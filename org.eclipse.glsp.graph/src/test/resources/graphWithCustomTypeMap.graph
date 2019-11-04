@@ -1,0 +1,20 @@
+{
+  "revision": 42,
+  "type": "mygraph",
+  "id": "graphId",
+  "children": [
+    {
+      "id": "node1",
+      "type": "mynode",
+      "position": {
+        "x": 10.0,
+        "y": 20.0
+      }
+    },
+    {
+      "id": "edge",
+      "type": "myedge",
+      "sourceId": "node1"
+    }
+  ]
+}

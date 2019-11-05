@@ -1,5 +1,5 @@
-# glsp-server
-Contains the code for a Java-based framework to create GLSP server components.
+# Eclipse GLSP Server
+Contains the code for a Java-based framework to create [GLSP](https://github.com/eclipse-glsp/glsp server components.
 
 ## Structure
 - `org.eclipse.glsp.api`: Java bindings for the GLSP API.

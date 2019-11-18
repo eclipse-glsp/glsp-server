@@ -40,7 +40,7 @@ public final class LayoutUtil {
 
    private LayoutUtil() {}
 
-   /*
+   /**
     * Apply the computed bounds from the given action to the model.
     */
    public static void applyBounds(final GModelRoot root, final ComputedBoundsAction action,
@@ -54,7 +54,9 @@ public final class LayoutUtil {
             if (b.getNewPosition() != null) {
                bae.setPosition(GraphUtil.copy(b.getNewPosition()));
             }
-            bae.setSize(GraphUtil.copy(b.getNewSize()));
+            if (b.getNewSize() != null) {
+               bae.setSize(GraphUtil.copy(b.getNewSize()));
+            }
          }
       }
       for (ElementAndAlignment a : action.getAlignments()) {
@@ -90,7 +92,7 @@ public final class LayoutUtil {
       copyLayoutDataRecursively(toRoot, oldIndex);
    }
 
-   @SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity" })
+   @SuppressWarnings("checkstyle:CyclomaticComplexity")
    private static void copyLayoutDataRecursively(final GModelElement element, final GModelIndex oldIndex) {
       if (element instanceof GBoundsAware) {
          Optional<GModelElement> oldElement = oldIndex.get(element.getId());

@@ -17,7 +17,7 @@ package org.eclipse.glsp.api.action.kind;
 
 import org.eclipse.glsp.api.action.Action;
 
-public class ValidateLabelEditAction extends Action {
+public class ValidateLabelEditAction extends RequestAction<SetEditLabelValidationResultAction> {
 
    private String value;
    private String labelId;

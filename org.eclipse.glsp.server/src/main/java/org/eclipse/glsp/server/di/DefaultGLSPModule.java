@@ -42,7 +42,7 @@ import org.eclipse.glsp.server.actionhandler.ExecuteServerCommandActionHandler;
 import org.eclipse.glsp.server.actionhandler.LayoutActionHandler;
 import org.eclipse.glsp.server.actionhandler.OpenActionHandler;
 import org.eclipse.glsp.server.actionhandler.OperationActionHandler;
-import org.eclipse.glsp.server.actionhandler.RequestCommandPaletteActionsHandler;
+import org.eclipse.glsp.server.actionhandler.RequestContextActionsHandler;
 import org.eclipse.glsp.server.actionhandler.RequestMarkersHandler;
 import org.eclipse.glsp.server.actionhandler.RequestModelActionHandler;
 import org.eclipse.glsp.server.actionhandler.RequestOperationsActionHandler;
@@ -78,7 +78,7 @@ public abstract class DefaultGLSPModule extends GLSPModule {
       OperationActionHandler.class, RequestModelActionHandler.class, RequestOperationsActionHandler.class,
       RequestPopupModelActionHandler.class, SaveModelActionHandler.class, UndoRedoActionHandler.class,
       SelectActionHandler.class, ExecuteServerCommandActionHandler.class, RequestTypeHintsActionHandler.class,
-      RequestCommandPaletteActionsHandler.class, RequestMarkersHandler.class, LayoutActionHandler.class,
+      RequestContextActionsHandler.class, RequestMarkersHandler.class, LayoutActionHandler.class,
       ValidateLabelEditActionHandler.class);
 
    @Override

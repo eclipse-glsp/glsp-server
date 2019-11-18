@@ -17,32 +17,43 @@ package org.eclipse.glsp.api.types;
 
 import java.util.List;
 
-public class NodeTypeHint extends ElementTypeHint {
+public class ShapeTypeHint extends ElementTypeHint {
 
    private boolean resizable;
+   private boolean reparentable;
    private List<String> containableElementTypeIds;
 
-   public NodeTypeHint() {}
+   public ShapeTypeHint() {}
 
-   public NodeTypeHint(String elementTypeId, boolean repositionable, boolean deletable, boolean resizable,
-      List<String> containableElementTypeIds) {
-      super(elementTypeId, repositionable, deletable);
+   public ShapeTypeHint(final String elementTypeId, final boolean repositionable, final boolean deletable,
+      final boolean resizable,
+      final boolean reparentable,
+      final List<String> containableElementTypeIds) {
+      this(elementTypeId, repositionable, deletable, resizable, reparentable);
       this.resizable = resizable;
+
       this.containableElementTypeIds = containableElementTypeIds;
    }
 
-   public NodeTypeHint(String elementTypeId, boolean repositionable, boolean deletable, boolean resizable) {
+   public ShapeTypeHint(final String elementTypeId, final boolean repositionable, final boolean deletable,
+      final boolean resizable,
+      final boolean reparentable) {
       super(elementTypeId, repositionable, deletable);
+      this.reparentable = reparentable;
       this.resizable = resizable;
    }
 
    public boolean isResizable() { return resizable; }
 
-   public void setResizable(boolean resizeable) { this.resizable = resizeable; }
+   public void setResizable(final boolean resizeable) { this.resizable = resizeable; }
 
    public List<String> getContainableElementTypeIds() { return containableElementTypeIds; }
 
-   public void setContainableElementTypeIds(List<String> containableElementTypeIds) {
+   public void setContainableElementTypeIds(final List<String> containableElementTypeIds) {
       this.containableElementTypeIds = containableElementTypeIds;
    }
+
+   public boolean isReparentable() { return reparentable; }
+
+   public void setReparentable(final boolean reparentable) { this.reparentable = reparentable; }
 }

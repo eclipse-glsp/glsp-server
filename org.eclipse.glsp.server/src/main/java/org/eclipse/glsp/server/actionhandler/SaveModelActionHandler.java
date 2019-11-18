@@ -59,7 +59,7 @@ public class SaveModelActionHandler extends AbstractActionHandler {
    private void saveModelState(final GraphicalModelState modelState) {
       convertToFile(modelState).ifPresent(file -> {
          try (Writer writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)) {
-            Gson gson = gsonConfigurationFactory.configureGson().create();
+            Gson gson = gsonConfigurationFactory.configureGson().setPrettyPrinting().create();
             gson.toJson(modelState.getRoot(), GGraph.class, writer);
          } catch (IOException e) {
             LOG.error(e);

@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.glsp.api.operations.Operation;
 import org.eclipse.glsp.api.types.EdgeTypeHint;
-import org.eclipse.glsp.api.types.NodeTypeHint;
+import org.eclipse.glsp.api.types.ShapeTypeHint;
 
 public interface DiagramConfiguration {
 
@@ -31,7 +31,7 @@ public interface DiagramConfiguration {
 
    Map<String, EClass> getTypeMappings();
 
-   List<NodeTypeHint> getNodeTypeHints();
+   List<ShapeTypeHint> getNodeTypeHints();
 
    List<EdgeTypeHint> getEdgeTypeHints();
 
@@ -43,7 +43,7 @@ public interface DiagramConfiguration {
       return new EdgeTypeHint(elementId, true, true, true, null, null);
    }
 
-   default NodeTypeHint createDefaultNodeTypeHint(final String elementId) {
-      return new NodeTypeHint(elementId, true, true, true);
+   default ShapeTypeHint createDefaultNodeTypeHint(final String elementId) {
+      return new ShapeTypeHint(elementId, true, true, true, false);
    }
 }

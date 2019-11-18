@@ -17,8 +17,7 @@ package org.eclipse.glsp.api.action;
 
 import java.util.Optional;
 
-import org.eclipse.glsp.api.action.kind.IdentifiableRequestAction;
-import org.eclipse.glsp.api.action.kind.IdentifiableResponseAction;
+import org.eclipse.glsp.api.action.kind.ResponseAction;
 
 public interface ActionProcessor {
 
@@ -31,20 +30,11 @@ public interface ActionProcessor {
     * @param clientId The client from which the action was received
     * @param action   The action to process
     */
-   default void process(final String clientId, Action action) {
-      Optional<String> requestId = Optional.empty();
-      if (action instanceof IdentifiableRequestAction) {
-         // unwrap identifiable request
-         requestId = Optional.of(((IdentifiableRequestAction) action).getId());
-         action = ((IdentifiableRequestAction) action).getAction();
-      }
-
+   default void process(final String clientId, final Action action) {
       Optional<Action> responseOpt = dispatch(clientId, action);
-
       if (responseOpt.isPresent()) {
-         // wrap identifiable response if necessary
-         Action response = requestId.<Action> map(id -> new IdentifiableResponseAction(id, responseOpt.get()))
-            .orElse(responseOpt.get());
+         // ensure request and response have same id if necessary
+         Action response = ResponseAction.respond(action, responseOpt.get());
          send(clientId, response);
       }
    }
@@ -79,7 +69,7 @@ public interface ActionProcessor {
     */
    void send(String clientId, Action action);
 
-   final class NullImpl implements ActionProcessor {
+   class NullImpl implements ActionProcessor {
 
       @Override
       public Optional<Action> dispatch(final String clientId, final Action action) {

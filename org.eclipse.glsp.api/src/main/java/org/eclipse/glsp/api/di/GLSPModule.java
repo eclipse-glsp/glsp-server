@@ -35,6 +35,7 @@ import org.eclipse.glsp.api.model.ModelStateProvider;
 import org.eclipse.glsp.api.provider.ActionHandlerProvider;
 import org.eclipse.glsp.api.provider.ActionProvider;
 import org.eclipse.glsp.api.provider.CommandPaletteActionProvider;
+import org.eclipse.glsp.api.provider.ContextMenuItemProvider;
 import org.eclipse.glsp.api.provider.OperationHandlerProvider;
 import org.eclipse.glsp.api.provider.ServerCommandHandlerProvider;
 import org.eclipse.glsp.graph.GraphExtension;
@@ -58,6 +59,7 @@ public abstract class GLSPModule extends AbstractModule {
       bind(OperationHandlerProvider.class).to(bindOperatioHandlerProvider());
       bind(ServerCommandHandlerProvider.class).to(bindServerCommandHandlerProvider());
       bind(CommandPaletteActionProvider.class).to(bindCommandPaletteActionProvider());
+      bind(ContextMenuItemProvider.class).to(bindContextMenuItemProvider());
       bind(ModelValidator.class).to(bindModelValidator());
       bind(ActionProcessor.class).to(bindActionProcessor()).in(Singleton.class);
       bind(DiagramConfigurationProvider.class).to(bindDiagramConfigurationProvider());
@@ -81,6 +83,10 @@ public abstract class GLSPModule extends AbstractModule {
 
    protected Class<? extends CommandPaletteActionProvider> bindCommandPaletteActionProvider() {
       return CommandPaletteActionProvider.NullImpl.class;
+   }
+
+   protected Class<? extends ContextMenuItemProvider> bindContextMenuItemProvider() {
+      return ContextMenuItemProvider.NullImpl.class;
    }
 
    protected Class<? extends ActionProvider> bindActionProvider() {

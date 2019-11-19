@@ -15,32 +15,41 @@
  ******************************************************************************/
 package org.eclipse.glsp.api.action.kind;
 
+import java.util.Map;
+import java.util.Set;
+
 import org.eclipse.glsp.api.action.Action;
+import org.eclipse.glsp.api.types.LabeledAction;
 
-public class IdentifiableRequestAction extends Action {
-   private String id;
-   private Action action;
+public class SetContextActions extends ResponseAction {
 
-   public IdentifiableRequestAction() {
-      super(Action.Kind.IDENTIFIABLE_REQUEST_ACTION);
+   private Set<LabeledAction> actions;
+   private Map<String, String> args;
+
+   public SetContextActions() {
+      super(Action.Kind.SET_CONTEXT_ACTIONS);
    }
 
-   public IdentifiableRequestAction(final String id, final Action action) {
+   public SetContextActions(final Set<LabeledAction> actions, final Map<String, String> map) {
       this();
-      this.id = id;
-      this.action = action;
+      this.actions = actions;
+      this.args = map;
    }
 
-   public String getId() { return id; }
+   public Set<LabeledAction> getActions() { return actions; }
 
-   public Action getAction() { return action; }
+   public void setActions(final Set<LabeledAction> commandPaletteActions) { this.actions = commandPaletteActions; }
+
+   public Map<String, String> getArgs() { return args; }
+
+   public void setArgs(final Map<String, String> args) { this.args = args; }
 
    @Override
    public int hashCode() {
       final int prime = 31;
       int result = super.hashCode();
-      result = prime * result + ((action == null) ? 0 : action.hashCode());
-      result = prime * result + ((id == null) ? 0 : id.hashCode());
+      result = prime * result + ((actions == null) ? 0 : actions.hashCode());
+      result = prime * result + ((args == null) ? 0 : args.hashCode());
       return result;
    }
 
@@ -53,22 +62,22 @@ public class IdentifiableRequestAction extends Action {
       if (!super.equals(obj)) {
          return false;
       }
-      if (!(obj instanceof IdentifiableRequestAction)) {
+      if (getClass() != obj.getClass()) {
          return false;
       }
-      IdentifiableRequestAction other = (IdentifiableRequestAction) obj;
-      if (action == null) {
-         if (other.action != null) {
+      SetContextActions other = (SetContextActions) obj;
+      if (actions == null) {
+         if (other.actions != null) {
             return false;
          }
-      } else if (!action.equals(other.action)) {
+      } else if (!actions.equals(other.actions)) {
          return false;
       }
-      if (id == null) {
-         if (other.id != null) {
+      if (args == null) {
+         if (other.args != null) {
             return false;
          }
-      } else if (!id.equals(other.id)) {
+      } else if (!args.equals(other.args)) {
          return false;
       }
       return true;

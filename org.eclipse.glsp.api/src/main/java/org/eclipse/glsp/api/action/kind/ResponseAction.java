@@ -15,37 +15,30 @@
  ******************************************************************************/
 package org.eclipse.glsp.api.action.kind;
 
+import java.util.Objects;
+
 import org.eclipse.glsp.api.action.Action;
 
-public class IdentifiableResponseAction extends Action {
-   private String id;
-   private Action action;
+public class ResponseAction extends Action {
+   private String responseId;
 
-   public IdentifiableResponseAction() {
-      super(Action.Kind.IDENTIFIABLE_RESPONSE_ACTION);
+   public ResponseAction(final String kind) {
+      super(kind);
    }
 
-   public IdentifiableResponseAction(final String id, final Action action) {
-      this();
-      this.id = id;
-      this.action = action;
-   }
+   public String getResponseId() { return responseId; }
 
-   public String getId() { return id; }
-
-   public Action getAction() { return action; }
+   public void setResponseId(final String responseId) { this.responseId = responseId; }
 
    @Override
    public int hashCode() {
       final int prime = 31;
       int result = super.hashCode();
-      result = prime * result + ((action == null) ? 0 : action.hashCode());
-      result = prime * result + ((id == null) ? 0 : id.hashCode());
+      result = prime * result + Objects.hash(responseId);
       return result;
    }
 
    @Override
-   @SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity" })
    public boolean equals(final Object obj) {
       if (this == obj) {
          return true;
@@ -53,25 +46,24 @@ public class IdentifiableResponseAction extends Action {
       if (!super.equals(obj)) {
          return false;
       }
-      if (!(obj instanceof IdentifiableResponseAction)) {
+      if (!(obj instanceof ResponseAction)) {
          return false;
       }
-      IdentifiableResponseAction other = (IdentifiableResponseAction) obj;
-      if (action == null) {
-         if (other.action != null) {
-            return false;
-         }
-      } else if (!action.equals(other.action)) {
-         return false;
-      }
-      if (id == null) {
-         if (other.id != null) {
-            return false;
-         }
-      } else if (!id.equals(other.id)) {
-         return false;
-      }
-      return true;
+      ResponseAction other = (ResponseAction) obj;
+      return Objects.equals(responseId, other.responseId);
    }
 
+   /**
+    * Transfers the {@link ResponseAction#responseId id} from request to response if applicable.
+    *
+    * @param request  potential {@link RequestAction}
+    * @param response potential {@link ResponseAction}
+    * @return given response action with id set if applicable
+    */
+   public static Action respond(final Action request, final Action response) {
+      if (request instanceof RequestAction<?> && response instanceof ResponseAction) {
+         ((ResponseAction) response).setResponseId(((RequestAction<?>) request).getRequestId());
+      }
+      return response;
+   }
 }

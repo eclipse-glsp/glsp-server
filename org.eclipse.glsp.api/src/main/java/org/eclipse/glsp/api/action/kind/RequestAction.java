@@ -15,56 +15,39 @@
  ******************************************************************************/
 package org.eclipse.glsp.api.action.kind;
 
-import java.util.Set;
+import java.util.Objects;
 
 import org.eclipse.glsp.api.action.Action;
-import org.eclipse.glsp.api.types.LabeledAction;
 
-public class SetCommandPaletteActions extends Action {
+public abstract class RequestAction<RESPONSE extends ResponseAction> extends Action {
+   private String requestId;
 
-   private Set<LabeledAction> actions;
-
-   public SetCommandPaletteActions() {
-      super(Action.Kind.SET_COMMAND_PALETTE_ACTIONS);
+   public RequestAction(final String kind) {
+      super(kind);
    }
 
-   public SetCommandPaletteActions(Set<LabeledAction> actions) {
-      this();
-      this.actions = actions;
-   }
-
-   public Set<LabeledAction> getActions() { return actions; }
-
-   public void setActions(Set<LabeledAction> commandPaletteActions) { this.actions = commandPaletteActions; }
+   public String getRequestId() { return requestId; }
 
    @Override
    public int hashCode() {
       final int prime = 31;
       int result = super.hashCode();
-      result = prime * result + ((actions == null) ? 0 : actions.hashCode());
+      result = prime * result + Objects.hash(requestId);
       return result;
    }
 
    @Override
-   public boolean equals(Object obj) {
+   public boolean equals(final Object obj) {
       if (this == obj) {
          return true;
       }
       if (!super.equals(obj)) {
          return false;
       }
-      if (!(obj instanceof SetCommandPaletteActions)) {
+      if (!(obj instanceof RequestAction)) {
          return false;
       }
-      SetCommandPaletteActions other = (SetCommandPaletteActions) obj;
-      if (actions == null) {
-         if (other.actions != null) {
-            return false;
-         }
-      } else if (!actions.equals(other.actions)) {
-         return false;
-      }
-      return true;
+      RequestAction<?> other = (RequestAction<?>) obj;
+      return Objects.equals(requestId, other.requestId);
    }
-
 }

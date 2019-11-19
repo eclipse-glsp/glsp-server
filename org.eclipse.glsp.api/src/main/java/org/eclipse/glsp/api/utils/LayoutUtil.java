@@ -40,7 +40,7 @@ public final class LayoutUtil {
 
    private LayoutUtil() {}
 
-   /**
+   /*
     * Apply the computed bounds from the given action to the model.
     */
    public static void applyBounds(final GModelRoot root, final ComputedBoundsAction action,

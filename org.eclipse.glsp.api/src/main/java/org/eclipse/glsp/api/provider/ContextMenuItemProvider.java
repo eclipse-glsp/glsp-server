@@ -22,35 +22,25 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.types.LabeledAction;
+import org.eclipse.glsp.api.types.MenuItem;
 import org.eclipse.glsp.graph.GPoint;
 
 @FunctionalInterface
-public interface CommandPaletteActionProvider {
+public interface ContextMenuItemProvider {
 
-   String KEY = "command-palette";
-   String TEXT = "text";
-   String INDEX = "index";
+   String KEY = "context-menu";
 
-   Set<LabeledAction> getActions(GraphicalModelState modelState, List<String> selectedElementIds,
+   Set<MenuItem> getItems(GraphicalModelState modelState, List<String> selectedElementIds,
       Optional<GPoint> lastMousePosition, Map<String, String> args);
 
-   default Set<LabeledAction> getActions(final GraphicalModelState modelState, final List<String> selectedElementIds,
+   default Set<MenuItem> getItems(final GraphicalModelState modelState, final List<String> selectedElementIds,
       final GPoint lastMousePosition, final Map<String, String> args) {
-      return getActions(modelState, selectedElementIds, Optional.ofNullable(lastMousePosition), args);
+      return getItems(modelState, selectedElementIds, Optional.ofNullable(lastMousePosition), args);
    }
 
-   default String getText(final Map<String, String> args) {
-      return args.getOrDefault(TEXT, "");
-   }
-
-   default int getIndex(final Map<String, String> args) {
-      return (int) Double.parseDouble(args.getOrDefault(INDEX, "0.0"));
-   }
-
-   class NullImpl implements CommandPaletteActionProvider {
+   class NullImpl implements ContextMenuItemProvider {
       @Override
-      public Set<LabeledAction> getActions(final GraphicalModelState modelState, final List<String> selectedElementIds,
+      public Set<MenuItem> getItems(final GraphicalModelState modelState, final List<String> selectedElementIds,
          final Optional<GPoint> lastMousePosition, final Map<String, String> args) {
          return Collections.emptySet();
       }

@@ -5,23 +5,11 @@ pipeline {
         jdk 'openjdk-jdk11-latest'
     }
     stages {
-
         stage ('Build') {
-            parallel {
-                stage('Maven build') {
-                    steps {
-                        sh "mvn clean verify"    
-                    }
-                }
-                stage('Checkstyle') {
-                    steps {
-                        sh "mvn checkstyle:check"
-                        recordIssues(tools: [checkStyle(reportEncoding: 'UTF-8')])
-                    }
-                }
+            steps {
+                sh "mvn clean verify"    
             }
         }
-
         stage('Deploy') {
             when { branch 'master'}
             steps {

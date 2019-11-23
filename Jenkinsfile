@@ -7,8 +7,18 @@ pipeline {
     stages {
 
         stage ('Build') {
-            steps {
-                sh 'mvn clean verify' 
+            parallel {
+                stage('Maven build') {
+                    steps {
+                        sh "mvn clean verify"    
+                    }
+                }
+                stage('Checkstyle') {
+                    steps {
+                        sh "mvn checkstyle:check"
+                        recordIssues(tools: [checkStyle(reportEncoding: 'UTF-8')])
+                    }
+                }
             }
         }
 
@@ -21,6 +31,11 @@ pipeline {
                 }
                 sh 'mvn deploy -Prelease'
             }
+        }
+    }
+    post {
+        always {
+            junit '**/surefire-reports/*.xml'
         }
     }
 }

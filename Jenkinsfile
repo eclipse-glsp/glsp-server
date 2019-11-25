@@ -5,13 +5,11 @@ pipeline {
         jdk 'openjdk-jdk11-latest'
     }
     stages {
-
         stage ('Build') {
             steps {
-                sh 'mvn clean verify' 
+                sh "mvn clean verify"    
             }
         }
-
         stage('Deploy') {
             when { branch 'master'}
             steps {
@@ -21,6 +19,11 @@ pipeline {
                 }
                 sh 'mvn deploy -Prelease'
             }
+        }
+    }
+    post {
+        always {
+            junit '**/surefire-reports/*.xml'
         }
     }
 }

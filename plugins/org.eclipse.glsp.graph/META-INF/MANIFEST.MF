@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: GLSP Graph
+Bundle-SymbolicName: org.eclipse.glsp.graph;singleton:=true
+Bundle-Version: 0.7.0.qualifier
+Bundle-Vendor: EclipseSource
+Automatic-Module-Name: org.eclipse.glsp.graph
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Require-Bundle: org.eclipse.emf.common;bundle-version="2.15.0",
+ com.google.gson,
+ org.eclipse.emf.ecore;bundle-version="2.15.0";visibility:=reexport,
+ org.apache.log4j;bundle-version="1.2.15";visibility:=reexport,
+ com.google.guava;bundle-version="21.0.0"
+Export-Package: org.eclipse.glsp.graph,
+ org.eclipse.glsp.graph,
+ org.eclipse.glsp.graph.builder,
+ org.eclipse.glsp.graph.builder.impl,
+ org.eclipse.glsp.graph.gson,
+ org.eclipse.glsp.graph.impl,
+ org.eclipse.glsp.graph.impl,
+ org.eclipse.glsp.graph.util,
+ org.eclipse.glsp.graph.util

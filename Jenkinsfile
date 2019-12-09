@@ -1,29 +1,34 @@
 pipeline { 
     agent any  
     tools { 
-        maven 'apache-maven-3.6.2'
+        maven 'apache-maven-latest'
         jdk 'openjdk-jdk11-latest'
     }
     stages {
-        stage ('Build') {
+        stage ('Build: Plain Maven(M2)') {
             steps {
-                sh "mvn clean verify"    
+                sh "mvn clean verify -Pm2 --batch-mode package"    
             }
         }
-        stage('Deploy') {
+
+        stage ('Build: Eclipse-based (P2)') {
+            steps {
+                sh "mvn clean verify -Pp2 --batch-mode package"    
+            }
+        }
+
+        stage ('Deploy)') {
             when { branch 'master'}
-            steps {
-                 withCredentials([file(credentialsId: 'secret-subkeys.asc', variable: 'KEYRING')]) {
-                    sh 'gpg --batch --import "${KEYRING}"'
-                    sh 'for fpr in $(gpg --list-keys --with-colons  | awk -F: \'/fpr:/ {print $10}\' | sort -u); do echo -e "5\ny\n" |  gpg --batch --command-fd 0 --expert --edit-key ${fpr} trust; done'
-                }
-                sh 'mvn deploy -Prelease'
-            }
-        }
-    }
-    post {
-        always {
-            junit '**/surefire-reports/*.xml'
+             steps {
+                parallel(
+                    p2: {
+                        build 'deploy-p2-glsp-server'
+                    },
+                    m2: {
+                        build 'deploy-m2-glsp-server'
+                    }
+                )
+             }
         }
     }
 }

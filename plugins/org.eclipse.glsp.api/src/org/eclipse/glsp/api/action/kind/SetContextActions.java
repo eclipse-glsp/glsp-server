@@ -15,30 +15,30 @@
  ******************************************************************************/
 package org.eclipse.glsp.api.action.kind;
 
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.types.LabeledAction;
 
 public class SetContextActions extends ResponseAction {
 
-   private Set<LabeledAction> actions;
+   private List<LabeledAction> actions;
    private Map<String, String> args;
 
    public SetContextActions() {
       super(Action.Kind.SET_CONTEXT_ACTIONS);
    }
 
-   public SetContextActions(final Set<LabeledAction> actions, final Map<String, String> map) {
+   public SetContextActions(final List<LabeledAction> actions, final Map<String, String> map) {
       this();
       this.actions = actions;
       this.args = map;
    }
 
-   public Set<LabeledAction> getActions() { return actions; }
+   public List<LabeledAction> getActions() { return actions; }
 
-   public void setActions(final Set<LabeledAction> commandPaletteActions) { this.actions = commandPaletteActions; }
+   public void setActions(final List<LabeledAction> commandPaletteActions) { this.actions = commandPaletteActions; }
 
    public Map<String, String> getArgs() { return args; }
 

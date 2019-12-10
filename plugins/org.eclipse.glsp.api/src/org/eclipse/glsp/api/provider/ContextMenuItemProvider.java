@@ -19,7 +19,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 import org.eclipse.glsp.api.model.GraphicalModelState;
 import org.eclipse.glsp.api.types.MenuItem;
@@ -30,19 +29,19 @@ public interface ContextMenuItemProvider {
 
    String KEY = "context-menu";
 
-   Set<MenuItem> getItems(GraphicalModelState modelState, List<String> selectedElementIds,
+   List<MenuItem> getItems(GraphicalModelState modelState, List<String> selectedElementIds,
       Optional<GPoint> lastMousePosition, Map<String, String> args);
 
-   default Set<MenuItem> getItems(final GraphicalModelState modelState, final List<String> selectedElementIds,
+   default List<MenuItem> getItems(final GraphicalModelState modelState, final List<String> selectedElementIds,
       final GPoint lastMousePosition, final Map<String, String> args) {
       return getItems(modelState, selectedElementIds, Optional.ofNullable(lastMousePosition), args);
    }
 
    class NullImpl implements ContextMenuItemProvider {
       @Override
-      public Set<MenuItem> getItems(final GraphicalModelState modelState, final List<String> selectedElementIds,
+      public List<MenuItem> getItems(final GraphicalModelState modelState, final List<String> selectedElementIds,
          final Optional<GPoint> lastMousePosition, final Map<String, String> args) {
-         return Collections.emptySet();
+         return Collections.emptyList();
       }
    }
 }

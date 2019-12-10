@@ -15,11 +15,10 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actionhandler;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.action.kind.RequestContextActions;
@@ -52,7 +51,7 @@ public class RequestContextActionsHandler extends AbstractActionHandler {
          RequestContextActions requestContextAction = (RequestContextActions) action;
          List<String> selectedElementIds = requestContextAction.getSelectedElementIds();
          Map<String, String> args = requestContextAction.getArgs();
-         Set<LabeledAction> items = new HashSet<>();
+         List<LabeledAction> items = new ArrayList<>();
          if (equalsUiControl(args, CommandPaletteActionProvider.KEY)) {
             items.addAll(commandPaletteActionProvider.getActions(modelState, selectedElementIds,
                requestContextAction.getLastMousePosition(), args));

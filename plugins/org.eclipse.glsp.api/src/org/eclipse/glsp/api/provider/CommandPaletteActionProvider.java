@@ -19,7 +19,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 import org.eclipse.glsp.api.model.GraphicalModelState;
 import org.eclipse.glsp.api.types.LabeledAction;
@@ -32,10 +31,10 @@ public interface CommandPaletteActionProvider {
    String TEXT = "text";
    String INDEX = "index";
 
-   Set<LabeledAction> getActions(GraphicalModelState modelState, List<String> selectedElementIds,
+   List<LabeledAction> getActions(GraphicalModelState modelState, List<String> selectedElementIds,
       Optional<GPoint> lastMousePosition, Map<String, String> args);
 
-   default Set<LabeledAction> getActions(final GraphicalModelState modelState, final List<String> selectedElementIds,
+   default List<LabeledAction> getActions(final GraphicalModelState modelState, final List<String> selectedElementIds,
       final GPoint lastMousePosition, final Map<String, String> args) {
       return getActions(modelState, selectedElementIds, Optional.ofNullable(lastMousePosition), args);
    }
@@ -50,9 +49,9 @@ public interface CommandPaletteActionProvider {
 
    class NullImpl implements CommandPaletteActionProvider {
       @Override
-      public Set<LabeledAction> getActions(final GraphicalModelState modelState, final List<String> selectedElementIds,
+      public List<LabeledAction> getActions(final GraphicalModelState modelState, final List<String> selectedElementIds,
          final Optional<GPoint> lastMousePosition, final Map<String, String> args) {
-         return Collections.emptySet();
+         return Collections.emptyList();
       }
    }
 }

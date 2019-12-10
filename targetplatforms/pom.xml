@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (C) 2011, Obeo All rights reserved. This program and the accompanying 
+	materials are made available under the terms of the Eclipse Public License 
+	v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+
+	<groupId>org.eclipse.glsp</groupId>
+	<artifactId>targetplatforms</artifactId>
+	<version>1.2.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<tycho-version>1.4.0</tycho-version>
+		<tycho-extras-version>1.4.0</tycho-extras-version>
+		<targetPlatform.application.name>org.eclipse.cbi.targetplatform.tpd.converter</targetPlatform.application.name>
+		<targetPlatform.application.args>r2019-09.tpd</targetPlatform.application.args>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho.extras</groupId>
+				<artifactId>tycho-eclipserun-plugin</artifactId>
+				<version>${tycho-extras-version}</version>
+				<configuration>
+					<repositories>
+						<repository>
+							<id>2019-09</id>
+							<layout>p2</layout>
+							<url>http://download.eclipse.org/releases/2019-09</url>
+						</repository>
+						<repository>
+							<id>tpd</id>
+							<layout>p2</layout>
+							<url> http://download.eclipse.org/cbi/tpd/3.0.0-SNAPSHOT/</url>
+						</repository>
+					</repositories>
+					<appArgLine>-consoleLog -application ${targetPlatform.application.name} ${targetPlatform.application.args}</appArgLine>
+					<!-- Set dependencies to launch the application -->
+					<dependencies>
+						<dependency>
+							<artifactId>org.eclipse.cbi.targetplatform-feature</artifactId>
+							<type>eclipse-feature</type>
+						</dependency>
+						
+						<dependency>
+							<artifactId>org.eclipse.equinox.p2.sdk</artifactId>
+							<type>eclipse-feature</type>
+						</dependency>
+					</dependencies>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>eclipse-run</goal>
+						</goals>
+						<!-- The phase validate rebuild the targetplatform before to compile/test... 
+							@see https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html -->
+						<phase>validate</phase>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

@@ -37,20 +37,12 @@ public class OperationActionHandler extends AbstractActionHandler {
    }
 
    @Override
-   @SuppressWarnings("checkstyle:CyclomaticComplexity")
    public Optional<Action> execute(final Action action, final GraphicalModelState modelState) {
-      switch (action.getKind()) {
-         case Action.Kind.CREATE_NODE_OPERATION:
-         case Action.Kind.CREATE_CONNECTION_OPERATION:
-         case Action.Kind.RECONNECT_CONNECTION_OPERATION:
-         case Action.Kind.REROUTE_CONNECTION_OPERATION:
-         case Action.Kind.DELETE_ELEMENT_OPERATION:
-         case Action.Kind.CHANGE_BOUNDS_OPERATION:
-         case Action.Kind.APPLY_LABEL_EDIT_OPERATION:
-            return doHandle((AbstractOperationAction) action, modelState);
-         default:
-            return Optional.empty();
+      if (action instanceof AbstractOperationAction
+         && operationHandlerProvider.isHandled((AbstractOperationAction) action)) {
+         return doHandle((AbstractOperationAction) action, modelState);
       }
+      return Optional.empty();
    }
 
    public Optional<Action> doHandle(final AbstractOperationAction action, final GraphicalModelState modelState) {

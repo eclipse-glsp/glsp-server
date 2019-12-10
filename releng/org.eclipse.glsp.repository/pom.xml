@@ -20,11 +20,13 @@
 
 			<properties>
 				<p2.repository.dest>${project.basedir}/../target/repository</p2.repository.dest>
-				<software.download.area>${user.home}/p2.repositories</software.download.area>
+				<local.p2.root>${user.home}</local.p2.root>
+				<remote.p2.root>genie.glsp@projects-storage.eclipse.org:/home/data/httpd/download.eclipse.org/glsp</remote.p2.root>
+				<repository.path>server/p2/</repository.path>
 				<!-- local source directory for rsync (read from this directory) -->
-				<rsync.remote.dir>genie.glsp@projects-storage.eclipse.org:/home/data/httpd/download.eclipse.org/glsp/nightly/</rsync.remote.dir>
+				<rsync.local.dir>${local.p2.root}/${repository.path}</rsync.local.dir>
 				<!-- remote rsync host -->
-				<rsync.local.dir>${software.download.area}/nightly/</rsync.local.dir>
+				<rsync.remote.dir>${remote.p2.root}/${repository.path}</rsync.remote.dir>
 				<!-- pass "-n" to perform a trial run with no changes made -->
 				<dryrun></dryrun>
 			</properties>
@@ -72,7 +74,7 @@
 						<configuration>
 							<executionEnvironment>JavaSE-11</executionEnvironment>
 							<!-- IMPORTANT: DO NOT split the arg line -->
-							<appArgLine>-application org.eclipse.ant.core.antRunner -buildfile packaging-p2composite.ant p2.composite.add -Dsite.label="Eclipse GLSP Nightly Updatesite" -Dproject.build.directory=${project.build.directory} -DunqualifiedVersion=${unqualifiedVersion} -DbuildQualifier=${buildQualifier} -Dsoftware.download.area=${software.download.area}</appArgLine>
+							<appArgLine>-application org.eclipse.ant.core.antRunner -buildfile packaging-p2composite.ant p2.composite.add -Dsite.label="Eclipse GLSP Nightly Updatesite" -Dproject.build.directory=${project.build.directory} -DunqualifiedVersion=${unqualifiedVersion} -DbuildQualifier=${buildQualifier} -Dsoftware.download.area=${rsync.local.dir}</appArgLine>
 							<repositories>
 								<repository>
 									<id>2019-09</id>

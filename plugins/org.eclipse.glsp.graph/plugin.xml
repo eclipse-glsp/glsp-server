@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="org.eclipse.glsp.graph.GraphPackage"
+            genModel="model/glsp-graph.genmodel"
+            uri="http://www.eclipsesource.com/glsp/graph">
+      </package>
+   </extension>
+
+</plugin>

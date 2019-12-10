@@ -1,4 +1,5 @@
-# Eclipse GLSP Server
+# Eclipse GLSP Server [![build-status](https://img.shields.io/jenkins/build?jobUrl=https%3A%2F%2Fci.eclipse.org%2Fglsp%2Fjob%2Feclipse-glsp%2Fjob%2Fglsp-server%2Fjob%2Fmaster%2F)](https://ci.eclipse.org/glsp/job/eclipse-glsp/job/glsp-server/job/master/)
+
 Contains the code for the Java-based framework to create [GLSP](https://github.com/eclipse-glsp/glsp) server components.
 
 ## Structure
@@ -8,3 +9,19 @@ Contains the code for the Java-based framework to create [GLSP](https://github.c
 - `org.eclipse.glsp.server`: Generic base implemenation for standalone GLSP servers (based on JSON-RPC)
 - `org.eclipse.glsp.server.websocket`: Extension of the base server implementation for communication over websockets
 
+## Building
+
+The GLSP server bundles are built with `mvn clean install -Pm2` (for maven) or `mvn clean install -Pp2` (for p2). The nightly builds are available as maven repository or p2 update site.
+
+### Maven Repositories
+- <i>Snapshots: </i> https://oss.sonatype.org/content/repositories/snapshots/org/eclipse/glsp/
+
+### P2 Update Sites
+- <i>Snapshots: </i> https://download.eclipse.org/glsp/server/p2/nightly/
+
+All changes on the master branch are deployed automatically to the corresponding snapshot repositories.
+
+## See also
+For more information, see the [GLSP umbrella project](https://github.com/eclipse-glsp/glsp) and please visit the [Eclipse GLSP Website](https://www.eclipse.org/glsp).
+
+![alt](https://www.eclipse.org/glsp/images/diagramanimated.gif)

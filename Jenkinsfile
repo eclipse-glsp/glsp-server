@@ -22,10 +22,10 @@ pipeline {
              steps {
                 parallel(
                     p2: {
-                        build 'deploy-p2-glsp-server', wait: false
+                        build job: 'deploy-p2-glsp-server', wait: false
                     },
                     m2: {
-                        build 'deploy-m2-glsp-server', wait: false
+                        build job: 'deploy-m2-glsp-server', wait: false
                     }
                 )
              }

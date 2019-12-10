@@ -11,15 +11,12 @@
 	<artifactId>org.eclipse.glsp.repository</artifactId>
 	<packaging>eclipse-repository</packaging>
 
-
-
 	<profiles>
 		<profile>
 			<id>p2-release</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
-
 
 			<properties>
 				<p2.repository.dest>${project.basedir}/../target/repository</p2.repository.dest>
@@ -129,7 +126,6 @@
 							<skip>true</skip>
 						</configuration>
 					</plugin>
-
 
 				</plugins>
 			</build>

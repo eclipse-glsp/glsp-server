@@ -14,7 +14,7 @@
 	</parent>
 
 
-	<url>https://github.com/eclipse/glsp-server</url>
+	<url>https://www.eclipse.org/glsp</url>
 	<licenses>
 		<license>
 			<name>Eclipse Public License - v 2.0</name>

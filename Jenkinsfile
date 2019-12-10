@@ -5,7 +5,7 @@ pipeline {
         jdk 'openjdk-jdk11-latest'
     }
     stages {
-        stage ('Build: Plain Maven(M2)') {
+        stage ('Build: Plain Maven (M2)') {
             steps {
                 sh "mvn clean verify -Pm2 --batch-mode package"    
             }

@@ -39,7 +39,6 @@ public class ActionRegistry {
    private void intialize() {
       this.actions = new HashMap<>();
       actionProvider.getActions().forEach(a -> actions.put(a.getKind(), a.getClass()));
-
    }
 
    public Set<Action> getAllActions() { return actionProvider.getActions(); }

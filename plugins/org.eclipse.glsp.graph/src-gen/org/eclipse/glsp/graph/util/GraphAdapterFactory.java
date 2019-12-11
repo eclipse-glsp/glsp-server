@@ -16,6 +16,8 @@
  */
 package org.eclipse.glsp.graph.util;
 
+import java.util.Map;
+
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 
@@ -151,11 +153,6 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
       }
 
       @Override
-      public Adapter caseGLayoutOptions(GLayoutOptions object) {
-         return createGLayoutOptionsAdapter();
-      }
-
-      @Override
       public Adapter caseGEdgeLayoutable(GEdgeLayoutable object) {
          return createGEdgeLayoutableAdapter();
       }
@@ -193,6 +190,11 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
       @Override
       public Adapter caseGPreRenderedElement(GPreRenderedElement object) {
          return createGPreRenderedElementAdapter();
+      }
+
+      @Override
+      public Adapter caseStringToObjectMapEntry(Map.Entry<String, Object> object) {
+         return createStringToObjectMapEntryAdapter();
       }
 
       @Override
@@ -411,20 +413,6 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
    }
 
    /**
-    * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GLayoutOptions <em>GLayout Options</em>}'.
-    * <!-- begin-user-doc -->
-    * This default implementation returns null so that we can easily ignore cases;
-    * it's useful to ignore a case when inheritance will catch all the cases anyway.
-    * <!-- end-user-doc -->
-    * @return the new adapter.
-    * @see org.eclipse.glsp.graph.GLayoutOptions
-    * @generated
-    */
-   public Adapter createGLayoutOptionsAdapter() {
-      return null;
-   }
-
-   /**
     * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GEdgeLayoutable <em>GEdge Layoutable</em>}'.
     * <!-- begin-user-doc -->
     * This default implementation returns null so that we can easily ignore cases;
@@ -533,6 +521,20 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
     * @generated
     */
    public Adapter createGPreRenderedElementAdapter() {
+      return null;
+   }
+
+   /**
+    * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Object Map Entry</em>}'.
+    * <!-- begin-user-doc -->
+    * This default implementation returns null so that we can easily ignore cases;
+    * it's useful to ignore a case when inheritance will catch all the cases anyway.
+    * <!-- end-user-doc -->
+    * @return the new adapter.
+    * @see java.util.Map.Entry
+    * @generated
+    */
+   public Adapter createStringToObjectMapEntryAdapter() {
       return null;
    }
 

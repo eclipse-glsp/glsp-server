@@ -15,40 +15,43 @@
  ********************************************************************************/
 package org.eclipse.glsp.graph.builder;
 
+import java.util.Map;
+
 import org.eclipse.glsp.graph.GEdgePlacement;
-import org.eclipse.glsp.graph.GLayoutOptions;
 import org.eclipse.glsp.graph.GNode;
 
 public abstract class AbstractGNodeBuilder<T extends GNode, E extends AbstractGNodeBuilder<T, E>>
    extends GShapeElementBuilder<T, E> {
 
    protected String layout;
-   protected GLayoutOptions layoutOptions;
+   protected Map<String, Object> layoutOptions;
    protected GEdgePlacement edgePlacement;
 
-   public AbstractGNodeBuilder(String type) {
+   public AbstractGNodeBuilder(final String type) {
       super(type);
    }
 
-   public E layoutOptions(GLayoutOptions layoutOptions) {
+   public E layoutOptions(final Map<String, Object> layoutOptions) {
       this.layoutOptions = layoutOptions;
       return self();
    }
 
-   public E edgePlacement(GEdgePlacement edgePlacement) {
+   public E edgePlacement(final GEdgePlacement edgePlacement) {
       this.edgePlacement = edgePlacement;
       return self();
    }
 
-   public E layout(String layout) {
+   public E layout(final String layout) {
       this.layout = layout;
       return self();
    }
 
    @Override
-   protected void setProperties(T node) {
+   protected void setProperties(final T node) {
       super.setProperties(node);
-      node.setLayoutOptions(layoutOptions);
+      if (layoutOptions != null) {
+         node.getLayoutOptions().putAll(layoutOptions);
+      }
       node.setLayout(layout);
       node.setEdgePlacement(edgePlacement);
    }

@@ -15,10 +15,12 @@
  ********************************************************************************/
 package org.eclipse.glsp.graph.builder.impl;
 
-import org.eclipse.glsp.graph.GLayoutOptions;
-import org.eclipse.glsp.graph.GraphFactory;
 import org.eclipse.glsp.graph.builder.GBuilder;
 
+/**
+ * Deprecated, you can use {@link GLayoutOptions} directly.
+ */
+@Deprecated
 public class GLayoutOptionsBuilder extends GBuilder<GLayoutOptions> {
 
    private Double paddingLeft;
@@ -26,7 +28,7 @@ public class GLayoutOptionsBuilder extends GBuilder<GLayoutOptions> {
    private Double paddingTop;
    private Double paddingBottom;
    private Double paddingFactor;
-   private boolean resizeContainer;
+   private Boolean resizeContainer;
    private Double vGap;
    private Double hGap;
    private String vAlign;
@@ -35,85 +37,84 @@ public class GLayoutOptionsBuilder extends GBuilder<GLayoutOptions> {
    private Double minWidth;
    private Double minHeight;
 
-   public GLayoutOptionsBuilder paddingLeft(Double paddingLeft) {
+   public GLayoutOptionsBuilder paddingLeft(final Double paddingLeft) {
       this.paddingLeft = paddingLeft;
       return this;
    }
 
-   public GLayoutOptionsBuilder paddingRight(Double paddingRight) {
+   public GLayoutOptionsBuilder paddingRight(final Double paddingRight) {
       this.paddingRight = paddingRight;
       return this;
    }
 
-   public GLayoutOptionsBuilder paddingTop(Double paddingTop) {
+   public GLayoutOptionsBuilder paddingTop(final Double paddingTop) {
       this.paddingTop = paddingTop;
       return this;
    }
 
-   public GLayoutOptionsBuilder paddingBottom(Double paddingBottom) {
+   public GLayoutOptionsBuilder paddingBottom(final Double paddingBottom) {
       this.paddingBottom = paddingBottom;
       return this;
    }
 
-   public GLayoutOptionsBuilder paddingFactor(Double paddingFactor) {
+   public GLayoutOptionsBuilder paddingFactor(final Double paddingFactor) {
       this.paddingFactor = paddingFactor;
       return this;
    }
 
-   public GLayoutOptionsBuilder resizeContainer(boolean resizeContainer) {
+   public GLayoutOptionsBuilder resizeContainer(final boolean resizeContainer) {
       this.resizeContainer = resizeContainer;
       return this;
    }
 
-   public GLayoutOptionsBuilder vGap(Double vGap) {
+   public GLayoutOptionsBuilder vGap(final Double vGap) {
       this.vGap = vGap;
       return this;
    }
 
-   public GLayoutOptionsBuilder hGap(Double hGap) {
+   public GLayoutOptionsBuilder hGap(final Double hGap) {
       this.hGap = hGap;
       return this;
    }
 
-   public GLayoutOptionsBuilder vAlign(String vAlign) {
+   public GLayoutOptionsBuilder vAlign(final String vAlign) {
       this.vAlign = vAlign;
       return this;
    }
 
-   public GLayoutOptionsBuilder hAlign(String hAlign) {
+   public GLayoutOptionsBuilder hAlign(final String hAlign) {
       this.hAlign = hAlign;
       return this;
    }
 
-   public GLayoutOptionsBuilder minWidth(Double minWidth) {
+   public GLayoutOptionsBuilder minWidth(final Double minWidth) {
       this.minWidth = minWidth;
       return this;
    }
 
-   public GLayoutOptionsBuilder minHeight(Double minHeight) {
+   public GLayoutOptionsBuilder minHeight(final Double minHeight) {
       this.minHeight = minHeight;
       return this;
    }
 
    @Override
    protected GLayoutOptions instantiate() {
-      return GraphFactory.eINSTANCE.createGLayoutOptions();
+      return new GLayoutOptions();
    }
 
    @Override
-   protected void setProperties(GLayoutOptions element) {
-      element.setPaddingLeft(paddingLeft);
-      element.setPaddingRight(paddingRight);
-      element.setPaddingTop(paddingTop);
-      element.setPaddingBottom(paddingBottom);
-      element.setPaddingFactor(paddingFactor);
-      element.setResizeContainer(resizeContainer);
-      element.setVGap(vGap);
-      element.setHGap(hGap);
-      element.setVAlign(vAlign);
-      element.setHAlign(hAlign);
-      element.setMinHeight(minHeight);
-      element.setMinWidth(minWidth);
+   protected void setProperties(final GLayoutOptions options) {
+      options.hAlign(hAlign);
+      options.vAlign(vAlign);
+      options.resizeContainer(resizeContainer);
+      options.paddingLeft(paddingLeft);
+      options.paddingRight(paddingRight);
+      options.paddingTop(paddingTop);
+      options.paddingBottom(paddingBottom);
+      options.paddingFactor(paddingFactor);
+      options.vGap(vGap);
+      options.hGap(hGap);
+      options.minWidth(minWidth);
+      options.minHeight(minHeight);
    }
-
 }

@@ -16,6 +16,8 @@
  */
 package org.eclipse.glsp.graph.impl;
 
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
@@ -38,7 +40,6 @@ import org.eclipse.glsp.graph.GHtmlRoot;
 import org.eclipse.glsp.graph.GIssue;
 import org.eclipse.glsp.graph.GIssueMarker;
 import org.eclipse.glsp.graph.GLabel;
-import org.eclipse.glsp.graph.GLayoutOptions;
 import org.eclipse.glsp.graph.GLayouting;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelRoot;
@@ -161,13 +162,6 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
     * <!-- end-user-doc -->
     * @generated
     */
-   private EClass gLayoutOptionsEClass = null;
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
    private EClass gEdgeLayoutableEClass = null;
 
    /**
@@ -218,6 +212,13 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
     * @generated
     */
    private EClass gPreRenderedElementEClass = null;
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   private EClass stringToObjectMapEntryEClass = null;
 
    /**
     * <!-- begin-user-doc -->
@@ -616,134 +617,6 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
     * @generated
     */
    @Override
-   public EClass getGLayoutOptions() { return gLayoutOptionsEClass; }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EAttribute getGLayoutOptions_PaddingLeft() {
-      return (EAttribute) gLayoutOptionsEClass.getEStructuralFeatures().get(0);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EAttribute getGLayoutOptions_PaddingRight() {
-      return (EAttribute) gLayoutOptionsEClass.getEStructuralFeatures().get(1);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EAttribute getGLayoutOptions_PaddingTop() {
-      return (EAttribute) gLayoutOptionsEClass.getEStructuralFeatures().get(2);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EAttribute getGLayoutOptions_PaddingBottom() {
-      return (EAttribute) gLayoutOptionsEClass.getEStructuralFeatures().get(3);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EAttribute getGLayoutOptions_PaddingFactor() {
-      return (EAttribute) gLayoutOptionsEClass.getEStructuralFeatures().get(4);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EAttribute getGLayoutOptions_ResizeContainer() {
-      return (EAttribute) gLayoutOptionsEClass.getEStructuralFeatures().get(5);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EAttribute getGLayoutOptions_VGap() {
-      return (EAttribute) gLayoutOptionsEClass.getEStructuralFeatures().get(6);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EAttribute getGLayoutOptions_HGap() {
-      return (EAttribute) gLayoutOptionsEClass.getEStructuralFeatures().get(7);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EAttribute getGLayoutOptions_VAlign() {
-      return (EAttribute) gLayoutOptionsEClass.getEStructuralFeatures().get(8);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EAttribute getGLayoutOptions_HAlign() {
-      return (EAttribute) gLayoutOptionsEClass.getEStructuralFeatures().get(9);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EAttribute getGLayoutOptions_MinWidth() {
-      return (EAttribute) gLayoutOptionsEClass.getEStructuralFeatures().get(10);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EAttribute getGLayoutOptions_MinHeight() {
-      return (EAttribute) gLayoutOptionsEClass.getEStructuralFeatures().get(11);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
    public EClass getGEdgeLayoutable() { return gEdgeLayoutableEClass; }
 
    /**
@@ -950,6 +823,34 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
     * @generated
     */
    @Override
+   public EClass getStringToObjectMapEntry() { return stringToObjectMapEntryEClass; }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
+   public EAttribute getStringToObjectMapEntry_Key() {
+      return (EAttribute) stringToObjectMapEntryEClass.getEStructuralFeatures().get(0);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
+   public EAttribute getStringToObjectMapEntry_Value() {
+      return (EAttribute) stringToObjectMapEntryEClass.getEStructuralFeatures().get(1);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
    public EEnum getGSeverity() { return gSeverityEEnum; }
 
    /**
@@ -1032,20 +933,6 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
       createEAttribute(gDimensionEClass, GDIMENSION__WIDTH);
       createEAttribute(gDimensionEClass, GDIMENSION__HEIGHT);
 
-      gLayoutOptionsEClass = createEClass(GLAYOUT_OPTIONS);
-      createEAttribute(gLayoutOptionsEClass, GLAYOUT_OPTIONS__PADDING_LEFT);
-      createEAttribute(gLayoutOptionsEClass, GLAYOUT_OPTIONS__PADDING_RIGHT);
-      createEAttribute(gLayoutOptionsEClass, GLAYOUT_OPTIONS__PADDING_TOP);
-      createEAttribute(gLayoutOptionsEClass, GLAYOUT_OPTIONS__PADDING_BOTTOM);
-      createEAttribute(gLayoutOptionsEClass, GLAYOUT_OPTIONS__PADDING_FACTOR);
-      createEAttribute(gLayoutOptionsEClass, GLAYOUT_OPTIONS__RESIZE_CONTAINER);
-      createEAttribute(gLayoutOptionsEClass, GLAYOUT_OPTIONS__VGAP);
-      createEAttribute(gLayoutOptionsEClass, GLAYOUT_OPTIONS__HGAP);
-      createEAttribute(gLayoutOptionsEClass, GLAYOUT_OPTIONS__VALIGN);
-      createEAttribute(gLayoutOptionsEClass, GLAYOUT_OPTIONS__HALIGN);
-      createEAttribute(gLayoutOptionsEClass, GLAYOUT_OPTIONS__MIN_WIDTH);
-      createEAttribute(gLayoutOptionsEClass, GLAYOUT_OPTIONS__MIN_HEIGHT);
-
       gEdgeLayoutableEClass = createEClass(GEDGE_LAYOUTABLE);
       createEReference(gEdgeLayoutableEClass, GEDGE_LAYOUTABLE__EDGE_PLACEMENT);
 
@@ -1077,6 +964,10 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 
       gPreRenderedElementEClass = createEClass(GPRE_RENDERED_ELEMENT);
       createEAttribute(gPreRenderedElementEClass, GPRE_RENDERED_ELEMENT__CODE);
+
+      stringToObjectMapEntryEClass = createEClass(STRING_TO_OBJECT_MAP_ENTRY);
+      createEAttribute(stringToObjectMapEntryEClass, STRING_TO_OBJECT_MAP_ENTRY__KEY);
+      createEAttribute(stringToObjectMapEntryEClass, STRING_TO_OBJECT_MAP_ENTRY__VALUE);
 
       // Create enums
       gSeverityEEnum = createEEnum(GSEVERITY);
@@ -1154,7 +1045,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
          IS_GENERATED_INSTANCE_CLASS);
 
       initEClass(gGraphEClass, GGraph.class, "GGraph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-      initEReference(getGGraph_LayoutOptions(), this.getGLayoutOptions(), null, "layoutOptions", null, 0, 1,
+      initEReference(getGGraph_LayoutOptions(), this.getStringToObjectMapEntry(), null, "layoutOptions", null, 0, -1,
          GGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
          IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1226,43 +1117,6 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
       initEAttribute(getGDimension_Height(), ecorePackage.getEDouble(), "height", "0", 1, 1, GDimension.class,
          !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-      initEClass(gLayoutOptionsEClass, GLayoutOptions.class, "GLayoutOptions", !IS_ABSTRACT, !IS_INTERFACE,
-         IS_GENERATED_INSTANCE_CLASS);
-      initEAttribute(getGLayoutOptions_PaddingLeft(), ecorePackage.getEDoubleObject(), "paddingLeft", null, 0, 1,
-         GLayoutOptions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-         !IS_DERIVED, IS_ORDERED);
-      initEAttribute(getGLayoutOptions_PaddingRight(), ecorePackage.getEDoubleObject(), "paddingRight", null, 0, 1,
-         GLayoutOptions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-         !IS_DERIVED, IS_ORDERED);
-      initEAttribute(getGLayoutOptions_PaddingTop(), ecorePackage.getEDoubleObject(), "paddingTop", null, 0, 1,
-         GLayoutOptions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-         !IS_DERIVED, IS_ORDERED);
-      initEAttribute(getGLayoutOptions_PaddingBottom(), ecorePackage.getEDoubleObject(), "paddingBottom", null, 0, 1,
-         GLayoutOptions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-         !IS_DERIVED, IS_ORDERED);
-      initEAttribute(getGLayoutOptions_PaddingFactor(), ecorePackage.getEDoubleObject(), "paddingFactor", null, 0, 1,
-         GLayoutOptions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-         !IS_DERIVED, IS_ORDERED);
-      initEAttribute(getGLayoutOptions_ResizeContainer(), ecorePackage.getEBoolean(), "resizeContainer", null, 0, 1,
-         GLayoutOptions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-         !IS_DERIVED, IS_ORDERED);
-      initEAttribute(getGLayoutOptions_VGap(), ecorePackage.getEDoubleObject(), "vGap", null, 0, 1,
-         GLayoutOptions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-         !IS_DERIVED, IS_ORDERED);
-      initEAttribute(getGLayoutOptions_HGap(), ecorePackage.getEDoubleObject(), "hGap", null, 0, 1,
-         GLayoutOptions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-         !IS_DERIVED, IS_ORDERED);
-      initEAttribute(getGLayoutOptions_VAlign(), ecorePackage.getEString(), "vAlign", null, 0, 1, GLayoutOptions.class,
-         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-      initEAttribute(getGLayoutOptions_HAlign(), ecorePackage.getEString(), "hAlign", null, 0, 1, GLayoutOptions.class,
-         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-      initEAttribute(getGLayoutOptions_MinWidth(), ecorePackage.getEDoubleObject(), "minWidth", null, 0, 1,
-         GLayoutOptions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-         !IS_DERIVED, IS_ORDERED);
-      initEAttribute(getGLayoutOptions_MinHeight(), ecorePackage.getEDoubleObject(), "minHeight", null, 0, 1,
-         GLayoutOptions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-         !IS_DERIVED, IS_ORDERED);
-
       initEClass(gEdgeLayoutableEClass, GEdgeLayoutable.class, "GEdgeLayoutable", IS_ABSTRACT, IS_INTERFACE,
          IS_GENERATED_INSTANCE_CLASS);
       initEReference(getGEdgeLayoutable_EdgePlacement(), this.getGEdgePlacement(), null, "edgePlacement", null, 0, 1,
@@ -1286,8 +1140,8 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
          IS_GENERATED_INSTANCE_CLASS);
       initEAttribute(getGLayouting_Layout(), ecorePackage.getEString(), "layout", null, 0, 1, GLayouting.class,
          !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-      initEReference(getGLayouting_LayoutOptions(), this.getGLayoutOptions(), null, "layoutOptions", null, 0, 1,
-         GLayouting.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+      initEReference(getGLayouting_LayoutOptions(), this.getStringToObjectMapEntry(), null, "layoutOptions", null, 0,
+         -1, GLayouting.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
          !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
       initEClass(gBoundsEClass, GBounds.class, "GBounds", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1322,6 +1176,14 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
       initEAttribute(getGPreRenderedElement_Code(), ecorePackage.getEString(), "code", null, 0, 1,
          GPreRenderedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
          !IS_DERIVED, IS_ORDERED);
+
+      initEClass(stringToObjectMapEntryEClass, Map.Entry.class, "StringToObjectMapEntry", !IS_ABSTRACT, !IS_INTERFACE,
+         !IS_GENERATED_INSTANCE_CLASS);
+      initEAttribute(getStringToObjectMapEntry_Key(), ecorePackage.getEString(), "key", null, 1, 1, Map.Entry.class,
+         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+      initEAttribute(getStringToObjectMapEntry_Value(), ecorePackage.getEJavaObject(), "value", null, 0, 1,
+         Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+         IS_ORDERED);
 
       // Initialize enums and add enum literals
       initEEnum(gSeverityEEnum, GSeverity.class, "GSeverity");

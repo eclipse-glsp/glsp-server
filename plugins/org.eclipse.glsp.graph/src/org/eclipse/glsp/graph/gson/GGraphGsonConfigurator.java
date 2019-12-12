@@ -44,8 +44,8 @@ public class GGraphGsonConfigurator {
 
    public static final String DEFAULT_TYPE_ATT = "type";
 
-   private Map<String, EClass> typeMap = new HashMap<>();
-   private List<EPackage> ePackages = new ArrayList<>();
+   private final Map<String, EClass> typeMap = new HashMap<>();
+   private final List<EPackage> ePackages = new ArrayList<>();
 
    public GGraphGsonConfigurator() {
       withEPackages(GraphPackage.eINSTANCE);
@@ -61,24 +61,25 @@ public class GGraphGsonConfigurator {
       return withTypes(defaultTypes);
    }
 
-   public GGraphGsonConfigurator withTypes(Map<String, EClass> types) {
+   public GGraphGsonConfigurator withTypes(final Map<String, EClass> types) {
       typeMap.putAll(types);
       return this;
    }
 
-   public GGraphGsonConfigurator withEPackages(EPackage... packages) {
+   public GGraphGsonConfigurator withEPackages(final EPackage... packages) {
       ePackages.addAll(Arrays.asList(packages));
       return this;
    }
 
-   public GsonBuilder configureGsonBuilder(GsonBuilder gsonBuilder) {
+   public GsonBuilder configureGsonBuilder(final GsonBuilder gsonBuilder) {
+      gsonBuilder.registerTypeAdapterFactory(new EMapTypeAdapter.Factory());
       gsonBuilder.registerTypeAdapterFactory(new GModelElementTypeAdapter.Factory(DEFAULT_TYPE_ATT, typeMap));
       configureClassesOfPackages(gsonBuilder);
       gsonBuilder.addSerializationExclusionStrategy(new EObjectExclusionStrategy());
       return gsonBuilder;
    }
 
-   protected void configureClassesOfPackages(GsonBuilder gsonBuilder) {
+   protected void configureClassesOfPackages(final GsonBuilder gsonBuilder) {
       for (EPackage pkg : ePackages) {
          for (EClassifier classifier : pkg.getEClassifiers()) {
             if (classifier instanceof EClass && !((EClass) classifier).isAbstract()) {
@@ -90,7 +91,7 @@ public class GGraphGsonConfigurator {
       }
    }
 
-   private Class<? extends EObject> getImplementationClass(EClass eClass, EPackage pkg) {
+   private Class<? extends EObject> getImplementationClass(final EClass eClass, final EPackage pkg) {
       return pkg.getEFactoryInstance().create(eClass).getClass();
    }
 

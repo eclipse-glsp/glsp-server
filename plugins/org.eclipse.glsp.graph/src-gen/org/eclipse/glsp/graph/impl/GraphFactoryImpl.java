@@ -16,6 +16,8 @@
  */
 package org.eclipse.glsp.graph.impl;
 
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
@@ -92,8 +94,6 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
             return createGPoint();
          case GraphPackage.GDIMENSION:
             return createGDimension();
-         case GraphPackage.GLAYOUT_OPTIONS:
-            return createGLayoutOptions();
          case GraphPackage.GEDGE_PLACEMENT:
             return createGEdgePlacement();
          case GraphPackage.GBOUNDS:
@@ -106,6 +106,8 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
             return createGHtmlRoot();
          case GraphPackage.GPRE_RENDERED_ELEMENT:
             return createGPreRenderedElement();
+         case GraphPackage.STRING_TO_OBJECT_MAP_ENTRY:
+            return (EObject) createStringToObjectMapEntry();
          default:
             throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
       }
@@ -268,17 +270,6 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
     * @generated
     */
    @Override
-   public GLayoutOptions createGLayoutOptions() {
-      GLayoutOptionsImpl gLayoutOptions = new GLayoutOptionsImpl();
-      return gLayoutOptions;
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
    public GEdgePlacement createGEdgePlacement() {
       GEdgePlacementImpl gEdgePlacement = new GEdgePlacementImpl();
       return gEdgePlacement;
@@ -337,6 +328,16 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
    public GPreRenderedElement createGPreRenderedElement() {
       GPreRenderedElementImpl gPreRenderedElement = new GPreRenderedElementImpl();
       return gPreRenderedElement;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public Map.Entry<String, Object> createStringToObjectMapEntry() {
+      StringToObjectMapEntryImpl stringToObjectMapEntry = new StringToObjectMapEntryImpl();
+      return stringToObjectMapEntry;
    }
 
    /**

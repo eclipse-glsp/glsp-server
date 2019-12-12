@@ -15,32 +15,35 @@
  ********************************************************************************/
 package org.eclipse.glsp.graph.builder;
 
+import java.util.Map;
+
 import org.eclipse.glsp.graph.GCompartment;
-import org.eclipse.glsp.graph.GLayoutOptions;
 
 public abstract class AbstractGCompartmentBuilder<T extends GCompartment, E extends AbstractGCompartmentBuilder<T, E>>
    extends GShapeElementBuilder<T, E> {
    protected String layout;
-   protected GLayoutOptions layoutOptions;
+   protected Map<String, Object> layoutOptions;
 
-   public AbstractGCompartmentBuilder(String type) {
+   public AbstractGCompartmentBuilder(final String type) {
       super(type);
    }
 
-   public E layoutOptions(GLayoutOptions layoutOptions) {
+   public E layoutOptions(final Map<String, Object> layoutOptions) {
       this.layoutOptions = layoutOptions;
       return self();
    }
 
-   public E layout(String layout) {
+   public E layout(final String layout) {
       this.layout = layout;
       return self();
    }
 
    @Override
-   protected void setProperties(T comp) {
+   protected void setProperties(final T comp) {
       super.setProperties(comp);
-      comp.setLayoutOptions(layoutOptions);
+      if (layoutOptions != null) {
+         comp.getLayoutOptions().putAll(layoutOptions);
+      }
       comp.setLayout(layout);
    }
 }

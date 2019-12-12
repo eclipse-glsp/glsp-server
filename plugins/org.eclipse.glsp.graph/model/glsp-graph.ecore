@@ -16,8 +16,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="GShapeElement" abstract="true" interface="true"
       eSuperTypes="#//GModelElement #//GBoundsAware"/>
   <eClassifiers xsi:type="ecore:EClass" name="GGraph" eSuperTypes="#//GModelRoot #//GBoundsAware">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="layoutOptions" eType="#//GLayoutOptions"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="layoutOptions" upperBound="-1"
+        eType="#//StringToObjectMapEntry" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GModelRoot" eSuperTypes="#//GModelElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="canvasBounds" eType="#//GBounds"
@@ -67,20 +67,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="height" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble" defaultValueLiteral="0"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="GLayoutOptions">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="paddingLeft" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="paddingRight" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="paddingTop" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="paddingBottom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="paddingFactor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="resizeContainer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="vGap" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="hGap" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="vAlign" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="hAlign" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minWidth" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minHeight" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GEdgeLayoutable" abstract="true" interface="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="edgePlacement" eType="#//GEdgePlacement"
         containment="true"/>
@@ -98,8 +84,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GLayouting" abstract="true" interface="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="layout" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="layoutOptions" eType="#//GLayoutOptions"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="layoutOptions" upperBound="-1"
+        eType="#//StringToObjectMapEntry" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GBounds">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
@@ -131,5 +117,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GPreRenderedElement" eSuperTypes="#//GModelElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StringToObjectMapEntry" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
   </eClassifiers>
 </ecore:EPackage>

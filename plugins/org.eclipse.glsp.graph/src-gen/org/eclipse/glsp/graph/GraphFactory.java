@@ -135,15 +135,6 @@ public interface GraphFactory extends EFactory {
    GDimension createGDimension();
 
    /**
-    * Returns a new object of class '<em>GLayout Options</em>'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return a new object of class '<em>GLayout Options</em>'.
-    * @generated
-    */
-   GLayoutOptions createGLayoutOptions();
-
-   /**
     * Returns a new object of class '<em>GEdge Placement</em>'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->

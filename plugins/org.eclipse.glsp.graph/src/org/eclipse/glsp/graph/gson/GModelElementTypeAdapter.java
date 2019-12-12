@@ -26,6 +26,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.glsp.graph.GModelElement;
@@ -101,51 +102,53 @@ public class GModelElementTypeAdapter extends PropertyBasedTypeAdapter<GModelEle
    }
 
    @Override
-   @SuppressWarnings("unchecked")
    protected void assignProperty(final GModelElement instance, final String propertyName, final JsonReader in)
       throws IllegalAccessException {
       try {
          Field field = findField(instance.getClass(), propertyName);
          Object value = gson.fromJson(in, field.getGenericType());
          if (EList.class.isAssignableFrom(field.getType()) && value instanceof Collection) {
-            Collection<?> values = (Collection<?>) value;
-            EStructuralFeature feature = instance.eClass().getEStructuralFeature(propertyName);
-            Object list = instance.eGet(feature);
-            if (list instanceof List<?>) {
-               ((List<Object>) list).addAll(values);
-               return;
-            }
+            assignEListProperty(instance, propertyName, (Collection<?>) value);
+         } else {
+            field.set(instance, value);
          }
-         field.set(instance, value);
       } catch (NoSuchFieldException e) {
          // Ignore this property
       }
    }
 
    @Override
-   @SuppressWarnings("unchecked")
    protected void assignProperty(final GModelElement instance, final String propertyName, final JsonElement element)
       throws IllegalAccessException {
       try {
          Field field = findField(instance.getClass(), propertyName);
          Object value = gson.fromJson(element, field.getGenericType());
          if (EList.class.isAssignableFrom(field.getType()) && value instanceof Collection) {
-            Collection<?> values = (Collection<?>) value;
-            EStructuralFeature feature = instance.eClass().getEStructuralFeature(propertyName);
-            Object list = instance.eGet(feature);
-            if (list instanceof List<?>) {
-               ((List<Object>) list).addAll(values);
-               return;
-            }
+            assignEListProperty(instance, propertyName, (Collection<?>) value);
+         } else {
+            field.set(instance, value);
          }
-         field.set(instance, value);
       } catch (NoSuchFieldException e) {
          // Ignore this property
       }
    }
 
+   @SuppressWarnings("unchecked")
+   protected void assignEListProperty(final GModelElement instance, final String propertyName,
+      final Collection<?> values) {
+      // add data to the correctly initialized fields instead of overwriting the fields
+      EStructuralFeature feature = instance.eClass().getEStructuralFeature(propertyName);
+      Object list = instance.eGet(feature);
+      if (list instanceof EMap<?, ?> && values instanceof EMap<?, ?>) {
+         // use putAll to ensure the correct Map.Entry type is used
+         ((EMap<Object, Object>) list).putAll((EMap<?, ?>) values);
+      } else if (list instanceof List<?>) {
+         ((List<Object>) list).addAll(values);
+      }
+   }
+
    @Override
-   @SuppressWarnings("checkstyle:CyclomaticComplexity")
+   @SuppressWarnings({ "checkstyle:CyclomaticComplexity", "restriction" })
    protected void writeProperties(final JsonWriter out, final GModelElement instance, final Class<?> type,
       final Set<String> written)
       throws IOException, IllegalAccessException {

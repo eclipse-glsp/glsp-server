@@ -15,27 +15,30 @@
  ********************************************************************************/
 package org.eclipse.glsp.graph.builder;
 
+import java.util.Map;
+
 import org.eclipse.glsp.graph.GGraph;
-import org.eclipse.glsp.graph.GLayoutOptions;
 
 public abstract class AbstractGGraphBuilder<T extends GGraph, E extends AbstractGGraphBuilder<T, E>>
    extends GModelRootBuilder<T, E> {
 
-   protected GLayoutOptions gLayoutOptions;
+   protected Map<String, String> gLayoutOptions;
 
-   public AbstractGGraphBuilder(String type) {
+   public AbstractGGraphBuilder(final String type) {
       super(type);
    }
 
-   public E layoutOptions(GLayoutOptions gLayoutOptions) {
+   public E layoutOptions(final Map<String, String> gLayoutOptions) {
       this.gLayoutOptions = gLayoutOptions;
       return self();
    }
 
    @Override
-   protected void setProperties(T element) {
+   protected void setProperties(final T element) {
       super.setProperties(element);
-      element.setLayoutOptions(gLayoutOptions);
+      if (gLayoutOptions != null) {
+         element.getLayoutOptions().putAll(gLayoutOptions);
+      }
    }
 
 }

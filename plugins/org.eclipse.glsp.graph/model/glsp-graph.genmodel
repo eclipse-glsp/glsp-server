@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText=" Copyright (c) 2019 EclipseSource and others.&#xA;&#xA;This program and the accompanying materials are made available under the&#xA;terms of the Eclipse Public License v. 2.0 which is available at&#xA;https://www.eclipse.org/legal/epl-2.0.&#xA;&#xA;This Source Code may also be made available under the following Secondary&#xA;Licenses when the conditions for such availability set forth in the Eclipse&#xA;Public License v. 2.0 are satisfied: GNU General Public License, version 2&#xA; with the GNU Classpath Exception which is available at&#xA; https://www.gnu.org/software/classpath/license.html.&#xA;&#xA;SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0&#xA; ********************************************************************************"
-    modelDirectory="/org.eclipse.glsp.graph/src-gen" creationCommands="false"
-    creationIcons="false" editDirectory="" editorDirectory="" modelPluginID="" modelName="org.eclipse.glsp.graph"
+    modelDirectory="/org.eclipse.glsp.graph/src-gen" creationCommands="false" creationIcons="false"
+    editDirectory="" editorDirectory="" modelPluginID="" modelName="org.eclipse.glsp.graph"
     editPluginClass="org.eclipse.glsp.graph.provider.GlspgraphEditPlugin" updateClasspath="false"
     rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" codeFormatting="true"
     testsDirectory="" testSuiteClass="org.eclipse.glsp.graph.tests.GlspGraphAllTests"
@@ -65,20 +65,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GDimension/width"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GDimension/height"/>
     </genClasses>
-    <genClasses ecoreClass="glsp-graph.ecore#//GLayoutOptions">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GLayoutOptions/paddingLeft"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GLayoutOptions/paddingRight"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GLayoutOptions/paddingTop"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GLayoutOptions/paddingBottom"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GLayoutOptions/paddingFactor"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GLayoutOptions/resizeContainer"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GLayoutOptions/vGap"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GLayoutOptions/hGap"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GLayoutOptions/vAlign"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GLayoutOptions/hAlign"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GLayoutOptions/minWidth"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GLayoutOptions/minHeight"/>
-    </genClasses>
     <genClasses image="false" ecoreClass="glsp-graph.ecore#//GEdgeLayoutable">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GEdgeLayoutable/edgePlacement"/>
     </genClasses>
@@ -110,6 +96,10 @@
     </genClasses>
     <genClasses ecoreClass="glsp-graph.ecore#//GPreRenderedElement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GPreRenderedElement/code"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//StringToObjectMapEntry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//StringToObjectMapEntry/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//StringToObjectMapEntry/value"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -19,15 +19,20 @@ package org.eclipse.glsp.graph.impl;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.EMap;
+
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.util.EcoreEMap;
+import org.eclipse.emf.ecore.util.InternalEList;
+
 import org.eclipse.glsp.graph.GBoundsAware;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GGraph;
-import org.eclipse.glsp.graph.GLayoutOptions;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.GraphPackage;
 
@@ -68,14 +73,14 @@ public class GGraphImpl extends GModelRootImpl implements GGraph {
    protected GDimension size;
 
    /**
-    * The cached value of the '{@link #getLayoutOptions() <em>Layout Options</em>}' containment reference.
+    * The cached value of the '{@link #getLayoutOptions() <em>Layout Options</em>}' map.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @see #getLayoutOptions()
     * @generated
     * @ordered
     */
-   protected GLayoutOptions layoutOptions;
+   protected EMap<String, Object> layoutOptions;
 
    /**
     * <!-- begin-user-doc -->
@@ -201,48 +206,12 @@ public class GGraphImpl extends GModelRootImpl implements GGraph {
     * @generated
     */
    @Override
-   public GLayoutOptions getLayoutOptions() { return layoutOptions; }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public NotificationChain basicSetLayoutOptions(GLayoutOptions newLayoutOptions, NotificationChain msgs) {
-      GLayoutOptions oldLayoutOptions = layoutOptions;
-      layoutOptions = newLayoutOptions;
-      if (eNotificationRequired()) {
-         ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-            GraphPackage.GGRAPH__LAYOUT_OPTIONS, oldLayoutOptions, newLayoutOptions);
-         if (msgs == null)
-            msgs = notification;
-         else
-            msgs.add(notification);
+   public EMap<String, Object> getLayoutOptions() {
+      if (layoutOptions == null) {
+         layoutOptions = new EcoreEMap<String, Object>(GraphPackage.Literals.STRING_TO_OBJECT_MAP_ENTRY,
+            StringToObjectMapEntryImpl.class, this, GraphPackage.GGRAPH__LAYOUT_OPTIONS);
       }
-      return msgs;
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public void setLayoutOptions(GLayoutOptions newLayoutOptions) {
-      if (newLayoutOptions != layoutOptions) {
-         NotificationChain msgs = null;
-         if (layoutOptions != null)
-            msgs = ((InternalEObject) layoutOptions).eInverseRemove(this,
-               EOPPOSITE_FEATURE_BASE - GraphPackage.GGRAPH__LAYOUT_OPTIONS, null, msgs);
-         if (newLayoutOptions != null)
-            msgs = ((InternalEObject) newLayoutOptions).eInverseAdd(this,
-               EOPPOSITE_FEATURE_BASE - GraphPackage.GGRAPH__LAYOUT_OPTIONS, null, msgs);
-         msgs = basicSetLayoutOptions(newLayoutOptions, msgs);
-         if (msgs != null)
-            msgs.dispatch();
-      } else if (eNotificationRequired())
-         eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.GGRAPH__LAYOUT_OPTIONS, newLayoutOptions,
-            newLayoutOptions));
+      return layoutOptions;
    }
 
    /**
@@ -258,7 +227,7 @@ public class GGraphImpl extends GModelRootImpl implements GGraph {
          case GraphPackage.GGRAPH__SIZE:
             return basicSetSize(null, msgs);
          case GraphPackage.GGRAPH__LAYOUT_OPTIONS:
-            return basicSetLayoutOptions(null, msgs);
+            return ((InternalEList<?>) getLayoutOptions()).basicRemove(otherEnd, msgs);
       }
       return super.eInverseRemove(otherEnd, featureID, msgs);
    }
@@ -276,7 +245,10 @@ public class GGraphImpl extends GModelRootImpl implements GGraph {
          case GraphPackage.GGRAPH__SIZE:
             return getSize();
          case GraphPackage.GGRAPH__LAYOUT_OPTIONS:
-            return getLayoutOptions();
+            if (coreType)
+               return getLayoutOptions();
+            else
+               return getLayoutOptions().map();
       }
       return super.eGet(featureID, resolve, coreType);
    }
@@ -296,7 +268,7 @@ public class GGraphImpl extends GModelRootImpl implements GGraph {
             setSize((GDimension) newValue);
             return;
          case GraphPackage.GGRAPH__LAYOUT_OPTIONS:
-            setLayoutOptions((GLayoutOptions) newValue);
+            ((EStructuralFeature.Setting) getLayoutOptions()).set(newValue);
             return;
       }
       super.eSet(featureID, newValue);
@@ -317,7 +289,7 @@ public class GGraphImpl extends GModelRootImpl implements GGraph {
             setSize((GDimension) null);
             return;
          case GraphPackage.GGRAPH__LAYOUT_OPTIONS:
-            setLayoutOptions((GLayoutOptions) null);
+            getLayoutOptions().clear();
             return;
       }
       super.eUnset(featureID);
@@ -336,7 +308,7 @@ public class GGraphImpl extends GModelRootImpl implements GGraph {
          case GraphPackage.GGRAPH__SIZE:
             return size != null;
          case GraphPackage.GGRAPH__LAYOUT_OPTIONS:
-            return layoutOptions != null;
+            return layoutOptions != null && !layoutOptions.isEmpty();
       }
       return super.eIsSet(featureID);
    }

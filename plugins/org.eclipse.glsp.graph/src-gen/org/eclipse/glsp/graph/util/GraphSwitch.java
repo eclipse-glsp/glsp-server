@@ -16,6 +16,8 @@
  */
 package org.eclipse.glsp.graph.util;
 
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -238,13 +240,6 @@ public class GraphSwitch<T> extends Switch<T> {
                result = defaultCase(theEObject);
             return result;
          }
-         case GraphPackage.GLAYOUT_OPTIONS: {
-            GLayoutOptions gLayoutOptions = (GLayoutOptions) theEObject;
-            T result = caseGLayoutOptions(gLayoutOptions);
-            if (result == null)
-               result = defaultCase(theEObject);
-            return result;
-         }
          case GraphPackage.GEDGE_LAYOUTABLE: {
             GEdgeLayoutable gEdgeLayoutable = (GEdgeLayoutable) theEObject;
             T result = caseGEdgeLayoutable(gEdgeLayoutable);
@@ -303,6 +298,14 @@ public class GraphSwitch<T> extends Switch<T> {
             T result = caseGPreRenderedElement(gPreRenderedElement);
             if (result == null)
                result = caseGModelElement(gPreRenderedElement);
+            if (result == null)
+               result = defaultCase(theEObject);
+            return result;
+         }
+         case GraphPackage.STRING_TO_OBJECT_MAP_ENTRY: {
+            @SuppressWarnings("unchecked")
+            Map.Entry<String, Object> stringToObjectMapEntry = (Map.Entry<String, Object>) theEObject;
+            T result = caseStringToObjectMapEntry(stringToObjectMapEntry);
             if (result == null)
                result = defaultCase(theEObject);
             return result;
@@ -523,21 +526,6 @@ public class GraphSwitch<T> extends Switch<T> {
    }
 
    /**
-    * Returns the result of interpreting the object as an instance of '<em>GLayout Options</em>'.
-    * <!-- begin-user-doc -->
-    * This implementation returns null;
-    * returning a non-null result will terminate the switch.
-    * <!-- end-user-doc -->
-    * @param object the target of the switch.
-    * @return the result of interpreting the object as an instance of '<em>GLayout Options</em>'.
-    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-    * @generated
-    */
-   public T caseGLayoutOptions(GLayoutOptions object) {
-      return null;
-   }
-
-   /**
     * Returns the result of interpreting the object as an instance of '<em>GEdge Layoutable</em>'.
     * <!-- begin-user-doc -->
     * This implementation returns null;
@@ -654,6 +642,21 @@ public class GraphSwitch<T> extends Switch<T> {
     * @generated
     */
    public T caseGPreRenderedElement(GPreRenderedElement object) {
+      return null;
+   }
+
+   /**
+    * Returns the result of interpreting the object as an instance of '<em>String To Object Map Entry</em>'.
+    * <!-- begin-user-doc -->
+    * This implementation returns null;
+    * returning a non-null result will terminate the switch.
+    * <!-- end-user-doc -->
+    * @param object the target of the switch.
+    * @return the result of interpreting the object as an instance of '<em>String To Object Map Entry</em>'.
+    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+    * @generated
+    */
+   public T caseStringToObjectMapEntry(Map.Entry<String, Object> object) {
       return null;
    }
 

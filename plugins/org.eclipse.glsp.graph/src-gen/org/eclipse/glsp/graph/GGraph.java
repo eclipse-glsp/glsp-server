@@ -16,6 +16,8 @@
  */
 package org.eclipse.glsp.graph;
 
+import org.eclipse.emf.common.util.EMap;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>GGraph</b></em>'.
@@ -34,25 +36,16 @@ package org.eclipse.glsp.graph;
  */
 public interface GGraph extends GModelRoot, GBoundsAware {
    /**
-    * Returns the value of the '<em><b>Layout Options</b></em>' containment reference.
+    * Returns the value of the '<em><b>Layout Options</b></em>' map.
+    * The key is of type {@link java.lang.String},
+    * and the value is of type {@link java.lang.Object},
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @return the value of the '<em>Layout Options</em>' containment reference.
-    * @see #setLayoutOptions(GLayoutOptions)
+    * @return the value of the '<em>Layout Options</em>' map.
     * @see org.eclipse.glsp.graph.GraphPackage#getGGraph_LayoutOptions()
-    * @model containment="true"
+    * @model mapType="org.eclipse.glsp.graph.StringToObjectMapEntry&lt;org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EJavaObject&gt;"
     * @generated
     */
-   GLayoutOptions getLayoutOptions();
-
-   /**
-    * Sets the value of the '{@link org.eclipse.glsp.graph.GGraph#getLayoutOptions <em>Layout Options</em>}' containment reference.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @param value the new value of the '<em>Layout Options</em>' containment reference.
-    * @see #getLayoutOptions()
-    * @generated
-    */
-   void setLayoutOptions(GLayoutOptions value);
+   EMap<String, Object> getLayoutOptions();
 
 } // GGraph

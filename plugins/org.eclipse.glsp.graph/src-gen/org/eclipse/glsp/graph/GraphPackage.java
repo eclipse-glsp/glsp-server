@@ -454,7 +454,7 @@ public interface GraphPackage extends EPackage {
    int GGRAPH__SIZE = GMODEL_ROOT_FEATURE_COUNT + 1;
 
    /**
-    * The feature id for the '<em><b>Layout Options</b></em>' containment reference.
+    * The feature id for the '<em><b>Layout Options</b></em>' map.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
@@ -581,7 +581,7 @@ public interface GraphPackage extends EPackage {
    int GNODE__LAYOUT = GSHAPE_ELEMENT_FEATURE_COUNT + 1;
 
    /**
-    * The feature id for the '<em><b>Layout Options</b></em>' containment reference.
+    * The feature id for the '<em><b>Layout Options</b></em>' map.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
@@ -835,7 +835,7 @@ public interface GraphPackage extends EPackage {
    int GCOMPARTMENT__LAYOUT = GSHAPE_ELEMENT_FEATURE_COUNT + 0;
 
    /**
-    * The feature id for the '<em><b>Layout Options</b></em>' containment reference.
+    * The feature id for the '<em><b>Layout Options</b></em>' map.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
@@ -869,7 +869,7 @@ public interface GraphPackage extends EPackage {
     * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGAlignable()
     * @generated
     */
-   int GALIGNABLE = 19;
+   int GALIGNABLE = 18;
 
    /**
     * The feature id for the '<em><b>Alignment</b></em>' containment reference.
@@ -1482,142 +1482,6 @@ public interface GraphPackage extends EPackage {
    int GDIMENSION_OPERATION_COUNT = 0;
 
    /**
-    * The meta object id for the '{@link org.eclipse.glsp.graph.impl.GLayoutOptionsImpl <em>GLayout Options</em>}' class.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @see org.eclipse.glsp.graph.impl.GLayoutOptionsImpl
-    * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGLayoutOptions()
-    * @generated
-    */
-   int GLAYOUT_OPTIONS = 14;
-
-   /**
-    * The feature id for the '<em><b>Padding Left</b></em>' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int GLAYOUT_OPTIONS__PADDING_LEFT = 0;
-
-   /**
-    * The feature id for the '<em><b>Padding Right</b></em>' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int GLAYOUT_OPTIONS__PADDING_RIGHT = 1;
-
-   /**
-    * The feature id for the '<em><b>Padding Top</b></em>' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int GLAYOUT_OPTIONS__PADDING_TOP = 2;
-
-   /**
-    * The feature id for the '<em><b>Padding Bottom</b></em>' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int GLAYOUT_OPTIONS__PADDING_BOTTOM = 3;
-
-   /**
-    * The feature id for the '<em><b>Padding Factor</b></em>' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int GLAYOUT_OPTIONS__PADDING_FACTOR = 4;
-
-   /**
-    * The feature id for the '<em><b>Resize Container</b></em>' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int GLAYOUT_OPTIONS__RESIZE_CONTAINER = 5;
-
-   /**
-    * The feature id for the '<em><b>VGap</b></em>' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int GLAYOUT_OPTIONS__VGAP = 6;
-
-   /**
-    * The feature id for the '<em><b>HGap</b></em>' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int GLAYOUT_OPTIONS__HGAP = 7;
-
-   /**
-    * The feature id for the '<em><b>VAlign</b></em>' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int GLAYOUT_OPTIONS__VALIGN = 8;
-
-   /**
-    * The feature id for the '<em><b>HAlign</b></em>' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int GLAYOUT_OPTIONS__HALIGN = 9;
-
-   /**
-    * The feature id for the '<em><b>Min Width</b></em>' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int GLAYOUT_OPTIONS__MIN_WIDTH = 10;
-
-   /**
-    * The feature id for the '<em><b>Min Height</b></em>' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int GLAYOUT_OPTIONS__MIN_HEIGHT = 11;
-
-   /**
-    * The number of structural features of the '<em>GLayout Options</em>' class.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int GLAYOUT_OPTIONS_FEATURE_COUNT = 12;
-
-   /**
-    * The number of operations of the '<em>GLayout Options</em>' class.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int GLAYOUT_OPTIONS_OPERATION_COUNT = 0;
-
-   /**
     * The meta object id for the '{@link org.eclipse.glsp.graph.GEdgeLayoutable <em>GEdge Layoutable</em>}' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -1625,7 +1489,7 @@ public interface GraphPackage extends EPackage {
     * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGEdgeLayoutable()
     * @generated
     */
-   int GEDGE_LAYOUTABLE = 15;
+   int GEDGE_LAYOUTABLE = 14;
 
    /**
     * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
@@ -1662,7 +1526,7 @@ public interface GraphPackage extends EPackage {
     * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGEdgePlacement()
     * @generated
     */
-   int GEDGE_PLACEMENT = 16;
+   int GEDGE_PLACEMENT = 15;
 
    /**
     * The feature id for the '<em><b>Position</b></em>' attribute.
@@ -1726,7 +1590,7 @@ public interface GraphPackage extends EPackage {
     * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGLayouting()
     * @generated
     */
-   int GLAYOUTING = 17;
+   int GLAYOUTING = 16;
 
    /**
     * The feature id for the '<em><b>Layout</b></em>' attribute.
@@ -1738,7 +1602,7 @@ public interface GraphPackage extends EPackage {
    int GLAYOUTING__LAYOUT = 0;
 
    /**
-    * The feature id for the '<em><b>Layout Options</b></em>' containment reference.
+    * The feature id for the '<em><b>Layout Options</b></em>' map.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
@@ -1772,7 +1636,7 @@ public interface GraphPackage extends EPackage {
     * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGBounds()
     * @generated
     */
-   int GBOUNDS = 18;
+   int GBOUNDS = 17;
 
    /**
     * The feature id for the '<em><b>X</b></em>' attribute.
@@ -1836,7 +1700,7 @@ public interface GraphPackage extends EPackage {
     * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGIssue()
     * @generated
     */
-   int GISSUE = 20;
+   int GISSUE = 19;
 
    /**
     * The feature id for the '<em><b>Severity</b></em>' attribute.
@@ -1882,7 +1746,7 @@ public interface GraphPackage extends EPackage {
     * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGHtmlRoot()
     * @generated
     */
-   int GHTML_ROOT = 21;
+   int GHTML_ROOT = 20;
 
    /**
     * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1991,7 +1855,7 @@ public interface GraphPackage extends EPackage {
     * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGPreRenderedElement()
     * @generated
     */
-   int GPRE_RENDERED_ELEMENT = 22;
+   int GPRE_RENDERED_ELEMENT = 21;
 
    /**
     * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -2073,6 +1937,52 @@ public interface GraphPackage extends EPackage {
     * @ordered
     */
    int GPRE_RENDERED_ELEMENT_OPERATION_COUNT = GMODEL_ELEMENT_OPERATION_COUNT + 0;
+
+   /**
+    * The meta object id for the '{@link org.eclipse.glsp.graph.impl.StringToObjectMapEntryImpl <em>String To Object Map Entry</em>}' class.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see org.eclipse.glsp.graph.impl.StringToObjectMapEntryImpl
+    * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getStringToObjectMapEntry()
+    * @generated
+    */
+   int STRING_TO_OBJECT_MAP_ENTRY = 22;
+
+   /**
+    * The feature id for the '<em><b>Key</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int STRING_TO_OBJECT_MAP_ENTRY__KEY = 0;
+
+   /**
+    * The feature id for the '<em><b>Value</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int STRING_TO_OBJECT_MAP_ENTRY__VALUE = 1;
+
+   /**
+    * The number of structural features of the '<em>String To Object Map Entry</em>' class.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int STRING_TO_OBJECT_MAP_ENTRY_FEATURE_COUNT = 2;
+
+   /**
+    * The number of operations of the '<em>String To Object Map Entry</em>' class.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int STRING_TO_OBJECT_MAP_ENTRY_OPERATION_COUNT = 0;
 
    /**
     * The meta object id for the '{@link org.eclipse.glsp.graph.GSeverity <em>GSeverity</em>}' enum.
@@ -2181,10 +2091,10 @@ public interface GraphPackage extends EPackage {
    EClass getGGraph();
 
    /**
-    * Returns the meta object for the containment reference '{@link org.eclipse.glsp.graph.GGraph#getLayoutOptions <em>Layout Options</em>}'.
+    * Returns the meta object for the map '{@link org.eclipse.glsp.graph.GGraph#getLayoutOptions <em>Layout Options</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @return the meta object for the containment reference '<em>Layout Options</em>'.
+    * @return the meta object for the map '<em>Layout Options</em>'.
     * @see org.eclipse.glsp.graph.GGraph#getLayoutOptions()
     * @see #getGGraph()
     * @generated
@@ -2489,148 +2399,6 @@ public interface GraphPackage extends EPackage {
    EAttribute getGDimension_Height();
 
    /**
-    * Returns the meta object for class '{@link org.eclipse.glsp.graph.GLayoutOptions <em>GLayout Options</em>}'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the meta object for class '<em>GLayout Options</em>'.
-    * @see org.eclipse.glsp.graph.GLayoutOptions
-    * @generated
-    */
-   EClass getGLayoutOptions();
-
-   /**
-    * Returns the meta object for the attribute '{@link org.eclipse.glsp.graph.GLayoutOptions#getPaddingLeft <em>Padding Left</em>}'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the meta object for the attribute '<em>Padding Left</em>'.
-    * @see org.eclipse.glsp.graph.GLayoutOptions#getPaddingLeft()
-    * @see #getGLayoutOptions()
-    * @generated
-    */
-   EAttribute getGLayoutOptions_PaddingLeft();
-
-   /**
-    * Returns the meta object for the attribute '{@link org.eclipse.glsp.graph.GLayoutOptions#getPaddingRight <em>Padding Right</em>}'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the meta object for the attribute '<em>Padding Right</em>'.
-    * @see org.eclipse.glsp.graph.GLayoutOptions#getPaddingRight()
-    * @see #getGLayoutOptions()
-    * @generated
-    */
-   EAttribute getGLayoutOptions_PaddingRight();
-
-   /**
-    * Returns the meta object for the attribute '{@link org.eclipse.glsp.graph.GLayoutOptions#getPaddingTop <em>Padding Top</em>}'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the meta object for the attribute '<em>Padding Top</em>'.
-    * @see org.eclipse.glsp.graph.GLayoutOptions#getPaddingTop()
-    * @see #getGLayoutOptions()
-    * @generated
-    */
-   EAttribute getGLayoutOptions_PaddingTop();
-
-   /**
-    * Returns the meta object for the attribute '{@link org.eclipse.glsp.graph.GLayoutOptions#getPaddingBottom <em>Padding Bottom</em>}'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the meta object for the attribute '<em>Padding Bottom</em>'.
-    * @see org.eclipse.glsp.graph.GLayoutOptions#getPaddingBottom()
-    * @see #getGLayoutOptions()
-    * @generated
-    */
-   EAttribute getGLayoutOptions_PaddingBottom();
-
-   /**
-    * Returns the meta object for the attribute '{@link org.eclipse.glsp.graph.GLayoutOptions#getPaddingFactor <em>Padding Factor</em>}'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the meta object for the attribute '<em>Padding Factor</em>'.
-    * @see org.eclipse.glsp.graph.GLayoutOptions#getPaddingFactor()
-    * @see #getGLayoutOptions()
-    * @generated
-    */
-   EAttribute getGLayoutOptions_PaddingFactor();
-
-   /**
-    * Returns the meta object for the attribute '{@link org.eclipse.glsp.graph.GLayoutOptions#isResizeContainer <em>Resize Container</em>}'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the meta object for the attribute '<em>Resize Container</em>'.
-    * @see org.eclipse.glsp.graph.GLayoutOptions#isResizeContainer()
-    * @see #getGLayoutOptions()
-    * @generated
-    */
-   EAttribute getGLayoutOptions_ResizeContainer();
-
-   /**
-    * Returns the meta object for the attribute '{@link org.eclipse.glsp.graph.GLayoutOptions#getVGap <em>VGap</em>}'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the meta object for the attribute '<em>VGap</em>'.
-    * @see org.eclipse.glsp.graph.GLayoutOptions#getVGap()
-    * @see #getGLayoutOptions()
-    * @generated
-    */
-   EAttribute getGLayoutOptions_VGap();
-
-   /**
-    * Returns the meta object for the attribute '{@link org.eclipse.glsp.graph.GLayoutOptions#getHGap <em>HGap</em>}'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the meta object for the attribute '<em>HGap</em>'.
-    * @see org.eclipse.glsp.graph.GLayoutOptions#getHGap()
-    * @see #getGLayoutOptions()
-    * @generated
-    */
-   EAttribute getGLayoutOptions_HGap();
-
-   /**
-    * Returns the meta object for the attribute '{@link org.eclipse.glsp.graph.GLayoutOptions#getVAlign <em>VAlign</em>}'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the meta object for the attribute '<em>VAlign</em>'.
-    * @see org.eclipse.glsp.graph.GLayoutOptions#getVAlign()
-    * @see #getGLayoutOptions()
-    * @generated
-    */
-   EAttribute getGLayoutOptions_VAlign();
-
-   /**
-    * Returns the meta object for the attribute '{@link org.eclipse.glsp.graph.GLayoutOptions#getHAlign <em>HAlign</em>}'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the meta object for the attribute '<em>HAlign</em>'.
-    * @see org.eclipse.glsp.graph.GLayoutOptions#getHAlign()
-    * @see #getGLayoutOptions()
-    * @generated
-    */
-   EAttribute getGLayoutOptions_HAlign();
-
-   /**
-    * Returns the meta object for the attribute '{@link org.eclipse.glsp.graph.GLayoutOptions#getMinWidth <em>Min Width</em>}'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the meta object for the attribute '<em>Min Width</em>'.
-    * @see org.eclipse.glsp.graph.GLayoutOptions#getMinWidth()
-    * @see #getGLayoutOptions()
-    * @generated
-    */
-   EAttribute getGLayoutOptions_MinWidth();
-
-   /**
-    * Returns the meta object for the attribute '{@link org.eclipse.glsp.graph.GLayoutOptions#getMinHeight <em>Min Height</em>}'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the meta object for the attribute '<em>Min Height</em>'.
-    * @see org.eclipse.glsp.graph.GLayoutOptions#getMinHeight()
-    * @see #getGLayoutOptions()
-    * @generated
-    */
-   EAttribute getGLayoutOptions_MinHeight();
-
-   /**
     * Returns the meta object for class '{@link org.eclipse.glsp.graph.GEdgeLayoutable <em>GEdge Layoutable</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -2727,10 +2495,10 @@ public interface GraphPackage extends EPackage {
    EAttribute getGLayouting_Layout();
 
    /**
-    * Returns the meta object for the containment reference '{@link org.eclipse.glsp.graph.GLayouting#getLayoutOptions <em>Layout Options</em>}'.
+    * Returns the meta object for the map '{@link org.eclipse.glsp.graph.GLayouting#getLayoutOptions <em>Layout Options</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @return the meta object for the containment reference '<em>Layout Options</em>'.
+    * @return the meta object for the map '<em>Layout Options</em>'.
     * @see org.eclipse.glsp.graph.GLayouting#getLayoutOptions()
     * @see #getGLayouting()
     * @generated
@@ -2887,6 +2655,40 @@ public interface GraphPackage extends EPackage {
    EAttribute getGPreRenderedElement_Code();
 
    /**
+    * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Object Map Entry</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for class '<em>String To Object Map Entry</em>'.
+    * @see java.util.Map.Entry
+    * @model keyDataType="org.eclipse.emf.ecore.EString" keyRequired="true"
+    *        valueDataType="org.eclipse.emf.ecore.EJavaObject"
+    * @generated
+    */
+   EClass getStringToObjectMapEntry();
+
+   /**
+    * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for the attribute '<em>Key</em>'.
+    * @see java.util.Map.Entry
+    * @see #getStringToObjectMapEntry()
+    * @generated
+    */
+   EAttribute getStringToObjectMapEntry_Key();
+
+   /**
+    * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Value</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for the attribute '<em>Value</em>'.
+    * @see java.util.Map.Entry
+    * @see #getStringToObjectMapEntry()
+    * @generated
+    */
+   EAttribute getStringToObjectMapEntry_Value();
+
+   /**
     * Returns the meta object for enum '{@link org.eclipse.glsp.graph.GSeverity <em>GSeverity</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -2998,7 +2800,7 @@ public interface GraphPackage extends EPackage {
       EClass GGRAPH = eINSTANCE.getGGraph();
 
       /**
-       * The meta object literal for the '<em><b>Layout Options</b></em>' containment reference feature.
+       * The meta object literal for the '<em><b>Layout Options</b></em>' map feature.
        * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
        * @generated
@@ -3252,112 +3054,6 @@ public interface GraphPackage extends EPackage {
       EAttribute GDIMENSION__HEIGHT = eINSTANCE.getGDimension_Height();
 
       /**
-       * The meta object literal for the '{@link org.eclipse.glsp.graph.impl.GLayoutOptionsImpl <em>GLayout Options</em>}' class.
-       * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-       * @see org.eclipse.glsp.graph.impl.GLayoutOptionsImpl
-       * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGLayoutOptions()
-       * @generated
-       */
-      EClass GLAYOUT_OPTIONS = eINSTANCE.getGLayoutOptions();
-
-      /**
-       * The meta object literal for the '<em><b>Padding Left</b></em>' attribute feature.
-       * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-       * @generated
-       */
-      EAttribute GLAYOUT_OPTIONS__PADDING_LEFT = eINSTANCE.getGLayoutOptions_PaddingLeft();
-
-      /**
-       * The meta object literal for the '<em><b>Padding Right</b></em>' attribute feature.
-       * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-       * @generated
-       */
-      EAttribute GLAYOUT_OPTIONS__PADDING_RIGHT = eINSTANCE.getGLayoutOptions_PaddingRight();
-
-      /**
-       * The meta object literal for the '<em><b>Padding Top</b></em>' attribute feature.
-       * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-       * @generated
-       */
-      EAttribute GLAYOUT_OPTIONS__PADDING_TOP = eINSTANCE.getGLayoutOptions_PaddingTop();
-
-      /**
-       * The meta object literal for the '<em><b>Padding Bottom</b></em>' attribute feature.
-       * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-       * @generated
-       */
-      EAttribute GLAYOUT_OPTIONS__PADDING_BOTTOM = eINSTANCE.getGLayoutOptions_PaddingBottom();
-
-      /**
-       * The meta object literal for the '<em><b>Padding Factor</b></em>' attribute feature.
-       * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-       * @generated
-       */
-      EAttribute GLAYOUT_OPTIONS__PADDING_FACTOR = eINSTANCE.getGLayoutOptions_PaddingFactor();
-
-      /**
-       * The meta object literal for the '<em><b>Resize Container</b></em>' attribute feature.
-       * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-       * @generated
-       */
-      EAttribute GLAYOUT_OPTIONS__RESIZE_CONTAINER = eINSTANCE.getGLayoutOptions_ResizeContainer();
-
-      /**
-       * The meta object literal for the '<em><b>VGap</b></em>' attribute feature.
-       * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-       * @generated
-       */
-      EAttribute GLAYOUT_OPTIONS__VGAP = eINSTANCE.getGLayoutOptions_VGap();
-
-      /**
-       * The meta object literal for the '<em><b>HGap</b></em>' attribute feature.
-       * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-       * @generated
-       */
-      EAttribute GLAYOUT_OPTIONS__HGAP = eINSTANCE.getGLayoutOptions_HGap();
-
-      /**
-       * The meta object literal for the '<em><b>VAlign</b></em>' attribute feature.
-       * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-       * @generated
-       */
-      EAttribute GLAYOUT_OPTIONS__VALIGN = eINSTANCE.getGLayoutOptions_VAlign();
-
-      /**
-       * The meta object literal for the '<em><b>HAlign</b></em>' attribute feature.
-       * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-       * @generated
-       */
-      EAttribute GLAYOUT_OPTIONS__HALIGN = eINSTANCE.getGLayoutOptions_HAlign();
-
-      /**
-       * The meta object literal for the '<em><b>Min Width</b></em>' attribute feature.
-       * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-       * @generated
-       */
-      EAttribute GLAYOUT_OPTIONS__MIN_WIDTH = eINSTANCE.getGLayoutOptions_MinWidth();
-
-      /**
-       * The meta object literal for the '<em><b>Min Height</b></em>' attribute feature.
-       * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-       * @generated
-       */
-      EAttribute GLAYOUT_OPTIONS__MIN_HEIGHT = eINSTANCE.getGLayoutOptions_MinHeight();
-
-      /**
        * The meta object literal for the '{@link org.eclipse.glsp.graph.GEdgeLayoutable <em>GEdge Layoutable</em>}' class.
        * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
@@ -3436,7 +3132,7 @@ public interface GraphPackage extends EPackage {
       EAttribute GLAYOUTING__LAYOUT = eINSTANCE.getGLayouting_Layout();
 
       /**
-       * The meta object literal for the '<em><b>Layout Options</b></em>' containment reference feature.
+       * The meta object literal for the '<em><b>Layout Options</b></em>' map feature.
        * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
        * @generated
@@ -3564,6 +3260,32 @@ public interface GraphPackage extends EPackage {
        * @generated
        */
       EAttribute GPRE_RENDERED_ELEMENT__CODE = eINSTANCE.getGPreRenderedElement_Code();
+
+      /**
+       * The meta object literal for the '{@link org.eclipse.glsp.graph.impl.StringToObjectMapEntryImpl <em>String To Object Map Entry</em>}' class.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @see org.eclipse.glsp.graph.impl.StringToObjectMapEntryImpl
+       * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getStringToObjectMapEntry()
+       * @generated
+       */
+      EClass STRING_TO_OBJECT_MAP_ENTRY = eINSTANCE.getStringToObjectMapEntry();
+
+      /**
+       * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      EAttribute STRING_TO_OBJECT_MAP_ENTRY__KEY = eINSTANCE.getStringToObjectMapEntry_Key();
+
+      /**
+       * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      EAttribute STRING_TO_OBJECT_MAP_ENTRY__VALUE = eINSTANCE.getStringToObjectMapEntry_Value();
 
       /**
        * The meta object literal for the '{@link org.eclipse.glsp.graph.GSeverity <em>GSeverity</em>}' enum.

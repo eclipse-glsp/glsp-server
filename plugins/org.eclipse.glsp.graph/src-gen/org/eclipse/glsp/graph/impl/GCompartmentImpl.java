@@ -22,8 +22,10 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -31,13 +33,13 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.glsp.graph.GBoundsAware;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GDimension;
-import org.eclipse.glsp.graph.GLayoutOptions;
 import org.eclipse.glsp.graph.GLayouting;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
@@ -187,14 +189,14 @@ public class GCompartmentImpl extends MinimalEObjectImpl.Container implements GC
    protected String layout = LAYOUT_EDEFAULT;
 
    /**
-    * The cached value of the '{@link #getLayoutOptions() <em>Layout Options</em>}' containment reference.
+    * The cached value of the '{@link #getLayoutOptions() <em>Layout Options</em>}' map.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @see #getLayoutOptions()
     * @generated
     * @ordered
     */
-   protected GLayoutOptions layoutOptions;
+   protected EMap<String, Object> layoutOptions;
 
    /**
     * <!-- begin-user-doc -->
@@ -478,48 +480,12 @@ public class GCompartmentImpl extends MinimalEObjectImpl.Container implements GC
     * @generated
     */
    @Override
-   public GLayoutOptions getLayoutOptions() { return layoutOptions; }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public NotificationChain basicSetLayoutOptions(GLayoutOptions newLayoutOptions, NotificationChain msgs) {
-      GLayoutOptions oldLayoutOptions = layoutOptions;
-      layoutOptions = newLayoutOptions;
-      if (eNotificationRequired()) {
-         ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-            GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS, oldLayoutOptions, newLayoutOptions);
-         if (msgs == null)
-            msgs = notification;
-         else
-            msgs.add(notification);
+   public EMap<String, Object> getLayoutOptions() {
+      if (layoutOptions == null) {
+         layoutOptions = new EcoreEMap<String, Object>(GraphPackage.Literals.STRING_TO_OBJECT_MAP_ENTRY,
+            StringToObjectMapEntryImpl.class, this, GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS);
       }
-      return msgs;
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public void setLayoutOptions(GLayoutOptions newLayoutOptions) {
-      if (newLayoutOptions != layoutOptions) {
-         NotificationChain msgs = null;
-         if (layoutOptions != null)
-            msgs = ((InternalEObject) layoutOptions).eInverseRemove(this,
-               EOPPOSITE_FEATURE_BASE - GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS, null, msgs);
-         if (newLayoutOptions != null)
-            msgs = ((InternalEObject) newLayoutOptions).eInverseAdd(this,
-               EOPPOSITE_FEATURE_BASE - GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS, null, msgs);
-         msgs = basicSetLayoutOptions(newLayoutOptions, msgs);
-         if (msgs != null)
-            msgs.dispatch();
-      } else if (eNotificationRequired())
-         eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS,
-            newLayoutOptions, newLayoutOptions));
+      return layoutOptions;
    }
 
    /**
@@ -558,7 +524,7 @@ public class GCompartmentImpl extends MinimalEObjectImpl.Container implements GC
          case GraphPackage.GCOMPARTMENT__SIZE:
             return basicSetSize(null, msgs);
          case GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS:
-            return basicSetLayoutOptions(null, msgs);
+            return ((InternalEList<?>) getLayoutOptions()).basicRemove(otherEnd, msgs);
       }
       return super.eInverseRemove(otherEnd, featureID, msgs);
    }
@@ -605,7 +571,10 @@ public class GCompartmentImpl extends MinimalEObjectImpl.Container implements GC
          case GraphPackage.GCOMPARTMENT__LAYOUT:
             return getLayout();
          case GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS:
-            return getLayoutOptions();
+            if (coreType)
+               return getLayoutOptions();
+            else
+               return getLayoutOptions().map();
       }
       return super.eGet(featureID, resolve, coreType);
    }
@@ -649,7 +618,7 @@ public class GCompartmentImpl extends MinimalEObjectImpl.Container implements GC
             setLayout((String) newValue);
             return;
          case GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS:
-            setLayoutOptions((GLayoutOptions) newValue);
+            ((EStructuralFeature.Setting) getLayoutOptions()).set(newValue);
             return;
       }
       super.eSet(featureID, newValue);
@@ -691,7 +660,7 @@ public class GCompartmentImpl extends MinimalEObjectImpl.Container implements GC
             setLayout(LAYOUT_EDEFAULT);
             return;
          case GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS:
-            setLayoutOptions((GLayoutOptions) null);
+            getLayoutOptions().clear();
             return;
       }
       super.eUnset(featureID);
@@ -724,7 +693,7 @@ public class GCompartmentImpl extends MinimalEObjectImpl.Container implements GC
          case GraphPackage.GCOMPARTMENT__LAYOUT:
             return LAYOUT_EDEFAULT == null ? layout != null : !LAYOUT_EDEFAULT.equals(layout);
          case GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS:
-            return layoutOptions != null;
+            return layoutOptions != null && !layoutOptions.isEmpty();
       }
       return super.eIsSet(featureID);
    }

@@ -12,9 +12,9 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.source>11</java.source>
-		<java.target>11</java.target>
-		<project.build.java.target>11</project.build.java.target>
+		<java.source>10</java.source>
+		<java.target>10</java.target>
+		<project.build.java.target>10</project.build.java.target>
 		<target.version>0.7.0-SNAPSHOT</target.version>
 	</properties>
 	<build>

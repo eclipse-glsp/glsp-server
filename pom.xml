@@ -12,9 +12,9 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.source>10</java.source>
-		<java.target>10</java.target>
-		<project.build.java.target>10</project.build.java.target>
+		<java.source>11</java.source>
+		<java.target>11</java.target>
+		<project.build.java.target>1.8</project.build.java.target>
 		<target.version>0.7.0-SNAPSHOT</target.version>
 	</properties>
 	<build>
@@ -31,20 +31,6 @@
 		</plugins>
 	</build>
 
-	<repositories>
-		<repository>
-			<id>sonatype</id>
-			<name>Sonatype</name>
-			<url>https://oss.sonatype.org/content/groups/public</url>
-		</repository>
-	</repositories>
-
-	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
 
 	<dependencies>
 		<dependency>
@@ -79,8 +65,8 @@
 			</activation>
 
 			<properties>
-				<tycho-version>1.5.1</tycho-version>
-				<tychoExtrasVersion>1.5.1</tychoExtrasVersion>
+				<tycho-version>1.3.0</tycho-version>
+				<tychoExtrasVersion>1.3.0</tychoExtrasVersion>
 				<maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
 
 			</properties>
@@ -218,6 +204,14 @@
 				<activeByDefault>false</activeByDefault>
 			</activation>
 
+			<repositories>
+				<repository>
+					<id>sonatype</id>
+					<name>Sonatype</name>
+					<url>https://oss.sonatype.org/content/groups/public</url>
+				</repository>
+			</repositories>
+
 			<modules>
 				<module>plugins/org.eclipse.glsp.graph</module>
 				<module>plugins/org.eclipse.glsp.api</module>
@@ -278,6 +272,13 @@
 
 		<profile>
 			<id>m2-release</id>
+
+			<distributionManagement>
+				<snapshotRepository>
+					<id>ossrh</id>
+					<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+				</snapshotRepository>
+			</distributionManagement>
 			<build>
 				<plugins>
 					<!-- To release to Sonatype/Maven central -->

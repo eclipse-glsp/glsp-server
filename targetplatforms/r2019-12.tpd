@@ -1,19 +1,15 @@
 target "2019-12 - Release" with source requirements
 
 location "http://download.eclipse.org/releases/2019-12" {
-	org.eclipse.platform.feature.group
-	org.eclipse.sdk.feature.group
-	org.eclipse.rcp.feature.group
-	org.eclipse.jdt.feature.group
 	org.eclipse.equinox.p2.discovery.feature.feature.group
 	org.eclipse.equinox.executable.feature.group
-	org.eclipse.xtext.sdk.feature.group
-	org.eclipse.xtend.lib
 	org.eclipse.emf.sdk.feature.group
-
 }
+
 location "https://download.eclipse.org/tools/orbit/downloads/drops/R20191126223242/repository/" {
 	org.apache.log4j
+	org.apache.commons.io
+	javax.servlet
 	com.google.gson [2.8.2,3.0.0)
 	com.google.inject [3.0.0,3.0.1)
 	com.google.inject.multibindings [3.0.0,3.0.1)
@@ -23,7 +19,6 @@ location "https://download.eclipse.org/tools/orbit/downloads/drops/R201911262232
 location "https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.14.v20181113/" {
 	org.eclipse.jetty.bundles.f.feature.group
 }
-
 
 location "https://build.eclipse.org/modeling/elk/updates/0.6.0/" {
 	org.eclipse.elk.core

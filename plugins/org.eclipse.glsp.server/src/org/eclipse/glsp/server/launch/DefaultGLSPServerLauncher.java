@@ -76,7 +76,7 @@ public class DefaultGLSPServerLauncher extends GLSPServerLauncher {
       serverSocket = AsynchronousServerSocketChannel.open().bind(new InetSocketAddress(hostname, port));
       threadPool = Executors.newCachedThreadPool();
 
-      CompletionHandler<AsynchronousSocketChannel, Void> handler = new CompletionHandler<>() {
+      CompletionHandler<AsynchronousSocketChannel, Void> handler = new CompletionHandler<AsynchronousSocketChannel, Void>() {
          @Override
          public void completed(final AsynchronousSocketChannel result, final Void attachment) {
             serverSocket.accept(null, this); // Prepare for the next connection

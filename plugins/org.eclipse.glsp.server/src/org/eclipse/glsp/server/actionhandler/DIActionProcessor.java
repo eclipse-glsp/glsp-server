@@ -15,6 +15,8 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actionhandler;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.glsp.api.action.Action;
@@ -36,12 +38,12 @@ public class DIActionProcessor implements ActionProcessor {
    protected ActionHandlerProvider handlerProvider;
 
    @Override
-   public Optional<Action> dispatch(final String clientId, final Action action) {
+   public List<Action> dispatch(final String clientId, final Action action) {
       Optional<ActionHandler> handler = handlerProvider.getHandler(action);
       if (handler.isPresent()) {
          return handler.get().execute(clientId, action);
       }
-      return Optional.empty();
+      return Collections.emptyList();
    }
 
    @Override

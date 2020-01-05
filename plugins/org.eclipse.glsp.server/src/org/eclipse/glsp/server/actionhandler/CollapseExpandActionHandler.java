@@ -15,7 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actionhandler;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.glsp.api.action.Action;
@@ -36,18 +36,18 @@ public class CollapseExpandActionHandler extends AbstractActionHandler {
    }
 
    @Override
-   public Optional<Action> execute(final Action action, final GraphicalModelState modelState) {
+   public List<Action> execute(final Action action, final GraphicalModelState modelState) {
       switch (action.getKind()) {
          case Action.Kind.COLLAPSE_EXPAND:
             return handleCollapseExpandAction((CollapseExpandAction) action, modelState);
          case Action.Kind.COLLAPSE_EXPAND_ALL:
             return handleCollapseExpandAllAction((CollapseExpandAllAction) action, modelState);
          default:
-            return Optional.empty();
+            return none();
       }
    }
 
-   private Optional<Action> handleCollapseExpandAllAction(final CollapseExpandAllAction action,
+   private List<Action> handleCollapseExpandAllAction(final CollapseExpandAllAction action,
       final GraphicalModelState modelState) {
       Set<String> expandedElements = modelState.getExpandedElements();
       expandedElements.clear();
@@ -57,10 +57,10 @@ public class CollapseExpandActionHandler extends AbstractActionHandler {
       if (expansionListener != null) {
          expansionListener.expansionChanged(action);
       }
-      return Optional.empty();
+      return none();
    }
 
-   private Optional<Action> handleCollapseExpandAction(final CollapseExpandAction action,
+   private List<Action> handleCollapseExpandAction(final CollapseExpandAction action,
       final GraphicalModelState modelState) {
       Set<String> expandedElements = modelState.getExpandedElements();
       if (action.getCollapseIds() != null) {
@@ -74,8 +74,7 @@ public class CollapseExpandActionHandler extends AbstractActionHandler {
          expansionListener.expansionChanged(action);
       }
 
-      return Optional.empty();
-
+      return none();
    }
 
 }

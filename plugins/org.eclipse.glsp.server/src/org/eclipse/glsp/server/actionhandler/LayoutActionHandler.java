@@ -15,7 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actionhandler;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.action.kind.LayoutAction;
@@ -41,13 +41,13 @@ public class LayoutActionHandler extends AbstractActionHandler {
    }
 
    @Override
-   protected Optional<Action> execute(final Action action, final GraphicalModelState modelState) {
+   protected List<Action> execute(final Action action, final GraphicalModelState modelState) {
       if (serverConfiguration.getLayoutKind() == ServerLayoutKind.MANUAL) {
          if (layoutEngine != null) {
             layoutEngine.layout(modelState);
          }
-         return Optional.of(new RequestBoundsAction(modelState.getRoot()));
+         return listOf(new RequestBoundsAction(modelState.getRoot()));
       }
-      return Optional.empty();
+      return none();
    }
 }

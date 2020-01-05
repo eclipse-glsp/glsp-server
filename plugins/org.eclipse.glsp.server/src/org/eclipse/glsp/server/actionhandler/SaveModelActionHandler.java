@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.log4j.Logger;
@@ -46,14 +47,11 @@ public class SaveModelActionHandler extends AbstractActionHandler {
    }
 
    @Override
-   public Optional<Action> execute(final Action action, final GraphicalModelState modelState) {
+   public List<Action> execute(final Action action, final GraphicalModelState modelState) {
       if (action instanceof SaveModelAction) {
-         SaveModelAction saveAction = (SaveModelAction) action;
-         if (saveAction != null) {
-            saveModelState(modelState);
-         }
+         saveModelState(modelState);
       }
-      return Optional.empty();
+      return none();
    }
 
    private void saveModelState(final GraphicalModelState modelState) {

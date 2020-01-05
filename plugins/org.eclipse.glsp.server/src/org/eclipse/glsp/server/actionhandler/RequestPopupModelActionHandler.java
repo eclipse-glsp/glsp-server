@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actionhandler;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.glsp.api.action.Action;
@@ -36,16 +37,16 @@ public class RequestPopupModelActionHandler extends AbstractActionHandler {
    }
 
    @Override
-   public Optional<Action> execute(final Action action, final GraphicalModelState modelState) {
+   public List<Action> execute(final Action action, final GraphicalModelState modelState) {
       if (action instanceof RequestPopupModelAction && popupModelFactory != null) {
          RequestPopupModelAction requestAction = (RequestPopupModelAction) action;
          Optional<GModelElement> element = modelState.getIndex().get(requestAction.getElementId());
          if (popupModelFactory != null && element.isPresent()) {
-            return popupModelFactory.createPopupModel(element.get(), requestAction, modelState)
-               .map(popupModel -> new SetPopupModelAction(popupModel, requestAction.getBounds()));
+            return listOf(popupModelFactory.createPopupModel(element.get(), requestAction, modelState)
+               .map(popupModel -> new SetPopupModelAction(popupModel, requestAction.getBounds())));
          }
       }
-      return Optional.empty();
+      return none();
    }
 
 }

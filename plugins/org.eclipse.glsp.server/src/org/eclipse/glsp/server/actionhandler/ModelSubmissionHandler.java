@@ -15,7 +15,9 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actionhandler;
 
-import java.util.Optional;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.action.kind.SetModelAction;
@@ -38,7 +40,7 @@ public class ModelSubmissionHandler {
    private final Object modelLock = new Object();
    private final int revision = 0;
 
-   public Optional<Action> doSubmitModel(final boolean update, final GraphicalModelState modelState) {
+   public List<Action> doSubmitModel(final boolean update, final GraphicalModelState modelState) {
       GModelRoot newRoot = modelState.getRoot();
       if (serverConfiguration.getLayoutKind() == ServerLayoutKind.AUTOMATIC) {
          layoutEngine.layout(modelState);
@@ -46,13 +48,12 @@ public class ModelSubmissionHandler {
       synchronized (modelLock) {
          if (newRoot.getRevision() == revision) {
             if (update) {
-               return Optional.of(new UpdateModelAction(newRoot, true));
-            } else {
-               return Optional.of(new SetModelAction(newRoot));
+               return Arrays.asList(new UpdateModelAction(newRoot, true));
             }
+            return Arrays.asList(new SetModelAction(newRoot));
          }
       }
-      return Optional.empty();
+      return Collections.emptyList();
    }
 
    public synchronized Object getModelLock() { return modelLock; }

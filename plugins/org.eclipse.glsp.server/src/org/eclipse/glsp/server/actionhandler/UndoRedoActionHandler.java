@@ -15,7 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actionhandler;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.eclipse.glsp.api.action.Action;
@@ -33,16 +33,16 @@ public class UndoRedoActionHandler extends AbstractActionHandler {
    }
 
    @Override
-   public Optional<Action> execute(final Action action, final GraphicalModelState modelState) {
+   public List<Action> execute(final Action action, final GraphicalModelState modelState) {
       if (action instanceof UndoAction && modelState.canUndo()) {
          modelState.undo();
-         return Optional.of(new RequestBoundsAction(modelState.getRoot()));
+         return listOf(new RequestBoundsAction(modelState.getRoot()));
       } else if (action instanceof RedoAction && modelState.canRedo()) {
          modelState.redo();
-         return Optional.of(new RequestBoundsAction(modelState.getRoot()));
+         return listOf(new RequestBoundsAction(modelState.getRoot()));
       }
 
       LOG.warn("Cannot undo or redo");
-      return Optional.empty();
+      return none();
    }
 }

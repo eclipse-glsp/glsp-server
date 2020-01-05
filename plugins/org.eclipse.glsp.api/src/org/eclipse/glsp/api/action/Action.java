@@ -112,9 +112,13 @@ public abstract class Action {
       public static final String SET_DIRTY_STATE = "setDirtyState";
       public static final String REQUEST_MARKERS = "requestMarkers";
       public static final String SET_MARKERS = "setMarkers";
+      public static final String REQUEST_CLIPBOARD_DATA = "requestClipboardData";
+      public static final String SET_CLIPBOARD_DATA = "setClipboardData";
       public static final String LAYOUT = "layout";
       public static final String VALIDATE_LABEL_EDIT_ACTION = "validateLabelEdit";
       public static final String SET_LABEL_EDIT_VALIDATION_RESULT_ACTION = "setLabelEditValidationResult";
+      public static final String PASTE_ACTION = "paste";
+      public static final String CUT_ACTION = "cut";
    }
 
 }

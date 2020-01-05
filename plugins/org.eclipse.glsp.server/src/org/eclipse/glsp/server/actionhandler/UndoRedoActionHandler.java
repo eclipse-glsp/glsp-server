@@ -21,6 +21,7 @@ import org.apache.log4j.Logger;
 import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.action.kind.RedoAction;
 import org.eclipse.glsp.api.action.kind.RequestBoundsAction;
+import org.eclipse.glsp.api.action.kind.SetDirtyStateAction;
 import org.eclipse.glsp.api.action.kind.UndoAction;
 import org.eclipse.glsp.api.model.GraphicalModelState;
 
@@ -36,12 +37,11 @@ public class UndoRedoActionHandler extends AbstractActionHandler {
    public List<Action> execute(final Action action, final GraphicalModelState modelState) {
       if (action instanceof UndoAction && modelState.canUndo()) {
          modelState.undo();
-         return listOf(new RequestBoundsAction(modelState.getRoot()));
+         return listOf(new RequestBoundsAction(modelState.getRoot()), new SetDirtyStateAction(modelState.isDirty()));
       } else if (action instanceof RedoAction && modelState.canRedo()) {
          modelState.redo();
-         return listOf(new RequestBoundsAction(modelState.getRoot()));
+         return listOf(new RequestBoundsAction(modelState.getRoot()), new SetDirtyStateAction(modelState.isDirty()));
       }
-
       LOG.warn("Cannot undo or redo");
       return none();
    }

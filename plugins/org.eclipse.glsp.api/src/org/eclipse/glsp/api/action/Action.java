@@ -109,6 +109,7 @@ public abstract class Action {
       public static final String EXECUTE_SERVER_COMMAND = "executeServerCommand";
       public static final String REQUEST_CONTEXT_ACTIONS = "requestContextActions";
       public static final String SET_CONTEXT_ACTIONS = "setContextActions";
+      public static final String SET_DIRTY_STATE = "setDirtyState";
       public static final String REQUEST_MARKERS = "requestMarkers";
       public static final String SET_MARKERS = "setMarkers";
       public static final String LAYOUT = "layout";

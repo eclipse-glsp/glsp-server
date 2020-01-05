@@ -37,4 +37,8 @@ public interface ModelState<T> {
 
    void redo();
 
+   boolean isDirty();
+
+   void saveIsDone();
+
 }

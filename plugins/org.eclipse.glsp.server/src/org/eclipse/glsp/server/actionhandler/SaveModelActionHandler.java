@@ -27,6 +27,7 @@ import java.util.Optional;
 import org.apache.log4j.Logger;
 import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.action.kind.SaveModelAction;
+import org.eclipse.glsp.api.action.kind.SetDirtyStateAction;
 import org.eclipse.glsp.api.factory.GraphGsonConfiguratorFactory;
 import org.eclipse.glsp.api.model.GraphicalModelState;
 import org.eclipse.glsp.api.utils.ClientOptions;
@@ -51,7 +52,7 @@ public class SaveModelActionHandler extends AbstractActionHandler {
       if (action instanceof SaveModelAction) {
          saveModelState(modelState);
       }
-      return none();
+      return listOf(new SetDirtyStateAction(modelState.isDirty()));
    }
 
    private void saveModelState(final GraphicalModelState modelState) {
@@ -59,6 +60,7 @@ public class SaveModelActionHandler extends AbstractActionHandler {
          try (Writer writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)) {
             Gson gson = gsonConfigurationFactory.configureGson().setPrettyPrinting().create();
             gson.toJson(modelState.getRoot(), GGraph.class, writer);
+            modelState.saveIsDone();
          } catch (IOException e) {
             LOG.error(e);
          }

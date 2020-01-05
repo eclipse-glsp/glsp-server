@@ -15,12 +15,12 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actionhandler;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.action.kind.AbstractOperationAction;
 import org.eclipse.glsp.api.action.kind.RequestBoundsAction;
+import org.eclipse.glsp.api.action.kind.SetDirtyStateAction;
 import org.eclipse.glsp.api.handler.OperationHandler;
 import org.eclipse.glsp.api.model.GraphicalModelState;
 import org.eclipse.glsp.api.provider.OperationHandlerProvider;
@@ -43,7 +43,7 @@ public class OperationActionHandler extends AbstractActionHandler {
          && operationHandlerProvider.isHandled((AbstractOperationAction) action)) {
          return doHandle((AbstractOperationAction) action, modelState);
       }
-      return Collections.emptyList();
+      return none();
    }
 
    public List<Action> doHandle(final AbstractOperationAction action, final GraphicalModelState modelState) {
@@ -53,7 +53,7 @@ public class OperationActionHandler extends AbstractActionHandler {
          GModelRecordingCommand command = new GModelRecordingCommand(modelState.getRoot(), label,
             () -> handler.execute(action, modelState));
          modelState.execute(command);
-         return listOf(new RequestBoundsAction(modelState.getRoot()));
+         return listOf(new RequestBoundsAction(modelState.getRoot()), new SetDirtyStateAction(modelState.isDirty()));
       }
       return none();
    }

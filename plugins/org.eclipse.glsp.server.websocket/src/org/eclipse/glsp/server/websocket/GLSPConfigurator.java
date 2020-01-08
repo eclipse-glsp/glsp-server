@@ -24,6 +24,8 @@ import javax.websocket.server.HandshakeRequest;
 import javax.websocket.server.ServerEndpointConfig;
 import javax.websocket.server.ServerEndpointConfig.Configurator;
 
+import org.eclipse.jetty.websocket.jsr356.server.ContainerDefaultConfigurator;
+
 import com.google.inject.Injector;
 
 public class GLSPConfigurator extends Configurator {
@@ -40,6 +42,8 @@ public class GLSPConfigurator extends Configurator {
             .load(javax.websocket.server.ServerEndpointConfig.Configurator.class);
          if (loader.iterator().hasNext()) {
             containerConfigurator = loader.iterator().next();
+         } else {
+            containerConfigurator = new ContainerDefaultConfigurator();
          }
       }
       return containerConfigurator;

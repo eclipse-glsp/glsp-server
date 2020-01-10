@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actionhandler;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.log4j.Logger;
@@ -39,31 +40,30 @@ public class RequestTypeHintsActionHandler extends AbstractActionHandler {
    }
 
    @Override
-   public Optional<Action> execute(final Action action, final GraphicalModelState modelState) {
+   public List<Action> execute(final Action action, final GraphicalModelState modelState) {
       if (action instanceof RequestTypeHintsAction) {
          Optional<String> diagramType = getDiagramType((RequestTypeHintsAction) action, modelState);
          if (!diagramType.isPresent()) {
             log.info("RequestTypeHintsAction failed: No diagram type is present");
-            return Optional.empty();
+            return none();
          }
          Optional<DiagramConfiguration> configuration = diagramConfigurationProvider.get(diagramType.get());
          if (!configuration.isPresent()) {
             log.info("RequestTypeHintsAction failed: No diagram confiuration found for : " + diagramType.get());
-            return Optional.empty();
+            return none();
          }
 
-         return Optional.of(new SetTypeHintsAction(configuration.get().getNodeTypeHints(),
+         return listOf(new SetTypeHintsAction(configuration.get().getNodeTypeHints(),
             configuration.get().getEdgeTypeHints()));
 
       }
-      return Optional.empty();
+      return none();
    }
 
    private Optional<String> getDiagramType(final RequestTypeHintsAction action, final GraphicalModelState modelState) {
       if (action.getDiagramType() == null && !action.getDiagramType().isEmpty()) {
          return Optional.of(action.getDiagramType());
-      } else {
-         return ClientOptions.getValue(modelState.getClientOptions(), ClientOptions.DIAGRAM_TYPE);
       }
+      return ClientOptions.getValue(modelState.getClientOptions(), ClientOptions.DIAGRAM_TYPE);
    }
 }

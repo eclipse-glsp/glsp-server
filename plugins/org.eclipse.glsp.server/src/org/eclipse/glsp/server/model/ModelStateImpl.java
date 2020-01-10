@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.glsp.api.model.GraphicalModelState;
@@ -31,7 +32,7 @@ public class ModelStateImpl implements GraphicalModelState {
    private Map<String, String> options;
    private String clientId;
    private GModelRoot currentModel;
-   private CommandStack commandStack;
+   private BasicCommandStack commandStack;
    private Set<String> expandedElements;
    private Set<String> selectedElements;
 
@@ -67,7 +68,7 @@ public class ModelStateImpl implements GraphicalModelState {
 
    public CommandStack getCommandStack() { return commandStack; }
 
-   protected void setCommandStack(final CommandStack commandStack) {
+   protected void setCommandStack(final BasicCommandStack commandStack) {
       if (this.commandStack != null) {
          this.commandStack.flush();
       }
@@ -134,6 +135,14 @@ public class ModelStateImpl implements GraphicalModelState {
          return;
       }
       commandStack.redo();
+   }
+
+   @Override
+   public boolean isDirty() { return commandStack.isSaveNeeded(); }
+
+   @Override
+   public void saveIsDone() {
+      commandStack.saveIsDone();
    }
 
 }

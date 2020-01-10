@@ -16,8 +16,8 @@
 package org.eclipse.glsp.api.handler;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.model.GraphicalModelState;
@@ -28,5 +28,5 @@ public interface ServerCommandHandler extends Handler<String> {
       execute(commandId, Collections.emptyMap(), modelState);
    }
 
-   Optional<Action> execute(String commandId, Map<String, String> options, GraphicalModelState modelState);
+   List<Action> execute(String commandId, Map<String, String> options, GraphicalModelState modelState);
 }

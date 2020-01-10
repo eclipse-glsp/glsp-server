@@ -37,7 +37,7 @@ public class RequestMarkersHandler extends AbstractActionHandler {
    protected ModelValidator validator;
 
    @Override
-   public Optional<Action> execute(final Action action, final GraphicalModelState modelState) {
+   public List<Action> execute(final Action action, final GraphicalModelState modelState) {
       RequestMarkersAction execAction = (RequestMarkersAction) action;
       List<String> elementsIDs = execAction.getElementsIDs();
       if (elementsIDs == null || elementsIDs.size() == 0) { // if no element ID is provided, compute the markers for
@@ -55,7 +55,7 @@ public class RequestMarkersHandler extends AbstractActionHandler {
       }
 
       SetMarkersAction setMarkersAction = new SetMarkersAction(markers);
-      return Optional.of(setMarkersAction);
+      return listOf(setMarkersAction);
    }
 
    @Override

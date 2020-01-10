@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actionhandler;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.glsp.api.action.Action;
@@ -38,14 +39,14 @@ public class ValidateLabelEditActionHandler extends AbstractActionHandler {
    }
 
    @Override
-   protected Optional<Action> execute(final Action action, final GraphicalModelState modelState) {
+   protected List<Action> execute(final Action action, final GraphicalModelState modelState) {
       ValidateLabelEditAction validateAction = (ValidateLabelEditAction) action;
       Optional<GModelElement> element = modelState.getIndex().get(validateAction.getLabelId());
       if (element.isPresent()) {
-         return Optional.of(new SetEditLabelValidationResultAction(
+         return listOf(new SetEditLabelValidationResultAction(
             editLabelValidator.validate(modelState, validateAction.getValue(), element.get())));
       }
-      return Optional.of(new SetEditLabelValidationResultAction(EditLabelValidationResult.OK_RESULT));
+      return listOf(new SetEditLabelValidationResultAction(EditLabelValidationResult.OK_RESULT));
    }
 
 }

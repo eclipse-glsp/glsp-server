@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actionhandler;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.log4j.Logger;
@@ -39,31 +40,30 @@ public class RequestOperationsActionHandler extends AbstractActionHandler {
    }
 
    @Override
-   public Optional<Action> execute(final Action action, final GraphicalModelState modelState) {
+   public List<Action> execute(final Action action, final GraphicalModelState modelState) {
       if (action instanceof RequestOperationsAction) {
          RequestOperationsAction requestAction = (RequestOperationsAction) action;
          Optional<String> diagramType = getDiagramType(requestAction, modelState);
          if (!diagramType.isPresent()) {
             LOG.info("RequestOperationsAction failed: No diagram type is present");
-            return Optional.empty();
+            return none();
          }
          Optional<DiagramConfiguration> configuration = diagramConfigurationProvider.get(diagramType.get());
          if (!configuration.isPresent()) {
             LOG.info("RequestOperationsAction failed: No diagram confiuration found for : " + diagramType.get());
-            return Optional.empty();
+            return none();
          }
-         return Optional.of(new SetOperationsAction(configuration.get().getOperations()));
+         return listOf(new SetOperationsAction(configuration.get().getOperations()));
       }
 
-      return Optional.empty();
+      return none();
    }
 
    private Optional<String> getDiagramType(final RequestOperationsAction action, final GraphicalModelState modelState) {
       if (action.getDiagramType() != null && !action.getDiagramType().isEmpty()) {
          return Optional.of(action.getDiagramType());
-      } else {
-         return ClientOptions.getValue(modelState.getClientOptions(), ClientOptions.DIAGRAM_TYPE);
       }
+      return ClientOptions.getValue(modelState.getClientOptions(), ClientOptions.DIAGRAM_TYPE);
    }
 
 }

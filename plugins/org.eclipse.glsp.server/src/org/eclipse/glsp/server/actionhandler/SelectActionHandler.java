@@ -15,7 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actionhandler;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.glsp.api.action.Action;
@@ -36,19 +36,19 @@ public class SelectActionHandler extends AbstractActionHandler {
    }
 
    @Override
-   public Optional<Action> execute(final Action action, final GraphicalModelState modelState) {
+   public List<Action> execute(final Action action, final GraphicalModelState modelState) {
       switch (action.getKind()) {
          case Action.Kind.SELECT:
             return handleSelectAction((SelectAction) action, modelState);
          case Action.Kind.SELECT_ALL:
             return handleSelectAllAction((SelectAllAction) action, modelState);
          default:
-            return Optional.empty();
+            return none();
       }
 
    }
 
-   private Optional<Action> handleSelectAllAction(final SelectAllAction action, final GraphicalModelState modelState) {
+   private List<Action> handleSelectAllAction(final SelectAllAction action, final GraphicalModelState modelState) {
       Set<String> selectedElements = modelState.getSelectedElements();
       if (action.isSelect()) {
          modelState.getIndex().allIds().forEach(id -> selectedElements.add(id));
@@ -58,10 +58,10 @@ public class SelectActionHandler extends AbstractActionHandler {
       if (modelSelectionListener != null) {
          modelSelectionListener.selectionChanged(action);
       }
-      return Optional.empty();
+      return none();
    }
 
-   private Optional<Action> handleSelectAction(final SelectAction action, final GraphicalModelState modelState) {
+   private List<Action> handleSelectAction(final SelectAction action, final GraphicalModelState modelState) {
       Set<String> selectedElements = modelState.getSelectedElements();
       if (action.getDeselectedElementsIDs() != null) {
          selectedElements.removeAll(action.getDeselectedElementsIDs());
@@ -72,7 +72,7 @@ public class SelectActionHandler extends AbstractActionHandler {
       if (modelSelectionListener != null) {
          modelSelectionListener.selectionChanged(action);
       }
-      return Optional.empty();
+      return none();
    }
 
 }

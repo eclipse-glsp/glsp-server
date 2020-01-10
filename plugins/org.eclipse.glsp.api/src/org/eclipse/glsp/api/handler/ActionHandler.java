@@ -15,12 +15,30 @@
  ********************************************************************************/
 package org.eclipse.glsp.api.handler;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.glsp.api.action.Action;
 
 public interface ActionHandler extends Handler<Action> {
 
-   Optional<Action> execute(String clientId, Action action);
+   List<Action> execute(String clientId, Action action);
+
+   default List<Action> listOf(final Action... action) {
+      return Arrays.asList(action);
+   }
+
+   default List<Action> listOf(final Optional<Action> optionalAction) {
+      List<Action> actions = new ArrayList<>();
+      optionalAction.ifPresent(action -> actions.add(action));
+      return actions;
+   }
+
+   default List<Action> none() {
+      return Collections.emptyList();
+   }
 
 }

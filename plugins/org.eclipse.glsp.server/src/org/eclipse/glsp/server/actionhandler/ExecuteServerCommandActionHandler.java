@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actionhandler;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.glsp.api.action.Action;
@@ -35,7 +36,7 @@ public class ExecuteServerCommandActionHandler extends AbstractActionHandler {
    }
 
    @Override
-   public Optional<Action> execute(final Action action, final GraphicalModelState modelState) {
+   public List<Action> execute(final Action action, final GraphicalModelState modelState) {
       if (action instanceof ExecuteServerCommandAction) {
          ExecuteServerCommandAction commandAction = (ExecuteServerCommandAction) action;
          Optional<ServerCommandHandler> handler = commandHandlerProvider.getHandler(commandAction.getCommandId());
@@ -43,7 +44,7 @@ public class ExecuteServerCommandActionHandler extends AbstractActionHandler {
             return handler.get().execute(commandAction.getCommandId(), commandAction.getOptions(), modelState);
          }
       }
-      return Optional.empty();
+      return none();
    }
 
 }

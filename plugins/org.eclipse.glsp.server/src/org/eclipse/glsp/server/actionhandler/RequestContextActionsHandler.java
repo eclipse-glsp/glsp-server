@@ -18,7 +18,6 @@ package org.eclipse.glsp.server.actionhandler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.action.kind.RequestContextActions;
@@ -46,7 +45,7 @@ public class RequestContextActionsHandler extends AbstractActionHandler {
    }
 
    @Override
-   public Optional<Action> execute(final Action action, final GraphicalModelState modelState) {
+   public List<Action> execute(final Action action, final GraphicalModelState modelState) {
       if (action instanceof RequestContextActions) {
          RequestContextActions requestContextAction = (RequestContextActions) action;
          List<String> selectedElementIds = requestContextAction.getSelectedElementIds();
@@ -60,9 +59,9 @@ public class RequestContextActionsHandler extends AbstractActionHandler {
                requestContextAction.getLastMousePosition(), args));
 
          }
-         return Optional.of(new SetContextActions(items, requestContextAction.getArgs()));
+         return listOf(new SetContextActions(items, requestContextAction.getArgs()));
       }
-      return Optional.empty();
+      return none();
    }
 
    protected boolean equalsUiControl(final Map<String, String> args, final String uiControlKey) {

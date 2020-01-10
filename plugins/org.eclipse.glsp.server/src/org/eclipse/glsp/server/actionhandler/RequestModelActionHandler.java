@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actionhandler;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.glsp.api.action.Action;
@@ -34,7 +35,7 @@ public class RequestModelActionHandler extends AbstractActionHandler {
    protected ModelFactory modelFactory;
 
    @Override
-   public Optional<Action> execute(final String clientId, final Action action) {
+   public List<Action> execute(final String clientId, final Action action) {
       this.clientId = clientId;
       Optional<GraphicalModelState> modelState = modelStateProvider.getModelState(clientId);
       if (modelState.isPresent()) {
@@ -44,7 +45,7 @@ public class RequestModelActionHandler extends AbstractActionHandler {
    }
 
    @Override
-   public Optional<Action> execute(final Action action, final GraphicalModelState modelState) {
+   public List<Action> execute(final Action action, final GraphicalModelState modelState) {
       if (action instanceof RequestModelAction) {
          RequestModelAction requestAction = (RequestModelAction) action;
          GModelRoot model = modelFactory.loadModel(requestAction, modelState);
@@ -56,9 +57,9 @@ public class RequestModelActionHandler extends AbstractActionHandler {
 
          Action responseAction = needsClientLayout ? new RequestBoundsAction(modelState.getRoot())
             : new SetModelAction(modelState.getRoot());
-         return Optional.of(responseAction);
+         return listOf(responseAction);
       }
-      return Optional.empty();
+      return none();
    }
 
    @Override

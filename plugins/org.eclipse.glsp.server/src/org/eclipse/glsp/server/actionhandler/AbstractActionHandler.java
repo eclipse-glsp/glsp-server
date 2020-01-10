@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actionhandler;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.glsp.api.action.Action;
@@ -37,7 +38,7 @@ public abstract class AbstractActionHandler implements ActionHandler {
     * the client. If no response to the client is need a NoOpAction is returned
     */
    @Override
-   public Optional<Action> execute(final String clientId, final Action action) {
+   public List<Action> execute(final String clientId, final Action action) {
       this.clientId = clientId;
       Optional<GraphicalModelState> modelState = modelStateProvider.getModelState(clientId);
       if (modelState.isPresent()) {
@@ -45,8 +46,8 @@ public abstract class AbstractActionHandler implements ActionHandler {
       }
       ServerStatus status = new ServerStatus(Severity.FATAL,
          "Could not retrieve the model state for client with id '" + clientId + "'");
-      return Optional.of(new ServerStatusAction(status));
+      return listOf(new ServerStatusAction(status));
    }
 
-   protected abstract Optional<Action> execute(Action action, GraphicalModelState modelState);
+   protected abstract List<Action> execute(Action action, GraphicalModelState modelState);
 }

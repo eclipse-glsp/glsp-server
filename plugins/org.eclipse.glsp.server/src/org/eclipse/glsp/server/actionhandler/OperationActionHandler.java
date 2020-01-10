@@ -15,11 +15,12 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actionhandler;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.action.kind.AbstractOperationAction;
 import org.eclipse.glsp.api.action.kind.RequestBoundsAction;
+import org.eclipse.glsp.api.action.kind.SetDirtyStateAction;
 import org.eclipse.glsp.api.handler.OperationHandler;
 import org.eclipse.glsp.api.model.GraphicalModelState;
 import org.eclipse.glsp.api.provider.OperationHandlerProvider;
@@ -37,24 +38,24 @@ public class OperationActionHandler extends AbstractActionHandler {
    }
 
    @Override
-   public Optional<Action> execute(final Action action, final GraphicalModelState modelState) {
+   public List<Action> execute(final Action action, final GraphicalModelState modelState) {
       if (action instanceof AbstractOperationAction
          && operationHandlerProvider.isHandled((AbstractOperationAction) action)) {
          return doHandle((AbstractOperationAction) action, modelState);
       }
-      return Optional.empty();
+      return none();
    }
 
-   public Optional<Action> doHandle(final AbstractOperationAction action, final GraphicalModelState modelState) {
+   public List<Action> doHandle(final AbstractOperationAction action, final GraphicalModelState modelState) {
       if (operationHandlerProvider.isHandled(action)) {
          OperationHandler handler = operationHandlerProvider.getHandler(action).get();
          String label = handler.getLabel(action);
          GModelRecordingCommand command = new GModelRecordingCommand(modelState.getRoot(), label,
             () -> handler.execute(action, modelState));
          modelState.execute(command);
-         return Optional.of(new RequestBoundsAction(modelState.getRoot()));
+         return listOf(new RequestBoundsAction(modelState.getRoot()), new SetDirtyStateAction(modelState.isDirty()));
       }
-      return Optional.empty();
+      return none();
    }
 
 }

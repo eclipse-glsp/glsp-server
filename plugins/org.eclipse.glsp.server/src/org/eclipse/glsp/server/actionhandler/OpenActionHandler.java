@@ -15,7 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actionhandler;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.action.kind.OpenAction;
@@ -34,13 +34,13 @@ public class OpenActionHandler extends AbstractActionHandler {
    }
 
    @Override
-   public Optional<Action> execute(final Action action, final GraphicalModelState modelState) {
+   public List<Action> execute(final Action action, final GraphicalModelState modelState) {
       if (action instanceof OpenAction) {
          if (modelElementOpenListener != null) {
             modelElementOpenListener.elementOpened((OpenAction) action);
          }
       }
-      return Optional.empty();
+      return none();
    }
 
 }

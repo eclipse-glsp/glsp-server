@@ -99,7 +99,7 @@ public abstract class Action {
       public static final String REDO = "glspRedo";
       public static final String CREATE_CONNECTION_OPERATION = Operation.Kind.CREATE_CONNECTION;
       public static final String RECONNECT_CONNECTION_OPERATION = Operation.Kind.RECONNECT_CONNECTION;
-      public static final String REROUTE_CONNECTION_OPERATION = Operation.Kind.REROUTE_CONNECTION;
+      public static final String CHANGE_ROUTING_POINTS_OPERATION = Operation.Kind.CHANGE_ROUTING_POINTS;
       public static final String CREATE_NODE_OPERATION = Operation.Kind.CREATE_NODE;
       public static final String DELETE_ELEMENT_OPERATION = Operation.Kind.DELETE_ELEMENT;
       public static final String CHANGE_BOUNDS_OPERATION = Operation.Kind.CHANGE_BOUNDS;

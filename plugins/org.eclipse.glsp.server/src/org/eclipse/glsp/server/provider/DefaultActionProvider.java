@@ -45,7 +45,7 @@ import org.eclipse.glsp.api.action.kind.RequestModelAction;
 import org.eclipse.glsp.api.action.kind.RequestOperationsAction;
 import org.eclipse.glsp.api.action.kind.RequestPopupModelAction;
 import org.eclipse.glsp.api.action.kind.RequestTypeHintsAction;
-import org.eclipse.glsp.api.action.kind.RerouteConnectionOperationAction;
+import org.eclipse.glsp.api.action.kind.ChangeRoutingPointsOperationAction;
 import org.eclipse.glsp.api.action.kind.SaveModelAction;
 import org.eclipse.glsp.api.action.kind.SelectAction;
 import org.eclipse.glsp.api.action.kind.SelectAllAction;
@@ -109,7 +109,7 @@ public class DefaultActionProvider implements ActionProvider {
       defaultActions.add(new ExecuteServerCommandAction());
       defaultActions.add(new RequestContextActions());
       defaultActions.add(new ReconnectConnectionOperationAction());
-      defaultActions.add(new RerouteConnectionOperationAction());
+      defaultActions.add(new ChangeRoutingPointsOperationAction());
       defaultActions.add(new LayoutAction());
       defaultActions.add(new ValidateLabelEditAction());
    }

@@ -18,14 +18,14 @@ package org.eclipse.glsp.api.operations;
 public class Operation {
 
    public static class Kind {
-      public static final String CHANGE_BOUNDS = "changeBoundsOperation";
+      public static final String CHANGE_BOUNDS = "changeBounds";
       public static final String CREATE_NODE = "createNode";
       public static final String CREATE_CONNECTION = "createConnection";
-      public static final String DELETE_ELEMENT = "delete";
+      public static final String DELETE_ELEMENT = "deleteElement";
       public static final String CHANGE_CONTAINER = "changeContainer";
       public static final String GENERIC = "generic";
       public static final String RECONNECT_CONNECTION = "reconnectConnection";
-      public static final String REROUTE_CONNECTION = "rerouteConnection";
+      public static final String CHANGE_ROUTING_POINTS = "changeRoutingPoints";
       public static final String APPLY_LABEL_EDIT = "applyLabelEdit";
    }
 

@@ -19,18 +19,19 @@ import static org.eclipse.glsp.api.jsonrpc.GLSPServerException.getOrThrow;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.api.action.kind.AbstractOperationAction;
-import org.eclipse.glsp.api.action.kind.RerouteConnectionOperationAction;
+import org.eclipse.glsp.api.action.kind.ChangeRoutingPointsOperationAction;
 import org.eclipse.glsp.api.handler.OperationHandler;
 import org.eclipse.glsp.api.model.GraphicalModelState;
+import org.eclipse.glsp.api.types.ElementAndRoutingPoints;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GPoint;
 
-public class RerouteEdgeHandler implements OperationHandler {
+public class ChangeRoutingPointsHandler implements OperationHandler {
 
    @Override
    public Class<?> handlesActionType() {
-      return RerouteConnectionOperationAction.class;
+      return ChangeRoutingPointsOperationAction.class;
    }
 
    @Override
@@ -40,25 +41,28 @@ public class RerouteEdgeHandler implements OperationHandler {
 
    @Override
    public void execute(final AbstractOperationAction operationAction, final GraphicalModelState modelState) {
-      if (!(operationAction instanceof RerouteConnectionOperationAction)) {
+      if (!(operationAction instanceof ChangeRoutingPointsOperationAction)) {
          throw new IllegalArgumentException("Unexpected action " + operationAction);
       }
 
       // check for null-values
-      final RerouteConnectionOperationAction action = (RerouteConnectionOperationAction) operationAction;
-      if (action.getConnectionElementId() == null || action.getRoutingPoints() == null) {
-         throw new IllegalArgumentException("Incomplete reconnect connection action");
+      final ChangeRoutingPointsOperationAction action = (ChangeRoutingPointsOperationAction) operationAction;
+      if (action.getNewRoutingPoints() == null) {
+         throw new IllegalArgumentException("Incomplete change routingPoints  action");
       }
 
       // check for existence of matching elements
       GModelIndex index = modelState.getIndex();
 
-      GEdge edge = getOrThrow(index.findElementByClass(action.getConnectionElementId(), GEdge.class),
-         "Invalid edge: edge ID " + action.getConnectionElementId());
+      for (ElementAndRoutingPoints ear : action.getNewRoutingPoints()) {
+         GEdge edge = getOrThrow(index.findElementByClass(ear.getElementId(), GEdge.class),
+            "Invalid edge: edge ID " + ear.getElementId());
 
-      // reroute
-      EList<GPoint> routingPoints = edge.getRoutingPoints();
-      routingPoints.clear();
-      routingPoints.addAll(action.getRoutingPoints());
+         // reroute
+         EList<GPoint> routingPoints = edge.getRoutingPoints();
+         routingPoints.clear();
+         routingPoints.addAll(ear.getNewRoutingPoints());
+      }
+
    }
 }

@@ -15,35 +15,18 @@
  ******************************************************************************/
 package org.eclipse.glsp.api.action.kind;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
 import org.eclipse.glsp.api.action.Action;
-import org.eclipse.glsp.graph.GPoint;
 
 public class CutOperationAction extends AbstractOperationAction {
 
-   private List<String> selectedElementIds;
-   private Map<String, String> args;
-   private GPoint lastMousePosition;
+   private EditorContext editorContext;
 
    public CutOperationAction() {
       super(Action.Kind.CUT_ACTION);
    }
 
-   public List<String> getSelectedElementIds() { return selectedElementIds; }
+   public EditorContext getEditorContext() { return editorContext; }
 
-   public void setSelectedElementsIds(final List<String> selectedElementsIDs) {
-      this.selectedElementIds = selectedElementsIDs;
-   }
-
-   public Map<String, String> getArgs() { return args; }
-
-   public void setArgs(final Map<String, String> args) { this.args = args; }
-
-   public Optional<GPoint> getLastMousePosition() { return Optional.ofNullable(lastMousePosition); }
-
-   public void setLastMousePosition(final GPoint lastMousePosition) { this.lastMousePosition = lastMousePosition; }
+   public void setEditorContext(final EditorContext editorContext) { this.editorContext = editorContext; }
 
 }

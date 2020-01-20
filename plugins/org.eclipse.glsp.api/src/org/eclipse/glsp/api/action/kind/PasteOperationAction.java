@@ -15,19 +15,14 @@
  ******************************************************************************/
 package org.eclipse.glsp.api.action.kind;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.eclipse.glsp.api.action.Action;
-import org.eclipse.glsp.graph.GPoint;
 
 public class PasteOperationAction extends AbstractOperationAction {
 
    private Map<String, String> clipboardData;
-   private List<String> selectedElementIds;
-   private Map<String, String> args;
-   private GPoint lastMousePosition;
+   private EditorContext editorContext;
 
    public PasteOperationAction() {
       super(Action.Kind.PASTE_ACTION);
@@ -37,18 +32,8 @@ public class PasteOperationAction extends AbstractOperationAction {
 
    public void setClipboardData(final Map<String, String> clipboardData) { this.clipboardData = clipboardData; }
 
-   public List<String> getSelectedElementIds() { return selectedElementIds; }
+   public EditorContext getEditorContext() { return editorContext; }
 
-   public void setSelectedElementsIds(final List<String> selectedElementsIDs) {
-      this.selectedElementIds = selectedElementsIDs;
-   }
-
-   public Map<String, String> getArgs() { return args; }
-
-   public void setArgs(final Map<String, String> args) { this.args = args; }
-
-   public Optional<GPoint> getLastMousePosition() { return Optional.ofNullable(lastMousePosition); }
-
-   public void setLastMousePosition(final GPoint lastMousePosition) { this.lastMousePosition = lastMousePosition; }
+   public void setEditorContext(final EditorContext editorContext) { this.editorContext = editorContext; }
 
 }

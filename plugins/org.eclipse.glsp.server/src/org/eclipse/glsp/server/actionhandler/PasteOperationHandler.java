@@ -64,7 +64,7 @@ public class PasteOperationHandler implements OperationHandler {
       PasteOperationAction action = (PasteOperationAction) plainAction;
       List<GModelElement> elements = getCopiedElements(action.getClipboardData().get("application/json"));
 
-      shift(elements, computeOffset(elements, action.getLastMousePosition()));
+      shift(elements, computeOffset(elements, action.getEditorContext().getLastMousePosition()));
 
       Map<String, String> idMap = reassignIds(elements);
       filterElements(elements, idMap);

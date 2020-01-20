@@ -47,7 +47,7 @@ public class CutOperationHandler implements OperationHandler {
 
    protected List<String> getElementToCut(final CutOperationAction cutAction,
       final GraphicalModelState modelState) {
-      return cutAction.getSelectedElementIds();
+      return cutAction.getEditorContext().getSelectedElementIds();
    }
 
    @Override

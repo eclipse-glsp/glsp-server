@@ -48,18 +48,18 @@ public class RequestContextActionsHandler extends AbstractActionHandler {
    public List<Action> execute(final Action action, final GraphicalModelState modelState) {
       if (action instanceof RequestContextActions) {
          RequestContextActions requestContextAction = (RequestContextActions) action;
-         List<String> selectedElementIds = requestContextAction.getSelectedElementIds();
-         Map<String, String> args = requestContextAction.getArgs();
+         List<String> selectedElementIds = requestContextAction.getEditorContext().getSelectedElementIds();
+         Map<String, String> args = requestContextAction.getEditorContext().getArgs();
          List<LabeledAction> items = new ArrayList<>();
          if (equalsUiControl(args, CommandPaletteActionProvider.KEY)) {
             items.addAll(commandPaletteActionProvider.getActions(modelState, selectedElementIds,
-               requestContextAction.getLastMousePosition(), args));
+               requestContextAction.getEditorContext().getLastMousePosition(), args));
          } else if (equalsUiControl(args, ContextMenuItemProvider.KEY)) {
             items.addAll(contextMenuItemProvider.getItems(modelState, selectedElementIds,
-               requestContextAction.getLastMousePosition(), args));
+               requestContextAction.getEditorContext().getLastMousePosition(), args));
 
          }
-         return listOf(new SetContextActions(items, requestContextAction.getArgs()));
+         return listOf(new SetContextActions(items, requestContextAction.getEditorContext().getArgs()));
       }
       return none();
    }

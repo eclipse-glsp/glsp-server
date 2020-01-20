@@ -52,7 +52,7 @@ public class RequestClipboardDataActionHandler extends AbstractActionHandler {
       RequestClipboardDataAction action = (RequestClipboardDataAction) plainAction;
       JsonArray jsonArray = new JsonArray();
       GModelIndex index = modelState.getIndex();
-      Set<GModelElement> selectedElements = index.getAll(action.getSelectedElementIds());
+      Set<GModelElement> selectedElements = index.getAll(action.getEditorContext().getSelectedElementIds());
       selectedElements.stream().map(gson::toJsonTree).forEach(jsonArray::add);
       return listOf(new SetClipboardDataAction(Collections.singletonMap("application/json", jsonArray.toString())));
    }

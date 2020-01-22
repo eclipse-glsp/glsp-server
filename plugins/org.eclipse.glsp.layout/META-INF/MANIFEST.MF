@@ -5,7 +5,7 @@ Bundle-SymbolicName: org.eclipse.glsp.layout
 Bundle-Version: 0.7.0.qualifier
 Bundle-Vendor: EclispeSource
 Automatic-Module-Name: org.eclipse.glsp.layout
-Bundle-RequiredExecutionEnvironment: JavaSE-10
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.glsp.api;bundle-version="0.7.0",
  org.eclipse.elk.core;bundle-version="0.5.0",
  org.eclipse.elk.graph;bundle-version="0.5.0",

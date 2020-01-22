@@ -5,7 +5,7 @@ Bundle-SymbolicName: org.eclipse.glsp.server.websocket
 Bundle-Version: 0.7.0.qualifier
 Bundle-Vendor: EclipseSource
 Automatic-Module-Name: com.eclipsesource.glps.server.websocket
-Bundle-RequiredExecutionEnvironment: JavaSE-10
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: javax.websocket;bundle-version="1.1.0";visibility:=reexport,
  javax.servlet;bundle-version="3.1.0";visibility:=reexport,
  org.eclipse.jetty.server;bundle-version="9.4.14";visibility:=reexport,

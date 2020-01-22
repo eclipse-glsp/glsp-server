@@ -15,8 +15,8 @@
  ******************************************************************************/
 package org.eclipse.glsp.api.json;
 
-import org.eclipse.glsp.api.action.ActionRegistry;
 import org.eclipse.glsp.api.factory.GraphGsonConfiguratorFactory;
+import org.eclipse.glsp.api.registry.ActionRegistry;
 import org.eclipse.glsp.graph.gson.EnumTypeAdapter;
 
 import com.google.gson.GsonBuilder;
@@ -25,20 +25,21 @@ import com.google.inject.Inject;
 
 public class GsonConfigurator {
 
-   private ActionRegistry actionRegistry;
-   private GraphGsonConfiguratorFactory gsonConfigurationFactory;
+   private final ActionRegistry actionRegistry;
+   private final GraphGsonConfiguratorFactory gsonConfigurationFactory;
 
    @Inject
-   public GsonConfigurator(ActionRegistry actionRegistry, GraphGsonConfiguratorFactory gsonConfigurationFactory) {
+   public GsonConfigurator(final ActionRegistry actionRegistry,
+      final GraphGsonConfiguratorFactory gsonConfigurationFactory) {
       this.actionRegistry = actionRegistry;
       this.gsonConfigurationFactory = gsonConfigurationFactory;
    }
 
    protected TypeAdapterFactory getActionTypeAdapterFactory() {
-      return new ActionTypeAdapter.Factory(actionRegistry.getAllActions());
+      return new ActionTypeAdapter.Factory(actionRegistry.getAll());
    }
 
-   public GsonBuilder configureGsonBuilder(GsonBuilder gsonBuilder) {
+   public GsonBuilder configureGsonBuilder(final GsonBuilder gsonBuilder) {
       gsonBuilder.registerTypeAdapterFactory(getActionTypeAdapterFactory());
       gsonBuilder.registerTypeAdapterFactory(new EnumTypeAdapter.Factory());
       return gsonConfigurationFactory.create().configureGsonBuilder(gsonBuilder);

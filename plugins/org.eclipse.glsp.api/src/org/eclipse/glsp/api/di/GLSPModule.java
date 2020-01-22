@@ -16,13 +16,19 @@
 package org.eclipse.glsp.api.di;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 
+import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.action.ActionProcessor;
 import org.eclipse.glsp.api.configuration.ServerConfiguration;
+import org.eclipse.glsp.api.diagram.DiagramConfiguration;
 import org.eclipse.glsp.api.diagram.DiagramConfigurationProvider;
 import org.eclipse.glsp.api.factory.GraphGsonConfiguratorFactory;
 import org.eclipse.glsp.api.factory.ModelFactory;
 import org.eclipse.glsp.api.factory.PopupModelFactory;
+import org.eclipse.glsp.api.handler.ActionHandler;
+import org.eclipse.glsp.api.handler.OperationHandler;
+import org.eclipse.glsp.api.handler.ServerCommandHandler;
 import org.eclipse.glsp.api.jsonrpc.GLSPClientProvider;
 import org.eclipse.glsp.api.jsonrpc.GLSPServer;
 import org.eclipse.glsp.api.labeledit.LabelEditValidator;
@@ -33,7 +39,6 @@ import org.eclipse.glsp.api.model.ModelExpansionListener;
 import org.eclipse.glsp.api.model.ModelSelectionListener;
 import org.eclipse.glsp.api.model.ModelStateProvider;
 import org.eclipse.glsp.api.provider.ActionHandlerProvider;
-import org.eclipse.glsp.api.provider.ActionProvider;
 import org.eclipse.glsp.api.provider.CommandPaletteActionProvider;
 import org.eclipse.glsp.api.provider.ContextMenuItemProvider;
 import org.eclipse.glsp.api.provider.OperationHandlerProvider;
@@ -54,7 +59,6 @@ public abstract class GLSPModule extends AbstractModule {
       bind(ModelExpansionListener.class).to(bindModelExpansionListener());
       bind(ModelElementOpenListener.class).to(bindModelElementOpenListener());
       bind(ILayoutEngine.class).to(bindLayoutEngine());
-      bind(ActionProvider.class).to(bindActionProvider());
       bind(ActionHandlerProvider.class).to(bindActionHandlerProvider());
       bind(OperationHandlerProvider.class).to(bindOperatioHandlerProvider());
       bind(ServerCommandHandlerProvider.class).to(bindServerCommandHandlerProvider());
@@ -68,8 +72,48 @@ public abstract class GLSPModule extends AbstractModule {
       bind(GraphGsonConfiguratorFactory.class).to(bindGraphGsonConfiguratorFactory());
       bind(GLSPClientProvider.class).to(bindGSLPClientProvider());
       bind(ServerConfiguration.class).to(bindServerConfiguration()).in(Singleton.class);
+
+      configureMultibindings();
+
+      // Optional Bindings
       Optional.ofNullable(bindGraphExtension()).ifPresent(ext -> bind(GraphExtension.class).to(ext));
+
    }
+
+   protected void configureMultibindings() {
+
+      configure(MultiBindings.create(Action.class), this::configureActions);
+      configure(MultiBindings
+         .create(ActionHandler.class), this::configureActionHandlers);
+      configure(MultiBindings
+         .create(ServerCommandHandler.class), this::configureServerCommandHandlers);
+      configure(MultiBindings
+         .create(OperationHandler.class), this::configureOperationHandlers);
+      configure(MultiBindings
+         .create(DiagramConfiguration.class), this::configureDiagramConfigurations);
+
+   }
+
+   private <T> void configure(final MultiBindings<T> multiBindings,
+      final Consumer<MultiBindings<T>> configurator) {
+      configurator.accept(multiBindings);
+      multiBindings.applyBindings(binder());
+   }
+
+   protected abstract void configureActions(
+      MultiBindings<Action> bindings);
+
+   protected abstract void configureActionHandlers(
+      MultiBindings<ActionHandler> bindings);
+
+   protected abstract void configureServerCommandHandlers(
+      MultiBindings<ServerCommandHandler> bindings);
+
+   protected abstract void configureOperationHandlers(
+      MultiBindings<OperationHandler> bindings);
+
+   protected abstract void configureDiagramConfigurations(
+      MultiBindings<DiagramConfiguration> bindings);
 
    protected abstract Class<? extends GLSPClientProvider> bindGSLPClientProvider();
 
@@ -87,10 +131,6 @@ public abstract class GLSPModule extends AbstractModule {
 
    protected Class<? extends ContextMenuItemProvider> bindContextMenuItemProvider() {
       return ContextMenuItemProvider.NullImpl.class;
-   }
-
-   protected Class<? extends ActionProvider> bindActionProvider() {
-      return ActionProvider.NullImpl.class;
    }
 
    protected Class<? extends ActionHandlerProvider> bindActionHandlerProvider() {

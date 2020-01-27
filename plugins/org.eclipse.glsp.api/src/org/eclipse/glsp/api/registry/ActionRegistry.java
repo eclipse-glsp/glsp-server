@@ -13,43 +13,20 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.api.action;
+package org.eclipse.glsp.api.registry;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.glsp.api.provider.ActionProvider;
+import org.eclipse.glsp.api.action.Action;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 @Singleton
-public class ActionRegistry {
-
-   private final ActionProvider actionProvider;
-   private Map<String, Class<? extends Action>> actions;
+public class ActionRegistry extends InstanceRegistry<Action> {
 
    @Inject
-   public ActionRegistry(final ActionProvider actionProvider) {
-      this.actionProvider = actionProvider;
-      intialize();
-   }
-
-   private void intialize() {
-      this.actions = new HashMap<>();
-      actionProvider.getActions().forEach(a -> actions.put(a.getKind(), a.getClass()));
-   }
-
-   public Set<Action> getAllActions() { return actionProvider.getActions(); }
-
-   /**
-    * Queries the correspondent Java class object for the given action kind.
-    *
-    * @param kind The kind/type of action
-    * @return correspondent Class
-    */
-   public Class<? extends Action> getActionClass(final String kind) {
-      return actions.get(kind);
+   public ActionRegistry(final Set<Action> actions) {
+      actions.forEach(action -> register(action.getKind(), action));
    }
 }

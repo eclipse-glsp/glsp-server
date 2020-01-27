@@ -65,8 +65,8 @@
 			</activation>
 
 			<properties>
-				<tycho-version>1.3.0</tycho-version>
-				<tychoExtrasVersion>1.3.0</tychoExtrasVersion>
+				<tycho-version>1.6.0</tycho-version>
+				<tychoExtrasVersion>1.6.0</tychoExtrasVersion>
 				<maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
 
 			</properties>

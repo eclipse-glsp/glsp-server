@@ -5,10 +5,48 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.glsp</groupId>
 	<artifactId>org.eclipse.glsp.parent</artifactId>
+	<description>GLSP Parent pom </description>
 	<version>0.7.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>GLSP Parent</name>
+
+	<url>https://www.eclipse.org/glsp</url>
+	<licenses>
+		<license>
+			<name>Eclipse Public License - v 2.0</name>
+			<url>http://www.eclipse.org/legal/epl-v20.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Philip Langer</name>
+			<email>planger@eclipsesource.com</email>
+			<organization>EclipseSource</organization>
+			<organizationUrl>http://www.eclipsesource.com</organizationUrl>
+		</developer>
+		<developer>
+			<name>Tobias Ortmayr</name>
+			<email>tortmayr@eclipsesource.com</email>
+			<organization>EclipseSource</organization>
+			<organizationUrl>http://www.eclipsesource.com</organizationUrl>
+		</developer>
+		<developer>
+			<name>Martin Fleck</name>
+			<email>mfleck@eclipsesource.com</email>
+			<organization>EclipseSource</organization>
+			<organizationUrl>http://www.eclipsesource.com</organizationUrl>
+		</developer>
+	</developers>
+
+	<scm>
+		<url>https://github.com/eclipse-glsp/glsp-server</url>
+		<connection>scm:git@github.com:eclipse-glsp/glsp-server.git</connection>
+		<developerConnection>scm:git@github.com:eclipse-glsp/glsp-server.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -218,7 +256,6 @@
 				<module>plugins/org.eclipse.glsp.layout</module>
 				<module>plugins/org.eclipse.glsp.server</module>
 				<module>plugins/org.eclipse.glsp.server.websocket</module>
-				<module>releng/org.eclipse.glsp.codestyle</module>
 			</modules>
 
 			<build>
@@ -272,6 +309,13 @@
 
 		<profile>
 			<id>m2-release</id>
+			<modules>
+				<module>plugins/org.eclipse.glsp.graph</module>
+				<module>plugins/org.eclipse.glsp.api</module>
+				<module>plugins/org.eclipse.glsp.layout</module>
+				<module>plugins/org.eclipse.glsp.server</module>
+				<module>plugins/org.eclipse.glsp.server.websocket</module>
+			</modules>
 
 			<distributionManagement>
 				<snapshotRepository>
@@ -296,39 +340,39 @@
 					<!-- To generate javadoc -->
 
 					<!-- Deactivate for now. Not needed for snapshot deployments -->
-					<!-- <plugin> -->
-					<!-- <groupId>org.apache.maven.plugins</groupId> -->
-					<!-- <artifactId>maven-javadoc-plugin</artifactId> -->
-					<!-- <version>3.1.0</version> -->
-					<!-- <executions> -->
-					<!-- <execution> -->
-					<!-- <id>attach-javadocs</id> -->
-					<!-- <goals> -->
-					<!-- <goal>jar</goal> -->
-					<!-- </goals> -->
-					<!-- <configuration> -->
-					<!-- <additionalJOption>-Xdoclint:none</additionalJOption> -->
-					<!-- <tags> -->
-					<!-- <tag> -->
-					<!-- <name>generated</name> -->
-					<!-- <placement>a</placement> -->
-					<!-- <head></head> -->
-					<!-- </tag> -->
-					<!-- <tag> -->
-					<!-- <name>ordered</name> -->
-					<!-- <placement>a</placement> -->
-					<!-- <head></head> -->
-					<!-- </tag> -->
-					<!-- <tag> -->
-					<!-- <name>model</name> -->
-					<!-- <placement>a</placement> -->
-					<!-- <head>Model:</head> -->
-					<!-- </tag> -->
-					<!-- </tags> -->
-					<!-- </configuration> -->
-					<!-- </execution> -->
-					<!-- </executions> -->
-					<!-- </plugin> -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>3.1.0</version>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+								<configuration>
+									<additionalJOption>-Xdoclint:none</additionalJOption>
+									<tags>
+										<tag>
+											<name>generated</name>
+											<placement>a</placement>
+											<head></head>
+										</tag>
+										<tag>
+											<name>ordered</name>
+											<placement>a</placement>
+											<head></head>
+										</tag>
+										<tag>
+											<name>model</name>
+											<placement>a</placement>
+											<head>Model:</head>
+										</tag>
+									</tags>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
 
 					<!-- To sign the artifacts -->
 					<plugin>
@@ -350,6 +394,20 @@
 								</configuration>
 							</execution>
 						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-deploy-plugin</artifactId>
+						<version>2.8</version>
+						<configuration>
+							<skip>true</skip>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>versions-maven-plugin</artifactId>
+						<version>2.7</version>
 					</plugin>
 				</plugins>
 

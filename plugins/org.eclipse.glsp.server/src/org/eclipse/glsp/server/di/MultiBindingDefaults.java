@@ -28,15 +28,18 @@ import org.eclipse.glsp.api.action.kind.CollapseExpandAllAction;
 import org.eclipse.glsp.api.action.kind.ComputedBoundsAction;
 import org.eclipse.glsp.api.action.kind.CreateConnectionOperationAction;
 import org.eclipse.glsp.api.action.kind.CreateNodeOperationAction;
+import org.eclipse.glsp.api.action.kind.CutOperationAction;
 import org.eclipse.glsp.api.action.kind.DeleteOperationAction;
 import org.eclipse.glsp.api.action.kind.ExecuteServerCommandAction;
 import org.eclipse.glsp.api.action.kind.ExportSVGAction;
 import org.eclipse.glsp.api.action.kind.FitToScreenAction;
 import org.eclipse.glsp.api.action.kind.LayoutAction;
 import org.eclipse.glsp.api.action.kind.OpenAction;
+import org.eclipse.glsp.api.action.kind.PasteOperationAction;
 import org.eclipse.glsp.api.action.kind.ReconnectConnectionOperationAction;
 import org.eclipse.glsp.api.action.kind.RedoAction;
 import org.eclipse.glsp.api.action.kind.RequestBoundsAction;
+import org.eclipse.glsp.api.action.kind.RequestClipboardDataAction;
 import org.eclipse.glsp.api.action.kind.RequestContextActions;
 import org.eclipse.glsp.api.action.kind.RequestExportSvgAction;
 import org.eclipse.glsp.api.action.kind.RequestLayersAction;
@@ -63,10 +66,13 @@ import org.eclipse.glsp.api.handler.ActionHandler;
 import org.eclipse.glsp.api.handler.OperationHandler;
 import org.eclipse.glsp.server.actionhandler.CollapseExpandActionHandler;
 import org.eclipse.glsp.server.actionhandler.ComputedBoundsActionHandler;
+import org.eclipse.glsp.server.actionhandler.CutOperationHandler;
 import org.eclipse.glsp.server.actionhandler.ExecuteServerCommandActionHandler;
 import org.eclipse.glsp.server.actionhandler.LayoutActionHandler;
 import org.eclipse.glsp.server.actionhandler.OpenActionHandler;
 import org.eclipse.glsp.server.actionhandler.OperationActionHandler;
+import org.eclipse.glsp.server.actionhandler.PasteOperationHandler;
+import org.eclipse.glsp.server.actionhandler.RequestClipboardDataActionHandler;
 import org.eclipse.glsp.server.actionhandler.RequestContextActionsHandler;
 import org.eclipse.glsp.server.actionhandler.RequestMarkersHandler;
 import org.eclipse.glsp.server.actionhandler.RequestModelActionHandler;
@@ -97,11 +103,14 @@ public final class MultiBindingDefaults {
       ComputedBoundsAction.class,
       CreateConnectionOperationAction.class,
       CreateNodeOperationAction.class,
+      CutOperationAction.class,
       DeleteOperationAction.class,
       ExportSVGAction.class,
       FitToScreenAction.class,
       ChangeContainerOperationAction.class,
       OpenAction.class,
+      PasteOperationAction.class,
+      RequestClipboardDataAction.class,
       RequestBoundsAction.class,
       RequestTypeHintsAction.class,
       RequestExportSvgAction.class,
@@ -143,6 +152,7 @@ public final class MultiBindingDefaults {
       UndoRedoActionHandler.class,
       SelectActionHandler.class,
       ExecuteServerCommandActionHandler.class,
+      RequestClipboardDataActionHandler.class,
       RequestTypeHintsActionHandler.class,
       RequestContextActionsHandler.class,
       RequestMarkersHandler.class,
@@ -150,9 +160,11 @@ public final class MultiBindingDefaults {
       ValidateLabelEditActionHandler.class);
 
    public static final List<Class<? extends OperationHandler>> DEFAULT_OPERATION_HANDLERS = Lists.newArrayList(
+      ApplyLabelEditOperationHandler.class,
       ChangeBoundsOperationHandler.class,
-      ReconnectEdgeHandler.class,
       ChangeRoutingPointsHandler.class,
+      CutOperationHandler.class,
       DeleteOperationHandler.class,
-      ApplyLabelEditOperationHandler.class);
+      PasteOperationHandler.class,
+      ReconnectEdgeHandler.class);
 }

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2017-2018 TypeFox and others.
+ * Copyright (c) 2018 TypeFox and others.
  * (c) 2019 EclipseSource (adaptation for GModel)
  *
  * This program and the accompanying materials are made available under the
@@ -42,9 +42,8 @@ public class GLSPLayoutConfigurator extends LayoutConfigurator {
    public static String toElkId(final String gmodelId) {
       if (gmodelId == null || gmodelId.isEmpty()) {
          return null;
-      } else {
-         return ID_REPLACE_PATTERN.matcher(gmodelId).replaceAll("_");
       }
+      return ID_REPLACE_PATTERN.matcher(gmodelId).replaceAll("_");
    }
 
    private final Map<String, MapPropertyHolder> idOptionMap = Maps.newHashMap();

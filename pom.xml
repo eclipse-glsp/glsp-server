@@ -50,8 +50,8 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.source>11</java.source>
-		<java.target>11</java.target>
+		<java.source>1.8</java.source>
+		<java.target>1.8</java.target>
 		<project.build.java.target>1.8</project.build.java.target>
 		<target.version>0.7.0-SNAPSHOT</target.version>
 	</properties>

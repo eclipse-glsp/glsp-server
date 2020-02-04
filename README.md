@@ -24,6 +24,6 @@ The GLSP server bundles are built with `mvn clean install -Pm2` (for maven) or `
 All changes on the master branch are deployed automatically to the corresponding snapshot repositories.
 
 ## See also
-For more information, please visit the [Eclipse GLSP Website](https://www.eclipse.org/glsp/). If you have questions, contact us on our [spectrum chat](https://spectrum.chat/glsp/) and have a look at our [communication and support options](https://www.eclipse.org/glsp/contact/).
+For more information, please visit the [Eclipse GLSP Umbrella repository](https://github.com/eclipse-glsp/glsp) and the [Eclipse GLSP Website](https://www.eclipse.org/glsp/). If you have questions, contact us on our [spectrum chat](https://spectrum.chat/glsp/) and have a look at our [communication and support options](https://www.eclipse.org/glsp/contact/).
 
 ![alt](https://www.eclipse.org/glsp/images/diagramanimated.gif)

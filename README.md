@@ -21,8 +21,9 @@ The GLSP server bundles are built with `mvn clean install -Pm2` (for maven) or `
 ### P2 Update Sites   ![build-status-server](https://img.shields.io/jenkins/build?jobUrl=https://ci.eclipse.org/glsp/job/deploy-p2-glsp-server/&label=publish)
 - <i>Snapshots: </i> https://download.eclipse.org/glsp/server/p2/nightly/
 
-All changes on the master branch are deployed automatically to the corresponding snapshot repositories. <
+All changes on the master branch are deployed automatically to the corresponding snapshot repositories.
+
 ## See also
-For more information, see the [GLSP umbrella project](https://github.com/eclipse-glsp/glsp) and please visit the [Eclipse GLSP Website](https://www.eclipse.org/glsp).
+For more information, please visit the [Eclipse GLSP Website](https://www.eclipse.org/glsp/). If you have questions, contact us on our [spectrum chat](https://spectrum.chat/glsp/) and have a look at our [communication and support options](https://www.eclipse.org/glsp/contact/).
 
 ![alt](https://www.eclipse.org/glsp/images/diagramanimated.gif)

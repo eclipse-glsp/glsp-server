@@ -17,6 +17,9 @@ package org.eclipse.glsp.server.websocket;
 
 import java.util.Collection;
 
+import javax.websocket.EndpointConfig;
+import javax.websocket.Session;
+
 import org.eclipse.glsp.api.json.GsonConfigurator;
 import org.eclipse.glsp.api.jsonrpc.GLSPClient;
 import org.eclipse.glsp.api.jsonrpc.GLSPClientAware;
@@ -27,7 +30,7 @@ import org.eclipse.lsp4j.websocket.WebSocketEndpoint;
 import com.google.inject.Inject;
 
 public class GLSPServerEndpoint extends WebSocketEndpoint<GLSPClient> {
-
+   public static final int MAX_TEXT_MESSAGE_BUFFER_SIZE = 8388608;
    @Inject
    private GLSPServer glspServer;
 
@@ -45,6 +48,12 @@ public class GLSPServerEndpoint extends WebSocketEndpoint<GLSPClient> {
    protected void connect(final Collection<Object> localServices, final GLSPClient remoteProxy) {
       localServices.stream().filter(GLSPClientAware.class::isInstance).map(GLSPClientAware.class::cast)
          .forEach(ca -> ca.connect(remoteProxy));
+   }
+
+   @Override
+   public void onOpen(final Session session, final EndpointConfig config) {
+      session.setMaxTextMessageBufferSize(MAX_TEXT_MESSAGE_BUFFER_SIZE);
+      super.onOpen(session, config);
    }
 
 }

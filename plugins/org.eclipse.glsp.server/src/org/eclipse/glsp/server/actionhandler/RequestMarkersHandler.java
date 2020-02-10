@@ -40,8 +40,10 @@ public class RequestMarkersHandler extends AbstractActionHandler {
    public List<Action> execute(final Action action, final GraphicalModelState modelState) {
       RequestMarkersAction execAction = (RequestMarkersAction) action;
       List<String> elementsIDs = execAction.getElementsIDs();
-      if (elementsIDs == null || elementsIDs.size() == 0) { // if no element ID is provided, compute the markers for
-         // the complete model
+
+      // if no element ID is provided, compute the markers for the complete model
+      if (elementsIDs == null || elementsIDs.size() == 0
+         || (elementsIDs.size() == 1 && "EMPTY".equals(elementsIDs.get(0)))) {
          elementsIDs = Arrays.asList(modelState.getRoot().getId());
       }
       List<Marker> markers = new ArrayList<>();

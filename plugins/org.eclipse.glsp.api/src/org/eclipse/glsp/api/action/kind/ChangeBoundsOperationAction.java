@@ -36,34 +36,4 @@ public class ChangeBoundsOperationAction extends AbstractOperationAction {
    public List<ElementAndBounds> getNewBounds() { return newBounds; }
 
    public void setNewBounds(final List<ElementAndBounds> newBounds) { this.newBounds = newBounds; }
-
-   @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = super.hashCode();
-      result = prime * result + ((newBounds == null) ? 0 : newBounds.hashCode());
-      return result;
-   }
-
-   @Override
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (!super.equals(obj)) {
-         return false;
-      }
-      if (getClass() != obj.getClass()) {
-         return false;
-      }
-      ChangeBoundsOperationAction other = (ChangeBoundsOperationAction) obj;
-      if (newBounds == null) {
-         if (other.newBounds != null) {
-            return false;
-         }
-      } else if (!newBounds.equals(other.newBounds)) {
-         return false;
-      }
-      return true;
-   }
 }

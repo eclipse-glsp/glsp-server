@@ -43,44 +43,4 @@ public class SetContextActions extends ResponseAction {
    public Map<String, String> getArgs() { return args; }
 
    public void setArgs(final Map<String, String> args) { this.args = args; }
-
-   @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = super.hashCode();
-      result = prime * result + ((actions == null) ? 0 : actions.hashCode());
-      result = prime * result + ((args == null) ? 0 : args.hashCode());
-      return result;
-   }
-
-   @Override
-   @SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity" })
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (!super.equals(obj)) {
-         return false;
-      }
-      if (getClass() != obj.getClass()) {
-         return false;
-      }
-      SetContextActions other = (SetContextActions) obj;
-      if (actions == null) {
-         if (other.actions != null) {
-            return false;
-         }
-      } else if (!actions.equals(other.actions)) {
-         return false;
-      }
-      if (args == null) {
-         if (other.args != null) {
-            return false;
-         }
-      } else if (!args.equals(other.args)) {
-         return false;
-      }
-      return true;
-   }
-
 }

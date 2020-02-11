@@ -35,35 +35,4 @@ public class SetLayersAction extends Action {
    public List<Layer> getLayers() { return layers; }
 
    public void setLayers(final List<Layer> layers) { this.layers = layers; }
-
-   @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = super.hashCode();
-      result = prime * result + ((layers == null) ? 0 : layers.hashCode());
-      return result;
-   }
-
-   @Override
-   @SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity" })
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (!super.equals(obj)) {
-         return false;
-      }
-      if (getClass() != obj.getClass()) {
-         return false;
-      }
-      SetLayersAction other = (SetLayersAction) obj;
-      if (layers == null) {
-         if (other.layers != null) {
-            return false;
-         }
-      } else if (!layers.equals(other.layers)) {
-         return false;
-      }
-      return true;
-   }
 }

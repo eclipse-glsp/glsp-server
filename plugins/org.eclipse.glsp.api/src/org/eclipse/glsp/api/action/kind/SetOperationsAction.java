@@ -36,36 +36,4 @@ public class SetOperationsAction extends Action {
    public List<Operation> getOperations() { return operations; }
 
    public void setOperations(final List<Operation> operations) { this.operations = operations; }
-
-   @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = super.hashCode();
-      result = prime * result + ((operations == null) ? 0 : operations.hashCode());
-      return result;
-   }
-
-   @Override
-   @SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity" })
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (!super.equals(obj)) {
-         return false;
-      }
-      if (getClass() != obj.getClass()) {
-         return false;
-      }
-      SetOperationsAction other = (SetOperationsAction) obj;
-      if (operations == null) {
-         if (other.operations != null) {
-            return false;
-         }
-      } else if (!operations.equals(other.operations)) {
-         return false;
-      }
-      return true;
-   }
-
 }

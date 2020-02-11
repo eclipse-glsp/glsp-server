@@ -50,48 +50,4 @@ public class ComputedBoundsAction extends Action {
    public int getRevision() { return revision; }
 
    public void setRevision(final int revision) { this.revision = revision; }
-
-   @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = super.hashCode();
-      result = prime * result + ((alignments == null) ? 0 : alignments.hashCode());
-      result = prime * result + ((bounds == null) ? 0 : bounds.hashCode());
-      result = prime * result + revision;
-      return result;
-   }
-
-   @Override
-   @SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity" })
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (!super.equals(obj)) {
-         return false;
-      }
-      if (getClass() != obj.getClass()) {
-         return false;
-      }
-      ComputedBoundsAction other = (ComputedBoundsAction) obj;
-      if (alignments == null) {
-         if (other.alignments != null) {
-            return false;
-         }
-      } else if (!alignments.equals(other.alignments)) {
-         return false;
-      }
-      if (bounds == null) {
-         if (other.bounds != null) {
-            return false;
-         }
-      } else if (!bounds.equals(other.bounds)) {
-         return false;
-      }
-      if (revision != other.revision) {
-         return false;
-      }
-      return true;
-   }
-
 }

@@ -44,43 +44,4 @@ public class SelectAction extends Action {
    public void setDeselectedElementsIDs(final List<String> deselectedElementsIDs) {
       this.deselectedElementsIDs = deselectedElementsIDs;
    }
-
-   @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = super.hashCode();
-      result = prime * result + ((deselectedElementsIDs == null) ? 0 : deselectedElementsIDs.hashCode());
-      result = prime * result + ((selectedElementsIDs == null) ? 0 : selectedElementsIDs.hashCode());
-      return result;
-   }
-
-   @Override
-   @SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity" })
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (!super.equals(obj)) {
-         return false;
-      }
-      if (getClass() != obj.getClass()) {
-         return false;
-      }
-      SelectAction other = (SelectAction) obj;
-      if (deselectedElementsIDs == null) {
-         if (other.deselectedElementsIDs != null) {
-            return false;
-         }
-      } else if (!deselectedElementsIDs.equals(other.deselectedElementsIDs)) {
-         return false;
-      }
-      if (selectedElementsIDs == null) {
-         if (other.selectedElementsIDs != null) {
-            return false;
-         }
-      } else if (!selectedElementsIDs.equals(other.selectedElementsIDs)) {
-         return false;
-      }
-      return true;
-   }
 }

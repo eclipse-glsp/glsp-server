@@ -41,39 +41,4 @@ public class CenterAction extends Action {
    public boolean isAnimate() { return animate; }
 
    public void setAnimate(final boolean animate) { this.animate = animate; }
-
-   @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = super.hashCode();
-      result = prime * result + (animate ? 1231 : 1237);
-      result = prime * result + ((elementIDs == null) ? 0 : elementIDs.hashCode());
-      return result;
-   }
-
-   @Override
-   @SuppressWarnings("checkstyle:CyclomaticComplexity")
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (!super.equals(obj)) {
-         return false;
-      }
-      if (getClass() != obj.getClass()) {
-         return false;
-      }
-      CenterAction other = (CenterAction) obj;
-      if (animate != other.animate) {
-         return false;
-      }
-      if (elementIDs == null) {
-         if (other.elementIDs != null) {
-            return false;
-         }
-      } else if (!elementIDs.equals(other.elementIDs)) {
-         return false;
-      }
-      return true;
-   }
 }

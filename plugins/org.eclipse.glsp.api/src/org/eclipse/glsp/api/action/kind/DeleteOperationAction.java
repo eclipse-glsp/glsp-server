@@ -32,38 +32,8 @@ public class DeleteOperationAction extends AbstractOperationAction {
       this.elementIds = elementIds;
    }
 
-   @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = super.hashCode();
-      result = prime * result + ((elementIds == null) ? 0 : elementIds.hashCode());
-      return result;
-   }
-
    public List<String> getElementIds() { return elementIds; }
 
    public void setElementIds(final List<String> elementIds) { this.elementIds = elementIds; }
-
-   @Override
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (!super.equals(obj)) {
-         return false;
-      }
-      if (getClass() != obj.getClass()) {
-         return false;
-      }
-      DeleteOperationAction other = (DeleteOperationAction) obj;
-      if (elementIds == null) {
-         if (other.elementIds != null) {
-            return false;
-         }
-      } else if (!elementIds.equals(other.elementIds)) {
-         return false;
-      }
-      return true;
-   }
 
 }

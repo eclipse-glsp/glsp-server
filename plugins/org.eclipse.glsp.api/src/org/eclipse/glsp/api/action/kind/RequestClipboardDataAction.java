@@ -16,6 +16,7 @@
 package org.eclipse.glsp.api.action.kind;
 
 import org.eclipse.glsp.api.action.Action;
+import org.eclipse.glsp.api.types.EditorContext;
 
 public class RequestClipboardDataAction extends RequestAction<SetClipboardDataAction> {
 

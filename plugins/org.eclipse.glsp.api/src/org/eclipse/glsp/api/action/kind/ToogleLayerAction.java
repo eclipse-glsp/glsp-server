@@ -35,40 +35,4 @@ public class ToogleLayerAction extends Action {
    public String getLayerName() { return layerName; }
 
    public boolean isNewState() { return newState; }
-
-   @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = super.hashCode();
-      result = prime * result + ((layerName == null) ? 0 : layerName.hashCode());
-      result = prime * result + (newState ? 1231 : 1237);
-      return result;
-   }
-
-   @Override
-   @SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity" })
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (!super.equals(obj)) {
-         return false;
-      }
-      if (getClass() != obj.getClass()) {
-         return false;
-      }
-      ToogleLayerAction other = (ToogleLayerAction) obj;
-      if (layerName == null) {
-         if (other.layerName != null) {
-            return false;
-         }
-      } else if (!layerName.equals(other.layerName)) {
-         return false;
-      }
-      if (newState != other.newState) {
-         return false;
-      }
-      return true;
-   }
-
 }

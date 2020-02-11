@@ -39,44 +39,4 @@ public class ValidateLabelEditAction extends RequestAction<SetEditLabelValidatio
    public String getLabelId() { return labelId; }
 
    public void setLabelId(final String labelId) { this.labelId = labelId; }
-
-   @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = super.hashCode();
-      result = prime * result + ((labelId == null) ? 0 : labelId.hashCode());
-      result = prime * result + ((value == null) ? 0 : value.hashCode());
-      return result;
-   }
-
-   @Override
-   @SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity" })
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (!super.equals(obj)) {
-         return false;
-      }
-      if (getClass() != obj.getClass()) {
-         return false;
-      }
-      ValidateLabelEditAction other = (ValidateLabelEditAction) obj;
-      if (labelId == null) {
-         if (other.labelId != null) {
-            return false;
-         }
-      } else if (!labelId.equals(other.labelId)) {
-         return false;
-      }
-      if (value == null) {
-         if (other.value != null) {
-            return false;
-         }
-      } else if (!value.equals(other.value)) {
-         return false;
-      }
-      return true;
-   }
-
 }

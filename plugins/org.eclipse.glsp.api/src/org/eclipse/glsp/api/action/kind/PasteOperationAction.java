@@ -18,6 +18,7 @@ package org.eclipse.glsp.api.action.kind;
 import java.util.Map;
 
 import org.eclipse.glsp.api.action.Action;
+import org.eclipse.glsp.api.types.EditorContext;
 
 public class PasteOperationAction extends AbstractOperationAction {
 

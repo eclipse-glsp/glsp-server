@@ -38,35 +38,4 @@ public class ChangeRoutingPointsOperationAction extends AbstractOperationAction 
    public void setNewRoutingPoints(final List<ElementAndRoutingPoints> newRoutingPoints) {
       this.newRoutingPoints = newRoutingPoints;
    }
-
-   @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = super.hashCode();
-      result = prime * result + ((newRoutingPoints == null) ? 0 : newRoutingPoints.hashCode());
-      return result;
-   }
-
-   @Override
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (!super.equals(obj)) {
-         return false;
-      }
-      if (getClass() != obj.getClass()) {
-         return false;
-      }
-      ChangeRoutingPointsOperationAction other = (ChangeRoutingPointsOperationAction) obj;
-      if (newRoutingPoints == null) {
-         if (other.newRoutingPoints != null) {
-            return false;
-         }
-      } else if (!newRoutingPoints.equals(other.newRoutingPoints)) {
-         return false;
-      }
-      return true;
-   }
-
 }

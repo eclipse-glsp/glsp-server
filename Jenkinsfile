@@ -7,13 +7,17 @@ pipeline {
     stages {
         stage ('Build: Plain Maven (M2)') {
             steps {
-                sh "mvn clean verify -Pm2 --batch-mode package"    
+                timeout(30){
+                     sh "mvn clean verify -Pm2 --batch-mode package"    
+                }
             }
         }
 
         stage ('Build: Eclipse-based (P2)') {
             steps {
-                sh "mvn clean verify -Pp2 --batch-mode package"    
+                timeout(30){
+                    sh "mvn clean verify -Pp2 --batch-mode package"    
+                }
             }
         }
 

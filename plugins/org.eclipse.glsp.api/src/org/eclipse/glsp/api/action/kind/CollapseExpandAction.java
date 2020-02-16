@@ -47,48 +47,4 @@ public class CollapseExpandAction extends Action {
    public boolean isCollapse() { return collapse; }
 
    public void setCollapse(final boolean collapse) { this.collapse = collapse; }
-
-   @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = super.hashCode();
-      result = prime * result + (collapse ? 1231 : 1237);
-      result = prime * result + ((collapseIds == null) ? 0 : collapseIds.hashCode());
-      result = prime * result + ((expandIds == null) ? 0 : expandIds.hashCode());
-      return result;
-   }
-
-   @Override
-   @SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity" })
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (!super.equals(obj)) {
-         return false;
-      }
-      if (getClass() != obj.getClass()) {
-         return false;
-      }
-      CollapseExpandAction other = (CollapseExpandAction) obj;
-      if (collapse != other.collapse) {
-         return false;
-      }
-      if (collapseIds == null) {
-         if (other.collapseIds != null) {
-            return false;
-         }
-      } else if (!collapseIds.equals(other.collapseIds)) {
-         return false;
-      }
-      if (expandIds == null) {
-         if (other.expandIds != null) {
-            return false;
-         }
-      } else if (!expandIds.equals(other.expandIds)) {
-         return false;
-      }
-      return true;
-   }
-
 }

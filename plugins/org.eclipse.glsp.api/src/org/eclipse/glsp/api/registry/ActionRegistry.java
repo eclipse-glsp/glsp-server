@@ -15,18 +15,16 @@
  ********************************************************************************/
 package org.eclipse.glsp.api.registry;
 
-import java.util.Set;
-
 import org.eclipse.glsp.api.action.Action;
+import org.eclipse.glsp.api.supplier.ActionSupplier;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 @Singleton
 public class ActionRegistry extends InstanceRegistry<Action> {
-
    @Inject
-   public ActionRegistry(final Set<Action> actions) {
-      actions.forEach(action -> register(action.getKind(), action));
+   public ActionRegistry(final ActionSupplier actionProvider) {
+      actionProvider.get().forEach(action -> register(action.getKind(), action));
    }
 }

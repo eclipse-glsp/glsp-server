@@ -36,36 +36,4 @@ public class SetMarkersAction extends Action {
    public List<Marker> getMarkers() { return markers; }
 
    public void setMarkers(final List<Marker> markers) { this.markers = markers; }
-
-   @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = super.hashCode();
-      result = prime * result + ((markers == null) ? 0 : markers.hashCode());
-      return result;
-   }
-
-   @Override
-   @SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity" })
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (!super.equals(obj)) {
-         return false;
-      }
-      if (getClass() != obj.getClass()) {
-         return false;
-      }
-      SetMarkersAction other = (SetMarkersAction) obj;
-      if (markers == null) {
-         if (other.markers != null) {
-            return false;
-         }
-      } else if (!markers.equals(other.markers)) {
-         return false;
-      }
-      return true;
-   }
-
 }

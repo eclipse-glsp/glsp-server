@@ -15,56 +15,35 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actionhandler;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.action.kind.RequestContextActions;
 import org.eclipse.glsp.api.action.kind.SetContextActions;
 import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.provider.CommandPaletteActionProvider;
-import org.eclipse.glsp.api.provider.ContextMenuItemProvider;
+import org.eclipse.glsp.api.supplier.ContextActionsProviderSupplier;
+import org.eclipse.glsp.api.types.EditorContext;
 import org.eclipse.glsp.api.types.LabeledAction;
 
 import com.google.inject.Inject;
 
-public class RequestContextActionsHandler extends AbstractActionHandler {
-
-   public static final String UI_CONTROL_KEY = "ui-control";
+public class RequestContextActionsHandler extends BasicActionHandler<RequestContextActions> {
 
    @Inject
-   protected CommandPaletteActionProvider commandPaletteActionProvider;
+   protected ContextActionsProviderSupplier contextActionsProviderSupplier;
 
-   @Inject
-   protected ContextMenuItemProvider contextMenuItemProvider;
-
-   @Override
-   public boolean handles(final Action action) {
-      return action instanceof RequestContextActions;
-   }
+   public RequestContextActionsHandler() {}
 
    @Override
-   public List<Action> execute(final Action action, final GraphicalModelState modelState) {
-      if (action instanceof RequestContextActions) {
-         RequestContextActions requestContextAction = (RequestContextActions) action;
-         List<String> selectedElementIds = requestContextAction.getEditorContext().getSelectedElementIds();
-         Map<String, String> args = requestContextAction.getEditorContext().getArgs();
-         List<LabeledAction> items = new ArrayList<>();
-         if (equalsUiControl(args, CommandPaletteActionProvider.KEY)) {
-            items.addAll(commandPaletteActionProvider.getActions(modelState, selectedElementIds,
-               requestContextAction.getEditorContext().getLastMousePosition(), args));
-         } else if (equalsUiControl(args, ContextMenuItemProvider.KEY)) {
-            items.addAll(contextMenuItemProvider.getItems(modelState, selectedElementIds,
-               requestContextAction.getEditorContext().getLastMousePosition(), args));
+   public List<Action> executeAction(final RequestContextActions action, final GraphicalModelState modelState) {
+      EditorContext editorContext = action.getEditorContext();
 
-         }
-         return listOf(new SetContextActions(items, requestContextAction.getEditorContext().getArgs()));
-      }
-      return none();
-   }
+      List<LabeledAction> actions = contextActionsProviderSupplier.get().stream()
+         .filter(provider -> provider.handles(action.getContextId()))
+         .flatMap(provider -> provider.getActions(editorContext, modelState).stream())
+         .collect(Collectors.toList());
 
-   protected boolean equalsUiControl(final Map<String, String> args, final String uiControlKey) {
-      return args.containsKey(UI_CONTROL_KEY) && args.get(UI_CONTROL_KEY).equals(uiControlKey);
+      return listOf(new SetContextActions(actions, action.getEditorContext().getArgs()));
    }
 }

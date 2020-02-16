@@ -23,15 +23,13 @@ import org.eclipse.glsp.api.action.kind.RedoAction;
 import org.eclipse.glsp.api.action.kind.RequestBoundsAction;
 import org.eclipse.glsp.api.action.kind.SetDirtyStateAction;
 import org.eclipse.glsp.api.action.kind.UndoAction;
+import org.eclipse.glsp.api.handler.ActionHandler;
 import org.eclipse.glsp.api.model.GraphicalModelState;
 
-public class UndoRedoActionHandler extends AbstractActionHandler {
-   private static final Logger LOG = Logger.getLogger(UndoRedoActionHandler.class);
+import com.google.common.collect.Lists;
 
-   @Override
-   public boolean handles(final Action action) {
-      return action instanceof UndoAction || action instanceof RedoAction;
-   }
+public class UndoRedoActionHandler implements ActionHandler {
+   private static final Logger LOG = Logger.getLogger(UndoRedoActionHandler.class);
 
    @Override
    public List<Action> execute(final Action action, final GraphicalModelState modelState) {
@@ -44,5 +42,10 @@ public class UndoRedoActionHandler extends AbstractActionHandler {
       }
       LOG.warn("Cannot undo or redo");
       return none();
+   }
+
+   @Override
+   public List<Class<? extends Action>> handledActionTypes() {
+      return Lists.newArrayList(UndoAction.class, RedoAction.class);
    }
 }

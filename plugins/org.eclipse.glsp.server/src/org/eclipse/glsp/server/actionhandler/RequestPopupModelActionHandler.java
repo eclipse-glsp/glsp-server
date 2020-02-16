@@ -27,24 +27,16 @@ import org.eclipse.glsp.graph.GModelElement;
 
 import com.google.inject.Inject;
 
-public class RequestPopupModelActionHandler extends AbstractActionHandler {
+public class RequestPopupModelActionHandler extends BasicActionHandler<RequestPopupModelAction> {
    @Inject
    protected PopupModelFactory popupModelFactory;
 
    @Override
-   public boolean handles(final Action action) {
-      return action instanceof RequestPopupModelAction;
-   }
-
-   @Override
-   public List<Action> execute(final Action action, final GraphicalModelState modelState) {
-      if (action instanceof RequestPopupModelAction && popupModelFactory != null) {
-         RequestPopupModelAction requestAction = (RequestPopupModelAction) action;
-         Optional<GModelElement> element = modelState.getIndex().get(requestAction.getElementId());
-         if (popupModelFactory != null && element.isPresent()) {
-            return listOf(popupModelFactory.createPopupModel(element.get(), requestAction, modelState)
-               .map(popupModel -> new SetPopupModelAction(popupModel, requestAction.getBounds())));
-         }
+   public List<Action> executeAction(final RequestPopupModelAction action, final GraphicalModelState modelState) {
+      Optional<GModelElement> element = modelState.getIndex().get(action.getElementId());
+      if (popupModelFactory != null && element.isPresent()) {
+         return listOf(popupModelFactory.createPopupModel(element.get(), action, modelState)
+            .map(popupModel -> new SetPopupModelAction(popupModel, action.getBounds())));
       }
       return none();
    }

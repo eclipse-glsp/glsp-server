@@ -36,22 +36,16 @@ import org.eclipse.glsp.graph.GGraph;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 
-public class SaveModelActionHandler extends AbstractActionHandler {
+public class SaveModelActionHandler extends BasicActionHandler<SaveModelAction> {
    private static final Logger LOG = Logger.getLogger(SaveModelActionHandler.class);
 
    @Inject
    protected GraphGsonConfiguratorFactory gsonConfigurationFactory;
 
    @Override
-   public boolean handles(final Action action) {
-      return action instanceof SaveModelAction;
-   }
+   public List<Action> executeAction(final SaveModelAction action, final GraphicalModelState modelState) {
+      saveModelState(modelState);
 
-   @Override
-   public List<Action> execute(final Action action, final GraphicalModelState modelState) {
-      if (action instanceof SaveModelAction) {
-         saveModelState(modelState);
-      }
       return listOf(new SetDirtyStateAction(modelState.isDirty()));
    }
 

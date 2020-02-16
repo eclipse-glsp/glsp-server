@@ -18,44 +18,35 @@ package org.eclipse.glsp.server.actionhandler;
 import java.util.List;
 
 import org.eclipse.glsp.api.action.Action;
-import org.eclipse.glsp.api.action.kind.AbstractOperationAction;
 import org.eclipse.glsp.api.action.kind.RequestBoundsAction;
 import org.eclipse.glsp.api.action.kind.SetDirtyStateAction;
 import org.eclipse.glsp.api.handler.OperationHandler;
 import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.provider.OperationHandlerProvider;
+import org.eclipse.glsp.api.operation.Operation;
+import org.eclipse.glsp.api.supplier.OperationHandlerSupplier;
 import org.eclipse.glsp.server.command.GModelRecordingCommand;
 
 import com.google.inject.Inject;
 
-public class OperationActionHandler extends AbstractActionHandler {
+public class OperationActionHandler extends BasicActionHandler<Operation> {
    @Inject
-   protected OperationHandlerProvider operationHandlerProvider;
+   protected OperationHandlerSupplier operationHandlerProvider;
 
    @Override
    public boolean handles(final Action action) {
-      return action instanceof AbstractOperationAction;
+      return action instanceof Operation;
    }
 
    @Override
-   public List<Action> execute(final Action action, final GraphicalModelState modelState) {
-      if (action instanceof AbstractOperationAction
-         && operationHandlerProvider.isHandled((AbstractOperationAction) action)) {
-         return doHandle((AbstractOperationAction) action, modelState);
-      }
-      return none();
-   }
-
-   public List<Action> doHandle(final AbstractOperationAction action, final GraphicalModelState modelState) {
-      if (operationHandlerProvider.isHandled(action)) {
-         OperationHandler handler = operationHandlerProvider.getHandler(action).get();
-         String label = handler.getLabel(action);
-         GModelRecordingCommand command = new GModelRecordingCommand(modelState.getRoot(), label,
-            () -> handler.execute(action, modelState));
+   public List<Action> executeAction(final Operation operation, final GraphicalModelState modelState) {
+      if (operationHandlerProvider.isHandled(operation)) {
+         OperationHandler handler = operationHandlerProvider.getHandler(operation).get();
+         GModelRecordingCommand command = new GModelRecordingCommand(modelState.getRoot(), handler.getLabel(),
+            () -> handler.execute(operation, modelState));
          modelState.execute(command);
          return listOf(new RequestBoundsAction(modelState.getRoot()), new SetDirtyStateAction(modelState.isDirty()));
       }
       return none();
-   }
 
+   }
 }

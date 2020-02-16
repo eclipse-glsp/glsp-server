@@ -22,28 +22,22 @@ import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.action.kind.ExecuteServerCommandAction;
 import org.eclipse.glsp.api.handler.ServerCommandHandler;
 import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.provider.ServerCommandHandlerProvider;
+import org.eclipse.glsp.api.supplier.ServerCommandHandlerSupplier;
 
 import com.google.inject.Inject;
 
-public class ExecuteServerCommandActionHandler extends AbstractActionHandler {
+public class ExecuteServerCommandActionHandler extends BasicActionHandler<ExecuteServerCommandAction> {
    @Inject
-   protected ServerCommandHandlerProvider commandHandlerProvider;
+   protected ServerCommandHandlerSupplier commandHandlerProvider;
 
    @Override
-   public boolean handles(final Action action) {
-      return action instanceof ExecuteServerCommandAction;
-   }
+   public List<Action> executeAction(final ExecuteServerCommandAction action, final GraphicalModelState modelState) {
 
-   @Override
-   public List<Action> execute(final Action action, final GraphicalModelState modelState) {
-      if (action instanceof ExecuteServerCommandAction) {
-         ExecuteServerCommandAction commandAction = (ExecuteServerCommandAction) action;
-         Optional<ServerCommandHandler> handler = commandHandlerProvider.getHandler(commandAction.getCommandId());
-         if (handler.isPresent()) {
-            return handler.get().execute(commandAction.getCommandId(), commandAction.getOptions(), modelState);
-         }
+      Optional<ServerCommandHandler> handler = commandHandlerProvider.getHandler(action.getCommandId());
+      if (handler.isPresent()) {
+         return handler.get().execute(action.getCommandId(), action.getOptions(), modelState);
       }
+
       return none();
    }
 

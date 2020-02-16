@@ -35,36 +35,4 @@ public class RequestMarkersAction extends Action {
    public List<String> getElementsIDs() { return elementsIDs; }
 
    public void setElementsIDs(final List<String> elementsIDs) { this.elementsIDs = elementsIDs; }
-
-   @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = super.hashCode();
-      result = prime * result + ((elementsIDs == null) ? 0 : elementsIDs.hashCode());
-      return result;
-   }
-
-   @Override
-   @SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity" })
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (!super.equals(obj)) {
-         return false;
-      }
-      if (getClass() != obj.getClass()) {
-         return false;
-      }
-      RequestMarkersAction other = (RequestMarkersAction) obj;
-      if (elementsIDs == null) {
-         if (other.elementsIDs != null) {
-            return false;
-         }
-      } else if (!elementsIDs.equals(other.elementsIDs)) {
-         return false;
-      }
-      return true;
-   }
-
 }

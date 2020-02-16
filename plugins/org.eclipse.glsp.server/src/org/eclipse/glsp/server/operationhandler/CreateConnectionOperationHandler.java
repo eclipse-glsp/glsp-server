@@ -19,43 +19,25 @@ import static org.eclipse.glsp.server.util.GModelUtil.IS_CONNECTABLE;
 
 import java.util.Optional;
 
-import org.eclipse.glsp.api.action.kind.AbstractOperationAction;
-import org.eclipse.glsp.api.action.kind.CreateConnectionOperationAction;
-import org.eclipse.glsp.api.handler.OperationHandler;
 import org.eclipse.glsp.api.model.GraphicalModelState;
+import org.eclipse.glsp.api.operation.Operation;
+import org.eclipse.glsp.api.operation.kind.CreateConnectionOperation;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GModelRoot;
 
-public abstract class CreateConnectionOperationHandler implements OperationHandler {
+public abstract class CreateConnectionOperationHandler extends BasicCreateOperationHandler<CreateConnectionOperation> {
 
-   protected final String elementTypeId;
+   private final String label;
 
-   public CreateConnectionOperationHandler(final String elementTypeId) {
-      this.elementTypeId = elementTypeId;
+   public CreateConnectionOperationHandler(final String elementTypeId, final String label) {
+      super(elementTypeId, Operation.Kind.CREATE_CONNECTION);
+      this.label = label;
    }
 
    @Override
-   public String getLabel(final AbstractOperationAction action) {
-      return "Create edge";
-   }
-
-   @Override
-   public Class<?> handlesActionType() {
-      return CreateConnectionOperationAction.class;
-   }
-
-   @Override
-   public boolean handles(final AbstractOperationAction action) {
-      return OperationHandler.super.handles(action)
-         ? ((CreateConnectionOperationAction) action).getElementTypeId().equals(elementTypeId)
-         : false;
-   }
-
-   @Override
-   public void execute(final AbstractOperationAction operationAction, final GraphicalModelState modelState) {
-      CreateConnectionOperationAction action = (CreateConnectionOperationAction) operationAction;
+   public void executeOperation(final CreateConnectionOperation action, final GraphicalModelState modelState) {
       if (action.getSourceElementId() == null || action.getTargetElementId() == null) {
          throw new IllegalArgumentException("Incomplete create connection action");
       }
@@ -81,5 +63,8 @@ public abstract class CreateConnectionOperationHandler implements OperationHandl
 
    protected abstract Optional<GEdge> createConnection(GModelElement source, GModelElement target,
       GraphicalModelState modelState);
+
+   @Override
+   public String getLabel() { return label; }
 
 }

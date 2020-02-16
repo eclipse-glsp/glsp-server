@@ -36,35 +36,4 @@ public class SetBoundsAction extends Action {
    public List<ElementAndBounds> getBounds() { return bounds; }
 
    public void setBounds(final List<ElementAndBounds> bounds) { this.bounds = bounds; }
-
-   @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = super.hashCode();
-      result = prime * result + ((bounds == null) ? 0 : bounds.hashCode());
-      return result;
-   }
-
-   @Override
-   @SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity" })
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (!super.equals(obj)) {
-         return false;
-      }
-      if (getClass() != obj.getClass()) {
-         return false;
-      }
-      SetBoundsAction other = (SetBoundsAction) obj;
-      if (bounds == null) {
-         if (other.bounds != null) {
-            return false;
-         }
-      } else if (!bounds.equals(other.bounds)) {
-         return false;
-      }
-      return true;
-   }
 }

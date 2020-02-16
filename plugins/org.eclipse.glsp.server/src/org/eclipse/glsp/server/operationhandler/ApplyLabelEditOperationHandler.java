@@ -17,35 +17,20 @@ package org.eclipse.glsp.server.operationhandler;
 
 import java.util.Optional;
 
-import org.eclipse.glsp.api.action.Action;
-import org.eclipse.glsp.api.action.kind.AbstractOperationAction;
-import org.eclipse.glsp.api.action.kind.ApplyLabelEditOperationAction;
-import org.eclipse.glsp.api.handler.OperationHandler;
 import org.eclipse.glsp.api.model.GraphicalModelState;
+import org.eclipse.glsp.api.operation.kind.ApplyLabelEditOperation;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
 
-public class ApplyLabelEditOperationHandler implements OperationHandler {
+public class ApplyLabelEditOperationHandler extends BasicOperationHandler<ApplyLabelEditOperation> {
 
    @Override
-   public Class<? extends Action> handlesActionType() {
-      return ApplyLabelEditOperationAction.class;
-   }
-
-   @Override
-   public void execute(final AbstractOperationAction action, final GraphicalModelState modelState) {
-      ApplyLabelEditOperationAction editLabelAction = (ApplyLabelEditOperationAction) action;
-      Optional<GModelElement> element = modelState.getIndex().get(editLabelAction.getLabelId());
+   public void executeOperation(final ApplyLabelEditOperation operation, final GraphicalModelState modelState) {
+      Optional<GModelElement> element = modelState.getIndex().get(operation.getLabelId());
       if (!element.isPresent() && !(element.get() instanceof GLabel)) {
          throw new IllegalArgumentException("Element with provided ID cannot be found or is not a GLabel");
       }
       GLabel sLabel = (GLabel) element.get();
-      sLabel.setText(editLabelAction.getText());
+      sLabel.setText(operation.getText());
    }
-
-   @Override
-   public String getLabel(final AbstractOperationAction action) {
-      return "Apply label";
-   }
-
 }

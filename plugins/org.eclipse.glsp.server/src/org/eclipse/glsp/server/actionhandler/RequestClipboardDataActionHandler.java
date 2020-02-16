@@ -32,7 +32,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.inject.Inject;
 
-public class RequestClipboardDataActionHandler extends AbstractActionHandler {
+public class RequestClipboardDataActionHandler extends BasicActionHandler<RequestClipboardDataAction> {
 
    protected final Gson gson;
 
@@ -43,13 +43,7 @@ public class RequestClipboardDataActionHandler extends AbstractActionHandler {
    }
 
    @Override
-   public boolean handles(final Action action) {
-      return action instanceof RequestClipboardDataAction;
-   }
-
-   @Override
-   public List<Action> execute(final Action plainAction, final GraphicalModelState modelState) {
-      RequestClipboardDataAction action = (RequestClipboardDataAction) plainAction;
+   public List<Action> executeAction(final RequestClipboardDataAction action, final GraphicalModelState modelState) {
       JsonArray jsonArray = new JsonArray();
       GModelIndex index = modelState.getIndex();
       Set<GModelElement> selectedElements = index.getAll(action.getEditorContext().getSelectedElementIds());

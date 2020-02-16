@@ -23,41 +23,34 @@ import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.action.kind.RequestTypeHintsAction;
 import org.eclipse.glsp.api.action.kind.SetTypeHintsAction;
 import org.eclipse.glsp.api.diagram.DiagramConfiguration;
-import org.eclipse.glsp.api.diagram.DiagramConfigurationProvider;
 import org.eclipse.glsp.api.model.GraphicalModelState;
+import org.eclipse.glsp.api.supplier.DiagramConfigurationSupplier;
 import org.eclipse.glsp.api.utils.ClientOptions;
 
 import com.google.inject.Inject;
 
-public class RequestTypeHintsActionHandler extends AbstractActionHandler {
+public class RequestTypeHintsActionHandler extends BasicActionHandler<RequestTypeHintsAction> {
    private final Logger log = Logger.getLogger(RequestTypeHintsActionHandler.class);
    @Inject
-   protected DiagramConfigurationProvider diagramConfigurationProvider;
+   protected DiagramConfigurationSupplier diagramConfigurationProvider;
 
    @Override
-   public boolean handles(final Action action) {
-      return action instanceof RequestTypeHintsAction;
-   }
+   public List<Action> executeAction(final RequestTypeHintsAction action, final GraphicalModelState modelState) {
 
-   @Override
-   public List<Action> execute(final Action action, final GraphicalModelState modelState) {
-      if (action instanceof RequestTypeHintsAction) {
-         Optional<String> diagramType = getDiagramType((RequestTypeHintsAction) action, modelState);
-         if (!diagramType.isPresent()) {
-            log.info("RequestTypeHintsAction failed: No diagram type is present");
-            return none();
-         }
-         Optional<DiagramConfiguration> configuration = diagramConfigurationProvider.get(diagramType.get());
-         if (!configuration.isPresent()) {
-            log.info("RequestTypeHintsAction failed: No diagram confiuration found for : " + diagramType.get());
-            return none();
-         }
-
-         return listOf(new SetTypeHintsAction(configuration.get().getNodeTypeHints(),
-            configuration.get().getEdgeTypeHints()));
-
+      Optional<String> diagramType = getDiagramType(action, modelState);
+      if (!diagramType.isPresent()) {
+         log.info("RequestTypeHintsAction failed: No diagram type is present");
+         return none();
       }
-      return none();
+      Optional<DiagramConfiguration> configuration = diagramConfigurationProvider.get(diagramType.get());
+      if (!configuration.isPresent()) {
+         log.info("RequestTypeHintsAction failed: No diagram confiuration found for : " + diagramType.get());
+         return none();
+      }
+
+      return listOf(new SetTypeHintsAction(configuration.get().getNodeTypeHints(),
+         configuration.get().getEdgeTypeHints()));
+
    }
 
    private Optional<String> getDiagramType(final RequestTypeHintsAction action, final GraphicalModelState modelState) {

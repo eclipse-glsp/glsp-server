@@ -30,32 +30,4 @@ public class SelectAllAction extends Action {
    }
 
    public boolean isSelect() { return select; }
-
-   @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = super.hashCode();
-      result = prime * result + (select ? 1231 : 1237);
-      return result;
-   }
-
-   @Override
-   @SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity" })
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (!super.equals(obj)) {
-         return false;
-      }
-      if (getClass() != obj.getClass()) {
-         return false;
-      }
-      SelectAllAction other = (SelectAllAction) obj;
-      if (select != other.select) {
-         return false;
-      }
-      return true;
-   }
-
 }

@@ -15,15 +15,16 @@
  ********************************************************************************/
 package org.eclipse.glsp.api.action.kind;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.glsp.api.action.Action;
 
 public class FitToScreenAction extends Action {
-   private List<String> elementIds;
+   private List<String> elementIds = new ArrayList<>();
    private double padding;
-   private double maxZoom;
-   private boolean animate;
+   private double maxZoom = 9999;
+   private boolean animate = true;
 
    public FitToScreenAction() {
       super(Action.Kind.FIT_TO_SCREEN);

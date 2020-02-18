@@ -15,28 +15,31 @@
  ********************************************************************************/
 package org.eclipse.glsp.api.action.kind;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.glsp.api.action.Action;
 
 public class CenterAction extends Action {
 
-   private List<String> elementIDs;
+   private List<String> elementIds = new ArrayList<>();
    private boolean animate = true;
+   private boolean retainZoom;
 
    public CenterAction() {
       super(Action.Kind.CENTER);
    }
 
-   public CenterAction(final List<String> elementIDs, final boolean animate) {
+   public CenterAction(final List<String> elementIDs, final boolean animate, final boolean retainZoom) {
       this();
-      this.elementIDs = elementIDs;
+      this.elementIds = elementIDs;
       this.animate = animate;
+      this.retainZoom = retainZoom;
    }
 
-   public List<String> getElementIDs() { return elementIDs; }
+   public List<String> getElementIDs() { return elementIds; }
 
-   public void setElementIDs(final List<String> elementIDs) { this.elementIDs = elementIDs; }
+   public void setElementIDs(final List<String> elementIDs) { this.elementIds = elementIDs; }
 
    public boolean isAnimate() { return animate; }
 
@@ -47,7 +50,7 @@ public class CenterAction extends Action {
       final int prime = 31;
       int result = super.hashCode();
       result = prime * result + (animate ? 1231 : 1237);
-      result = prime * result + ((elementIDs == null) ? 0 : elementIDs.hashCode());
+      result = prime * result + ((elementIds == null) ? 0 : elementIds.hashCode());
       return result;
    }
 
@@ -67,11 +70,14 @@ public class CenterAction extends Action {
       if (animate != other.animate) {
          return false;
       }
-      if (elementIDs == null) {
-         if (other.elementIDs != null) {
+      if (retainZoom != other.retainZoom) {
+         return false;
+      }
+      if (elementIds == null) {
+         if (other.elementIds != null) {
             return false;
          }
-      } else if (!elementIDs.equals(other.elementIDs)) {
+      } else if (!elementIds.equals(other.elementIds)) {
          return false;
       }
       return true;

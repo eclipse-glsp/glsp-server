@@ -13,12 +13,12 @@ Contains the code for the Java-based framework to create [GLSP](https://github.c
 
 The GLSP server bundles are built with `mvn clean install -Pm2` (for maven) or `mvn clean install -Pp2` (for p2). The nightly builds are available as maven repository or p2 update site.
 
-### Maven Repositories ![build-status-server](https://img.shields.io/jenkins/build?jobUrl=https://ci.eclipse.org/glsp/job/deploy-m2-glsp-server/&label=publish)
+### Maven Repositories [![build-status-server](https://img.shields.io/jenkins/build?jobUrl=https://ci.eclipse.org/glsp/job/deploy-m2-glsp-server/&label=publish)](https://ci.eclipse.org/glsp/job/deploy-m2-glsp-server/)
 
 - <i>Snapshots: </i> https://oss.sonatype.org/content/repositories/snapshots/org/eclipse/glsp/
 - <i>Releases/Release Candiates: </i> https://oss.sonatype.org/content/groups/public/org/eclipse/glsp/
 
-### P2 Update Sites   ![build-status-server](https://img.shields.io/jenkins/build?jobUrl=https://ci.eclipse.org/glsp/job/deploy-p2-glsp-server/&label=publish)
+### P2 Update Sites   [![build-status-server](https://img.shields.io/jenkins/build?jobUrl=https://ci.eclipse.org/glsp/job/deploy-p2-glsp-server/&label=publish)](https://ci.eclipse.org/glsp/job/deploy-p2-glsp-server/)
 - <i>Snapshots: </i> https://download.eclipse.org/glsp/server/p2/nightly/
 
 All changes on the master branch are deployed automatically to the corresponding snapshot repositories.

@@ -15,42 +15,30 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operationhandler;
 
-import java.util.List;
-
-import org.eclipse.glsp.api.action.kind.InitCreateOperationAction;
 import org.eclipse.glsp.api.handler.CreateOperationHandler;
 import org.eclipse.glsp.api.operation.CreateOperation;
 import org.eclipse.glsp.api.operation.Operation;
-import org.eclipse.glsp.api.utils.GenericUtil;
-
-import com.google.common.collect.Lists;
+import org.eclipse.glsp.api.utils.GenericsUtil;
 
 public abstract class BasicCreateOperationHandler<T extends CreateOperation> extends BasicOperationHandler<T>
    implements CreateOperationHandler {
 
    private String elementTypeId;
-   private String operationKind;
 
-   public BasicCreateOperationHandler(final String elementTypeId, final String operationKind) {
+   public BasicCreateOperationHandler(final String elementTypeId) {
       this.elementTypeId = elementTypeId;
-      this.operationKind = operationKind;
    }
 
    @SuppressWarnings("unchecked")
    @Override
    protected Class<T> deriveOperationType() {
-      return (Class<T>) (GenericUtil.getParametrizedType(getClass(), BasicCreateOperationHandler.class))
+      return (Class<T>) (GenericsUtil.getParametrizedType(getClass(), BasicCreateOperationHandler.class))
          .getActualTypeArguments()[0];
    }
 
    @Override
-   public List<InitCreateOperationAction> getInitActions() {
-      return Lists.newArrayList(new InitCreateOperationAction(elementTypeId, operationKind));
-   }
-
-   @Override
    public boolean handles(final Operation operation) {
-      return super.handles(operation) && getOperationType()
+      return super.handles(operation) && getHandledOperationType()
          .cast(operation).getElementTypeId().equals(elementTypeId);
    }
 
@@ -61,10 +49,5 @@ public abstract class BasicCreateOperationHandler<T extends CreateOperation> ext
    public String getElementTypeId() { return elementTypeId; }
 
    public void setElementTypeId(final String elementTypeId) { this.elementTypeId = elementTypeId; }
-
-   @Override
-   public String getOperationKind() { return operationKind; }
-
-   public void setOperationKind(final String operationKind) { this.operationKind = operationKind; }
 
 }

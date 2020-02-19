@@ -27,7 +27,7 @@ import org.eclipse.glsp.api.jsonrpc.GLSPClient;
 import org.eclipse.glsp.api.jsonrpc.GLSPClientProvider;
 import org.eclipse.glsp.api.model.GraphicalModelState;
 import org.eclipse.glsp.api.model.ModelStateProvider;
-import org.eclipse.glsp.api.supplier.ActionHandlerSupplier;
+import org.eclipse.glsp.api.registry.ActionHandlerRegistry;
 
 import com.google.inject.Inject;
 
@@ -37,14 +37,14 @@ public class DefaultActionProcessor implements ActionProcessor {
    protected GLSPClientProvider clientProvider;
 
    @Inject
-   protected ActionHandlerSupplier handlerProvider;
+   protected ActionHandlerRegistry actionHandlerRegistry;
 
    @Inject
    protected ModelStateProvider modelStateProvider;
 
    @Override
    public List<Action> dispatch(final String clientId, final Action action) {
-      Optional<ActionHandler> handler = handlerProvider.getHandler(action);
+      Optional<ActionHandler> handler = actionHandlerRegistry.get(action).stream().findFirst();
       if (handler.isPresent()) {
          GraphicalModelState modelState = modelStateProvider.getModelState(clientId)
             .orElseGet(() -> modelStateProvider.create(clientId));

@@ -45,7 +45,7 @@ public class UndoRedoActionHandler implements ActionHandler {
    }
 
    @Override
-   public List<Class<? extends Action>> handledActionTypes() {
+   public List<Class<? extends Action>> getHandledActionTypes() {
       return Lists.newArrayList(UndoAction.class, RedoAction.class);
    }
 }

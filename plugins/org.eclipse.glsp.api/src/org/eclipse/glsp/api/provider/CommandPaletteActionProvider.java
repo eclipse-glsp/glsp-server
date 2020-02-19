@@ -31,7 +31,7 @@ public interface CommandPaletteActionProvider extends ContextActionsProvider {
    String INDEX = "index";
 
    @Override
-   default String contextId() {
+   default String getContextId() {
       return CommandPaletteActionProvider.CONTEXT_ID;
    }
 

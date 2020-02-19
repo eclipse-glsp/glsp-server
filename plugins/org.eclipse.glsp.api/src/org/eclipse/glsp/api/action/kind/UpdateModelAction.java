@@ -34,4 +34,8 @@ public class UpdateModelAction extends Action {
    }
 
    public GModelRoot getNewRoot() { return newRoot; }
+
+   public boolean isAnimate() { return animate; }
+
+   public void setAnimate(final boolean animate) { this.animate = animate; }
 }

@@ -18,40 +18,42 @@ package org.eclipse.glsp.api.registry;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.glsp.api.jsonrpc.GLSPServerException;
 
-public abstract class InstanceRegistry<T> {
-   protected Map<String, T> elements;
+public abstract class MapRegistry<K, V> implements Registry<K, V> {
+   protected Map<K, V> elements;
 
-   public InstanceRegistry() {
+   public MapRegistry() {
       this.elements = new HashMap<>();
    }
 
-   public boolean register(final String key, final T instance) {
+   @Override
+   public boolean register(final K key, final V instance) {
       return this.elements.putIfAbsent(key, instance) != null;
    }
 
-   public boolean deregister(final String key) {
+   @Override
+   public boolean deregister(final K key) {
       return elements.remove(key) != null;
    }
 
-   public boolean hasKey(final String key) {
+   @Override
+   public boolean hasKey(final K key) {
       return this.elements.containsKey(key);
    }
 
-   public T get(final String key) {
-      T result = elements.get(key);
-      if (result == null) {
-         throw missing(key);
-      }
-      return result;
+   @Override
+   public Optional<V> get(final K key) {
+      return Optional.ofNullable(elements.get(key));
    }
 
-   public Set<T> getAll() { return new HashSet<>(elements.values()); }
+   @Override
+   public Set<V> getAll() { return new HashSet<>(elements.values()); }
 
-   protected GLSPServerException missing(final String key) {
+   protected GLSPServerException missing(final K key) {
       return new GLSPServerException("Unknown registry key: " + key);
    }
 }

@@ -23,5 +23,5 @@ Export-Package: org.eclipse.glsp.server.actionhandler,
  org.eclipse.glsp.server.model,
  org.eclipse.glsp.server.operationhandler,
  org.eclipse.glsp.server.provider,
- org.eclipse.glsp.server.supplier,
- org.eclipse.glsp.server.util
+ org.eclipse.glsp.server.registry,
+ org.eclipse.glsp.server.utils

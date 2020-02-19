@@ -13,23 +13,19 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.api.supplier;
+package org.eclipse.glsp.api.registry;
 
-import java.util.Collections;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.eclipse.glsp.api.action.Action;
-import org.eclipse.glsp.api.handler.ActionHandler;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.glsp.api.diagram.DiagramConfiguration;
 
-public interface ActionHandlerSupplier extends HandlerSupplier<ActionHandler, Action> {
+public interface DiagramConfigurationRegistry extends Registry<String, DiagramConfiguration> {
 
-   final class NullImpl implements ActionHandlerSupplier {
-
-      @Override
-      public Set<ActionHandler> get() {
-         return Collections.emptySet();
-      }
-
+   default Map<String, EClass> getCollectiveTypeMappings() {
+      Map<String, EClass> collectiveTypeMappings = new HashMap<>();
+      getAll().stream().map(DiagramConfiguration::getTypeMappings).forEach(collectiveTypeMappings::putAll);
+      return collectiveTypeMappings;
    }
-
 }

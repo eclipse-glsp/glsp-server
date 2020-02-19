@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,26 +13,20 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.supplier;
+package org.eclipse.glsp.api.registry;
 
-import java.util.Set;
+import java.util.List;
 
-import org.eclipse.glsp.api.handler.ServerCommandHandler;
-import org.eclipse.glsp.api.supplier.ServerCommandHandlerSupplier;
+public interface MultiRegistry<K, V> {
+   boolean register(K key, V element);
 
-import com.google.inject.Inject;
+   boolean deregister(K key, V element);
 
-public class DIServerCommandHandlerSupplier implements ServerCommandHandlerSupplier {
-   protected final Set<ServerCommandHandler> handlers;
+   boolean deregisterAll(K key);
 
-   @Inject
-   public DIServerCommandHandlerSupplier(final Set<ServerCommandHandler> handlers) {
-      this.handlers = handlers;
-   }
+   boolean hasKey(K key);
 
-   @Override
-   public Set<ServerCommandHandler> get() {
-      return handlers;
-   }
+   List<V> get(K key);
 
+   List<V> getAll();
 }

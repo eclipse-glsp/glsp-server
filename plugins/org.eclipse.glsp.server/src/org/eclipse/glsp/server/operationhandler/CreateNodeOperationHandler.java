@@ -18,7 +18,6 @@ package org.eclipse.glsp.server.operationhandler;
 import java.util.Optional;
 
 import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.operation.Operation;
 import org.eclipse.glsp.api.operation.kind.CreateNodeOperation;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
@@ -28,7 +27,7 @@ import org.eclipse.glsp.graph.GPoint;
 public abstract class CreateNodeOperationHandler extends BasicCreateOperationHandler<CreateNodeOperation> {
 
    public CreateNodeOperationHandler(final String elementTypeId) {
-      super(elementTypeId, Operation.Kind.CREATE_NODE);
+      super(elementTypeId);
    }
 
    @Override

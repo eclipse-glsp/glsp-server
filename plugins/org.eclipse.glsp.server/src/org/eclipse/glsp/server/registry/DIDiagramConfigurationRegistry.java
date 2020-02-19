@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2019 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,20 +13,22 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.api.supplier;
+package org.eclipse.glsp.server.registry;
 
-import java.util.Collections;
 import java.util.Set;
-import java.util.function.Supplier;
 
-import org.eclipse.glsp.api.provider.ContextActionsProvider;
+import org.eclipse.glsp.api.diagram.DiagramConfiguration;
+import org.eclipse.glsp.api.registry.DiagramConfigurationRegistry;
+import org.eclipse.glsp.api.registry.MapRegistry;
 
-public interface ContextActionsProviderSupplier extends Supplier<Set<ContextActionsProvider>> {
-   final class NullImpl implements ContextActionsProviderSupplier {
+import com.google.inject.Inject;
 
-      @Override
-      public Set<ContextActionsProvider> get() {
-         return Collections.emptySet();
-      }
+public class DIDiagramConfigurationRegistry extends MapRegistry<String, DiagramConfiguration>
+   implements DiagramConfigurationRegistry {
+   public static final String DEFAULT_DIAGRAM_TYPE = "default-diagram";
+
+   @Inject
+   public DIDiagramConfigurationRegistry(final Set<DiagramConfiguration> diagramConfigurations) {
+      diagramConfigurations.forEach(handler -> register(handler.getDiagramType(), handler));
    }
 }

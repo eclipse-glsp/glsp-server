@@ -15,14 +15,10 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operationhandler;
 
-import java.util.List;
-
 import org.eclipse.glsp.api.handler.OperationHandler;
 import org.eclipse.glsp.api.model.GraphicalModelState;
 import org.eclipse.glsp.api.operation.Operation;
-import org.eclipse.glsp.api.utils.GenericUtil;
-
-import com.google.common.collect.Lists;
+import org.eclipse.glsp.api.utils.GenericsUtil;
 
 public abstract class BasicOperationHandler<T extends Operation> implements OperationHandler {
 
@@ -34,16 +30,12 @@ public abstract class BasicOperationHandler<T extends Operation> implements Oper
 
    @SuppressWarnings("unchecked")
    protected Class<T> deriveOperationType() {
-      return (Class<T>) (GenericUtil.getParametrizedType(getClass(), BasicOperationHandler.class))
+      return (Class<T>) (GenericsUtil.getParametrizedType(getClass(), BasicOperationHandler.class))
          .getActualTypeArguments()[0];
    }
 
    @Override
-   public boolean handles(final Operation operation) {
-      return operationType.isInstance(operation);
-   }
-
-   public Class<T> getOperationType() { return operationType; }
+   public Class<T> getHandledOperationType() { return operationType; }
 
    @Override
    public void execute(final Operation operation, final GraphicalModelState modelState) {
@@ -56,10 +48,4 @@ public abstract class BasicOperationHandler<T extends Operation> implements Oper
 
    @Override
    public String getLabel() { return operationType.getSimpleName(); }
-
-   @Override
-   public List<Class<? extends Operation>> handledOperationTypes() {
-      return Lists.newArrayList(operationType);
-   }
-
 }

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,26 +13,22 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.supplier;
+package org.eclipse.glsp.api.registry;
 
+import java.util.Comparator;
+import java.util.Optional;
 import java.util.Set;
+import java.util.function.Supplier;
 
-import org.eclipse.glsp.api.handler.OperationHandler;
-import org.eclipse.glsp.api.supplier.OperationHandlerSupplier;
+import org.eclipse.glsp.api.handler.Handler;
 
-import com.google.inject.Inject;
-
-public class DIOperationHandlerSupplier implements OperationHandlerSupplier {
-   protected final Set<OperationHandler> handlers;
-
-   @Inject
-   public DIOperationHandlerSupplier(final Set<OperationHandler> handlers) {
-      this.handlers = handlers;
+public interface HandlerSupplier<T extends Handler<E>, E> extends Supplier<Set<T>> {
+   default boolean isHandled(final E object) {
+      return getHandler(object).isPresent();
    }
 
-   @Override
-   public Set<OperationHandler> get() {
-      return handlers;
+   default Optional<T> getHandler(final E object) {
+      return get().stream().sorted(Comparator.comparing(Handler::getPriority))
+         .filter(ha -> ha.handles(object)).findFirst();
    }
-
 }

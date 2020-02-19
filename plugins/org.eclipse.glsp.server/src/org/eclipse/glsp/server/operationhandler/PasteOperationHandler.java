@@ -15,8 +15,8 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operationhandler;
 
-import static org.eclipse.glsp.server.util.GModelUtil.filterByType;
-import static org.eclipse.glsp.server.util.GModelUtil.shift;
+import static org.eclipse.glsp.server.utils.GModelUtil.filterByType;
+import static org.eclipse.glsp.server.utils.GModelUtil.shift;
 
 import java.util.ArrayList;
 import java.util.Arrays;

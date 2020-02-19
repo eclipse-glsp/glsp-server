@@ -44,4 +44,12 @@ public class CenterAction extends Action {
    public boolean isAnimate() { return animate; }
 
    public void setAnimate(final boolean animate) { this.animate = animate; }
+
+   public List<String> getElementIds() { return elementIds; }
+
+   public void setElementIds(final List<String> elementIds) { this.elementIds = elementIds; }
+
+   public boolean isRetainZoom() { return retainZoom; }
+
+   public void setRetainZoom(final boolean retainZoom) { this.retainZoom = retainZoom; }
 }

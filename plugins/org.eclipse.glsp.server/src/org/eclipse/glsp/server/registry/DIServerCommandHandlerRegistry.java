@@ -13,32 +13,23 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.supplier;
+package org.eclipse.glsp.server.registry;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Set;
 
-import org.eclipse.glsp.api.diagram.DiagramConfiguration;
-import org.eclipse.glsp.api.supplier.DiagramConfigurationSupplier;
+import org.eclipse.glsp.api.handler.ServerCommandHandler;
+import org.eclipse.glsp.api.registry.MapRegistry;
+import org.eclipse.glsp.api.registry.ServerCommandHandlerRegistry;
 
 import com.google.inject.Inject;
 
-public class DIDiagramConfigurationSupplier implements DiagramConfigurationSupplier {
-   public static final String DEFAULT_DIAGRAM_TYPE = "default-diagram";
-   protected final Set<DiagramConfiguration> diagramHandlers;
+public class DIServerCommandHandlerRegistry extends MapRegistry<String, ServerCommandHandler>
+   implements ServerCommandHandlerRegistry {
 
    @Inject
-   public DIDiagramConfigurationSupplier(final Set<DiagramConfiguration> diagramHandlers) {
-      this.diagramHandlers = diagramHandlers;
+   public DIServerCommandHandlerRegistry(final Set<ServerCommandHandler> handlers) {
+      handlers.forEach(handler -> {
+         handler.handledCommandIds().forEach(id -> register(id, handler));
+      });
    }
-
-   @Override
-   public Collection<String> getDiagramTypes() { return Arrays.asList(DEFAULT_DIAGRAM_TYPE); }
-
-   @Override
-   public Set<DiagramConfiguration> get() {
-      return diagramHandlers;
-   }
-
 }

@@ -19,34 +19,24 @@ import java.util.Map;
 
 import org.eclipse.glsp.api.action.Action;
 
-public class InitCreateOperationAction extends Action {
+public abstract class TriggerElementCreationAction extends Action {
    private String elementTypeId;
-   private String operationKind;
    private Map<String, String> args;
 
-   public InitCreateOperationAction() {
-      super(Action.Kind.INIT_CREATE_OPERATION);
+   public TriggerElementCreationAction(final String kind, final String elementTypeId) {
+      this(kind, elementTypeId, null);
    }
 
-   public InitCreateOperationAction(final String elementTypeId, final String operationKind) {
-      this(elementTypeId, operationKind, null);
-   }
-
-   public InitCreateOperationAction(final String elementTypeId, final String operationKind,
+   public TriggerElementCreationAction(final String kind, final String elementTypeId,
       final Map<String, String> args) {
-      this();
+      super(kind);
       this.elementTypeId = elementTypeId;
-      this.operationKind = operationKind;
       this.args = args;
    }
 
    public String getElementTypeId() { return elementTypeId; }
 
    public void setElementTypeId(final String elementTypeId) { this.elementTypeId = elementTypeId; }
-
-   public String getOperationKind() { return operationKind; }
-
-   public void setOperationKind(final String operationKind) { this.operationKind = operationKind; }
 
    public Map<String, String> getArgs() { return args; }
 

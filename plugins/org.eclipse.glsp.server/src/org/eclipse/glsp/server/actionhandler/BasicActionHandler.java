@@ -21,20 +21,20 @@ import java.util.List;
 import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.handler.ActionHandler;
 import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.utils.GenericUtil;
+import org.eclipse.glsp.api.utils.GenericsUtil;
 
 public abstract class BasicActionHandler<T extends Action> implements ActionHandler {
    protected final Class<T> actionType;
 
    @SuppressWarnings("unchecked")
    public BasicActionHandler() {
-      this.actionType = (Class<T>) (GenericUtil.getParametrizedType(getClass(), BasicActionHandler.class))
+      this.actionType = (Class<T>) (GenericsUtil.getParametrizedType(getClass(), BasicActionHandler.class))
          .getActualTypeArguments()[0];
    }
 
    @SuppressWarnings("unchecked")
    protected Class<T> deriveOperationType() {
-      return (Class<T>) GenericUtil.getGenericTypeParameterClass(getClass(), BasicActionHandler.class);
+      return (Class<T>) GenericsUtil.getGenericTypeParameterClass(getClass(), BasicActionHandler.class);
    }
 
    @Override
@@ -46,11 +46,9 @@ public abstract class BasicActionHandler<T extends Action> implements ActionHand
    public List<Action> execute(final Action action, final GraphicalModelState modelState) {
       if (handles(action)) {
          T actualAction = actionType.cast(action);
-
          return executeAction(actualAction, modelState);
       }
       return none();
-
    }
 
    protected abstract List<Action> executeAction(T actualAction, GraphicalModelState modelState);
@@ -58,7 +56,7 @@ public abstract class BasicActionHandler<T extends Action> implements ActionHand
    public Class<T> getActionType() { return actionType; }
 
    @Override
-   public List<Class<? extends Action>> handledActionTypes() {
+   public List<Class<? extends Action>> getHandledActionTypes() {
       return Arrays.asList(actionType);
    }
 

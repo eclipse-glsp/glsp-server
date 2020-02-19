@@ -13,38 +13,31 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.supplier;
+package org.eclipse.glsp.server.registry;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.eclipse.glsp.api.provider.CommandPaletteActionProvider;
 import org.eclipse.glsp.api.provider.ContextActionsProvider;
 import org.eclipse.glsp.api.provider.ContextMenuItemProvider;
 import org.eclipse.glsp.api.provider.ToolPaletteItemProvider;
-import org.eclipse.glsp.api.supplier.ContextActionsProviderSupplier;
+import org.eclipse.glsp.api.registry.ContextActionsProviderRegistry;
+import org.eclipse.glsp.api.registry.MapRegistry;
 
 import com.google.inject.Inject;
 
-public class DIContextActionsProviderSupplier implements ContextActionsProviderSupplier {
-
-   protected final Set<ContextActionsProvider> contextActionsProviders;
+public class DIContextActionsProviderRegistry extends MapRegistry<String, ContextActionsProvider>
+   implements ContextActionsProviderRegistry {
 
    @Inject
-   public DIContextActionsProviderSupplier(final Set<ContextActionsProvider> contextActionsProviders,
+   public DIContextActionsProviderRegistry(final Set<ContextActionsProvider> contextActionsProviders,
       final ContextMenuItemProvider contextMenuItemProvider,
       final CommandPaletteActionProvider commandPaletteActionProvider,
       final ToolPaletteItemProvider toolPaletteItemProvider) {
-      this.contextActionsProviders = new HashSet<>();
-      this.contextActionsProviders.addAll(contextActionsProviders);
-      this.contextActionsProviders.add(contextMenuItemProvider);
-      this.contextActionsProviders.add(commandPaletteActionProvider);
-      this.contextActionsProviders.add(toolPaletteItemProvider);
-   }
+      contextActionsProviders.forEach(provider -> register(provider.getContextId(), provider));
 
-   @Override
-   public Set<ContextActionsProvider> get() {
-      return contextActionsProviders;
+      Stream.of(contextMenuItemProvider, commandPaletteActionProvider, toolPaletteItemProvider)
+         .forEach(provider -> register(provider.getContextId(), provider));
    }
-
 }

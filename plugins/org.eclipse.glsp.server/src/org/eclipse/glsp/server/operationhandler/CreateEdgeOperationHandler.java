@@ -15,29 +15,28 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operationhandler;
 
-import static org.eclipse.glsp.server.util.GModelUtil.IS_CONNECTABLE;
+import static org.eclipse.glsp.server.utils.GModelUtil.IS_CONNECTABLE;
 
 import java.util.Optional;
 
 import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.operation.Operation;
-import org.eclipse.glsp.api.operation.kind.CreateConnectionOperation;
+import org.eclipse.glsp.api.operation.kind.CreateEdgeOperation;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GModelRoot;
 
-public abstract class CreateConnectionOperationHandler extends BasicCreateOperationHandler<CreateConnectionOperation> {
+public abstract class CreateEdgeOperationHandler extends BasicCreateOperationHandler<CreateEdgeOperation> {
 
    private final String label;
 
-   public CreateConnectionOperationHandler(final String elementTypeId, final String label) {
-      super(elementTypeId, Operation.Kind.CREATE_CONNECTION);
+   public CreateEdgeOperationHandler(final String elementTypeId, final String label) {
+      super(elementTypeId);
       this.label = label;
    }
 
    @Override
-   public void executeOperation(final CreateConnectionOperation action, final GraphicalModelState modelState) {
+   public void executeOperation(final CreateEdgeOperation action, final GraphicalModelState modelState) {
       if (action.getSourceElementId() == null || action.getTargetElementId() == null) {
          throw new IllegalArgumentException("Incomplete create connection action");
       }
@@ -51,7 +50,7 @@ public abstract class CreateConnectionOperationHandler extends BasicCreateOperat
             + " and target ID " + action.getTargetElementId());
       }
 
-      Optional<GEdge> connection = createConnection(source.get(), target.get(), modelState);
+      Optional<GEdge> connection = createEdge(source.get(), target.get(), modelState);
       if (!connection.isPresent()) {
          throw new IllegalArgumentException(
             String.format("Creation of connection failed for source: %s , target: %s", source.get().getId(),
@@ -61,7 +60,7 @@ public abstract class CreateConnectionOperationHandler extends BasicCreateOperat
       currentModel.getChildren().add(connection.get());
    }
 
-   protected abstract Optional<GEdge> createConnection(GModelElement source, GModelElement target,
+   protected abstract Optional<GEdge> createEdge(GModelElement source, GModelElement target,
       GraphicalModelState modelState);
 
    @Override

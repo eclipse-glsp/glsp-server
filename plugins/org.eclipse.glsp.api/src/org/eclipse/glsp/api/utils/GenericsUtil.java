@@ -13,21 +13,22 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.api.supplier;
+package org.eclipse.glsp.api.utils;
 
-import java.util.Collections;
-import java.util.Set;
-import java.util.function.Supplier;
+import java.lang.reflect.ParameterizedType;
 
-import org.eclipse.glsp.api.action.Action;
+public final class GenericsUtil {
+   private GenericsUtil() {}
 
-public interface ActionSupplier extends Supplier<Set<Action>> {
-   final class NullImpl implements ActionSupplier {
-
-      @Override
-      public Set<Action> get() {
-         return Collections.emptySet();
+   public static ParameterizedType getParametrizedType(final Class<?> clazz, final Class<?> genericBaseclass) {
+      if (clazz.getSuperclass().equals(genericBaseclass)) { // check that we are at the top of the hierarchy
+         return (ParameterizedType) clazz.getGenericSuperclass();
       }
+      return getParametrizedType(clazz.getSuperclass(), genericBaseclass);
+   }
 
+   public static Class<?> getGenericTypeParameterClass(final Class<?> clazz, final Class<?> genericBaseclass) {
+      return (Class<?>) (GenericsUtil.getParametrizedType(clazz, genericBaseclass))
+         .getActualTypeArguments()[0];
    }
 }

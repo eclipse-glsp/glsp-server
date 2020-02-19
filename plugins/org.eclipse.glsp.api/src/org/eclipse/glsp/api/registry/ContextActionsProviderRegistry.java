@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,24 +13,8 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.supplier;
+package org.eclipse.glsp.api.registry;
 
-import java.util.Set;
+import org.eclipse.glsp.api.provider.ContextActionsProvider;
 
-import org.eclipse.glsp.api.handler.ActionHandler;
-import org.eclipse.glsp.api.supplier.ActionHandlerSupplier;
-
-import com.google.inject.Inject;
-
-public class DIActionHandlerSupplier implements ActionHandlerSupplier {
-   protected final Set<ActionHandler> handlers;
-
-   @Inject
-   public DIActionHandlerSupplier(final Set<ActionHandler> handlers) {
-      this.handlers = handlers;
-   }
-
-   @Override
-   public Set<ActionHandler> get() { return handlers; }
-
-}
+public interface ContextActionsProviderRegistry extends Registry<String, ContextActionsProvider> {}

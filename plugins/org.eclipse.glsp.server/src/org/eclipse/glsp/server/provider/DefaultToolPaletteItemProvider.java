@@ -19,12 +19,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.eclipse.glsp.api.action.kind.InitCreateOperationAction;
+import org.eclipse.glsp.api.action.kind.TriggerElementCreationAction;
 import org.eclipse.glsp.api.handler.CreateOperationHandler;
 import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.operation.Operation;
+import org.eclipse.glsp.api.operation.CreateOperation;
+import org.eclipse.glsp.api.operation.kind.CreateEdgeOperation;
+import org.eclipse.glsp.api.operation.kind.CreateNodeOperation;
 import org.eclipse.glsp.api.provider.ToolPaletteItemProvider;
-import org.eclipse.glsp.api.supplier.OperationHandlerSupplier;
+import org.eclipse.glsp.api.registry.OperationHandlerRegistry;
 import org.eclipse.glsp.api.types.PaletteItem;
 
 import com.google.common.collect.Lists;
@@ -33,37 +35,36 @@ import com.google.inject.Inject;
 public class DefaultToolPaletteItemProvider implements ToolPaletteItemProvider {
 
    @Inject
-   protected OperationHandlerSupplier operationHandlerProvider;
+   protected OperationHandlerRegistry operationHandlerRegistry;
    private int counter;
 
    @Override
    public List<PaletteItem> getItems(final Map<String, String> args, final GraphicalModelState modelState) {
-      List<CreateOperationHandler> createOperationHandlers = operationHandlerProvider.get().stream()
+      List<CreateOperationHandler> handlers = operationHandlerRegistry.getAll().stream()
          .filter(CreateOperationHandler.class::isInstance)
          .map(CreateOperationHandler.class::cast)
          .collect(Collectors.toList());
       counter = 0;
+      List<PaletteItem> nodes = createPaletteItems(handlers, CreateNodeOperation.class);
 
-      List<PaletteItem> nodes = createOperationHandlers.stream()
-         .filter(h -> h.getOperationKind().equals(Operation.Kind.CREATE_NODE))
-         .flatMap(handler -> handler.getInitActions()
-            .stream()
-            .map(action -> create(action, handler.getLabel())))
-         .collect(Collectors.toList());
-
-      List<PaletteItem> edges = createOperationHandlers.stream()
-         .filter(h -> h.getOperationKind().equals(Operation.Kind.CREATE_CONNECTION))
-         .flatMap(handler -> handler.getInitActions()
-            .stream()
-            .map(action -> create(action, handler.getLabel())))
-         .collect(Collectors.toList());
+      List<PaletteItem> edges = createPaletteItems(handlers, CreateEdgeOperation.class);
 
       return Lists.newArrayList(PaletteItem.createPaletteGroup("node-group", "Nodes", nodes, "fa-hammer", "A"),
          PaletteItem.createPaletteGroup("edge-group", "Edges", edges, "fa-hammer", "B"));
 
    }
 
-   protected PaletteItem create(final InitCreateOperationAction action, final String label) {
+   protected List<PaletteItem> createPaletteItems(final List<CreateOperationHandler> handlers,
+      final Class<? extends CreateOperation> operationClass) {
+      return handlers.stream()
+         .filter(h -> operationClass.isAssignableFrom(h.getHandledOperationType()))
+         .flatMap(handler -> handler.getTriggerActions()
+            .stream()
+            .map(action -> create(action, handler.getLabel())))
+         .collect(Collectors.toList());
+   }
+
+   protected PaletteItem create(final TriggerElementCreationAction action, final String label) {
       PaletteItem item = new PaletteItem("palette-item" + counter++, label, action);
       item.setSortString("" + counter);
       return item;

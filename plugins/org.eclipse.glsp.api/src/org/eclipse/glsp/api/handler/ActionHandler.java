@@ -25,11 +25,11 @@ import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.model.GraphicalModelState;
 
 public interface ActionHandler extends Handler<Action> {
-   List<Class<? extends Action>> handledActionTypes();
+   List<Class<? extends Action>> getHandledActionTypes();
 
    @Override
    default boolean handles(final Action action) {
-      return handledActionTypes().stream().anyMatch(clazz -> clazz.isInstance(action));
+      return getHandledActionTypes().stream().anyMatch(clazz -> clazz.isInstance(action));
    }
 
    default List<Action> listOf(final Action... action) {

@@ -16,18 +16,18 @@
 package org.eclipse.glsp.server.operationhandler;
 
 import static org.eclipse.glsp.api.jsonrpc.GLSPServerException.getOrThrow;
-import static org.eclipse.glsp.server.util.GModelUtil.IS_CONNECTABLE;
+import static org.eclipse.glsp.server.utils.GModelUtil.IS_CONNECTABLE;
 
 import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.operation.kind.ReconnectConnectionOperation;
+import org.eclipse.glsp.api.operation.kind.ReconnectEdgeOperation;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
 
-public class ReconnectOperationHandler extends BasicOperationHandler<ReconnectConnectionOperation> {
+public class ReconnectOperationHandler extends BasicOperationHandler<ReconnectEdgeOperation> {
    @Override
    @SuppressWarnings("checkstyle:CyclomaticComplexity")
-   public void executeOperation(final ReconnectConnectionOperation operation, final GraphicalModelState modelState) {
+   public void executeOperation(final ReconnectEdgeOperation operation, final GraphicalModelState modelState) {
 
       if (operation.getConnectionElementId() == null || operation.getSourceElementId() == null
          || operation.getTargetElementId() == null) {

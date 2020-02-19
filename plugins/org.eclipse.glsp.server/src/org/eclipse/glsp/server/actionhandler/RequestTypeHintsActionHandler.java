@@ -24,7 +24,7 @@ import org.eclipse.glsp.api.action.kind.RequestTypeHintsAction;
 import org.eclipse.glsp.api.action.kind.SetTypeHintsAction;
 import org.eclipse.glsp.api.diagram.DiagramConfiguration;
 import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.supplier.DiagramConfigurationSupplier;
+import org.eclipse.glsp.api.registry.DiagramConfigurationRegistry;
 import org.eclipse.glsp.api.utils.ClientOptions;
 
 import com.google.inject.Inject;
@@ -32,7 +32,7 @@ import com.google.inject.Inject;
 public class RequestTypeHintsActionHandler extends BasicActionHandler<RequestTypeHintsAction> {
    private final Logger log = Logger.getLogger(RequestTypeHintsActionHandler.class);
    @Inject
-   protected DiagramConfigurationSupplier diagramConfigurationProvider;
+   protected DiagramConfigurationRegistry diagramConfigurationRegistry;
 
    @Override
    public List<Action> executeAction(final RequestTypeHintsAction action, final GraphicalModelState modelState) {
@@ -42,7 +42,7 @@ public class RequestTypeHintsActionHandler extends BasicActionHandler<RequestTyp
          log.info("RequestTypeHintsAction failed: No diagram type is present");
          return none();
       }
-      Optional<DiagramConfiguration> configuration = diagramConfigurationProvider.get(diagramType.get());
+      Optional<DiagramConfiguration> configuration = diagramConfigurationRegistry.get(diagramType.get());
       if (!configuration.isPresent()) {
          log.info("RequestTypeHintsAction failed: No diagram confiuration found for : " + diagramType.get());
          return none();

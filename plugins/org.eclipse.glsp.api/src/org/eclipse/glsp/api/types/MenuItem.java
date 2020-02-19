@@ -20,9 +20,12 @@ import java.util.List;
 
 import org.eclipse.glsp.api.action.Action;
 
-public class MenuItem extends Item {
+public class MenuItem extends LabeledAction {
+   private final String id;
+   private final String sortString;
    private String group;
    private String parentId;
+   private final List<MenuItem> children;
    private boolean isEnabled;
    private boolean isToggled;
 
@@ -57,8 +60,10 @@ public class MenuItem extends Item {
    public MenuItem(final String id, final String label, final List<Action> actions, final String icon,
       final String sortString, final String group,
       final String parentId, final boolean isEnabled, final boolean isToggled, final List<MenuItem> children) {
-      super(id, label, actions, icon);
-      setSortString(sortString);
+      super(label, actions, icon);
+      this.id = id;
+      this.sortString = sortString;
+      this.children = children;
       this.group = group;
       this.parentId = parentId;
       this.isEnabled = isEnabled;
@@ -81,4 +86,9 @@ public class MenuItem extends Item {
 
    public void setToggled(final boolean isToggled) { this.isToggled = isToggled; }
 
+   public String getId() { return id; }
+
+   public String getSortString() { return sortString; }
+
+   public List<MenuItem> getChildren() { return children; }
 }

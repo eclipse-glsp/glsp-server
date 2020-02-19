@@ -22,18 +22,18 @@ import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.action.kind.ExecuteServerCommandAction;
 import org.eclipse.glsp.api.handler.ServerCommandHandler;
 import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.supplier.ServerCommandHandlerSupplier;
+import org.eclipse.glsp.api.registry.ServerCommandHandlerRegistry;
 
 import com.google.inject.Inject;
 
 public class ExecuteServerCommandActionHandler extends BasicActionHandler<ExecuteServerCommandAction> {
    @Inject
-   protected ServerCommandHandlerSupplier commandHandlerProvider;
+   protected ServerCommandHandlerRegistry commandHandlerRegistry;
 
    @Override
    public List<Action> executeAction(final ExecuteServerCommandAction action, final GraphicalModelState modelState) {
 
-      Optional<ServerCommandHandler> handler = commandHandlerProvider.getHandler(action.getCommandId());
+      Optional<ServerCommandHandler> handler = commandHandlerRegistry.get(action.getCommandId());
       if (handler.isPresent()) {
          return handler.get().execute(action.getCommandId(), action.getOptions(), modelState);
       }

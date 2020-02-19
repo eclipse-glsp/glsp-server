@@ -33,7 +33,7 @@ public interface ContextMenuItemProvider extends ContextActionsProvider {
    String KEY = "context-menu";
 
    @Override
-   default String contextId() {
+   default String getContextId() {
       return ContextMenuItemProvider.KEY;
    }
 

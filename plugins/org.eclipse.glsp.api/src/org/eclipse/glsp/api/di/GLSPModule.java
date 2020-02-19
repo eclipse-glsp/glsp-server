@@ -31,12 +31,12 @@ import org.eclipse.glsp.api.model.ModelStateProvider;
 import org.eclipse.glsp.api.provider.CommandPaletteActionProvider;
 import org.eclipse.glsp.api.provider.ContextMenuItemProvider;
 import org.eclipse.glsp.api.provider.ToolPaletteItemProvider;
-import org.eclipse.glsp.api.supplier.ActionHandlerSupplier;
-import org.eclipse.glsp.api.supplier.ActionSupplier;
-import org.eclipse.glsp.api.supplier.ContextActionsProviderSupplier;
-import org.eclipse.glsp.api.supplier.DiagramConfigurationSupplier;
-import org.eclipse.glsp.api.supplier.OperationHandlerSupplier;
-import org.eclipse.glsp.api.supplier.ServerCommandHandlerSupplier;
+import org.eclipse.glsp.api.registry.ActionHandlerRegistry;
+import org.eclipse.glsp.api.registry.ActionRegistry;
+import org.eclipse.glsp.api.registry.ContextActionsProviderRegistry;
+import org.eclipse.glsp.api.registry.DiagramConfigurationRegistry;
+import org.eclipse.glsp.api.registry.OperationHandlerRegistry;
+import org.eclipse.glsp.api.registry.ServerCommandHandlerRegistry;
 import org.eclipse.glsp.graph.GraphExtension;
 
 import com.google.inject.AbstractModule;
@@ -63,15 +63,14 @@ public abstract class GLSPModule extends AbstractModule {
       bind(ContextMenuItemProvider.class).to(bindContextMenuItemProvider());
 
       // Configure set suppliers
-      bind(ActionSupplier.class).to(bindActionSupplier()).in(Singleton.class);
-      bind(ActionHandlerSupplier.class).to(bindActionHandlerSupplier()).in(Singleton.class);
-      bind(OperationHandlerSupplier.class).to(bindOperatioHandlerSupplier()).in(Singleton.class);
-      bind(DiagramConfigurationSupplier.class).to(bindDiagramConfigurationSupplier()).in(Singleton.class);
-      bind(ContextActionsProviderSupplier.class).to(bindContextActionsProviderSupplier()).in(Singleton.class);
-      bind(ServerCommandHandlerSupplier.class).to(bindServerCommandHandlerSupplier()).in(Singleton.class);
+      bind(ActionRegistry.class).to(bindActionRegistry()).in(Singleton.class);
+      bind(ActionHandlerRegistry.class).to(bindActionHandlerRegistry()).in(Singleton.class);
+      bind(OperationHandlerRegistry.class).to(bindOperatioHandlerRegistry()).in(Singleton.class);
+      bind(DiagramConfigurationRegistry.class).to(bindDiagramConfigurationRegistry()).in(Singleton.class);
+      bind(ContextActionsProviderRegistry.class).to(bindContextActionsProviderRegistry()).in(Singleton.class);
+      bind(ServerCommandHandlerRegistry.class).to(bindServerCommandHandlerRegistry()).in(Singleton.class);
       // Configure Optional Bindings (Bindings that cannot be bound to a NullImpl)
       Optional.ofNullable(bindGraphExtension()).ifPresent(ext -> bind(GraphExtension.class).to(ext));
-
    }
 
    protected abstract Class<? extends GLSPClientProvider> bindGSLPClientProvider();
@@ -122,27 +121,17 @@ public abstract class GLSPModule extends AbstractModule {
       return ToolPaletteItemProvider.NullImpl.class;
    }
 
-   protected Class<? extends ActionSupplier> bindActionSupplier() {
-      return ActionSupplier.NullImpl.class;
-   }
+   protected abstract Class<? extends ActionRegistry> bindActionRegistry();
 
-   protected Class<? extends ActionHandlerSupplier> bindActionHandlerSupplier() {
-      return ActionHandlerSupplier.NullImpl.class;
-   }
+   protected abstract Class<? extends ActionHandlerRegistry> bindActionHandlerRegistry();
 
-   protected Class<? extends OperationHandlerSupplier> bindOperatioHandlerSupplier() {
-      return OperationHandlerSupplier.NullImpl.class;
-   }
+   protected abstract Class<? extends OperationHandlerRegistry> bindOperatioHandlerRegistry();
 
-   protected abstract Class<? extends DiagramConfigurationSupplier> bindDiagramConfigurationSupplier();
+   protected abstract Class<? extends DiagramConfigurationRegistry> bindDiagramConfigurationRegistry();
 
-   protected Class<? extends ContextActionsProviderSupplier> bindContextActionsProviderSupplier() {
-      return ContextActionsProviderSupplier.NullImpl.class;
-   }
+   protected abstract Class<? extends ContextActionsProviderRegistry> bindContextActionsProviderRegistry();
 
-   protected Class<? extends ServerCommandHandlerSupplier> bindServerCommandHandlerSupplier() {
-      return ServerCommandHandlerSupplier.NullImpl.class;
-   }
+   protected abstract Class<? extends ServerCommandHandlerRegistry> bindServerCommandHandlerRegistry();
 
    protected Class<? extends GraphExtension> bindGraphExtension() {
       return null;

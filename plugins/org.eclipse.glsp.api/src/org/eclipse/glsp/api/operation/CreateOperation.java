@@ -15,8 +15,11 @@
  ********************************************************************************/
 package org.eclipse.glsp.api.operation;
 
+import java.util.Map;
+
 public abstract class CreateOperation extends Operation {
    private String elementTypeId;
+   private Map<String, String> args;
 
    public CreateOperation(final String operationKind) {
       super(operationKind);
@@ -27,8 +30,18 @@ public abstract class CreateOperation extends Operation {
       this.elementTypeId = elementTypeId;
    }
 
+   public CreateOperation(final String operationKind, final String elementTypeId, final Map<String, String> args) {
+      super(operationKind);
+      this.elementTypeId = elementTypeId;
+      this.args = args;
+   }
+
    public String getElementTypeId() { return elementTypeId; }
 
    public void setElementTypeId(final String elementTypeId) { this.elementTypeId = elementTypeId; }
+
+   public Map<String, String> getArgs() { return args; }
+
+   public void setArgs(final Map<String, String> args) { this.args = args; }
 
 }

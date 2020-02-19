@@ -28,7 +28,7 @@ public interface ToolPaletteItemProvider extends ContextActionsProvider {
    String CONTEXT_ID = "tool-palette";
 
    @Override
-   default String contextId() {
+   default String getContextId() {
       return ToolPaletteItemProvider.CONTEXT_ID;
    }
 

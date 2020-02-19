@@ -16,7 +16,7 @@
 package org.eclipse.glsp.server.factory;
 
 import org.eclipse.glsp.api.factory.GraphGsonConfiguratorFactory;
-import org.eclipse.glsp.api.supplier.DiagramConfigurationSupplier;
+import org.eclipse.glsp.api.registry.DiagramConfigurationRegistry;
 import org.eclipse.glsp.graph.GraphExtension;
 import org.eclipse.glsp.graph.gson.GGraphGsonConfigurator;
 
@@ -24,14 +24,14 @@ import com.google.inject.Inject;
 
 public class DefaultGraphGsonConfiguratorFactory implements GraphGsonConfiguratorFactory {
    @Inject
-   private DiagramConfigurationSupplier diagramConfigurationProvider;
+   private DiagramConfigurationRegistry diagramConfigurationRegistry;
    @Inject(optional = true)
    private GraphExtension graphExtension;
 
    @Override
    public GGraphGsonConfigurator create() {
       GGraphGsonConfigurator configurator = new GGraphGsonConfigurator()
-         .withTypes(diagramConfigurationProvider.getCollectiveTypeMappings());
+         .withTypes(diagramConfigurationRegistry.getCollectiveTypeMappings());
       if (graphExtension != null) {
          configurator = configurator.withEPackages(graphExtension.getEPackage());
       }

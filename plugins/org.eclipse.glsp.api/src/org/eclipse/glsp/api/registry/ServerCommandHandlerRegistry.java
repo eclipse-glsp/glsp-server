@@ -13,21 +13,10 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ******************************************************************************/
-package org.eclipse.glsp.api.supplier;
+package org.eclipse.glsp.api.registry;
 
-import java.util.Collections;
-import java.util.Set;
+import org.eclipse.glsp.api.handler.ServerCommandHandler;
 
-import org.eclipse.glsp.api.handler.OperationHandler;
-import org.eclipse.glsp.api.operation.Operation;
-
-public interface OperationHandlerSupplier extends HandlerSupplier<OperationHandler, Operation> {
-
-   final class NullImpl implements OperationHandlerSupplier {
-      @Override
-      public Set<OperationHandler> get() {
-         return Collections.emptySet();
-      }
-   }
+public interface ServerCommandHandlerRegistry extends Registry<String, ServerCommandHandler> {
 
 }

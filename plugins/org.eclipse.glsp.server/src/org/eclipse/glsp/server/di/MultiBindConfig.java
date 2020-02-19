@@ -34,7 +34,6 @@ public final class MultiBindConfig<T> {
    private MultiBindConfig(final Class<T> type) {
       this.type = type;
       bindings = new LinkedHashSet<>();
-
    }
 
    /**

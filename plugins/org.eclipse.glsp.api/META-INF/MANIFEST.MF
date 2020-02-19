@@ -31,6 +31,5 @@ Export-Package: org.eclipse.glsp.api.action,
  org.eclipse.glsp.api.operation.kind,
  org.eclipse.glsp.api.provider,
  org.eclipse.glsp.api.registry,
- org.eclipse.glsp.api.supplier,
  org.eclipse.glsp.api.types,
  org.eclipse.glsp.api.utils

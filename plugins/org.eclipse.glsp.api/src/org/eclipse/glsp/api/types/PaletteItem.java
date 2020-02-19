@@ -18,33 +18,42 @@ package org.eclipse.glsp.api.types;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
-import org.eclipse.glsp.api.action.kind.InitCreateOperationAction;
+import org.eclipse.glsp.api.action.kind.TriggerElementCreationAction;
 
-public class PaletteItem extends Item {
+public class PaletteItem extends LabeledAction {
+   private String id;
+   private String sortString;
+   private List<PaletteItem> children;
 
    public PaletteItem(final String id, final String label) {
-      super(id, label, Collections.emptyList());
-      setSortString("" + label.charAt(0));
+      super(label, Collections.emptyList());
+      this.id = id;
+      this.sortString = ("" + label.charAt(0));
    }
 
-   public PaletteItem(final String id, final String label, final InitCreateOperationAction initalizeAction) {
+   public PaletteItem(final String id, final String label, final TriggerElementCreationAction initalizeAction) {
       this(id, label, initalizeAction, null);
    }
 
-   public PaletteItem(final String id, final String label, final InitCreateOperationAction initalizeAction,
+   public PaletteItem(final String id, final String label, final TriggerElementCreationAction initalizeAction,
       final String icon) {
-      super(id, label, Arrays.asList(initalizeAction), icon);
-      setSortString("" + label.charAt(0));
+      super(label, Arrays.asList(initalizeAction), icon);
+      this.id = id;
+      this.sortString = ("" + label.charAt(0));
    }
 
-   public Optional<InitCreateOperationAction> getInitAction() {
-      return getActions().stream()
-         .filter(InitCreateOperationAction.class::isInstance)
-         .map(InitCreateOperationAction.class::cast)
-         .findFirst();
-   }
+   public String getId() { return id; }
+
+   public void setId(final String id) { this.id = id; }
+
+   public String getSortString() { return sortString; }
+
+   public void setSortString(final String sortString) { this.sortString = sortString; }
+
+   public List<PaletteItem> getChildren() { return children; }
+
+   public void setChildren(final List<PaletteItem> children) { this.children = children; }
 
    public static PaletteItem createPaletteGroup(final String id, final String label, final List<PaletteItem> children) {
       PaletteItem item = new PaletteItem(id, label);

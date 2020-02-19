@@ -15,14 +15,14 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actionhandler;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.action.kind.RequestContextActions;
 import org.eclipse.glsp.api.action.kind.SetContextActions;
 import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.supplier.ContextActionsProviderSupplier;
+import org.eclipse.glsp.api.registry.ContextActionsProviderRegistry;
 import org.eclipse.glsp.api.types.EditorContext;
 import org.eclipse.glsp.api.types.LabeledAction;
 
@@ -31,18 +31,17 @@ import com.google.inject.Inject;
 public class RequestContextActionsHandler extends BasicActionHandler<RequestContextActions> {
 
    @Inject
-   protected ContextActionsProviderSupplier contextActionsProviderSupplier;
+   protected ContextActionsProviderRegistry contextActionsProviderRegistry;
 
    public RequestContextActionsHandler() {}
 
    @Override
    public List<Action> executeAction(final RequestContextActions action, final GraphicalModelState modelState) {
       EditorContext editorContext = action.getEditorContext();
-
-      List<LabeledAction> actions = contextActionsProviderSupplier.get().stream()
-         .filter(provider -> provider.handles(action.getContextId()))
-         .flatMap(provider -> provider.getActions(editorContext, modelState).stream())
-         .collect(Collectors.toList());
+      List<LabeledAction> actions = new ArrayList<>();
+      contextActionsProviderRegistry.get(action.getContextId())
+         .map(provider -> provider.getActions(editorContext, modelState))
+         .ifPresent(labeledActions -> actions.addAll(labeledActions));
 
       return listOf(new SetContextActions(actions, action.getEditorContext().getArgs()));
    }

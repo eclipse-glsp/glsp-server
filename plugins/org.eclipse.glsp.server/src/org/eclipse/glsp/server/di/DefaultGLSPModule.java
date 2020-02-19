@@ -31,12 +31,12 @@ import org.eclipse.glsp.api.jsonrpc.GLSPServer;
 import org.eclipse.glsp.api.model.ModelStateProvider;
 import org.eclipse.glsp.api.provider.ContextActionsProvider;
 import org.eclipse.glsp.api.provider.ToolPaletteItemProvider;
-import org.eclipse.glsp.api.supplier.ActionHandlerSupplier;
-import org.eclipse.glsp.api.supplier.ActionSupplier;
-import org.eclipse.glsp.api.supplier.ContextActionsProviderSupplier;
-import org.eclipse.glsp.api.supplier.DiagramConfigurationSupplier;
-import org.eclipse.glsp.api.supplier.OperationHandlerSupplier;
-import org.eclipse.glsp.api.supplier.ServerCommandHandlerSupplier;
+import org.eclipse.glsp.api.registry.ActionHandlerRegistry;
+import org.eclipse.glsp.api.registry.ActionRegistry;
+import org.eclipse.glsp.api.registry.ContextActionsProviderRegistry;
+import org.eclipse.glsp.api.registry.DiagramConfigurationRegistry;
+import org.eclipse.glsp.api.registry.OperationHandlerRegistry;
+import org.eclipse.glsp.api.registry.ServerCommandHandlerRegistry;
 import org.eclipse.glsp.server.action.DefaultActionProcessor;
 import org.eclipse.glsp.server.factory.DefaultGraphGsonConfiguratorFactory;
 import org.eclipse.glsp.server.jsonrpc.DefaultGLSPClientProvider;
@@ -44,12 +44,12 @@ import org.eclipse.glsp.server.jsonrpc.DefaultGLSPServer;
 import org.eclipse.glsp.server.model.DefaultModelStateProvider;
 import org.eclipse.glsp.server.model.FileBasedModelFactory;
 import org.eclipse.glsp.server.provider.DefaultToolPaletteItemProvider;
-import org.eclipse.glsp.server.supplier.DIActionHandlerSupplier;
-import org.eclipse.glsp.server.supplier.DIActionSupplier;
-import org.eclipse.glsp.server.supplier.DIContextActionsProviderSupplier;
-import org.eclipse.glsp.server.supplier.DIDiagramConfigurationSupplier;
-import org.eclipse.glsp.server.supplier.DIOperationHandlerSupplier;
-import org.eclipse.glsp.server.supplier.DIServerCommandHandlerSupplier;
+import org.eclipse.glsp.server.registry.DIActionHandlerRegistry;
+import org.eclipse.glsp.server.registry.DIActionRegistry;
+import org.eclipse.glsp.server.registry.DIContextActionsProviderRegistry;
+import org.eclipse.glsp.server.registry.DIDiagramConfigurationRegistry;
+import org.eclipse.glsp.server.registry.DIOperationHandlerRegistry;
+import org.eclipse.glsp.server.registry.DIServerCommandHandlerRegistry;
 
 public abstract class DefaultGLSPModule extends GLSPModule {
 
@@ -61,14 +61,12 @@ public abstract class DefaultGLSPModule extends GLSPModule {
    }
 
    protected void configureMultiBindConfigs() {
-
       configure(MultiBindConfig.create(Action.class), this::configureActions);
       configure(MultiBindConfig.create(ActionHandler.class), this::configureActionHandlers);
       configure(MultiBindConfig.create(ServerCommandHandler.class), this::configureServerCommandHandlers);
       configure(MultiBindConfig.create(OperationHandler.class), this::configureOperationHandlers);
       configure(MultiBindConfig.create(DiagramConfiguration.class), this::configureDiagramConfigurations);
       configure(MultiBindConfig.create(ContextActionsProvider.class), this::configureContextActionsProviders);
-
    }
 
    protected <T> void configure(final MultiBindConfig<T> multiBindings,
@@ -92,7 +90,6 @@ public abstract class DefaultGLSPModule extends GLSPModule {
    protected void configureOperationHandlers(
       final MultiBindConfig<OperationHandler> bindings) {
       bindings.addAll(MultiBindingDefaults.DEFAULT_OPERATION_HANDLERS);
-
    }
 
    protected void configureContextActionsProviders(final MultiBindConfig<ContextActionsProvider> config) {}
@@ -133,33 +130,33 @@ public abstract class DefaultGLSPModule extends GLSPModule {
    }
 
    @Override
-   protected Class<? extends ActionSupplier> bindActionSupplier() {
-      return DIActionSupplier.class;
+   protected Class<? extends ActionRegistry> bindActionRegistry() {
+      return DIActionRegistry.class;
    }
 
    @Override
-   protected Class<? extends DiagramConfigurationSupplier> bindDiagramConfigurationSupplier() {
-      return DIDiagramConfigurationSupplier.class;
+   protected Class<? extends DiagramConfigurationRegistry> bindDiagramConfigurationRegistry() {
+      return DIDiagramConfigurationRegistry.class;
    }
 
    @Override
-   protected Class<? extends ActionHandlerSupplier> bindActionHandlerSupplier() {
-      return DIActionHandlerSupplier.class;
+   protected Class<? extends ActionHandlerRegistry> bindActionHandlerRegistry() {
+      return DIActionHandlerRegistry.class;
    }
 
    @Override
-   protected Class<? extends OperationHandlerSupplier> bindOperatioHandlerSupplier() {
-      return DIOperationHandlerSupplier.class;
+   protected Class<? extends OperationHandlerRegistry> bindOperatioHandlerRegistry() {
+      return DIOperationHandlerRegistry.class;
    }
 
    @Override
-   protected Class<? extends ContextActionsProviderSupplier> bindContextActionsProviderSupplier() {
-      return DIContextActionsProviderSupplier.class;
+   protected Class<? extends ContextActionsProviderRegistry> bindContextActionsProviderRegistry() {
+      return DIContextActionsProviderRegistry.class;
    }
 
    @Override
-   protected Class<? extends ServerCommandHandlerSupplier> bindServerCommandHandlerSupplier() {
-      return DIServerCommandHandlerSupplier.class;
+   protected Class<? extends ServerCommandHandlerRegistry> bindServerCommandHandlerRegistry() {
+      return DIServerCommandHandlerRegistry.class;
    }
 
 }

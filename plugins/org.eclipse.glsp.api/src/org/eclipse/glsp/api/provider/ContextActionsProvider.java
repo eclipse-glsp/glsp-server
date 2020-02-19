@@ -23,12 +23,12 @@ import org.eclipse.glsp.api.types.LabeledAction;
 
 public interface ContextActionsProvider {
 
-   String contextId();
+   String getContextId();
 
    List<? extends LabeledAction> getActions(EditorContext editorContext, GraphicalModelState modelState);
 
    default boolean handles(final String contextId) {
-      return contextId().equals(contextId);
+      return getContextId().equals(contextId);
    }
 
 }

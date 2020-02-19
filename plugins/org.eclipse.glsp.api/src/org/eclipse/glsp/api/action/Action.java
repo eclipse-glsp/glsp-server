@@ -44,7 +44,6 @@ public abstract class Action {
       public static final String EXECUTE_SERVER_COMMAND = "executeServerCommand";
       public static final String EXPORT_SVG = "exportSvg";
       public static final String FIT_TO_SCREEN = "fit";
-      public static final String INIT_CREATE_OPERATION = "initCreateOperation";
       public static final String OPEN = "open";
       public static final String REDO = "glspRedo";
       public static final String REQUEST_BOUNDS = "requestBounds";
@@ -71,6 +70,8 @@ public abstract class Action {
       public static final String SET_OPERATIONS = "setOperations";
       public static final String SET_POPUP_MODEL = "setPopupModel";
       public static final String SET_TYPE_HINTS = "setTypeHints";
+      public static final String TRIGGER_NODE_CREATION = "triggerNodeCreation";
+      public static final String TRIGGER_EDGE_CREATION = "triggerEdgeCreation";
       public static final String UNDO = "glspUndo";
       public static final String UPDATE_MODEL = "updateModel";
       public static final String VALIDATE_LABEL_EDIT_ACTION = "validateLabelEdit";

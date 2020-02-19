@@ -13,22 +13,20 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.api.utils;
+package org.eclipse.glsp.api.registry;
 
-import java.lang.reflect.ParameterizedType;
+import java.util.Optional;
+import java.util.Set;
 
-public final class GenericUtil {
-   private GenericUtil() {}
+public interface Registry<K, V> {
 
-   public static ParameterizedType getParametrizedType(final Class<?> clazz, final Class<?> genericBaseclass) {
-      if (clazz.getSuperclass().equals(genericBaseclass)) { // check that we are at the top of the hierarchy
-         return (ParameterizedType) clazz.getGenericSuperclass();
-      }
-      return getParametrizedType(clazz.getSuperclass(), genericBaseclass);
-   }
+   boolean register(K key, V element);
 
-   public static Class<?> getGenericTypeParameterClass(final Class<?> clazz, final Class<?> genericBaseclass) {
-      return (Class<?>) (GenericUtil.getParametrizedType(clazz, genericBaseclass))
-         .getActualTypeArguments()[0];
-   }
+   boolean deregister(K key);
+
+   boolean hasKey(K key);
+
+   Optional<V> get(K key);
+
+   Set<V> getAll();
 }

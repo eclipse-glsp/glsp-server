@@ -33,6 +33,8 @@ import org.eclipse.glsp.api.action.kind.SetBoundsAction;
 import org.eclipse.glsp.api.action.kind.SetEditLabelValidationResultAction;
 import org.eclipse.glsp.api.action.kind.SetModelAction;
 import org.eclipse.glsp.api.action.kind.SetPopupModelAction;
+import org.eclipse.glsp.api.action.kind.TriggerEdgeCreationAction;
+import org.eclipse.glsp.api.action.kind.TriggerNodeCreationAction;
 import org.eclipse.glsp.api.action.kind.UpdateModelAction;
 import org.eclipse.glsp.api.handler.ActionHandler;
 import org.eclipse.glsp.api.handler.OperationHandler;
@@ -78,6 +80,8 @@ public final class MultiBindingDefaults {
       SetModelAction.class,
       SetPopupModelAction.class,
       SetEditLabelValidationResultAction.class,
+      TriggerNodeCreationAction.class,
+      TriggerEdgeCreationAction.class,
       UpdateModelAction.class);
 
    public static final List<Class<? extends ActionHandler>> DEFAULT_ACTION_HANDLERS = Lists.newArrayList(

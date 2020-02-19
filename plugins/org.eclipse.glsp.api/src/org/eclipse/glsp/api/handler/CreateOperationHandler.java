@@ -15,16 +15,30 @@
  ********************************************************************************/
 package org.eclipse.glsp.api.handler;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.glsp.api.action.kind.InitCreateOperationAction;
+import org.eclipse.glsp.api.action.kind.TriggerEdgeCreationAction;
+import org.eclipse.glsp.api.action.kind.TriggerElementCreationAction;
+import org.eclipse.glsp.api.action.kind.TriggerNodeCreationAction;
+import org.eclipse.glsp.api.operation.CreateOperation;
+import org.eclipse.glsp.api.operation.kind.CreateEdgeOperation;
+import org.eclipse.glsp.api.operation.kind.CreateNodeOperation;
 
 public interface CreateOperationHandler extends OperationHandler {
 
-   List<InitCreateOperationAction> getInitActions();
+   @Override
+   Class<? extends CreateOperation> getHandledOperationType();
+
+   default List<TriggerElementCreationAction> getTriggerActions() {
+      List<TriggerElementCreationAction> actions = new ArrayList<>();
+      if (CreateNodeOperation.class.isAssignableFrom(getHandledOperationType())) {
+         actions.add(new TriggerNodeCreationAction(getElementTypeId()));
+      } else if (CreateEdgeOperation.class.isAssignableFrom(getHandledOperationType())) {
+         actions.add(new TriggerEdgeCreationAction(getElementTypeId()));
+      }
+      return actions;
+   }
 
    String getElementTypeId();
-
-   String getOperationKind();
-
 }

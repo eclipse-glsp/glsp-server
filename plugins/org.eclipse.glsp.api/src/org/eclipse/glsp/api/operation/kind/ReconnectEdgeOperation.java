@@ -1,4 +1,4 @@
-/********************************************************************************
+/*******************************************************************************
  * Copyright (c) 2019 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
@@ -12,28 +12,33 @@
  * https://www.gnu.org/software/classpath/license.html.
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
- ********************************************************************************/
+ ******************************************************************************/
 package org.eclipse.glsp.api.operation.kind;
 
-import org.eclipse.glsp.api.operation.CreateOperation;
 import org.eclipse.glsp.api.operation.Operation;
 
-public class CreateConnectionOperation extends CreateOperation {
+public class ReconnectEdgeOperation extends Operation {
 
+   private String connectionElementId;
    private String sourceElementId;
-
    private String targetElementId;
 
-   public CreateConnectionOperation() {
-      super(Operation.Kind.CREATE_CONNECTION, "Create connection");
+   public ReconnectEdgeOperation() {
+      super(Operation.Kind.RECONNECT_CONNECTION);
    }
 
-   public CreateConnectionOperation(final String elementTypeId, final String sourceElementId,
+   public ReconnectEdgeOperation(final String connectionElementId, final String sourceElementId,
       final String targetElementId) {
       this();
+      this.connectionElementId = connectionElementId;
       this.sourceElementId = sourceElementId;
       this.targetElementId = targetElementId;
-      setElementTypeId(elementTypeId);
+   }
+
+   public String getConnectionElementId() { return connectionElementId; }
+
+   public void setConnectionElementId(final String connectionElementId) {
+      this.connectionElementId = connectionElementId;
    }
 
    public String getSourceElementId() { return sourceElementId; }

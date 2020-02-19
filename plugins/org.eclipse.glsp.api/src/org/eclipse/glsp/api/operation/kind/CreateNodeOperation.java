@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.api.operation.kind;
 
+import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.glsp.api.operation.CreateOperation;
@@ -28,26 +29,28 @@ public class CreateNodeOperation extends CreateOperation {
    private String containerId;
 
    public CreateNodeOperation() {
-      super(Operation.Kind.CREATE_NODE, "Create node");
+      super(Operation.Kind.CREATE_NODE);
    }
 
    public CreateNodeOperation(final String elementTypeId) {
-      this();
-      setElementTypeId(elementTypeId);
+      this(elementTypeId, null, null, null);
    }
 
    public CreateNodeOperation(final String elementTypeId, final GPoint location) {
-      this(elementTypeId);
-      this.location = location;
+      this(elementTypeId, location, null, null);
    }
 
    public CreateNodeOperation(final String elementTypeId, final String containerId) {
-      this(elementTypeId);
-      this.containerId = containerId;
+      this(elementTypeId, null, containerId, null);
    }
 
    public CreateNodeOperation(final String elementTypeId, final GPoint location, final String containerId) {
-      this(elementTypeId);
+      this(elementTypeId, location, containerId, null);
+   }
+
+   public CreateNodeOperation(final String elementTypeId, final GPoint location, final String containerId,
+      final Map<String, String> args) {
+      super(Operation.Kind.CREATE_NODE, elementTypeId, args);
       this.location = location;
       this.containerId = containerId;
    }

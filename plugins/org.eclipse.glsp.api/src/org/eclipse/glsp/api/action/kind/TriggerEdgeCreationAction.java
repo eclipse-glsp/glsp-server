@@ -13,36 +13,24 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.api.types;
+package org.eclipse.glsp.api.action.kind;
 
-import java.util.List;
+import java.util.Map;
 
 import org.eclipse.glsp.api.action.Action;
 
-public class Item extends LabeledAction {
-   private String id;
-   private String sortString;
-   private List<? extends Item> children;
+public class TriggerEdgeCreationAction extends TriggerElementCreationAction {
 
-   public Item(final String id, final String label, final List<Action> actions) {
-      this(id, label, actions, null);
+   public TriggerEdgeCreationAction() {
+      this(null, null);
    }
 
-   public Item(final String id, final String label, final List<Action> actions, final String icon) {
-      super(label, actions, icon);
-      this.id = id;
+   public TriggerEdgeCreationAction(final String elementTypeId) {
+      this(elementTypeId, null);
    }
 
-   public String getId() { return id; }
-
-   public void setId(final String id) { this.id = id; }
-
-   public String getSortString() { return sortString; }
-
-   public void setSortString(final String sortString) { this.sortString = sortString; }
-
-   public List<? extends Item> getChildren() { return children; }
-
-   public void setChildren(final List<? extends Item> children) { this.children = children; }
-
+   public TriggerEdgeCreationAction(final String elementTypeId,
+      final Map<String, String> args) {
+      super(Action.Kind.TRIGGER_EDGE_CREATION, elementTypeId, args);
+   }
 }

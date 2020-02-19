@@ -1,4 +1,4 @@
-/*******************************************************************************
+/********************************************************************************
  * Copyright (c) 2019 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
@@ -12,33 +12,34 @@
  * https://www.gnu.org/software/classpath/license.html.
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
- ******************************************************************************/
+ ********************************************************************************/
 package org.eclipse.glsp.api.operation.kind;
 
+import java.util.Map;
+
+import org.eclipse.glsp.api.operation.CreateOperation;
 import org.eclipse.glsp.api.operation.Operation;
 
-public class ReconnectConnectionOperation extends Operation {
+public class CreateEdgeOperation extends CreateOperation {
 
-   private String connectionElementId;
    private String sourceElementId;
+
    private String targetElementId;
 
-   public ReconnectConnectionOperation() {
-      super(Operation.Kind.RECONNECT_CONNECTION);
+   public CreateEdgeOperation() {
+      super(Operation.Kind.CREATE_EDGE);
    }
 
-   public ReconnectConnectionOperation(final String connectionElementId, final String sourceElementId,
+   public CreateEdgeOperation(final String elementTypeId, final String sourceElementId,
       final String targetElementId) {
-      this();
-      this.connectionElementId = connectionElementId;
+      this(elementTypeId, sourceElementId, targetElementId, null);
+   }
+
+   public CreateEdgeOperation(final String elementTypeId, final String sourceElementId,
+      final String targetElementId, final Map<String, String> args) {
+      super(Operation.Kind.CREATE_EDGE, elementTypeId, args);
       this.sourceElementId = sourceElementId;
       this.targetElementId = targetElementId;
-   }
-
-   public String getConnectionElementId() { return connectionElementId; }
-
-   public void setConnectionElementId(final String connectionElementId) {
-      this.connectionElementId = connectionElementId;
    }
 
    public String getSourceElementId() { return sourceElementId; }

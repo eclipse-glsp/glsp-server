@@ -6,7 +6,7 @@
 	<groupId>org.eclipse.glsp</groupId>
 	<artifactId>org.eclipse.glsp.parent</artifactId>
 	<description>GLSP Parent pom </description>
-	<version>0.7.0-SNAPSHOT</version>
+	<version>0.8.0-rc-01</version>
 	<packaging>pom</packaging>
 
 	<name>GLSP Parent</name>
@@ -53,7 +53,7 @@
 		<java.source>1.8</java.source>
 		<java.target>1.8</java.target>
 		<project.build.java.target>1.8</project.build.java.target>
-		<target.version>0.7.0-SNAPSHOT</target.version>
+		<target.version>0.8.0-SNAPSHOT</target.version>
 	</properties>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
@@ -116,6 +116,7 @@
 				<module>plugins/org.eclipse.glsp.server.websocket</module>
 				<module>plugins/org.eclipse.glsp.layout</module>
 				<module>plugins/org.eclipse.glsp.graph</module>
+				<module>releng</module>
 			</modules>
 			<build>
 				<pluginManagement>
@@ -340,39 +341,39 @@
 					<!-- To generate javadoc -->
 
 					<!-- Deactivate for now. Not needed for snapshot deployments -->
-<!-- 					<plugin> -->
-<!-- 						<groupId>org.apache.maven.plugins</groupId> -->
-<!-- 						<artifactId>maven-javadoc-plugin</artifactId> -->
-<!-- 						<version>3.1.0</version> -->
-<!-- 						<executions> -->
-<!-- 							<execution> -->
-<!-- 								<id>attach-javadocs</id> -->
-<!-- 								<goals> -->
-<!-- 									<goal>jar</goal> -->
-<!-- 								</goals> -->
-<!-- 								<configuration> -->
-<!-- 									<additionalJOption>-Xdoclint:none</additionalJOption> -->
-<!-- 									<tags> -->
-<!-- 										<tag> -->
-<!-- 											<name>generated</name> -->
-<!-- 											<placement>a</placement> -->
-<!-- 											<head></head> -->
-<!-- 										</tag> -->
-<!-- 										<tag> -->
-<!-- 											<name>ordered</name> -->
-<!-- 											<placement>a</placement> -->
-<!-- 											<head></head> -->
-<!-- 										</tag> -->
-<!-- 										<tag> -->
-<!-- 											<name>model</name> -->
-<!-- 											<placement>a</placement> -->
-<!-- 											<head>Model:</head> -->
-<!-- 										</tag> -->
-<!-- 									</tags> -->
-<!-- 								</configuration> -->
-<!-- 							</execution> -->
-<!-- 						</executions> -->
-<!-- 					</plugin> -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>3.1.0</version>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+								<configuration>
+									<additionalJOption>-Xdoclint:none</additionalJOption>
+									<tags>
+										<tag>
+											<name>generated</name>
+											<placement>a</placement>
+											<head></head>
+										</tag>
+										<tag>
+											<name>ordered</name>
+											<placement>a</placement>
+											<head></head>
+										</tag>
+										<tag>
+											<name>model</name>
+											<placement>a</placement>
+											<head>Model:</head>
+										</tag>
+									</tags>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
 
 					<!-- To sign the artifacts -->
 					<plugin>

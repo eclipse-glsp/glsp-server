@@ -32,36 +32,4 @@ public class RequestTypeHintsAction extends Action {
    public String getDiagramType() { return diagramType; }
 
    public void setDiagramType(final String diagramType) { this.diagramType = diagramType; }
-
-   @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = super.hashCode();
-      result = prime * result + ((diagramType == null) ? 0 : diagramType.hashCode());
-      return result;
-   }
-
-   @Override
-   @SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity" })
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (!super.equals(obj)) {
-         return false;
-      }
-      if (getClass() != obj.getClass()) {
-         return false;
-      }
-      RequestTypeHintsAction other = (RequestTypeHintsAction) obj;
-      if (diagramType == null) {
-         if (other.diagramType != null) {
-            return false;
-         }
-      } else if (!diagramType.equals(other.diagramType)) {
-         return false;
-      }
-      return true;
-   }
-
 }

@@ -16,21 +16,29 @@
 package org.eclipse.glsp.api.action.kind;
 
 import org.eclipse.glsp.api.action.Action;
+import org.eclipse.glsp.api.types.EditorContext;
 
 public class RequestContextActions extends RequestAction<SetContextActions> {
 
+   private String contextId;
    private EditorContext editorContext;
 
    public RequestContextActions() {
       super(Action.Kind.REQUEST_CONTEXT_ACTIONS);
    }
 
-   public RequestContextActions(final EditorContext editorContext) {
+   public RequestContextActions(final String contextId, final EditorContext editorContext) {
       this();
+      this.contextId = contextId;
       this.editorContext = editorContext;
    }
 
    public EditorContext getEditorContext() { return editorContext; }
 
    public void setEditorContext(final EditorContext editorContext) { this.editorContext = editorContext; }
+
+   public String getContextId() { return contextId; }
+
+   public void setContextId(final String contextId) { this.contextId = contextId; }
+
 }

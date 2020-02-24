@@ -15,8 +15,6 @@
  ******************************************************************************/
 package org.eclipse.glsp.api.types;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,86 +26,26 @@ public class LabeledAction {
    private List<Action> actions;
    private String icon;
 
-   public LabeledAction(final String label, final String icon, final List<Action> actions) {
+   public LabeledAction(final String label, final List<Action> actions, final String icon) {
       this.label = label;
       this.actions = actions;
       this.icon = icon;
    }
 
    public LabeledAction(final String label, final List<Action> actions) {
-      this(label, null, actions);
-   }
-
-   public LabeledAction(final String label, final Action... actions) {
-      this(label, Arrays.asList(actions));
-   }
-
-   public LabeledAction(final String label, final String icon, final Action... actions) {
-      this(label, icon, Arrays.asList(actions));
+      this(label, actions, null);
    }
 
    public void setLabel(final String label) { this.label = label; }
 
    public String getLabel() { return label; }
 
-   public void setActions(final List<Action> actions) {
-      if (actions == null || actions.isEmpty()) {
-         throw new IllegalArgumentException("Invalid LabeledAction: Require at least one action to execute.");
-      }
-      this.actions = actions;
-   }
+   public void setActions(final List<Action> actions) { this.actions = actions; }
 
-   public Collection<Action> getActions() { return actions; }
+   public List<Action> getActions() { return actions; }
 
    public void setIcon(final String icon) { this.icon = icon; }
 
    public Optional<String> getIcon() { return Optional.ofNullable(icon); }
-
-   @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = 1;
-      result = prime * result + ((actions == null) ? 0 : actions.hashCode());
-      result = prime * result + ((icon == null) ? 0 : icon.hashCode());
-      result = prime * result + ((label == null) ? 0 : label.hashCode());
-      return result;
-   }
-
-   @Override
-   @SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity" })
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (obj == null) {
-         return false;
-      }
-      if (getClass() != obj.getClass()) {
-         return false;
-      }
-      LabeledAction other = (LabeledAction) obj;
-      if (actions == null) {
-         if (other.actions != null) {
-            return false;
-         }
-      } else if (!actions.equals(other.actions)) {
-         return false;
-      }
-      if (icon == null) {
-         if (other.icon != null) {
-            return false;
-         }
-      } else if (!icon.equals(other.icon)) {
-         return false;
-      }
-      if (label == null) {
-         if (other.label != null) {
-            return false;
-         }
-      } else if (!label.equals(other.label)) {
-         return false;
-      }
-      return true;
-   }
 
 }

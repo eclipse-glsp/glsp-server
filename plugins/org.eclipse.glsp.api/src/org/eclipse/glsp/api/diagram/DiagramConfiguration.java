@@ -21,7 +21,6 @@ import java.util.Optional;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.glsp.api.operations.Operation;
 import org.eclipse.glsp.api.types.EdgeTypeHint;
 import org.eclipse.glsp.api.types.ShapeTypeHint;
 
@@ -34,8 +33,6 @@ public interface DiagramConfiguration {
    List<ShapeTypeHint> getNodeTypeHints();
 
    List<EdgeTypeHint> getEdgeTypeHints();
-
-   List<Operation> getOperations();
 
    default Optional<EPackage> getEPackage() { return Optional.empty(); }
 

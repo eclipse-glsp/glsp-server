@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -22,10 +22,15 @@ import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.glsp.api.action.Action;
+import org.eclipse.glsp.api.model.GraphicalModelState;
 
 public interface ActionHandler extends Handler<Action> {
+   List<Class<? extends Action>> getHandledActionTypes();
 
-   List<Action> execute(String clientId, Action action);
+   @Override
+   default boolean handles(final Action action) {
+      return getHandledActionTypes().stream().anyMatch(clazz -> clazz.isInstance(action));
+   }
 
    default List<Action> listOf(final Action... action) {
       return Arrays.asList(action);
@@ -37,8 +42,9 @@ public interface ActionHandler extends Handler<Action> {
       return actions;
    }
 
+   List<Action> execute(Action action, GraphicalModelState modelState);
+
    default List<Action> none() {
       return Collections.emptyList();
    }
-
 }

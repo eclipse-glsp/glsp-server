@@ -17,54 +17,29 @@ package org.eclipse.glsp.server.operationhandler;
 
 import java.util.Optional;
 
-import org.eclipse.glsp.api.action.Action;
-import org.eclipse.glsp.api.action.kind.AbstractOperationAction;
-import org.eclipse.glsp.api.action.kind.CreateNodeOperationAction;
-import org.eclipse.glsp.api.handler.OperationHandler;
 import org.eclipse.glsp.api.model.GraphicalModelState;
+import org.eclipse.glsp.api.operation.kind.CreateNodeOperation;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 
-public abstract class CreateNodeOperationHandler implements OperationHandler {
-
-   protected String elementTypeId;
+public abstract class CreateNodeOperationHandler extends BasicCreateOperationHandler<CreateNodeOperation> {
 
    public CreateNodeOperationHandler(final String elementTypeId) {
-      this.elementTypeId = elementTypeId;
+      super(elementTypeId);
    }
 
    @Override
-   public Class<? extends Action> handlesActionType() {
-      return CreateNodeOperationAction.class;
-   }
-
-   @Override
-   public boolean handles(final AbstractOperationAction action) {
-      return OperationHandler.super.handles(action)
-         ? ((CreateNodeOperationAction) action).getElementTypeId().equals(elementTypeId)
-         : false;
-   }
-
-   @Override
-   public String getLabel(final AbstractOperationAction action) {
-      return "Create node";
-   }
-
-   @Override
-   public void execute(final AbstractOperationAction action, final GraphicalModelState modelState) {
-      CreateNodeOperationAction executeAction = (CreateNodeOperationAction) action;
-
+   public void executeOperation(final CreateNodeOperation operation, final GraphicalModelState modelState) {
       GModelIndex index = modelState.getIndex();
 
-      Optional<GModelElement> container = index.get(executeAction.getContainerId());
+      Optional<GModelElement> container = index.get(operation.getContainerId());
       if (!container.isPresent()) {
          container = Optional.of(modelState.getRoot());
       }
 
-      Optional<GPoint> point = Optional.of(executeAction.getLocation());
-      GModelElement element = createNode(point, modelState);
+      GModelElement element = createNode(operation.getLocation(), modelState);
       container.get().getChildren().add(element);
    }
 

@@ -18,11 +18,8 @@ package org.eclipse.glsp.server.operationhandler;
 import static org.eclipse.glsp.api.jsonrpc.GLSPServerException.getOrThrow;
 
 import org.apache.log4j.Logger;
-import org.eclipse.glsp.api.action.Action;
-import org.eclipse.glsp.api.action.kind.AbstractOperationAction;
-import org.eclipse.glsp.api.action.kind.ChangeBoundsOperationAction;
-import org.eclipse.glsp.api.handler.OperationHandler;
 import org.eclipse.glsp.api.model.GraphicalModelState;
+import org.eclipse.glsp.api.operation.kind.ChangeBoundsOperation;
 import org.eclipse.glsp.api.types.ElementAndBounds;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GModelIndex;
@@ -30,21 +27,15 @@ import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 
 /**
- * Generic handler implementation for {@link ChangeBoundsOperationAction}.
+ * Generic handler implementation for {@link ChangeBoundsOperation}.
  */
-public class ChangeBoundsOperationHandler implements OperationHandler {
+public class ChangeBoundsOperationHandler extends BasicOperationHandler<ChangeBoundsOperation> {
 
    private static Logger log = Logger.getLogger(ChangeBoundsOperationHandler.class);
 
    @Override
-   public Class<? extends Action> handlesActionType() {
-      return ChangeBoundsOperationAction.class;
-   }
-
-   @Override
-   public void execute(final AbstractOperationAction action, final GraphicalModelState modelState) {
-      ChangeBoundsOperationAction changeBoundsAction = (ChangeBoundsOperationAction) action;
-      for (ElementAndBounds element : changeBoundsAction.getNewBounds()) {
+   public void executeOperation(final ChangeBoundsOperation operation, final GraphicalModelState modelState) {
+      for (ElementAndBounds element : operation.getNewBounds()) {
          changeElementBounds(element.getElementId(), element.getNewPosition(), element.getNewSize(), modelState);
       }
    }
@@ -62,10 +53,5 @@ public class ChangeBoundsOperationHandler implements OperationHandler {
 
       nodeToUpdate.setPosition(newPosition);
       nodeToUpdate.setSize(newSize);
-   }
-
-   @Override
-   public String getLabel(final AbstractOperationAction action) {
-      return "Change bounds";
    }
 }

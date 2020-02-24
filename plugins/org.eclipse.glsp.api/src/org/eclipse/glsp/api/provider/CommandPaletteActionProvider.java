@@ -18,25 +18,21 @@ package org.eclipse.glsp.api.provider;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.eclipse.glsp.api.model.GraphicalModelState;
+import org.eclipse.glsp.api.types.EditorContext;
 import org.eclipse.glsp.api.types.LabeledAction;
-import org.eclipse.glsp.graph.GPoint;
 
 @FunctionalInterface
-public interface CommandPaletteActionProvider {
+public interface CommandPaletteActionProvider extends ContextActionsProvider {
 
-   String KEY = "command-palette";
+   String CONTEXT_ID = "command-palette";
    String TEXT = "text";
    String INDEX = "index";
 
-   List<LabeledAction> getActions(GraphicalModelState modelState, List<String> selectedElementIds,
-      Optional<GPoint> lastMousePosition, Map<String, String> args);
-
-   default List<LabeledAction> getActions(final GraphicalModelState modelState, final List<String> selectedElementIds,
-      final GPoint lastMousePosition, final Map<String, String> args) {
-      return getActions(modelState, selectedElementIds, Optional.ofNullable(lastMousePosition), args);
+   @Override
+   default String getContextId() {
+      return CommandPaletteActionProvider.CONTEXT_ID;
    }
 
    default String getText(final Map<String, String> args) {
@@ -47,11 +43,13 @@ public interface CommandPaletteActionProvider {
       return (int) Double.parseDouble(args.getOrDefault(INDEX, "0.0"));
    }
 
-   class NullImpl implements CommandPaletteActionProvider {
+   final class NullImpl implements CommandPaletteActionProvider {
+
       @Override
-      public List<LabeledAction> getActions(final GraphicalModelState modelState, final List<String> selectedElementIds,
-         final Optional<GPoint> lastMousePosition, final Map<String, String> args) {
+      public List<? extends LabeledAction> getActions(final EditorContext editorContext,
+         final GraphicalModelState modelState) {
          return Collections.emptyList();
       }
+
    }
 }

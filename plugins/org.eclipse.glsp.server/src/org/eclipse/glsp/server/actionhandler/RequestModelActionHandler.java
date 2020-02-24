@@ -16,7 +16,6 @@
 package org.eclipse.glsp.server.actionhandler;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.action.kind.RequestBoundsAction;
@@ -29,42 +28,24 @@ import org.eclipse.glsp.graph.GModelRoot;
 
 import com.google.inject.Inject;
 
-public class RequestModelActionHandler extends AbstractActionHandler {
+public class RequestModelActionHandler extends BasicActionHandler<RequestModelAction> {
 
    @Inject
    protected ModelFactory modelFactory;
 
    @Override
-   public List<Action> execute(final String clientId, final Action action) {
-      this.clientId = clientId;
-      Optional<GraphicalModelState> modelState = modelStateProvider.getModelState(clientId);
-      if (modelState.isPresent()) {
-         return execute(action, modelState.get());
-      }
-      return execute(action, modelStateProvider.create(clientId));
+   public List<Action> executeAction(final RequestModelAction action, final GraphicalModelState modelState) {
+
+      GModelRoot model = modelFactory.loadModel(action, modelState);
+      modelState.setRoot(model);
+      modelState.setClientOptions(action.getOptions());
+
+      boolean needsClientLayout = ClientOptions.getBoolValue(action.getOptions(),
+         ClientOptions.NEEDS_CLIENT_LAYOUT);
+
+      Action responseAction = needsClientLayout ? new RequestBoundsAction(modelState.getRoot())
+         : new SetModelAction(modelState.getRoot());
+      return listOf(responseAction);
+
    }
-
-   @Override
-   public List<Action> execute(final Action action, final GraphicalModelState modelState) {
-      if (action instanceof RequestModelAction) {
-         RequestModelAction requestAction = (RequestModelAction) action;
-         GModelRoot model = modelFactory.loadModel(requestAction, modelState);
-         modelState.setRoot(model);
-         modelState.setClientOptions(requestAction.getOptions());
-
-         boolean needsClientLayout = ClientOptions.getBoolValue(requestAction.getOptions(),
-            ClientOptions.NEEDS_CLIENT_LAYOUT);
-
-         Action responseAction = needsClientLayout ? new RequestBoundsAction(modelState.getRoot())
-            : new SetModelAction(modelState.getRoot());
-         return listOf(responseAction);
-      }
-      return none();
-   }
-
-   @Override
-   public boolean handles(final Action action) {
-      return action instanceof RequestModelAction;
-   }
-
 }

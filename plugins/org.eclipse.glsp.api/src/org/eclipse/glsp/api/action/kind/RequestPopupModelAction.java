@@ -36,44 +36,4 @@ public class RequestPopupModelAction extends Action {
    public String getElementId() { return elementId; }
 
    public GBounds getBounds() { return bounds; }
-
-   @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = super.hashCode();
-      result = prime * result + ((bounds == null) ? 0 : bounds.hashCode());
-      result = prime * result + ((elementId == null) ? 0 : elementId.hashCode());
-      return result;
-   }
-
-   @Override
-   @SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity" })
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (!super.equals(obj)) {
-         return false;
-      }
-      if (getClass() != obj.getClass()) {
-         return false;
-      }
-      RequestPopupModelAction other = (RequestPopupModelAction) obj;
-      if (bounds == null) {
-         if (other.bounds != null) {
-            return false;
-         }
-      } else if (!bounds.equals(other.bounds)) {
-         return false;
-      }
-      if (elementId == null) {
-         if (other.elementId != null) {
-            return false;
-         }
-      } else if (!elementId.equals(other.elementId)) {
-         return false;
-      }
-      return true;
-   }
-
 }

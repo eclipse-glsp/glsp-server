@@ -67,7 +67,6 @@ public abstract class Action {
       public static final String SET_LAYERS = "setLayers";
       public static final String SET_MARKERS = "setMarkers";
       public static final String SET_MODEL = "setModel";
-      public static final String SET_OPERATIONS = "setOperations";
       public static final String SET_POPUP_MODEL = "setPopupModel";
       public static final String SET_TYPE_HINTS = "setTypeHints";
       public static final String TRIGGER_NODE_CREATION = "triggerNodeCreation";

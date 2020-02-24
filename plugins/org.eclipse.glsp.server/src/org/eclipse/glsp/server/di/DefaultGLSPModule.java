@@ -145,7 +145,7 @@ public abstract class DefaultGLSPModule extends GLSPModule {
    }
 
    @Override
-   protected Class<? extends OperationHandlerRegistry> bindOperatioHandlerRegistry() {
+   protected Class<? extends OperationHandlerRegistry> bindOperationHandlerRegistry() {
       return DIOperationHandlerRegistry.class;
    }
 

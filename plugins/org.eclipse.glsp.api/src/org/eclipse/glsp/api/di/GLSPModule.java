@@ -65,7 +65,7 @@ public abstract class GLSPModule extends AbstractModule {
       // Configure set suppliers
       bind(ActionRegistry.class).to(bindActionRegistry()).in(Singleton.class);
       bind(ActionHandlerRegistry.class).to(bindActionHandlerRegistry()).in(Singleton.class);
-      bind(OperationHandlerRegistry.class).to(bindOperatioHandlerRegistry()).in(Singleton.class);
+      bind(OperationHandlerRegistry.class).to(bindOperationHandlerRegistry()).in(Singleton.class);
       bind(DiagramConfigurationRegistry.class).to(bindDiagramConfigurationRegistry()).in(Singleton.class);
       bind(ContextActionsProviderRegistry.class).to(bindContextActionsProviderRegistry()).in(Singleton.class);
       bind(ServerCommandHandlerRegistry.class).to(bindServerCommandHandlerRegistry()).in(Singleton.class);
@@ -125,7 +125,7 @@ public abstract class GLSPModule extends AbstractModule {
 
    protected abstract Class<? extends ActionHandlerRegistry> bindActionHandlerRegistry();
 
-   protected abstract Class<? extends OperationHandlerRegistry> bindOperatioHandlerRegistry();
+   protected abstract Class<? extends OperationHandlerRegistry> bindOperationHandlerRegistry();
 
    protected abstract Class<? extends DiagramConfigurationRegistry> bindDiagramConfigurationRegistry();
 

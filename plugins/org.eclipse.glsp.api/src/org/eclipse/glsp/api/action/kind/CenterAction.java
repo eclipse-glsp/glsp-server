@@ -45,41 +45,11 @@ public class CenterAction extends Action {
 
    public void setAnimate(final boolean animate) { this.animate = animate; }
 
-   @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = super.hashCode();
-      result = prime * result + (animate ? 1231 : 1237);
-      result = prime * result + ((elementIds == null) ? 0 : elementIds.hashCode());
-      return result;
-   }
+   public List<String> getElementIds() { return elementIds; }
 
-   @Override
-   @SuppressWarnings("checkstyle:CyclomaticComplexity")
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (!super.equals(obj)) {
-         return false;
-      }
-      if (getClass() != obj.getClass()) {
-         return false;
-      }
-      CenterAction other = (CenterAction) obj;
-      if (animate != other.animate) {
-         return false;
-      }
-      if (retainZoom != other.retainZoom) {
-         return false;
-      }
-      if (elementIds == null) {
-         if (other.elementIds != null) {
-            return false;
-         }
-      } else if (!elementIds.equals(other.elementIds)) {
-         return false;
-      }
-      return true;
-   }
+   public void setElementIds(final List<String> elementIds) { this.elementIds = elementIds; }
+
+   public boolean isRetainZoom() { return retainZoom; }
+
+   public void setRetainZoom(final boolean retainZoom) { this.retainZoom = retainZoom; }
 }

@@ -24,31 +24,23 @@ import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.glsp.api.action.kind.AbstractOperationAction;
-import org.eclipse.glsp.api.action.kind.DeleteOperationAction;
-import org.eclipse.glsp.api.handler.OperationHandler;
 import org.eclipse.glsp.api.model.GraphicalModelState;
+import org.eclipse.glsp.api.operation.kind.DeleteOperation;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GNode;
 
 /**
- * Generic handler implementation for {@link DeleteOperationAction}.
+ * Generic handler implementation for {@link DeleteOperation}.
  */
-public class DeleteOperationHandler implements OperationHandler {
+public class DeleteOperationHandler extends BasicOperationHandler<DeleteOperation> {
    private static Logger log = Logger.getLogger(DeleteOperationHandler.class);
    private Set<String> allDependantsIds;
 
    @Override
-   public boolean handles(final AbstractOperationAction action) {
-      return action instanceof DeleteOperationAction;
-   }
-
-   @Override
-   public void execute(final AbstractOperationAction execAction, final GraphicalModelState modelState) {
-      DeleteOperationAction action = (DeleteOperationAction) execAction;
-      List<String> elementIds = action.getElementIds();
+   public void executeOperation(final DeleteOperation operation, final GraphicalModelState modelState) {
+      List<String> elementIds = operation.getElementIds();
       if (elementIds == null || elementIds.size() == 0) {
          throw new IllegalArgumentException("Elements to delete are not specified");
       }
@@ -129,10 +121,4 @@ public class DeleteOperationHandler implements OperationHandler {
       }
       return findTopLevelElement(parent);
    }
-
-   @Override
-   public String getLabel(final AbstractOperationAction action) {
-      return "Delete element";
-   }
-
 }

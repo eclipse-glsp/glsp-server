@@ -15,33 +15,48 @@
  ********************************************************************************/
 package org.eclipse.glsp.api.provider;
 
+import static org.eclipse.glsp.graph.util.GraphUtil.point;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.eclipse.glsp.api.model.GraphicalModelState;
+import org.eclipse.glsp.api.types.EditorContext;
+import org.eclipse.glsp.api.types.LabeledAction;
 import org.eclipse.glsp.api.types.MenuItem;
 import org.eclipse.glsp.graph.GPoint;
 
 @FunctionalInterface
-public interface ContextMenuItemProvider {
+public interface ContextMenuItemProvider extends ContextActionsProvider {
 
    String KEY = "context-menu";
 
-   List<MenuItem> getItems(GraphicalModelState modelState, List<String> selectedElementIds,
-      Optional<GPoint> lastMousePosition, Map<String, String> args);
-
-   default List<MenuItem> getItems(final GraphicalModelState modelState, final List<String> selectedElementIds,
-      final GPoint lastMousePosition, final Map<String, String> args) {
-      return getItems(modelState, selectedElementIds, Optional.ofNullable(lastMousePosition), args);
+   @Override
+   default String getContextId() {
+      return ContextMenuItemProvider.KEY;
    }
 
-   class NullImpl implements ContextMenuItemProvider {
+   List<MenuItem> getItems(List<String> selectedElementIds, GPoint position, Map<String, String> args,
+      GraphicalModelState modelState);
+
+   @Override
+   default List<? extends LabeledAction> getActions(final EditorContext editorContext,
+      final GraphicalModelState modelState) {
+      return getItems(editorContext.getSelectedElementIds(), editorContext.getLastMousePosition().orElse(point(0, 0)),
+         editorContext.getArgs(),
+         modelState);
+   }
+
+   final class NullImpl implements ContextMenuItemProvider {
+
       @Override
-      public List<MenuItem> getItems(final GraphicalModelState modelState, final List<String> selectedElementIds,
-         final Optional<GPoint> lastMousePosition, final Map<String, String> args) {
+      public List<MenuItem> getItems(final List<String> selectedElementIds, final GPoint position,
+         final Map<String, String> args,
+         final GraphicalModelState modelState) {
          return Collections.emptyList();
       }
+
    }
+
 }

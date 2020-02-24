@@ -25,28 +25,21 @@ import org.eclipse.glsp.graph.GModelRoot;
 
 import com.google.inject.Inject;
 
-public class ComputedBoundsActionHandler extends AbstractActionHandler {
+public class ComputedBoundsActionHandler extends BasicActionHandler<ComputedBoundsAction> {
    @Inject
    protected ModelSubmissionHandler submissionHandler;
 
    @Override
-   public boolean handles(final Action action) {
-      return action instanceof ComputedBoundsAction;
-   }
+   public List<Action> executeAction(final ComputedBoundsAction action, final GraphicalModelState modelState) {
 
-   @Override
-   public List<Action> execute(final Action action, final GraphicalModelState modelState) {
-      if (action instanceof ComputedBoundsAction) {
-         ComputedBoundsAction computedBoundsAction = (ComputedBoundsAction) action;
-
-         synchronized (submissionHandler.getModelLock()) {
-            GModelRoot model = modelState.getRoot();
-            if (model != null && model.getRevision() == computedBoundsAction.getRevision()) {
-               LayoutUtil.applyBounds(model, computedBoundsAction, modelState);
-               return submissionHandler.doSubmitModel(true, modelState);
-            }
+      synchronized (submissionHandler.getModelLock()) {
+         GModelRoot model = modelState.getRoot();
+         if (model != null && model.getRevision() == action.getRevision()) {
+            LayoutUtil.applyBounds(model, action, modelState);
+            return submissionHandler.doSubmitModel(true, modelState);
          }
       }
+
       return none();
    }
 

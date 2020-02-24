@@ -28,23 +28,17 @@ import org.eclipse.glsp.graph.GModelElement;
 
 import com.google.inject.Inject;
 
-public class ValidateLabelEditActionHandler extends AbstractActionHandler {
+public class ValidateLabelEditActionHandler extends BasicActionHandler<ValidateLabelEditAction> {
 
    @Inject
    protected LabelEditValidator editLabelValidator;
 
    @Override
-   public boolean handles(final Action action) {
-      return action instanceof ValidateLabelEditAction;
-   }
-
-   @Override
-   protected List<Action> execute(final Action action, final GraphicalModelState modelState) {
-      ValidateLabelEditAction validateAction = (ValidateLabelEditAction) action;
-      Optional<GModelElement> element = modelState.getIndex().get(validateAction.getLabelId());
+   protected List<Action> executeAction(final ValidateLabelEditAction action, final GraphicalModelState modelState) {
+      Optional<GModelElement> element = modelState.getIndex().get(action.getLabelId());
       if (element.isPresent()) {
          return listOf(new SetEditLabelValidationResultAction(
-            editLabelValidator.validate(modelState, validateAction.getValue(), element.get())));
+            editLabelValidator.validate(modelState, action.getValue(), element.get())));
       }
       return listOf(new SetEditLabelValidationResultAction(EditLabelValidationResult.OK_RESULT));
    }

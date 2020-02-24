@@ -18,43 +18,27 @@ package org.eclipse.glsp.server.operationhandler;
 import static org.eclipse.glsp.api.jsonrpc.GLSPServerException.getOrThrow;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.glsp.api.action.kind.AbstractOperationAction;
-import org.eclipse.glsp.api.action.kind.ChangeRoutingPointsOperationAction;
-import org.eclipse.glsp.api.handler.OperationHandler;
 import org.eclipse.glsp.api.model.GraphicalModelState;
+import org.eclipse.glsp.api.operation.kind.ChangeRoutingPointsOperation;
 import org.eclipse.glsp.api.types.ElementAndRoutingPoints;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GPoint;
 
-public class ChangeRoutingPointsHandler implements OperationHandler {
+public class ChangeRoutingPointsHandler extends BasicOperationHandler<ChangeRoutingPointsOperation> {
 
    @Override
-   public Class<?> handlesActionType() {
-      return ChangeRoutingPointsOperationAction.class;
-   }
-
-   @Override
-   public String getLabel(final AbstractOperationAction action) {
-      return "Reconnect edge";
-   }
-
-   @Override
-   public void execute(final AbstractOperationAction operationAction, final GraphicalModelState modelState) {
-      if (!(operationAction instanceof ChangeRoutingPointsOperationAction)) {
-         throw new IllegalArgumentException("Unexpected action " + operationAction);
-      }
+   protected void executeOperation(final ChangeRoutingPointsOperation operation, final GraphicalModelState modelState) {
 
       // check for null-values
-      final ChangeRoutingPointsOperationAction action = (ChangeRoutingPointsOperationAction) operationAction;
-      if (action.getNewRoutingPoints() == null) {
+      if (operation.getNewRoutingPoints() == null) {
          throw new IllegalArgumentException("Incomplete change routingPoints  action");
       }
 
       // check for existence of matching elements
       GModelIndex index = modelState.getIndex();
 
-      for (ElementAndRoutingPoints ear : action.getNewRoutingPoints()) {
+      for (ElementAndRoutingPoints ear : operation.getNewRoutingPoints()) {
          GEdge edge = getOrThrow(index.findElementByClass(ear.getElementId(), GEdge.class),
             "Invalid edge: edge ID " + ear.getElementId());
 

@@ -17,11 +17,11 @@ Import-Package: com.google.inject.multibindings;version="1.3.0"
 Export-Package: org.eclipse.glsp.server.actionhandler,
  org.eclipse.glsp.server.command,
  org.eclipse.glsp.server.di,
- org.eclipse.glsp.server.diagram,
  org.eclipse.glsp.server.factory,
  org.eclipse.glsp.server.jsonrpc,
  org.eclipse.glsp.server.launch,
  org.eclipse.glsp.server.model,
  org.eclipse.glsp.server.operationhandler,
  org.eclipse.glsp.server.provider,
- org.eclipse.glsp.server.util
+ org.eclipse.glsp.server.registry,
+ org.eclipse.glsp.server.utils

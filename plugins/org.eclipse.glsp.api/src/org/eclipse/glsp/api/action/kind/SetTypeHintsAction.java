@@ -44,43 +44,4 @@ public class SetTypeHintsAction extends Action {
 
    public void setEdgeHints(final List<EdgeTypeHint> edgeHints) { this.edgeHints = edgeHints; }
 
-   @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = super.hashCode();
-      result = prime * result + ((edgeHints == null) ? 0 : edgeHints.hashCode());
-      result = prime * result + ((shapeHints == null) ? 0 : shapeHints.hashCode());
-      return result;
-   }
-
-   @Override
-   @SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity" })
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (!super.equals(obj)) {
-         return false;
-      }
-      if (getClass() != obj.getClass()) {
-         return false;
-      }
-      SetTypeHintsAction other = (SetTypeHintsAction) obj;
-      if (edgeHints == null) {
-         if (other.edgeHints != null) {
-            return false;
-         }
-      } else if (!edgeHints.equals(other.edgeHints)) {
-         return false;
-      }
-      if (shapeHints == null) {
-         if (other.shapeHints != null) {
-            return false;
-         }
-      } else if (!shapeHints.equals(other.shapeHints)) {
-         return false;
-      }
-      return true;
-   }
-
 }

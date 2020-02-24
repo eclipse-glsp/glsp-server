@@ -15,8 +15,6 @@
  ******************************************************************************/
 package org.eclipse.glsp.api.action.kind;
 
-import java.util.Objects;
-
 import org.eclipse.glsp.api.action.Action;
 
 public abstract class RequestAction<RESPONSE extends ResponseAction> extends Action {
@@ -27,27 +25,4 @@ public abstract class RequestAction<RESPONSE extends ResponseAction> extends Act
    }
 
    public String getRequestId() { return requestId; }
-
-   @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = super.hashCode();
-      result = prime * result + Objects.hash(requestId);
-      return result;
-   }
-
-   @Override
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (!super.equals(obj)) {
-         return false;
-      }
-      if (!(obj instanceof RequestAction)) {
-         return false;
-      }
-      RequestAction<?> other = (RequestAction<?>) obj;
-      return Objects.equals(requestId, other.requestId);
-   }
 }

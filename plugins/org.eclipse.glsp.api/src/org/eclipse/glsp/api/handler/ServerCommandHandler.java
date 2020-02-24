@@ -28,5 +28,12 @@ public interface ServerCommandHandler extends Handler<String> {
       execute(commandId, Collections.emptyMap(), modelState);
    }
 
+   List<String> handledCommandIds();
+
+   @Override
+   default boolean handles(final String commandId) {
+      return handledCommandIds().contains(commandId);
+   }
+
    List<Action> execute(String commandId, Map<String, String> options, GraphicalModelState modelState);
 }

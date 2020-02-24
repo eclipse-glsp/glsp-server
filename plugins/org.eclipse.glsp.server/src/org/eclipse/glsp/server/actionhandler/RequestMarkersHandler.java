@@ -31,15 +31,14 @@ import org.eclipse.glsp.graph.GModelIndex;
 
 import com.google.inject.Inject;
 
-public class RequestMarkersHandler extends AbstractActionHandler {
+public class RequestMarkersHandler extends BasicActionHandler<RequestMarkersAction> {
 
    @Inject
    protected ModelValidator validator;
 
    @Override
-   public List<Action> execute(final Action action, final GraphicalModelState modelState) {
-      RequestMarkersAction execAction = (RequestMarkersAction) action;
-      List<String> elementsIDs = execAction.getElementsIDs();
+   public List<Action> executeAction(final RequestMarkersAction action, final GraphicalModelState modelState) {
+      List<String> elementsIDs = action.getElementsIDs();
 
       // if no element ID is provided, compute the markers for the complete model
       if (elementsIDs == null || elementsIDs.size() == 0
@@ -56,13 +55,6 @@ public class RequestMarkersHandler extends AbstractActionHandler {
 
       }
 
-      SetMarkersAction setMarkersAction = new SetMarkersAction(markers);
-      return listOf(setMarkersAction);
+      return listOf(new SetMarkersAction(markers));
    }
-
-   @Override
-   public boolean handles(final Action action) {
-      return action instanceof RequestMarkersAction;
-   }
-
 }

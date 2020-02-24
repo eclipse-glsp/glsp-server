@@ -15,26 +15,20 @@
  ******************************************************************************/
 package org.eclipse.glsp.api.handler;
 
-import java.util.Optional;
-
-import org.eclipse.glsp.api.action.kind.AbstractOperationAction;
 import org.eclipse.glsp.api.model.GraphicalModelState;
+import org.eclipse.glsp.api.operation.Operation;
 
-public interface OperationHandler extends Handler<AbstractOperationAction> {
+public interface OperationHandler extends Handler<Operation> {
 
-   void execute(AbstractOperationAction action, GraphicalModelState modelState);
+   Class<? extends Operation> getHandledOperationType();
 
-   String getLabel(AbstractOperationAction action);
+   String getLabel();
+
+   void execute(Operation operation, GraphicalModelState modelState);
 
    @Override
-   default boolean handles(AbstractOperationAction action) {
-      return Optional.ofNullable(handlesActionType()) //
-         .map(cl -> cl.isInstance(action)) //
-         .orElse(false);
-   }
-
-   default Class<?> handlesActionType() {
-      return null;
+   default boolean handles(final Operation operation) {
+      return getHandledOperationType().isInstance(operation);
    }
 
 }

@@ -22,25 +22,4 @@ public class RedoAction extends Action {
    public RedoAction() {
       super(Action.Kind.REDO);
    }
-
-   @Override
-   public int hashCode() {
-      return super.hashCode();
-   }
-
-   @Override
-   @SuppressWarnings({ "checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity" })
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (!super.equals(obj)) {
-         return false;
-      }
-      if (getClass() != obj.getClass()) {
-         return false;
-      }
-      return true;
-   }
-
 }

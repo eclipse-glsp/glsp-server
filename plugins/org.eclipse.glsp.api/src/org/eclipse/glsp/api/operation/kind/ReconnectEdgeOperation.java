@@ -24,7 +24,7 @@ public class ReconnectEdgeOperation extends Operation {
    private String targetElementId;
 
    public ReconnectEdgeOperation() {
-      super(Operation.Kind.RECONNECT_CONNECTION);
+      super(Operation.Kind.RECONNECT_EDGE);
    }
 
    public ReconnectEdgeOperation(final String connectionElementId, final String sourceElementId,

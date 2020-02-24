@@ -39,7 +39,7 @@ public abstract class Operation extends Action {
 
    public static class Kind {
       public static final String CREATE_EDGE = "createEdge";
-      public static final String RECONNECT_CONNECTION = "reconnectConnection";
+      public static final String RECONNECT_EDGE = "reconnectEdge";
       public static final String CHANGE_ROUTING_POINTS = "changeRoutingPoints";
       public static final String CREATE_NODE = "createNode";
       public static final String DELETE_ELEMENT = "deleteElement";

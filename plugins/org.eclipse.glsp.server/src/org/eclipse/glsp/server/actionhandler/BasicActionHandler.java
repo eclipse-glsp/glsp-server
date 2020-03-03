@@ -26,14 +26,12 @@ import org.eclipse.glsp.api.utils.GenericsUtil;
 public abstract class BasicActionHandler<T extends Action> implements ActionHandler {
    protected final Class<T> actionType;
 
-   @SuppressWarnings("unchecked")
    public BasicActionHandler() {
-      this.actionType = (Class<T>) (GenericsUtil.getParametrizedType(getClass(), BasicActionHandler.class))
-         .getActualTypeArguments()[0];
+      this.actionType = deriveActionType();
    }
 
    @SuppressWarnings("unchecked")
-   protected Class<T> deriveOperationType() {
+   protected Class<T> deriveActionType() {
       return (Class<T>) GenericsUtil.getGenericTypeParameterClass(getClass(), BasicActionHandler.class);
    }
 

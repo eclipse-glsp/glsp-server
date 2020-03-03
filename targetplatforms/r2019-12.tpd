@@ -20,7 +20,7 @@ location "https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.14.v2
 	org.eclipse.jetty.bundles.f.feature.group
 }
 
-location "https://build.eclipse.org/modeling/elk/updates/0.6.0/" {
+location "https://download.eclipse.org/elk/updates/releases/0.6.0/" {
 	org.eclipse.elk.core
 	org.eclipse.elk.graph
 	org.eclipse.elk.graph.text

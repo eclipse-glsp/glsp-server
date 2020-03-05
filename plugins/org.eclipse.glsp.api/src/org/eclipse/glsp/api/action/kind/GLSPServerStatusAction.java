@@ -13,27 +13,35 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ******************************************************************************/
-package org.eclipse.glsp.api.types;
+package org.eclipse.glsp.api.action.kind;
 
-public class ServerStatus {
-   private final Severity severity;
-   private final String message;
-   private String details;
+import org.eclipse.glsp.api.types.Severity;
+import org.eclipse.glsp.api.types.ServerStatus;
 
-   public ServerStatus(final Severity severity, final String message) {
+public class GLSPServerStatusAction extends ServerStatusAction {
+   private static final int NO_TIMEOUT = -1;
+
+   private int timeout;
+
+   public GLSPServerStatusAction() {
       super();
-      this.severity = severity;
-      this.message = message;
    }
 
-   public ServerStatus(final Severity severity, final String message, final String details) {
-      this(severity, message);
-      this.details = details;
+   public GLSPServerStatusAction(final Severity severity, final String message) {
+      this(severity, message, NO_TIMEOUT);
    }
 
-   public String getMessage() { return message; }
+   public GLSPServerStatusAction(final ServerStatus status) {
+      this(status.getSeverity(), status.getMessage(), NO_TIMEOUT);
+   }
 
-   public Severity getSeverity() { return severity; }
+   public GLSPServerStatusAction(final Severity severity, final String message, final int timeout) {
+      super(severity, message);
+      this.timeout = timeout;
+   }
 
-   public String getDetails() { return details; }
+   public int getTimeout() { return timeout; }
+
+   public void setTimeout(final int timeout) { this.timeout = timeout; }
+
 }

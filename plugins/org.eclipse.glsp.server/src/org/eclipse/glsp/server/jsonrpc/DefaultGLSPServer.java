@@ -15,7 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.jsonrpc;
 
-import static org.eclipse.glsp.api.utils.ServerStatusUtil.error;
+import static org.eclipse.glsp.api.utils.ServerMessageUtil.error;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -27,8 +27,8 @@ import org.eclipse.glsp.api.jsonrpc.GLSPClientProvider;
 import org.eclipse.glsp.api.jsonrpc.GLSPServer;
 import org.eclipse.glsp.api.jsonrpc.InitializeParameters;
 import org.eclipse.glsp.api.model.ModelStateProvider;
+import org.eclipse.glsp.api.types.Severity;
 import org.eclipse.glsp.api.types.ServerStatus;
-import org.eclipse.glsp.api.types.ServerStatus.Severity;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;

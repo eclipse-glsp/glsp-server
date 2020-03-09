@@ -6,7 +6,7 @@
       <package
             class="org.eclipse.glsp.graph.GraphPackage"
             genModel="model/glsp-graph.genmodel"
-            uri="http://www.eclipsesource.com/glsp/graph">
+            uri="http://www.eclipse.org/glsp/graph">
       </package>
    </extension>
 

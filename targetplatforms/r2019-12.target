@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="2019-12 - Release" sequenceNumber="1583224617">
+<target name="2019-12 - Release" sequenceNumber="1584016407">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.equinox.p2.discovery.feature.feature.group" version="1.2.400.v20191014-1907"/>
@@ -17,6 +17,8 @@
       <unit id="com.google.inject" version="3.0.0.v201605172100"/>
       <unit id="com.google.inject.multibindings" version="3.0.0.v201605172100"/>
       <unit id="com.google.guava" version="27.1.0.v20190517-1946"/>
+      <unit id="org.junit" version="4.12.0.v201504281640"/>
+      <unit id="org.junit.jupiter.api" version="5.5.1.v20190826-0900"/>
       <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20191126223242/repository/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
@@ -38,7 +40,7 @@
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.apache.jasper" version="8.5.35"/>
-      <repository location="http://download.eclipse.org/gemini/updates/web/3.0.4"/>
+      <repository location="https://download.eclipse.org/gemini/updates/web/3.0.4"/>
     </location>
   </locations>
 </target>

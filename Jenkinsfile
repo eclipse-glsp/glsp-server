@@ -35,4 +35,10 @@ pipeline {
              }
         }
     }
+
+    post {
+        always {
+                junit 'tests/**/surefire-reports/*.xml'
+        }
+    }
 }

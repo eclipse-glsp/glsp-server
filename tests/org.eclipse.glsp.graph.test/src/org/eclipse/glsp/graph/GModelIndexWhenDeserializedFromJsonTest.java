@@ -50,7 +50,6 @@ public class GModelIndexWhenDeserializedFromJsonTest {
       assertEquals(graph.getChildren().get(0), index.get("node1").get());
       assertEquals(graph.getChildren().get(1), index.get("node2").get());
       assertEquals(graph.getChildren().get(2), index.get("edge12").get());
-      assertEquals(true, false);
    }
 
    @Test

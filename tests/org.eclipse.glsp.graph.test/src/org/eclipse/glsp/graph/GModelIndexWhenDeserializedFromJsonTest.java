@@ -73,6 +73,38 @@ public class GModelIndexWhenDeserializedFromJsonTest {
       assertTrue(incomingEdgesOfNode2.contains(edge));
    }
 
+   @Test
+   void testFindByIdIfEdgeBeforeSourceOrTarget() throws IOException {
+      GGraph graph = loadResource("graphEdgeBeforeSourceAndTarget.graph");
+      GModelIndex index = GModelIndex.get(graph);
+
+      assertEquals(graph, index.get("graphId").get());
+      assertEquals(graph.getChildren().get(0), index.get("edge12").get());
+      assertEquals(graph.getChildren().get(1), index.get("node1").get());
+      assertEquals(graph.getChildren().get(2), index.get("node2").get());
+   }
+
+   @Test
+   void testGetIncomingIfEdgeBeforeSourceOrTarget() throws IOException {
+      GGraph graph = loadResource("graphEdgeBeforeSourceAndTarget.graph");
+      GModelElement edge = graph.getChildren().get(0);
+      GModelElement node1 = graph.getChildren().get(1);
+      GModelElement node2 = graph.getChildren().get(2);
+      GModelIndex index = GModelIndex.get(graph);
+
+      Collection<GEdge> incomingEdgesOfNode1 = index.getIncomingEdges(node1);
+      Collection<GEdge> outgoingEdgesOfNode1 = index.getOutgoingEdges(node1);
+      assertEquals(0, incomingEdgesOfNode1.size());
+      assertEquals(1, outgoingEdgesOfNode1.size());
+      assertTrue(outgoingEdgesOfNode1.contains(edge));
+
+      Collection<GEdge> incomingEdgesOfNode2 = index.getIncomingEdges(node2);
+      Collection<GEdge> outgoingEdgesOfNode2 = index.getOutgoingEdges(node2);
+      assertEquals(1, incomingEdgesOfNode2.size());
+      assertEquals(0, outgoingEdgesOfNode2.size());
+      assertTrue(incomingEdgesOfNode2.contains(edge));
+   }
+
    private GGraph loadResource(final String file) throws IOException {
       Gson gson = gsonConfigurator.configureGsonBuilder(new GsonBuilder()).create();
       JsonReader jsonReader = new JsonReader(new FileReader(RESOURCE_PATH + file));

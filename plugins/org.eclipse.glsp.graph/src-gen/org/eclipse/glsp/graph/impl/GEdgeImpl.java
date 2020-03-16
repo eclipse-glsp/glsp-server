@@ -503,7 +503,7 @@ public class GEdgeImpl extends MinimalEObjectImpl.Container implements GEdge {
       this.sourceId = newSource.getId();
    }
 
-   protected Optional<GModelElement> findElement(final String elementId) {
+   private Optional<GModelElement> findElement(final String elementId) {
       return GModelIndex.get(this).get(elementId);
    }
 

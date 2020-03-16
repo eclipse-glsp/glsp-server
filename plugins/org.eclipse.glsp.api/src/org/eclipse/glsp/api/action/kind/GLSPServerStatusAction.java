@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,8 +15,8 @@
  ******************************************************************************/
 package org.eclipse.glsp.api.action.kind;
 
-import org.eclipse.glsp.api.types.Severity;
 import org.eclipse.glsp.api.types.ServerStatus;
+import org.eclipse.glsp.api.types.Severity;
 
 public class GLSPServerStatusAction extends ServerStatusAction {
    private static final int NO_TIMEOUT = -1;

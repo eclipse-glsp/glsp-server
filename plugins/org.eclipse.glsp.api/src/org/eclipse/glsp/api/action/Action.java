@@ -58,6 +58,7 @@ public abstract class Action {
       public static final String SAVE_MODEL = "saveModel";
       public static final String SELECT = "selectElement";
       public static final String SELECT_ALL = "allSelected";
+      public static final String SERVER_MESSAGE = "serverMessage";
       public static final String SERVER_STATUS = "serverStatus";
       public static final String SET_BOUNDS = "setBounds";
       public static final String SET_CLIPBOARD_DATA = "setClipboardData";

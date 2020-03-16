@@ -15,16 +15,16 @@
  ******************************************************************************/
 package org.eclipse.glsp.api.utils;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
-import org.apache.log4j.Logger;
 import org.eclipse.glsp.api.action.kind.ServerStatusAction;
-import org.eclipse.glsp.api.types.ServerStatus.Severity;
+import org.eclipse.glsp.api.action.kind.GLSPServerStatusAction;
+import org.eclipse.glsp.api.types.Severity;
 
 public final class ServerStatusUtil {
-   private static Logger LOGGER = Logger.getLogger(ServerStatusUtil.class);
+   private ServerStatusUtil() {}
+
+   public static ServerStatusAction status(final Severity severity, final String message) {
+      return new ServerStatusAction(severity, message);
+   }
 
    public static ServerStatusAction info(final String message) {
       return new ServerStatusAction(Severity.INFO, message);
@@ -34,52 +34,28 @@ public final class ServerStatusUtil {
       return new ServerStatusAction(Severity.WARNING, message);
    }
 
-   public static ServerStatusAction error(final String message, final String details) {
-      return new ServerStatusAction(Severity.ERROR, message, details);
+   public static ServerStatusAction error(final String message) {
+      return new ServerStatusAction(Severity.ERROR, message);
    }
 
-   public static ServerStatusAction error(final String message, final Throwable cause) {
-      return new ServerStatusAction(Severity.ERROR, message, getDetails(cause));
+   public static ServerStatusAction status(final Severity severity, final String message,
+      final int timeout) {
+      return new GLSPServerStatusAction(severity, message, timeout);
    }
 
-   public static ServerStatusAction error(final Exception e) {
-      return error(getMessage(e), getDetails(e));
+   public static ServerStatusAction info(final String message, final int timeout) {
+      return new GLSPServerStatusAction(Severity.INFO, message, timeout);
+   }
+
+   public static ServerStatusAction warn(final String message, final int timeout) {
+      return new GLSPServerStatusAction(Severity.WARNING, message, timeout);
+   }
+
+   public static ServerStatusAction error(final String message, final int timeout) {
+      return new GLSPServerStatusAction(Severity.ERROR, message, timeout);
    }
 
    public static ServerStatusAction clear() {
-      return new ServerStatusAction(Severity.OK, "");
-   }
-
-   private ServerStatusUtil() {}
-
-   public static String getDetails(final Throwable throwable) {
-      if (throwable == null) {
-         return null;
-      }
-      StringBuilder result = new StringBuilder();
-      // message
-      if (throwable.getMessage() != null) {
-         result.append(throwable.getMessage() + "\n");
-      }
-      // stacktrace
-      try (StringWriter stackTraceWriter = new StringWriter();
-         PrintWriter printWriter = new PrintWriter(stackTraceWriter)) {
-         throwable.printStackTrace(printWriter);
-         result.append(stackTraceWriter.toString());
-      } catch (IOException ex) {
-         LOGGER.error("Could not write stacktrace.", ex);
-         return null;
-      }
-      return result.toString();
-   }
-
-   private static String getMessage(final Exception e) {
-      if (e == null) {
-         return "<no-message>";
-      }
-      if (e.getMessage() != null) {
-         return e.getMessage();
-      }
-      return e.getClass().toString();
+      return new ServerStatusAction(Severity.NONE, "");
    }
 }

@@ -28,6 +28,7 @@ import org.eclipse.glsp.api.action.kind.RequestBoundsAction;
 import org.eclipse.glsp.api.action.kind.RequestExportSvgAction;
 import org.eclipse.glsp.api.action.kind.SelectAction;
 import org.eclipse.glsp.api.action.kind.SelectAllAction;
+import org.eclipse.glsp.api.action.kind.ServerMessageAction;
 import org.eclipse.glsp.api.action.kind.ServerStatusAction;
 import org.eclipse.glsp.api.action.kind.SetBoundsAction;
 import org.eclipse.glsp.api.action.kind.SetEditLabelValidationResultAction;
@@ -75,6 +76,7 @@ public final class MultiBindingDefaults {
       RequestExportSvgAction.class,
       SelectAction.class,
       SelectAllAction.class,
+      ServerMessageAction.class,
       ServerStatusAction.class,
       SetBoundsAction.class,
       SetModelAction.class,

@@ -16,17 +16,17 @@
 package org.eclipse.glsp.api.types;
 
 public class ServerStatus {
-   private Severity severity;
-   private String message;
+   private final Severity severity;
+   private final String message;
    private String details;
 
-   public ServerStatus(Severity severity, String message) {
+   public ServerStatus(final Severity severity, final String message) {
       super();
       this.severity = severity;
       this.message = message;
    }
 
-   public ServerStatus(Severity severity, String message, String details) {
+   public ServerStatus(final Severity severity, final String message, final String details) {
       this(severity, message);
       this.details = details;
    }
@@ -36,12 +36,4 @@ public class ServerStatus {
    public Severity getSeverity() { return severity; }
 
    public String getDetails() { return details; }
-
-   public enum Severity {
-      FATAL,
-      ERROR,
-      WARNING,
-      INFO,
-      OK
-   }
 }

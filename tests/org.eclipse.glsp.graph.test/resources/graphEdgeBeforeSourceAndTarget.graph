@@ -1,0 +1,29 @@
+{
+  "revision": 42,
+  "type": "graph",
+  "id": "graphId",
+  "children": [
+    {
+      "id": "edge12",
+      "type": "edge",
+      "sourceId": "node1",
+      "targetId": "node2"
+    },
+    {
+      "id": "node1",
+      "type": "node",
+      "position": {
+        "x": 10.0,
+        "y": 20.0
+      }
+    },
+    {
+      "id": "node2",
+      "type": "node",
+      "position": {
+        "x": 30.0,
+        "y": 40.0
+      }
+    }
+  ]
+}

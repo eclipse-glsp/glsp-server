@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -118,7 +119,11 @@ public class GModelIndexImpl extends ECrossReferenceAdapter implements GModelInd
 
    @Override
    public Optional<GModelElement> get(final String elementId) {
-      return Optional.ofNullable(idToElement.get(elementId));
+      Optional<GModelElement> indexMatch = Optional.ofNullable(idToElement.get(elementId));
+      if (!indexMatch.isPresent() && isCurrentlyBuildingIndex()) {
+         return searchElementInModel(elementId);
+      }
+      return indexMatch;
    }
 
    @Override
@@ -171,5 +176,34 @@ public class GModelIndexImpl extends ECrossReferenceAdapter implements GModelInd
 
    @Override
    public GModelElement getRoot() { return root; }
+
+   /**
+    * Indicates whether this indexer is currently setting targets and thus not done indexing.
+    *
+    * @return <code>true</code> if currently setting targets, <code>false</code> otherwise.
+    */
+   public boolean isCurrentlyBuildingIndex() { return settingTargets; }
+
+   /**
+    * Searches the element by iterating through the model and not based on a built up index.
+    *
+    * @param elementId The element id to search for.
+    * @return The element with the <code>elementId</code> or {@link Optional#empty()}.
+    */
+   public Optional<GModelElement> searchElementInModel(final String elementId) {
+      if (elementId.equals(root.getId())) {
+         return Optional.of(root);
+      }
+      for (TreeIterator<EObject> eAllContents = root.eAllContents(); eAllContents.hasNext();) {
+         EObject next = eAllContents.next();
+         if (next instanceof GModelElement) {
+            GModelElement gModelElement = (GModelElement) next;
+            if (elementId.equals(gModelElement.getId())) {
+               return Optional.of(gModelElement);
+            }
+         }
+      }
+      return Optional.empty();
+   }
 
 }

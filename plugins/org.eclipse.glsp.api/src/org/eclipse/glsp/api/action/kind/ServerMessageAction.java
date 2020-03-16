@@ -19,26 +19,53 @@ import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.types.Severity;
 import org.eclipse.glsp.api.types.ServerStatus;
 
-public class ServerStatusAction extends Action {
+public class ServerMessageAction extends Action {
+   private static final int NO_TIMEOUT = -1;
+
    private String severity;
    private String message;
+   private String details;
+   private int timeout;
 
-   public ServerStatusAction() {
-      super(Action.Kind.SERVER_STATUS);
+   public ServerMessageAction() {
+      super(Action.Kind.SERVER_MESSAGE);
    }
 
-   public ServerStatusAction(final ServerStatus status) {
-      this(status.getSeverity(), status.getMessage());
+   public ServerMessageAction(final Severity severity, final String message) {
+      this(severity, message, null, NO_TIMEOUT);
    }
 
-   public ServerStatusAction(final Severity severity, final String message) {
+   public ServerMessageAction(final Severity severity, final String message, final int timeout) {
+      this(severity, message, null, timeout);
+   }
+
+   public ServerMessageAction(final Severity severity, final String message, final String details) {
+      this(severity, message, details, NO_TIMEOUT);
+   }
+
+   public ServerMessageAction(final ServerStatus status) {
+      this(status.getSeverity(), status.getMessage(), status.getDetails(), NO_TIMEOUT);
+   }
+
+   public ServerMessageAction(final Severity severity, final String message, final String details,
+      final int timeout) {
       this();
       this.severity = Severity.toString(severity);
       this.message = message;
+      this.details = details;
+      this.timeout = timeout;
    }
 
    public String getSeverity() { return severity; }
 
    public String getMessage() { return message; }
+
+   public String getDetails() { return details; }
+
+   public void setDetails(final String details) { this.details = details; }
+
+   public int getTimeout() { return timeout; }
+
+   public void setTimeout(final int timeout) { this.timeout = timeout; }
 
 }

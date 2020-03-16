@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,30 +15,33 @@
  ******************************************************************************/
 package org.eclipse.glsp.api.action.kind;
 
-import org.eclipse.glsp.api.action.Action;
-import org.eclipse.glsp.api.types.Severity;
 import org.eclipse.glsp.api.types.ServerStatus;
+import org.eclipse.glsp.api.types.Severity;
 
-public class ServerStatusAction extends Action {
-   private String severity;
-   private String message;
+public class GLSPServerStatusAction extends ServerStatusAction {
+   private static final int NO_TIMEOUT = -1;
 
-   public ServerStatusAction() {
-      super(Action.Kind.SERVER_STATUS);
+   private int timeout;
+
+   public GLSPServerStatusAction() {
+      super();
    }
 
-   public ServerStatusAction(final ServerStatus status) {
-      this(status.getSeverity(), status.getMessage());
+   public GLSPServerStatusAction(final Severity severity, final String message) {
+      this(severity, message, NO_TIMEOUT);
    }
 
-   public ServerStatusAction(final Severity severity, final String message) {
-      this();
-      this.severity = Severity.toString(severity);
-      this.message = message;
+   public GLSPServerStatusAction(final ServerStatus status) {
+      this(status.getSeverity(), status.getMessage(), NO_TIMEOUT);
    }
 
-   public String getSeverity() { return severity; }
+   public GLSPServerStatusAction(final Severity severity, final String message, final int timeout) {
+      super(severity, message);
+      this.timeout = timeout;
+   }
 
-   public String getMessage() { return message; }
+   public int getTimeout() { return timeout; }
+
+   public void setTimeout(final int timeout) { this.timeout = timeout; }
 
 }

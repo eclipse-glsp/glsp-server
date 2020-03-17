@@ -60,7 +60,7 @@ public class DefaultToolPaletteItemProvider implements ToolPaletteItemProvider {
          .flatMap(handler -> handler.getTriggerActions()
             .stream()
             .map(action -> create(action, handler.getLabel())))
-         .sorted(Comparator.comparing((final PaletteItem a) -> a.getLabel()))
+         .sorted(Comparator.comparing(PaletteItem::getLabel))
          .collect(Collectors.toList());
    }
 

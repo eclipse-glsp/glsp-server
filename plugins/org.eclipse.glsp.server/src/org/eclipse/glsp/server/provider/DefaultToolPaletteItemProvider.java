@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.provider;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -46,9 +47,7 @@ public class DefaultToolPaletteItemProvider implements ToolPaletteItemProvider {
          .collect(Collectors.toList());
       counter = 0;
       List<PaletteItem> nodes = createPaletteItems(handlers, CreateNodeOperation.class);
-
       List<PaletteItem> edges = createPaletteItems(handlers, CreateEdgeOperation.class);
-
       return Lists.newArrayList(PaletteItem.createPaletteGroup("node-group", "Nodes", nodes, "fa-hammer", "A"),
          PaletteItem.createPaletteGroup("edge-group", "Edges", edges, "fa-hammer", "B"));
 
@@ -61,12 +60,11 @@ public class DefaultToolPaletteItemProvider implements ToolPaletteItemProvider {
          .flatMap(handler -> handler.getTriggerActions()
             .stream()
             .map(action -> create(action, handler.getLabel())))
+         .sorted(Comparator.comparing(PaletteItem::getLabel))
          .collect(Collectors.toList());
    }
 
    protected PaletteItem create(final TriggerElementCreationAction action, final String label) {
-      PaletteItem item = new PaletteItem("palette-item" + counter++, label, action);
-      item.setSortString("" + counter);
-      return item;
+      return new PaletteItem("palette-item" + counter++, label, action);
    }
 }

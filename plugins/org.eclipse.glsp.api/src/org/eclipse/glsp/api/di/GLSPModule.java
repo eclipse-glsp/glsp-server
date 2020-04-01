@@ -34,6 +34,7 @@ import org.eclipse.glsp.api.provider.ToolPaletteItemProvider;
 import org.eclipse.glsp.api.registry.ActionHandlerRegistry;
 import org.eclipse.glsp.api.registry.ActionRegistry;
 import org.eclipse.glsp.api.registry.ContextActionsProviderRegistry;
+import org.eclipse.glsp.api.registry.ContextEditValidatorRegistry;
 import org.eclipse.glsp.api.registry.DiagramConfigurationRegistry;
 import org.eclipse.glsp.api.registry.OperationHandlerRegistry;
 import org.eclipse.glsp.api.registry.ServerCommandHandlerRegistry;
@@ -68,6 +69,7 @@ public abstract class GLSPModule extends AbstractModule {
       bind(OperationHandlerRegistry.class).to(bindOperationHandlerRegistry()).in(Singleton.class);
       bind(DiagramConfigurationRegistry.class).to(bindDiagramConfigurationRegistry()).in(Singleton.class);
       bind(ContextActionsProviderRegistry.class).to(bindContextActionsProviderRegistry()).in(Singleton.class);
+      bind(ContextEditValidatorRegistry.class).to(bindContextEditValidatorRegistry()).in(Singleton.class);
       bind(ServerCommandHandlerRegistry.class).to(bindServerCommandHandlerRegistry()).in(Singleton.class);
       // Configure Optional Bindings (Bindings that cannot be bound to a NullImpl)
       Optional.ofNullable(bindGraphExtension()).ifPresent(ext -> bind(GraphExtension.class).to(ext));
@@ -130,6 +132,8 @@ public abstract class GLSPModule extends AbstractModule {
    protected abstract Class<? extends DiagramConfigurationRegistry> bindDiagramConfigurationRegistry();
 
    protected abstract Class<? extends ContextActionsProviderRegistry> bindContextActionsProviderRegistry();
+
+   protected abstract Class<? extends ContextEditValidatorRegistry> bindContextEditValidatorRegistry();
 
    protected abstract Class<? extends ServerCommandHandlerRegistry> bindServerCommandHandlerRegistry();
 

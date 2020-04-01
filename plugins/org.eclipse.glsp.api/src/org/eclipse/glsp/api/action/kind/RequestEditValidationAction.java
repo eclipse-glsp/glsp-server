@@ -19,6 +19,7 @@ import org.eclipse.glsp.api.action.Action;
 
 public class RequestEditValidationAction extends RequestAction<SetEditValidationResultAction> {
 
+   private String contextId;
    private String modelElementId;
    private String text;
 
@@ -26,11 +27,16 @@ public class RequestEditValidationAction extends RequestAction<SetEditValidation
       super(Action.Kind.REQUEST_EDIT_VALIDATION);
    }
 
-   public RequestEditValidationAction(final String kind, final String modelElementId, final String text) {
+   public RequestEditValidationAction(final String contextId, final String modelElementId, final String text) {
       this();
+      this.contextId = contextId;
       this.modelElementId = modelElementId;
       this.text = text;
    }
+
+   public String getContextId() { return contextId; }
+
+   public void setContextId(final String contextId) { this.contextId = contextId; }
 
    public String getModelElementId() { return modelElementId; }
 

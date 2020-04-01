@@ -44,6 +44,7 @@ import org.eclipse.glsp.server.actionhandler.ExecuteServerCommandActionHandler;
 import org.eclipse.glsp.server.actionhandler.OperationActionHandler;
 import org.eclipse.glsp.server.actionhandler.RequestClipboardDataActionHandler;
 import org.eclipse.glsp.server.actionhandler.RequestContextActionsHandler;
+import org.eclipse.glsp.server.actionhandler.RequestEditValidationHandler;
 import org.eclipse.glsp.server.actionhandler.RequestMarkersHandler;
 import org.eclipse.glsp.server.actionhandler.RequestModelActionHandler;
 import org.eclipse.glsp.server.actionhandler.RequestPopupModelActionHandler;
@@ -97,6 +98,7 @@ public final class MultiBindingDefaults {
       RequestClipboardDataActionHandler.class,
       RequestTypeHintsActionHandler.class,
       RequestContextActionsHandler.class,
+      RequestEditValidationHandler.class,
       RequestMarkersHandler.class,
       ValidateLabelEditActionHandler.class);
 

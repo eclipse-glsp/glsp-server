@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,34 +13,36 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.actionhandler;
+package org.eclipse.glsp.server.internal.labeledit;
 
-import java.util.List;
 import java.util.Optional;
 
-import org.eclipse.glsp.api.action.Action;
-import org.eclipse.glsp.api.action.kind.SetEditLabelValidationResultAction;
-import org.eclipse.glsp.api.action.kind.ValidateLabelEditAction;
-import org.eclipse.glsp.api.labeledit.EditLabelValidationResult;
+import org.eclipse.glsp.api.action.kind.RequestEditValidationAction;
 import org.eclipse.glsp.api.labeledit.LabelEditValidator;
 import org.eclipse.glsp.api.model.GraphicalModelState;
+import org.eclipse.glsp.api.provider.ContextEditValidator;
+import org.eclipse.glsp.api.types.ValidationStatus;
 import org.eclipse.glsp.graph.GModelElement;
 
-import com.google.inject.Inject;
+public class ValidateLabelEditAdapter implements ContextEditValidator {
 
-public class ValidateLabelEditActionHandler extends BasicActionHandler<ValidateLabelEditAction> {
+   private final LabelEditValidator editLabelValidator;
 
-   @Inject
-   protected LabelEditValidator editLabelValidator;
+   public ValidateLabelEditAdapter(final LabelEditValidator editLabelValidator) {
+      super();
+      this.editLabelValidator = editLabelValidator;
+   }
 
    @Override
-   protected List<Action> executeAction(final ValidateLabelEditAction action, final GraphicalModelState modelState) {
-      Optional<GModelElement> element = modelState.getIndex().get(action.getLabelId());
+   public String getContextId() { return LabelEditValidator.CONTEXT_ID; }
+
+   @Override
+   public ValidationStatus validate(final RequestEditValidationAction action, final GraphicalModelState modelState) {
+      Optional<GModelElement> element = modelState.getIndex().get(action.getModelElementId());
       if (element.isPresent()) {
-         return listOf(new SetEditLabelValidationResultAction(
-            editLabelValidator.validate(modelState, action.getValue(), element.get())));
+         return editLabelValidator.validate(modelState, action.getText(), element.get());
       }
-      return listOf(new SetEditLabelValidationResultAction(EditLabelValidationResult.OK_RESULT));
+      return ValidationStatus.ok();
    }
 
 }

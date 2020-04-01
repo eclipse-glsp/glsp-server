@@ -17,9 +17,11 @@ package org.eclipse.glsp.server.registry;
 
 import java.util.Set;
 
+import org.eclipse.glsp.api.labeledit.LabelEditValidator;
 import org.eclipse.glsp.api.provider.ContextEditValidator;
 import org.eclipse.glsp.api.registry.ContextEditValidatorRegistry;
 import org.eclipse.glsp.api.registry.MapRegistry;
+import org.eclipse.glsp.server.internal.labeledit.ValidateLabelEditAdapter;
 
 import com.google.inject.Inject;
 
@@ -27,7 +29,9 @@ public class DIContextEditValidatorRegistry extends MapRegistry<String, ContextE
    implements ContextEditValidatorRegistry {
 
    @Inject
-   public DIContextEditValidatorRegistry(final Set<ContextEditValidator> contextEditValidators) {
+   public DIContextEditValidatorRegistry(final Set<ContextEditValidator> contextEditValidators,
+      final LabelEditValidator labelEditValidator) {
       contextEditValidators.forEach(provider -> register(provider.getContextId(), provider));
+      register(LabelEditValidator.CONTEXT_ID, new ValidateLabelEditAdapter(labelEditValidator));
    }
 }

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,28 +15,15 @@
  ********************************************************************************/
 package org.eclipse.glsp.api.action.kind;
 
-import org.eclipse.glsp.api.action.Action;
+import org.eclipse.glsp.api.labeledit.LabelEditValidator;
 
-public class ValidateLabelEditAction extends RequestAction<SetEditLabelValidationResultAction> {
-
-   private String value;
-   private String labelId;
+public class ValidateLabelEditAction extends RequestEditValidationAction {
 
    public ValidateLabelEditAction() {
-      super(Action.Kind.VALIDATE_LABEL_EDIT_ACTION);
+      super();
    }
 
    public ValidateLabelEditAction(final String value, final String labelId) {
-      super(Action.Kind.VALIDATE_LABEL_EDIT_ACTION);
-      this.value = value;
-      this.labelId = labelId;
+      super(LabelEditValidator.CONTEXT_ID, labelId, value);
    }
-
-   public String getValue() { return value; }
-
-   public void setValue(final String value) { this.value = value; }
-
-   public String getLabelId() { return labelId; }
-
-   public void setLabelId(final String labelId) { this.labelId = labelId; }
 }

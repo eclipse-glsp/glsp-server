@@ -1,5 +1,5 @@
-/*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+/********************************************************************************
+ * Copyright (c) 2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -12,13 +12,9 @@
  * https://www.gnu.org/software/classpath/license.html.
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
- ******************************************************************************/
-package org.eclipse.glsp.api.labeledit;
+ ********************************************************************************/
+package org.eclipse.glsp.api.registry;
 
-public final class SeverityKind {
-   public static final String OK = "ok";
-   public static final String WARNING = "warning";
-   public static final String ERROR = "error";
+import org.eclipse.glsp.api.provider.ContextEditValidator;
 
-   private SeverityKind() {}
-}
+public interface ContextEditValidatorRegistry extends Registry<String, ContextEditValidator> {}

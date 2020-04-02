@@ -1,5 +1,5 @@
-/*******************************************************************************
- * Copyright (c) 2019-2020 EclipseSource and others.
+/********************************************************************************
+ * Copyright (c) 2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -12,25 +12,22 @@
  * https://www.gnu.org/software/classpath/license.html.
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
- ******************************************************************************/
-package org.eclipse.glsp.api.labeledit;
+ ********************************************************************************/
+package org.eclipse.glsp.api.provider;
 
+import org.eclipse.glsp.api.action.kind.RequestEditValidationAction;
 import org.eclipse.glsp.api.model.GraphicalModelState;
 import org.eclipse.glsp.api.types.ValidationStatus;
-import org.eclipse.glsp.graph.GModelElement;
 
-public interface LabelEditValidator {
+public interface ContextEditValidator {
 
-   String CONTEXT_ID = "label-edit";
+   String getContextId();
 
-   ValidationStatus validate(GraphicalModelState modelState, String label, GModelElement element);
+   ValidationStatus validate(final RequestEditValidationAction action,
+      final GraphicalModelState modelState);
 
-   final class NullImpl implements LabelEditValidator {
-      @Override
-      public ValidationStatus validate(final GraphicalModelState modelState, final String label,
-         final GModelElement element) {
-         return ValidationStatus.ok();
-      }
+   default boolean handles(final String contextId) {
+      return getContextId().equals(contextId);
    }
 
 }

@@ -31,7 +31,6 @@ import org.eclipse.glsp.api.action.kind.SelectAllAction;
 import org.eclipse.glsp.api.action.kind.ServerMessageAction;
 import org.eclipse.glsp.api.action.kind.ServerStatusAction;
 import org.eclipse.glsp.api.action.kind.SetBoundsAction;
-import org.eclipse.glsp.api.action.kind.SetEditLabelValidationResultAction;
 import org.eclipse.glsp.api.action.kind.SetModelAction;
 import org.eclipse.glsp.api.action.kind.SetPopupModelAction;
 import org.eclipse.glsp.api.action.kind.TriggerEdgeCreationAction;
@@ -44,13 +43,13 @@ import org.eclipse.glsp.server.actionhandler.ExecuteServerCommandActionHandler;
 import org.eclipse.glsp.server.actionhandler.OperationActionHandler;
 import org.eclipse.glsp.server.actionhandler.RequestClipboardDataActionHandler;
 import org.eclipse.glsp.server.actionhandler.RequestContextActionsHandler;
+import org.eclipse.glsp.server.actionhandler.RequestEditValidationHandler;
 import org.eclipse.glsp.server.actionhandler.RequestMarkersHandler;
 import org.eclipse.glsp.server.actionhandler.RequestModelActionHandler;
 import org.eclipse.glsp.server.actionhandler.RequestPopupModelActionHandler;
 import org.eclipse.glsp.server.actionhandler.RequestTypeHintsActionHandler;
 import org.eclipse.glsp.server.actionhandler.SaveModelActionHandler;
 import org.eclipse.glsp.server.actionhandler.UndoRedoActionHandler;
-import org.eclipse.glsp.server.actionhandler.ValidateLabelEditActionHandler;
 import org.eclipse.glsp.server.operationhandler.ApplyLabelEditOperationHandler;
 import org.eclipse.glsp.server.operationhandler.ChangeBoundsOperationHandler;
 import org.eclipse.glsp.server.operationhandler.ChangeRoutingPointsHandler;
@@ -81,7 +80,6 @@ public final class MultiBindingDefaults {
       SetBoundsAction.class,
       SetModelAction.class,
       SetPopupModelAction.class,
-      SetEditLabelValidationResultAction.class,
       TriggerNodeCreationAction.class,
       TriggerEdgeCreationAction.class,
       UpdateModelAction.class);
@@ -97,8 +95,8 @@ public final class MultiBindingDefaults {
       RequestClipboardDataActionHandler.class,
       RequestTypeHintsActionHandler.class,
       RequestContextActionsHandler.class,
-      RequestMarkersHandler.class,
-      ValidateLabelEditActionHandler.class);
+      RequestEditValidationHandler.class,
+      RequestMarkersHandler.class);
 
    public static final List<Class<? extends OperationHandler>> DEFAULT_OPERATION_HANDLERS = Lists.newArrayList(
       ApplyLabelEditOperationHandler.class,

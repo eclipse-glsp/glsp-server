@@ -49,6 +49,7 @@ public abstract class Action {
       public static final String REQUEST_BOUNDS = "requestBounds";
       public static final String REQUEST_CLIPBOARD_DATA = "requestClipboardData";
       public static final String REQUEST_CONTEXT_ACTIONS = "requestContextActions";
+      public static final String REQUEST_EDIT_VALIDATION = "requestEditValidation";
       public static final String REQUEST_EXPORT_SVG = "requestExportSvg";
       public static final String REQUEST_MARKERS = "requestMarkers";
       public static final String REQUEST_MODEL = "requestModel";
@@ -64,6 +65,7 @@ public abstract class Action {
       public static final String SET_CLIPBOARD_DATA = "setClipboardData";
       public static final String SET_CONTEXT_ACTIONS = "setContextActions";
       public static final String SET_DIRTY_STATE = "setDirtyState";
+      public static final String SET_EDIT_VALIDATION_RESULT = "setEditValidationResult";
       public static final String SET_LABEL_EDIT_VALIDATION_RESULT_ACTION = "setLabelEditValidationResult";
       public static final String SET_LAYERS = "setLayers";
       public static final String SET_MARKERS = "setMarkers";

@@ -33,8 +33,6 @@ public class RequestContextActionsHandler extends BasicActionHandler<RequestCont
    @Inject
    protected ContextActionsProviderRegistry contextActionsProviderRegistry;
 
-   public RequestContextActionsHandler() {}
-
    @Override
    public List<Action> executeAction(final RequestContextActions action, final GraphicalModelState modelState) {
       EditorContext editorContext = action.getEditorContext();

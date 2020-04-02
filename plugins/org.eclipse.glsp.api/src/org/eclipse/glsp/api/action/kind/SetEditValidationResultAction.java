@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -16,22 +16,23 @@
 package org.eclipse.glsp.api.action.kind;
 
 import org.eclipse.glsp.api.action.Action;
-import org.eclipse.glsp.api.labeledit.EditLabelValidationResult;
+import org.eclipse.glsp.api.types.ValidationStatus;
 
-public class SetEditLabelValidationResultAction extends ResponseAction {
+public class SetEditValidationResultAction extends ResponseAction {
 
-   private EditLabelValidationResult result;
+   private ValidationStatus status;
 
-   public SetEditLabelValidationResultAction() {
-      super(Action.Kind.SET_LABEL_EDIT_VALIDATION_RESULT_ACTION);
+   public SetEditValidationResultAction() {
+      super(Action.Kind.SET_EDIT_VALIDATION_RESULT);
    }
 
-   public SetEditLabelValidationResultAction(final EditLabelValidationResult result) {
-      super(Action.Kind.SET_LABEL_EDIT_VALIDATION_RESULT_ACTION);
-      this.result = result;
+   public SetEditValidationResultAction(final ValidationStatus status) {
+      this();
+      this.status = status;
    }
 
-   public EditLabelValidationResult getResult() { return result; }
+   public ValidationStatus getStatus() { return status; }
 
-   public void setResult(final EditLabelValidationResult result) { this.result = result; }
+   public void setStatus(final ValidationStatus status) { this.status = status; }
+
 }

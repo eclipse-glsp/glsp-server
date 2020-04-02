@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2020 EclipseSource and others.
+ * Copyright (c) 2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,15 +15,22 @@
  ********************************************************************************/
 package org.eclipse.glsp.api.action.kind;
 
-import org.eclipse.glsp.api.labeledit.LabelEditValidator;
+import java.util.ArrayList;
 
-public class ValidateLabelEditAction extends RequestEditValidationAction {
+import org.eclipse.glsp.api.action.Action;
+import org.eclipse.glsp.api.types.LabeledAction;
 
-   public ValidateLabelEditAction() {
-      super();
+public class SetAutoCompleteValueAction extends LabeledAction {
+
+   private String text;
+
+   public SetAutoCompleteValueAction(final String label, final String icon, final String text) {
+      super(label, new ArrayList<Action>(), icon);
+      this.text = text;
    }
 
-   public ValidateLabelEditAction(final String value, final String labelId) {
-      super(LabelEditValidator.CONTEXT_ID, labelId, value);
-   }
+   public String getText() { return text; }
+
+   public void setText(final String text) { this.text = text; }
+
 }

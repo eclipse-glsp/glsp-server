@@ -15,18 +15,26 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operationhandler;
 
+import java.util.List;
+
 import org.eclipse.glsp.api.handler.CreateOperationHandler;
 import org.eclipse.glsp.api.operation.CreateOperation;
 import org.eclipse.glsp.api.operation.Operation;
 import org.eclipse.glsp.api.utils.GenericsUtil;
 
+import com.google.common.collect.Lists;
+
 public abstract class BasicCreateOperationHandler<T extends CreateOperation> extends BasicOperationHandler<T>
    implements CreateOperationHandler {
 
-   private String elementTypeId;
+   private List<String> handledElementTypeIds;
 
-   public BasicCreateOperationHandler(final String elementTypeId) {
-      this.elementTypeId = elementTypeId;
+   public BasicCreateOperationHandler(final String... elementTypeIds) {
+      this(Lists.newArrayList(elementTypeIds));
+   }
+
+   public BasicCreateOperationHandler(final List<String> handledElementTypeIds) {
+      this.handledElementTypeIds = handledElementTypeIds;
    }
 
    @SuppressWarnings("unchecked")
@@ -38,16 +46,18 @@ public abstract class BasicCreateOperationHandler<T extends CreateOperation> ext
 
    @Override
    public boolean handles(final Operation operation) {
-      return super.handles(operation) && getHandledOperationType()
-         .cast(operation).getElementTypeId().equals(elementTypeId);
+      return super.handles(operation) && handledElementTypeIds.contains(getHandledOperationType()
+         .cast(operation).getElementTypeId());
    }
 
    @Override
    public abstract String getLabel();
 
    @Override
-   public String getElementTypeId() { return elementTypeId; }
+   public List<String> getHandledElementTypeIds() { return handledElementTypeIds; }
 
-   public void setElementTypeId(final String elementTypeId) { this.elementTypeId = elementTypeId; }
+   public void setHandledElementTypeIds(final List<String> handledElementTypeIds) {
+      this.handledElementTypeIds = handledElementTypeIds;
+   }
 
 }

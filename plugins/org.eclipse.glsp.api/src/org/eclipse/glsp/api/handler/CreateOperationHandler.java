@@ -17,6 +17,7 @@ package org.eclipse.glsp.api.handler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.eclipse.glsp.api.action.kind.TriggerEdgeCreationAction;
 import org.eclipse.glsp.api.action.kind.TriggerElementCreationAction;
@@ -24,6 +25,8 @@ import org.eclipse.glsp.api.action.kind.TriggerNodeCreationAction;
 import org.eclipse.glsp.api.operation.CreateOperation;
 import org.eclipse.glsp.api.operation.kind.CreateEdgeOperation;
 import org.eclipse.glsp.api.operation.kind.CreateNodeOperation;
+
+import com.google.common.collect.Lists;
 
 public interface CreateOperationHandler extends OperationHandler {
 
@@ -33,12 +36,12 @@ public interface CreateOperationHandler extends OperationHandler {
    default List<TriggerElementCreationAction> getTriggerActions() {
       List<TriggerElementCreationAction> actions = new ArrayList<>();
       if (CreateNodeOperation.class.isAssignableFrom(getHandledOperationType())) {
-         actions.add(new TriggerNodeCreationAction(getElementTypeId()));
+         return getHandledElementTypeIds().stream().map(TriggerNodeCreationAction::new).collect(Collectors.toList());
       } else if (CreateEdgeOperation.class.isAssignableFrom(getHandledOperationType())) {
-         actions.add(new TriggerEdgeCreationAction(getElementTypeId()));
+         return getHandledElementTypeIds().stream().map(TriggerEdgeCreationAction::new).collect(Collectors.toList());
       }
-      return actions;
+      return Lists.newArrayList();
    }
 
-   String getElementTypeId();
+   List<String> getHandledElementTypeIds();
 }

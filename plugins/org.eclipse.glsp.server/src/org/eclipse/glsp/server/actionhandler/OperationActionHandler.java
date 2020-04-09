@@ -48,7 +48,8 @@ public class OperationActionHandler extends BasicActionHandler<Operation> {
             .filter(CreateOperationHandler.class::isInstance)
             .map(CreateOperationHandler.class::cast)
             .filter(
-               handler -> handler.getElementTypeId().equals(((CreateOperation) operation).getElementTypeId()));
+               handler -> handler.getHandledElementTypeIds()
+                  .contains(((CreateOperation) operation).getElementTypeId()));
       } else {
          operationHandler = operationHandlerRegistry.get(operation);
       }

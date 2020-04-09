@@ -57,10 +57,12 @@ public class DIOperationHandlerRegistry
 
    @Override
    public boolean register(final Operation key, final OperationHandler handler) {
-      String elementTypeId = handler instanceof CreateOperationHandler
-         ? ((CreateOperationHandler) handler).getElementTypeId()
-         : null;
-      return internalRegistry.register(deriveKey(key, elementTypeId), handler);
+      if (handler instanceof CreateOperationHandler) {
+         return ((CreateOperationHandler) handler).getHandledElementTypeIds().stream()
+            .allMatch(typeId -> internalRegistry.register(deriveKey(key, typeId), handler));
+
+      }
+      return internalRegistry.register(deriveKey(key, null), handler);
    }
 
    @Override

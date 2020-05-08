@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -31,6 +32,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.glsp.graph.GModelElement;
 
+import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.TypeAdapter;
@@ -45,6 +47,7 @@ public class GModelElementTypeAdapter extends PropertyBasedTypeAdapter<GModelEle
 
    private final Gson gson;
    private final Map<String, EClass> typeMap;
+   private String delimiter = ":";
 
    public static class Factory implements TypeAdapterFactory {
 
@@ -75,14 +78,26 @@ public class GModelElementTypeAdapter extends PropertyBasedTypeAdapter<GModelEle
 
    @Override
    protected GModelElement createInstance(final String type) {
-      EClass eClass = typeMap.get(type);
-      if (eClass != null) {
-         GModelElement element = (GModelElement) eClass.getEPackage().getEFactoryInstance().create(eClass);
+      Optional<EClass> eClass = findEClassForType(type);
+      if (eClass.isPresent()) {
+         GModelElement element = (GModelElement) eClass.get().getEPackage().getEFactoryInstance().create(eClass.get());
          element.setType(type);
          return element;
       }
       LOG.error("Cannot find class for type " + type);
       return null;
+   }
+
+   protected Optional<EClass> findEClassForType(final String type) {
+      EClass eClass = typeMap.get(type);
+      if (eClass == null) {
+         List<String> subtypes = Lists.newArrayList(type.split(delimiter));
+         while (eClass == null && !subtypes.isEmpty()) {
+            subtypes.remove(subtypes.size() - 1);
+            eClass = typeMap.get(String.join(delimiter, subtypes));
+         }
+      }
+      return Optional.ofNullable(eClass);
    }
 
    @Override
@@ -169,5 +184,9 @@ public class GModelElementTypeAdapter extends PropertyBasedTypeAdapter<GModelEle
    protected boolean isSet(final GModelElement instance, final Field field) {
       return instance.eIsSet(instance.eClass().getEStructuralFeature(field.getName()));
    }
+
+   public String getDelimiter() { return delimiter; }
+
+   public void setDelimiter(final String delimiter) { this.delimiter = delimiter; }
 
 }

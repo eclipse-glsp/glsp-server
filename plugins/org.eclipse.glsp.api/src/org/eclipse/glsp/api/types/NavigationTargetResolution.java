@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -17,32 +17,35 @@ package org.eclipse.glsp.api.types;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
-import org.eclipse.glsp.graph.GPoint;
+public class NavigationTargetResolution {
 
-public class EditorContext {
+   public static final NavigationTargetResolution EMPTY = new NavigationTargetResolution();
 
-   private List<String> selectedElementIds;
-   private GPoint lastMousePosition;
-   private String sourceUri;
+   private List<String> elementIds;
    private Map<String, String> args;
 
-   public EditorContext() {}
-
-   public List<String> getSelectedElementIds() { return selectedElementIds; }
-
-   public void setSelectedElementIds(final List<String> selectedElementIds) {
-      this.selectedElementIds = selectedElementIds;
+   public NavigationTargetResolution() {
+      this(null, null);
    }
 
-   public Optional<GPoint> getLastMousePosition() { return Optional.ofNullable(lastMousePosition); }
+   public NavigationTargetResolution(final List<String> elementIds) {
+      this(elementIds, null);
+   }
 
-   public void setLastMousePosition(final GPoint lastMousePosition) { this.lastMousePosition = lastMousePosition; }
+   public NavigationTargetResolution(final Map<String, String> args) {
+      this(null, args);
+   }
 
-   public String getSourceUri() { return sourceUri; }
+   public NavigationTargetResolution(final List<String> elementIds, final Map<String, String> args) {
+      super();
+      this.elementIds = elementIds;
+      this.args = args;
+   }
 
-   public void setSourceUri(final String sourceUri) { this.sourceUri = sourceUri; }
+   public List<String> getElementIds() { return elementIds; }
+
+   public void setElementIds(final List<String> elementIds) { this.elementIds = elementIds; }
 
    public Map<String, String> getArgs() { return args; }
 

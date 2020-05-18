@@ -28,6 +28,7 @@ import org.eclipse.glsp.api.labeledit.LabelEditValidator;
 import org.eclipse.glsp.api.layout.ILayoutEngine;
 import org.eclipse.glsp.api.markers.ModelValidator;
 import org.eclipse.glsp.api.model.ModelStateProvider;
+import org.eclipse.glsp.api.model.NavigationTargetResolver;
 import org.eclipse.glsp.api.provider.CommandPaletteActionProvider;
 import org.eclipse.glsp.api.provider.ContextMenuItemProvider;
 import org.eclipse.glsp.api.provider.ToolPaletteItemProvider;
@@ -36,6 +37,7 @@ import org.eclipse.glsp.api.registry.ActionRegistry;
 import org.eclipse.glsp.api.registry.ContextActionsProviderRegistry;
 import org.eclipse.glsp.api.registry.ContextEditValidatorRegistry;
 import org.eclipse.glsp.api.registry.DiagramConfigurationRegistry;
+import org.eclipse.glsp.api.registry.NavigationTargetProviderRegistry;
 import org.eclipse.glsp.api.registry.OperationHandlerRegistry;
 import org.eclipse.glsp.api.registry.ServerCommandHandlerRegistry;
 import org.eclipse.glsp.graph.GraphExtension;
@@ -62,6 +64,7 @@ public abstract class GLSPModule extends AbstractModule {
       bind(ToolPaletteItemProvider.class).to(bindToolPaletteItemProvider());
       bind(CommandPaletteActionProvider.class).to(bindCommandPaletteActionProvider());
       bind(ContextMenuItemProvider.class).to(bindContextMenuItemProvider());
+      bind(NavigationTargetResolver.class).to(bindNavigationTargetResolver());
 
       // Configure set suppliers
       bind(ActionRegistry.class).to(bindActionRegistry()).in(Singleton.class);
@@ -69,6 +72,7 @@ public abstract class GLSPModule extends AbstractModule {
       bind(OperationHandlerRegistry.class).to(bindOperationHandlerRegistry()).in(Singleton.class);
       bind(DiagramConfigurationRegistry.class).to(bindDiagramConfigurationRegistry()).in(Singleton.class);
       bind(ContextActionsProviderRegistry.class).to(bindContextActionsProviderRegistry()).in(Singleton.class);
+      bind(NavigationTargetProviderRegistry.class).to(bindNavigationTargetProviderRegistry()).in(Singleton.class);
       bind(ContextEditValidatorRegistry.class).to(bindContextEditValidatorRegistry()).in(Singleton.class);
       bind(ServerCommandHandlerRegistry.class).to(bindServerCommandHandlerRegistry()).in(Singleton.class);
       // Configure Optional Bindings (Bindings that cannot be bound to a NullImpl)
@@ -123,6 +127,10 @@ public abstract class GLSPModule extends AbstractModule {
       return ToolPaletteItemProvider.NullImpl.class;
    }
 
+   protected Class<? extends NavigationTargetResolver> bindNavigationTargetResolver() {
+      return NavigationTargetResolver.NullImpl.class;
+   }
+
    protected abstract Class<? extends ActionRegistry> bindActionRegistry();
 
    protected abstract Class<? extends ActionHandlerRegistry> bindActionHandlerRegistry();
@@ -132,6 +140,8 @@ public abstract class GLSPModule extends AbstractModule {
    protected abstract Class<? extends DiagramConfigurationRegistry> bindDiagramConfigurationRegistry();
 
    protected abstract Class<? extends ContextActionsProviderRegistry> bindContextActionsProviderRegistry();
+
+   protected abstract Class<? extends NavigationTargetProviderRegistry> bindNavigationTargetProviderRegistry();
 
    protected abstract Class<? extends ContextEditValidatorRegistry> bindContextEditValidatorRegistry();
 

@@ -46,8 +46,10 @@ import org.eclipse.glsp.server.actionhandler.RequestContextActionsHandler;
 import org.eclipse.glsp.server.actionhandler.RequestEditValidationHandler;
 import org.eclipse.glsp.server.actionhandler.RequestMarkersHandler;
 import org.eclipse.glsp.server.actionhandler.RequestModelActionHandler;
+import org.eclipse.glsp.server.actionhandler.RequestNavigationTargetsActionHandler;
 import org.eclipse.glsp.server.actionhandler.RequestPopupModelActionHandler;
 import org.eclipse.glsp.server.actionhandler.RequestTypeHintsActionHandler;
+import org.eclipse.glsp.server.actionhandler.ResolveNavigationTargetActionHandler;
 import org.eclipse.glsp.server.actionhandler.SaveModelActionHandler;
 import org.eclipse.glsp.server.actionhandler.UndoRedoActionHandler;
 import org.eclipse.glsp.server.operationhandler.ApplyLabelEditOperationHandler;
@@ -92,7 +94,9 @@ public final class MultiBindingDefaults {
       SaveModelActionHandler.class,
       UndoRedoActionHandler.class,
       ExecuteServerCommandActionHandler.class,
+      ResolveNavigationTargetActionHandler.class,
       RequestClipboardDataActionHandler.class,
+      RequestNavigationTargetsActionHandler.class,
       RequestTypeHintsActionHandler.class,
       RequestContextActionsHandler.class,
       RequestEditValidationHandler.class,

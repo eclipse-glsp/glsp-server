@@ -53,6 +53,7 @@ public abstract class Action {
       public static final String REQUEST_EXPORT_SVG = "requestExportSvg";
       public static final String REQUEST_MARKERS = "requestMarkers";
       public static final String REQUEST_MODEL = "requestModel";
+      public static final String REQUEST_NAVIGATION_TARGETS = "requestNavigationTargets";
       public static final String REQUEST_OPERATIONS = "requestOperations";
       public static final String REQUEST_POPUP_MODEL = "requestPopupModel";
       public static final String REQUEST_TYPE_HINTS = "requestTypeHints";
@@ -70,6 +71,7 @@ public abstract class Action {
       public static final String SET_LAYERS = "setLayers";
       public static final String SET_MARKERS = "setMarkers";
       public static final String SET_MODEL = "setModel";
+      public static final String SET_NAVIGATION_TARGETS = "setNavigationTargets";
       public static final String SET_POPUP_MODEL = "setPopupModel";
       public static final String SET_TYPE_HINTS = "setTypeHints";
       public static final String TRIGGER_NODE_CREATION = "triggerNodeCreation";
@@ -77,5 +79,7 @@ public abstract class Action {
       public static final String UNDO = "glspUndo";
       public static final String UPDATE_MODEL = "updateModel";
       public static final String VALIDATE_LABEL_EDIT_ACTION = "validateLabelEdit";
+      public static final String RESOLVE_NAVIGATION_TARGET = "resolveNavigationTarget";
+      public static final String SET_RESOLVED_NAVIGATION_TARGET = "setResolvedNavigationTarget";
    }
 }

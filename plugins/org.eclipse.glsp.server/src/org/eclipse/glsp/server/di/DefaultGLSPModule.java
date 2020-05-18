@@ -31,12 +31,14 @@ import org.eclipse.glsp.api.jsonrpc.GLSPServer;
 import org.eclipse.glsp.api.model.ModelStateProvider;
 import org.eclipse.glsp.api.provider.ContextActionsProvider;
 import org.eclipse.glsp.api.provider.ContextEditValidator;
+import org.eclipse.glsp.api.provider.NavigationTargetProvider;
 import org.eclipse.glsp.api.provider.ToolPaletteItemProvider;
 import org.eclipse.glsp.api.registry.ActionHandlerRegistry;
 import org.eclipse.glsp.api.registry.ActionRegistry;
 import org.eclipse.glsp.api.registry.ContextActionsProviderRegistry;
 import org.eclipse.glsp.api.registry.ContextEditValidatorRegistry;
 import org.eclipse.glsp.api.registry.DiagramConfigurationRegistry;
+import org.eclipse.glsp.api.registry.NavigationTargetProviderRegistry;
 import org.eclipse.glsp.api.registry.OperationHandlerRegistry;
 import org.eclipse.glsp.api.registry.ServerCommandHandlerRegistry;
 import org.eclipse.glsp.server.action.DefaultActionProcessor;
@@ -51,6 +53,7 @@ import org.eclipse.glsp.server.registry.DIActionRegistry;
 import org.eclipse.glsp.server.registry.DIContextActionsProviderRegistry;
 import org.eclipse.glsp.server.registry.DIContextEditValidatorRegistry;
 import org.eclipse.glsp.server.registry.DIDiagramConfigurationRegistry;
+import org.eclipse.glsp.server.registry.DINavigationTargetProviderRegistry;
 import org.eclipse.glsp.server.registry.DIOperationHandlerRegistry;
 import org.eclipse.glsp.server.registry.DIServerCommandHandlerRegistry;
 
@@ -59,7 +62,6 @@ public abstract class DefaultGLSPModule extends GLSPModule {
    @Override
    public void configure() {
       super.configure();
-      // Configure MultiBindings
       configureMultiBindConfigs();
    }
 
@@ -71,6 +73,7 @@ public abstract class DefaultGLSPModule extends GLSPModule {
       configure(MultiBindConfig.create(DiagramConfiguration.class), this::configureDiagramConfigurations);
       configure(MultiBindConfig.create(ContextActionsProvider.class), this::configureContextActionsProviders);
       configure(MultiBindConfig.create(ContextEditValidator.class), this::configureContextEditValidators);
+      configure(MultiBindConfig.create(NavigationTargetProvider.class), this::configureNavigationTargetProviders);
    }
 
    protected <T> void configure(final MultiBindConfig<T> multiBindings,
@@ -99,6 +102,8 @@ public abstract class DefaultGLSPModule extends GLSPModule {
    protected void configureContextActionsProviders(final MultiBindConfig<ContextActionsProvider> config) {}
 
    protected void configureContextEditValidators(final MultiBindConfig<ContextEditValidator> config) {}
+
+   protected void configureNavigationTargetProviders(final MultiBindConfig<NavigationTargetProvider> config) {}
 
    @Override
    protected Class<? extends GLSPServer> bindGLSPServer() {
@@ -158,6 +163,11 @@ public abstract class DefaultGLSPModule extends GLSPModule {
    @Override
    protected Class<? extends ContextActionsProviderRegistry> bindContextActionsProviderRegistry() {
       return DIContextActionsProviderRegistry.class;
+   }
+
+   @Override
+   protected Class<? extends NavigationTargetProviderRegistry> bindNavigationTargetProviderRegistry() {
+      return DINavigationTargetProviderRegistry.class;
    }
 
    @Override

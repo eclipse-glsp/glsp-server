@@ -72,15 +72,15 @@ public class NavigationTarget {
    }
 
    public boolean hasTextPosition() {
-      boolean hasValues = this.args != null && this.args.containsKey(TEXT_LINE) && this.args.containsKey(TEXT_COLUMN);
+      final boolean hasValues = args != null && args.containsKey(TEXT_LINE) && args.containsKey(TEXT_COLUMN);
       if (!hasValues) {
          return false;
       }
       try {
-         Integer.valueOf(this.args.get(TEXT_LINE));
-         Integer.valueOf(this.args.get(TEXT_COLUMN));
+         Double.valueOf(args.get(TEXT_LINE));
+         Double.valueOf(args.get(TEXT_COLUMN));
          return true;
-      } catch (NumberFormatException nfe) {
+      } catch (final NumberFormatException nfe) {
          return false;
       }
    }
@@ -90,8 +90,12 @@ public class NavigationTarget {
       this.args.put(TEXT_COLUMN, String.valueOf(column));
    }
 
-   public int getTextPositionLine() { return Integer.valueOf(this.args.get(TEXT_LINE)); }
+   public int getTextPositionLine(final NavigationTarget navigationTarget) {
+      return Double.valueOf(args.get(TEXT_LINE)).intValue();
+   }
 
-   public int getTextPositionColumn() { return Integer.valueOf(this.args.get(TEXT_COLUMN)); }
+   public int getTextPositionColumn(final NavigationTarget navigationTarget) {
+      return Double.valueOf(args.get(TEXT_COLUMN)).intValue();
+   }
 
 }

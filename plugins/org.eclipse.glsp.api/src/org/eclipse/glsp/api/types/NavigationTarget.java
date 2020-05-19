@@ -58,17 +58,17 @@ public class NavigationTarget {
    public Map<String, String> getArgs() { return args; }
 
    public List<String> getElementIds() {
-      if (this.args == null || this.args.get(ELEMENT_IDS) == null || this.args.get(ELEMENT_IDS).isEmpty()) {
+      if (args == null || args.get(ELEMENT_IDS) == null || args.get(ELEMENT_IDS).isEmpty()) {
          return Arrays.asList();
       }
       return Arrays.asList(this.args.get(ELEMENT_IDS).split(ELEMENT_IDS_SEPARATOR));
    }
 
    public void setElementIds(final List<String> elementIds) {
-      if (this.args == null) {
-         this.args = new HashMap<>();
+      if (args == null) {
+         args = new HashMap<>();
       }
-      this.args.put(ELEMENT_IDS, elementIds.stream().collect(Collectors.joining(ELEMENT_IDS_SEPARATOR)));
+      args.put(ELEMENT_IDS, elementIds.stream().collect(Collectors.joining(ELEMENT_IDS_SEPARATOR)));
    }
 
    public boolean hasTextPosition() {
@@ -86,16 +86,12 @@ public class NavigationTarget {
    }
 
    public void setTextPosition(final int line, final int column) {
-      this.args.put(TEXT_LINE, String.valueOf(line));
-      this.args.put(TEXT_COLUMN, String.valueOf(column));
+      args.put(TEXT_LINE, String.valueOf(line));
+      args.put(TEXT_COLUMN, String.valueOf(column));
    }
 
-   public int getTextPositionLine(final NavigationTarget navigationTarget) {
-      return Double.valueOf(args.get(TEXT_LINE)).intValue();
-   }
+   public int getTextPositionLine() { return Double.valueOf(args.get(TEXT_LINE)).intValue(); }
 
-   public int getTextPositionColumn(final NavigationTarget navigationTarget) {
-      return Double.valueOf(args.get(TEXT_COLUMN)).intValue();
-   }
+   public int getTextPositionColumn() { return Double.valueOf(args.get(TEXT_COLUMN)).intValue(); }
 
 }

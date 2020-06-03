@@ -55,6 +55,7 @@ import org.eclipse.glsp.server.actionhandler.UndoRedoActionHandler;
 import org.eclipse.glsp.server.operationhandler.ApplyLabelEditOperationHandler;
 import org.eclipse.glsp.server.operationhandler.ChangeBoundsOperationHandler;
 import org.eclipse.glsp.server.operationhandler.ChangeRoutingPointsHandler;
+import org.eclipse.glsp.server.operationhandler.CompoundOperationHandler;
 import org.eclipse.glsp.server.operationhandler.CutOperationHandler;
 import org.eclipse.glsp.server.operationhandler.DeleteOperationHandler;
 import org.eclipse.glsp.server.operationhandler.LayoutOperationHandler;
@@ -110,5 +111,6 @@ public final class MultiBindingDefaults {
       DeleteOperationHandler.class,
       LayoutOperationHandler.class,
       PasteOperationHandler.class,
-      ReconnectOperationHandler.class);
+      ReconnectOperationHandler.class,
+      CompoundOperationHandler.class);
 }

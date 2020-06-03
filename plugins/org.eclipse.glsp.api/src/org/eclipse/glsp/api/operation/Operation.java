@@ -49,5 +49,6 @@ public abstract class Operation extends Action {
       public static final String PASTE = "paste";
       public static final String CUT = "cut";
       public static final String LAYOUT = "layout";
+      public static final String COMPOUND = "compound";
    }
 }

@@ -42,17 +42,7 @@ public class OperationActionHandler extends BasicActionHandler<Operation> {
 
    @Override
    public List<Action> executeAction(final Operation operation, final GraphicalModelState modelState) {
-      Optional<? extends OperationHandler> operationHandler;
-      if (operation instanceof CreateOperation) {
-         operationHandler = operationHandlerRegistry.get(operation)
-            .filter(CreateOperationHandler.class::isInstance)
-            .map(CreateOperationHandler.class::cast)
-            .filter(
-               handler -> handler.getHandledElementTypeIds()
-                  .contains(((CreateOperation) operation).getElementTypeId()));
-      } else {
-         operationHandler = operationHandlerRegistry.get(operation);
-      }
+      Optional<? extends OperationHandler> operationHandler = getOperationHandler(operation, operationHandlerRegistry);
       if (operationHandler.isPresent()) {
          return executeHandler(operation, operationHandler.get(), modelState);
       }
@@ -66,5 +56,21 @@ public class OperationActionHandler extends BasicActionHandler<Operation> {
          () -> handler.execute(operation, modelState));
       modelState.execute(command);
       return listOf(new RequestBoundsAction(modelState.getRoot()), new SetDirtyStateAction(modelState.isDirty()));
+   }
+
+   public static Optional<? extends OperationHandler> getOperationHandler(final Operation operation,
+      final OperationHandlerRegistry registry) {
+      Optional<? extends OperationHandler> operationHandler;
+      if (operation instanceof CreateOperation) {
+         operationHandler = registry.get(operation)
+            .filter(CreateOperationHandler.class::isInstance)
+            .map(CreateOperationHandler.class::cast)
+            .filter(
+               handler -> handler.getHandledElementTypeIds()
+                  .contains(((CreateOperation) operation).getElementTypeId()));
+      } else {
+         operationHandler = registry.get(operation);
+      }
+      return operationHandler;
    }
 }

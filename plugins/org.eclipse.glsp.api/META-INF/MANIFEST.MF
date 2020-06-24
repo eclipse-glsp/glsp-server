@@ -7,7 +7,7 @@ Bundle-Vendor: EclipseSource
 Automatic-Module-Name: org.eclipse.glsp.api
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.lsp4j,
- org.eclipse.lsp4j.jsonrpc;bundle-version="0.6.0",
+ org.eclipse.lsp4j.jsonrpc;bundle-version="0.8.0",
  javax.websocket;bundle-version="1.0.0";visibility:=reexport,
  org.eclipse.glsp.graph;bundle-version="0.7.0";visibility:=reexport,
  com.google.gson,

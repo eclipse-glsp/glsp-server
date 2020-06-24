@@ -196,7 +196,7 @@
 								<artifact>
 									<groupId>org.eclipse.glsp</groupId>
 									<artifactId>org.eclipse.glsp.parent</artifactId>
-									<classifier>targetplatforms/r2019-12</classifier>
+									<classifier>targetplatforms/r2020-06</classifier>
 									<version>${target.version}</version>
 								</artifact>
 							</target>

@@ -1,12 +1,12 @@
-target "2019-12 - Release" with source requirements
+target "2020-06 - Release" with source requirements
 
-location "http://download.eclipse.org/releases/2019-12" {
+location "http://download.eclipse.org/releases/2020-06" {
 	org.eclipse.equinox.p2.discovery.feature.feature.group
 	org.eclipse.equinox.executable.feature.group
 	org.eclipse.emf.sdk.feature.group
 }
 
-location "https://download.eclipse.org/tools/orbit/downloads/drops/R20191126223242/repository/" {
+location "https://download.eclipse.org/tools/orbit/downloads/drops/R20200529191137/repository/" {
 	org.apache.log4j
 	org.apache.commons.io
 	javax.servlet
@@ -15,7 +15,7 @@ location "https://download.eclipse.org/tools/orbit/downloads/drops/R201911262232
 	com.google.inject.multibindings [3.0.0,3.0.1)
 	com.google.guava [27.1.0,27.1.1)
 	org.junit [4.12.0,4.13.0)
-	org.junit.jupiter.api [5.5.1,5.6.0)
+	org.junit.jupiter.api [5.6.0,5.6.1)
 }
 
 location "https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.14.v20181113/" {
@@ -29,7 +29,7 @@ location "https://download.eclipse.org/elk/updates/releases/0.6.0/" {
 	org.eclipse.elk.alg.layered
 }
 
-location "https://download.eclipse.org/lsp4j/updates/releases/0.8.1/" {
+location "https://download.eclipse.org/lsp4j/updates/releases/0.9.0" {
 	org.eclipse.lsp4j lazy
 	org.eclipse.lsp4j.jsonrpc lazy
 	org.eclipse.lsp4j.websocket lazy

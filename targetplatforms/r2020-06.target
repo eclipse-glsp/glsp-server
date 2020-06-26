@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="2019-12 - Release" sequenceNumber="1584016407">
+<target name="2020-06 - Release" sequenceNumber="1593006377">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="org.eclipse.equinox.p2.discovery.feature.feature.group" version="1.2.400.v20191014-1907"/>
-      <unit id="org.eclipse.equinox.executable.feature.group" version="3.8.600.v20191014-2025"/>
-      <unit id="org.eclipse.emf.sdk.feature.group" version="2.20.0.v20191028-0905"/>
-      <repository location="http://download.eclipse.org/releases/2019-12"/>
+      <unit id="org.eclipse.equinox.p2.discovery.feature.feature.group" version="1.2.600.v20200521-1852"/>
+      <unit id="org.eclipse.equinox.executable.feature.group" version="3.8.800.v20200514-1529"/>
+      <unit id="org.eclipse.emf.sdk.feature.group" version="2.22.0.v20200519-1135"/>
+      <repository location="http://download.eclipse.org/releases/2020-06"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.apache.log4j" version="1.2.15.v201012070815"/>
@@ -18,8 +18,8 @@
       <unit id="com.google.inject.multibindings" version="3.0.0.v201605172100"/>
       <unit id="com.google.guava" version="27.1.0.v20190517-1946"/>
       <unit id="org.junit" version="4.12.0.v201504281640"/>
-      <unit id="org.junit.jupiter.api" version="5.5.1.v20190826-0900"/>
-      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20191126223242/repository/"/>
+      <unit id="org.junit.jupiter.api" version="5.6.0.v20200203-2009"/>
+      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20200529191137/repository/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.jetty.bundles.f.feature.group" version="9.4.14.v20181113"/>
@@ -36,7 +36,7 @@
       <unit id="org.eclipse.lsp4j" version="0.0.0"/>
       <unit id="org.eclipse.lsp4j.jsonrpc" version="0.0.0"/>
       <unit id="org.eclipse.lsp4j.websocket" version="0.0.0"/>
-      <repository location="https://download.eclipse.org/lsp4j/updates/releases/0.8.1/"/>
+      <repository location="https://download.eclipse.org/lsp4j/updates/releases/0.9.0"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.apache.jasper" version="8.5.35"/>

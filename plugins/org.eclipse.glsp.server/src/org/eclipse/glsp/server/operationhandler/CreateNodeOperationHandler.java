@@ -39,8 +39,12 @@ public abstract class CreateNodeOperationHandler extends BasicCreateOperationHan
          container = Optional.of(modelState.getRoot());
       }
 
-      GModelElement element = createNode(operation.getLocation(), modelState);
+      GModelElement element = createNode(getLocation(operation), modelState);
       container.get().getChildren().add(element);
+   }
+
+   protected Optional<GPoint> getLocation(final CreateNodeOperation operation) {
+      return operation.getLocation();
    }
 
    protected abstract GNode createNode(Optional<GPoint> point, GraphicalModelState modelState);

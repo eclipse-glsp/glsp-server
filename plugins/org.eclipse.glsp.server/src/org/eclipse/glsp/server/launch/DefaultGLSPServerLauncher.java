@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
-import java.net.SocketAddress;
 import java.nio.channels.AsynchronousServerSocketChannel;
 import java.nio.channels.AsynchronousSocketChannel;
 import java.nio.channels.Channels;
@@ -61,7 +60,7 @@ public class DefaultGLSPServerLauncher extends GLSPServerLauncher {
       try {
          onClose = asyncRun(hostname, port);
          onClose.get();
-         log.info("Stopped language server");
+         log.info("Stopped GLSP server");
       } catch (IOException | InterruptedException | ExecutionException e) {
          log.error(e.getMessage());
          e.printStackTrace();
@@ -90,7 +89,7 @@ public class DefaultGLSPServerLauncher extends GLSPServerLauncher {
       };
 
       serverSocket.accept(null, handler);
-      log.info("The graphical server launcher is ready to accept new client requests");
+      log.info("The GLSP server is ready to accept new client requests");
 
       return onShutdown;
    }
@@ -98,41 +97,44 @@ public class DefaultGLSPServerLauncher extends GLSPServerLauncher {
    private void createClientConnection(final AsynchronousSocketChannel socketChannel) {
       Injector injector = Guice.createInjector(getGLSPModule());
       GsonConfigurator gsonConf = injector.getInstance(GsonConfigurator.class);
-
-      InputStream in = Channels.newInputStream(socketChannel);
-      OutputStream out = Channels.newOutputStream(socketChannel);
-
-      Consumer<GsonBuilder> configureGson = (final GsonBuilder builder) -> gsonConf.configureGsonBuilder(builder);
-      Function<MessageConsumer, MessageConsumer> wrapper = Function.identity();
-      GLSPServer languageServer = injector.getInstance(GLSPServer.class);
-
-      Launcher<GLSPClient> launcher = Launcher.createIoLauncher(languageServer, GLSPClient.class, in, out, threadPool,
-         wrapper, configureGson);
-      languageServer.connect(launcher.getRemoteProxy());
-      launcher.startListening();
-
       try {
-         SocketAddress remoteAddress = socketChannel.getRemoteAddress();
-         log.info("Started language server for client " + remoteAddress);
-      } catch (IOException ex) {
-         log.error("Failed to get the remoteAddress for the new client connection: " + ex.getMessage(), ex);
+         InputStream in = Channels.newInputStream(socketChannel);
+         OutputStream out = Channels.newOutputStream(socketChannel);
+
+         Consumer<GsonBuilder> configureGson = (final GsonBuilder builder) -> gsonConf.configureGsonBuilder(builder);
+         Function<MessageConsumer, MessageConsumer> wrapper = Function.identity();
+         GLSPServer languageServer = injector.getInstance(GLSPServer.class);
+
+         Launcher<GLSPClient> launcher = Launcher.createIoLauncher(languageServer, GLSPClient.class, in, out,
+            threadPool, wrapper, configureGson);
+         languageServer.connect(launcher.getRemoteProxy());
+         log.info("Starting GLSP server connection for client " + socketChannel.getRemoteAddress());
+         launcher.startListening().get();
+         log.info("Stopping GLSP server connection for client" + socketChannel.getRemoteAddress());
+      } catch (IOException | InterruptedException | ExecutionException ex) {
+         log.error("Failed to create client connection " + ex.getMessage(), ex);
+      } finally {
+         try {
+            socketChannel.close();
+         } catch (IOException e) {
+            log.debug("Excpetion occured when trying to close socketChannel", e);
+         }
       }
    }
 
    @Override
    public void shutdown() {
-      log.info("Stopping all connections to the language server...");
+      log.info("Stopping all connections to the GLSP server...");
       if (serverSocket.isOpen()) {
          try {
             serverSocket.close();
          } catch (IOException e) {
             log.error("Failed to close serverSocket: " + e.getMessage(), e);
-
          }
       }
 
       threadPool.shutdown();
       onShutdown.complete(null);
-      log.info("Stopped language server");
+      log.info("Stopped GLSP server");
    }
 }

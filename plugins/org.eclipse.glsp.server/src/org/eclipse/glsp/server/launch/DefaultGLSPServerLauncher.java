@@ -106,8 +106,7 @@ public class DefaultGLSPServerLauncher extends GLSPServerLauncher {
          GLSPServer languageServer = injector.getInstance(GLSPServer.class);
 
          Launcher<GLSPClient> launcher = Launcher.createIoLauncher(languageServer, GLSPClient.class, in, out,
-            threadPool,
-            wrapper, configureGson);
+            threadPool, wrapper, configureGson);
          languageServer.connect(launcher.getRemoteProxy());
          log.info("Starting GLSP server connection for client " + socketChannel.getRemoteAddress());
          launcher.startListening().get();
@@ -125,7 +124,7 @@ public class DefaultGLSPServerLauncher extends GLSPServerLauncher {
 
    @Override
    public void shutdown() {
-      log.info("Stopping all connections to the graphical language server...");
+      log.info("Stopping all connections to the GLSP server...");
       if (serverSocket.isOpen()) {
          try {
             serverSocket.close();

@@ -22,7 +22,6 @@ import org.eclipse.glsp.api.action.ActionProcessor;
 import org.eclipse.glsp.api.di.GLSPModule;
 import org.eclipse.glsp.api.diagram.DiagramConfiguration;
 import org.eclipse.glsp.api.factory.GraphGsonConfiguratorFactory;
-import org.eclipse.glsp.api.factory.ModelFactory;
 import org.eclipse.glsp.api.handler.ActionHandler;
 import org.eclipse.glsp.api.handler.OperationHandler;
 import org.eclipse.glsp.api.handler.ServerCommandHandler;
@@ -46,7 +45,6 @@ import org.eclipse.glsp.server.factory.DefaultGraphGsonConfiguratorFactory;
 import org.eclipse.glsp.server.jsonrpc.DefaultGLSPClientProvider;
 import org.eclipse.glsp.server.jsonrpc.DefaultGLSPServer;
 import org.eclipse.glsp.server.model.DefaultModelStateProvider;
-import org.eclipse.glsp.server.model.FileBasedModelFactory;
 import org.eclipse.glsp.server.provider.DefaultToolPaletteItemProvider;
 import org.eclipse.glsp.server.registry.DIActionHandlerRegistry;
 import org.eclipse.glsp.server.registry.DIActionRegistry;
@@ -113,11 +111,6 @@ public abstract class DefaultGLSPModule extends GLSPModule {
    @Override
    protected Class<? extends GraphGsonConfiguratorFactory> bindGraphGsonConfiguratorFactory() {
       return DefaultGraphGsonConfiguratorFactory.class;
-   }
-
-   @Override
-   protected Class<? extends ModelFactory> bindModelFactory() {
-      return FileBasedModelFactory.class;
    }
 
    @Override

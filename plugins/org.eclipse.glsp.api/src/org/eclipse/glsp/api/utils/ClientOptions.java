@@ -26,12 +26,12 @@ public final class ClientOptions {
    private ClientOptions() {}
 
    public static Optional<String> getValue(final Map<String, String> options, final String key) {
-      return Optional.ofNullable(options.get(key));
+      return Optional.ofNullable(options).map(opt -> opt.get(key));
    }
 
    public static Optional<Integer> getIntValue(final Map<String, String> options, final String key) {
       try {
-         return Optional.ofNullable(Integer.parseInt(options.get(key)));
+         return Optional.ofNullable(options).map(opt -> Integer.parseInt(opt.get(key)));
       } catch (NumberFormatException ex) {
          return Optional.empty();
       }
@@ -39,13 +39,13 @@ public final class ClientOptions {
 
    public static Optional<Float> getFloatValue(final Map<String, String> options, final String key) {
       try {
-         return Optional.ofNullable(Float.parseFloat(options.get(key)));
+         return Optional.ofNullable(options).map(opt -> Float.parseFloat(opt.get(key)));
       } catch (NumberFormatException ex) {
          return Optional.empty();
       }
    }
 
    public static boolean getBoolValue(final Map<String, String> options, final String key) {
-      return Boolean.parseBoolean(options.get(key));
+      return Optional.ofNullable(options).map(opt -> Boolean.parseBoolean(opt.get(key))).orElse(false);
    }
 }

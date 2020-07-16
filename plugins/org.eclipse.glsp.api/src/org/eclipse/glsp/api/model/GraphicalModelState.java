@@ -15,24 +15,15 @@
  ******************************************************************************/
 package org.eclipse.glsp.api.model;
 
-import java.util.Map;
-import java.util.Set;
-
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GModelRoot;
 
 public interface GraphicalModelState extends ModelState<GModelRoot> {
-   Map<String, String> getClientOptions();
-
-   void setClientOptions(Map<String, String> options);
-
-   Set<String> getExpandedElements();
-
-   Set<String> getSelectedElements();
-
-   void setExpandedElements(Set<String> expandedElements);
-
-   void setSelectedElements(Set<String> selectedElements);
 
    GModelIndex getIndex();
+
+   void saveIsDone();
+
+   void execute(Command command);
 }

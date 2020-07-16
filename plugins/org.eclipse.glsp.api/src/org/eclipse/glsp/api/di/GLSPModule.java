@@ -87,9 +87,7 @@ public abstract class GLSPModule extends AbstractModule {
 
    protected abstract Class<? extends GraphGsonConfiguratorFactory> bindGraphGsonConfiguratorFactory();
 
-   protected Class<? extends ModelFactory> bindModelFactory() {
-      return ModelFactory.NullImpl.class;
-   }
+   protected abstract Class<? extends ModelFactory> bindModelFactory();
 
    protected Class<? extends PopupModelFactory> bindPopupModelFactory() {
       return PopupModelFactory.NullImpl.class;

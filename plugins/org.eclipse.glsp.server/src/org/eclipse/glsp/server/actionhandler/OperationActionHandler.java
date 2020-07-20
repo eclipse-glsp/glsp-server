@@ -45,7 +45,7 @@ public class OperationActionHandler extends BasicActionHandler<Operation> {
    public List<Action> executeAction(final Operation operation, final GraphicalModelState modelState) {
       if (modelState.isReadonly()) {
          return listOf(ServerMessageUtil
-            .warn("Server is in readony-mode! Could not execute operation: " + operation.getKind()));
+            .warn("Server is in readonly-mode! Could not execute operation: " + operation.getKind()));
       }
       Optional<? extends OperationHandler> operationHandler = getOperationHandler(operation, operationHandlerRegistry);
       if (operationHandler.isPresent()) {

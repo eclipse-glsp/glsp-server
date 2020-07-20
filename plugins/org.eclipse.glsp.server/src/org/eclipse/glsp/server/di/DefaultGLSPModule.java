@@ -15,6 +15,8 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.di;
 
+import static org.eclipse.glsp.server.actionhandler.ClientActionHandler.CLIENT_ACTIONS;
+
 import java.util.function.Consumer;
 
 import org.eclipse.glsp.api.action.Action;
@@ -65,6 +67,7 @@ public abstract class DefaultGLSPModule extends GLSPModule {
 
    protected void configureMultiBindConfigs() {
       configure(MultiBindConfig.create(Action.class), this::configureActions);
+      configure(MultiBindConfig.create(Action.class).setAnnotationName(CLIENT_ACTIONS), this::configureClientActions);
       configure(MultiBindConfig.create(ActionHandler.class), this::configureActionHandlers);
       configure(MultiBindConfig.create(ServerCommandHandler.class), this::configureServerCommandHandlers);
       configure(MultiBindConfig.create(OperationHandler.class), this::configureOperationHandlers);
@@ -86,6 +89,10 @@ public abstract class DefaultGLSPModule extends GLSPModule {
 
    protected void configureActions(final MultiBindConfig<Action> bindings) {
       bindings.addAll(MultiBindingDefaults.DEFAULT_ACTIONS);
+   }
+
+   protected void configureClientActions(final MultiBindConfig<Action> bindings) {
+      bindings.addAll(MultiBindingDefaults.DEFAULT_CLIENT_ACTIONS);
    }
 
    protected void configureActionHandlers(final MultiBindConfig<ActionHandler> bindings) {

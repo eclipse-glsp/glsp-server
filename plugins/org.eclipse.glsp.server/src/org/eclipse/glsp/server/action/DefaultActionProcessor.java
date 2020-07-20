@@ -15,23 +15,26 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.action;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.apache.log4j.Logger;
 import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.action.ActionMessage;
 import org.eclipse.glsp.api.action.ActionProcessor;
+import org.eclipse.glsp.api.action.kind.ResponseAction;
 import org.eclipse.glsp.api.handler.ActionHandler;
 import org.eclipse.glsp.api.jsonrpc.GLSPClient;
 import org.eclipse.glsp.api.jsonrpc.GLSPClientProvider;
 import org.eclipse.glsp.api.model.GraphicalModelState;
 import org.eclipse.glsp.api.model.ModelStateProvider;
 import org.eclipse.glsp.api.registry.ActionHandlerRegistry;
+import org.eclipse.glsp.server.actionhandler.RequestEditValidationHandler;
 
 import com.google.inject.Inject;
 
 public class DefaultActionProcessor implements ActionProcessor {
+   private static Logger LOG = Logger.getLogger(RequestEditValidationHandler.class);
 
    @Inject
    protected GLSPClientProvider clientProvider;
@@ -43,15 +46,21 @@ public class DefaultActionProcessor implements ActionProcessor {
    protected ModelStateProvider modelStateProvider;
 
    @Override
-   public List<Action> dispatch(final String clientId, final Action action) {
-      Optional<ActionHandler> handler = actionHandlerRegistry.get(action).stream().findFirst();
-      if (handler.isPresent()) {
-         GraphicalModelState modelState = modelStateProvider.getModelState(clientId)
-            .orElseGet(() -> modelStateProvider.create(clientId));
-
-         return handler.get().execute(action, modelState);
+   public void process(final String clientId, final Action action) {
+      List<ActionHandler> actionHandlers = actionHandlerRegistry.get(action);
+      if (actionHandlers.isEmpty()) {
+         LOG.warn("No handler registered for action: " + action);
+         return;
       }
-      return Collections.emptyList();
+      GraphicalModelState modelState = modelStateProvider.getModelState(clientId)
+         .orElseGet(() -> modelStateProvider.create(clientId));
+
+      for (ActionHandler actionHandler : actionHandlers) {
+         List<Action> responses = actionHandler.execute(action, modelState).stream()
+            .map(response -> ResponseAction.respond(action, response))
+            .collect(Collectors.toList());
+         processAll(clientId, responses);
+      }
    }
 
    @Override

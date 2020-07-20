@@ -33,7 +33,7 @@ public class CutOperationHandler extends BasicOperationHandler<CutOperation> {
    public void executeOperation(final CutOperation operation, final GraphicalModelState modelState) {
       List<String> cutableElementIds = getElementToCut(operation, modelState);
       if (!cutableElementIds.isEmpty()) {
-         actionProcessor.dispatch(modelState.getClientId(), new DeleteOperation(cutableElementIds));
+         actionProcessor.process(modelState.getClientId(), new DeleteOperation(cutableElementIds));
       }
    }
 

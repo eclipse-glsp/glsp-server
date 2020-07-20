@@ -31,13 +31,22 @@ import org.eclipse.glsp.api.action.kind.SelectAllAction;
 import org.eclipse.glsp.api.action.kind.ServerMessageAction;
 import org.eclipse.glsp.api.action.kind.ServerStatusAction;
 import org.eclipse.glsp.api.action.kind.SetBoundsAction;
+import org.eclipse.glsp.api.action.kind.SetClipboardDataAction;
+import org.eclipse.glsp.api.action.kind.SetContextActions;
+import org.eclipse.glsp.api.action.kind.SetDirtyStateAction;
+import org.eclipse.glsp.api.action.kind.SetEditValidationResultAction;
+import org.eclipse.glsp.api.action.kind.SetMarkersAction;
 import org.eclipse.glsp.api.action.kind.SetModelAction;
+import org.eclipse.glsp.api.action.kind.SetNavigationTargetsAction;
 import org.eclipse.glsp.api.action.kind.SetPopupModelAction;
+import org.eclipse.glsp.api.action.kind.SetResolvedNavigationTargetAction;
+import org.eclipse.glsp.api.action.kind.SetTypeHintsAction;
 import org.eclipse.glsp.api.action.kind.TriggerEdgeCreationAction;
 import org.eclipse.glsp.api.action.kind.TriggerNodeCreationAction;
 import org.eclipse.glsp.api.action.kind.UpdateModelAction;
 import org.eclipse.glsp.api.handler.ActionHandler;
 import org.eclipse.glsp.api.handler.OperationHandler;
+import org.eclipse.glsp.server.actionhandler.ClientActionHandler;
 import org.eclipse.glsp.server.actionhandler.ComputedBoundsActionHandler;
 import org.eclipse.glsp.server.actionhandler.ExecuteServerCommandActionHandler;
 import org.eclipse.glsp.server.actionhandler.OperationActionHandler;
@@ -88,7 +97,22 @@ public final class MultiBindingDefaults {
       TriggerEdgeCreationAction.class,
       UpdateModelAction.class);
 
+   public static final List<Class<? extends Action>> DEFAULT_CLIENT_ACTIONS = Lists.newArrayList(
+      SetClipboardDataAction.class,
+      SetContextActions.class,
+      SetEditValidationResultAction.class,
+      SetNavigationTargetsAction.class,
+      SetResolvedNavigationTargetAction.class,
+      SetDirtyStateAction.class,
+      RequestBoundsAction.class,
+      SetTypeHintsAction.class,
+      SetMarkersAction.class,
+      UpdateModelAction.class,
+      SetModelAction.class,
+      SetPopupModelAction.class);
+
    public static final List<Class<? extends ActionHandler>> DEFAULT_ACTION_HANDLERS = Lists.newArrayList(
+      ClientActionHandler.class,
       ComputedBoundsActionHandler.class,
       OperationActionHandler.class,
       RequestModelActionHandler.class,

@@ -39,7 +39,6 @@ public class RequestModelActionHandler extends BasicActionHandler<RequestModelAc
       GModelRoot model = modelFactory.loadModel(action, modelState);
       modelState.setRoot(model);
       modelState.setClientOptions(action.getOptions());
-
       boolean needsClientLayout = ClientOptions.getBoolValue(action.getOptions(),
          ClientOptions.NEEDS_CLIENT_LAYOUT);
 

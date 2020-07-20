@@ -51,6 +51,7 @@ import org.eclipse.glsp.server.actionhandler.RequestPopupModelActionHandler;
 import org.eclipse.glsp.server.actionhandler.RequestTypeHintsActionHandler;
 import org.eclipse.glsp.server.actionhandler.ResolveNavigationTargetActionHandler;
 import org.eclipse.glsp.server.actionhandler.SaveModelActionHandler;
+import org.eclipse.glsp.server.actionhandler.SetEditModeActionHandler;
 import org.eclipse.glsp.server.actionhandler.UndoRedoActionHandler;
 import org.eclipse.glsp.server.operationhandler.ApplyLabelEditOperationHandler;
 import org.eclipse.glsp.server.operationhandler.ChangeBoundsOperationHandler;
@@ -101,7 +102,8 @@ public final class MultiBindingDefaults {
       RequestTypeHintsActionHandler.class,
       RequestContextActionsHandler.class,
       RequestEditValidationHandler.class,
-      RequestMarkersHandler.class);
+      RequestMarkersHandler.class,
+      SetEditModeActionHandler.class);
 
    public static final List<Class<? extends OperationHandler>> DEFAULT_OPERATION_HANDLERS = Lists.newArrayList(
       ApplyLabelEditOperationHandler.class,

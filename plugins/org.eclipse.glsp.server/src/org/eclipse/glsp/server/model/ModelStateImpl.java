@@ -15,9 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.model;
 
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
@@ -33,13 +31,7 @@ public class ModelStateImpl implements GraphicalModelState {
    private String clientId;
    private GModelRoot currentModel;
    private BasicCommandStack commandStack;
-   private Set<String> expandedElements;
-   private Set<String> selectedElements;
-
-   public ModelStateImpl() {
-      expandedElements = new HashSet<>();
-      selectedElements = new HashSet<>();
-   }
+   private boolean readonly;
 
    @Override
    public Map<String, String> getClientOptions() { return options; }
@@ -77,22 +69,7 @@ public class ModelStateImpl implements GraphicalModelState {
    }
 
    @Override
-   public Set<String> getExpandedElements() { return expandedElements; }
-
-   @Override
-   public Set<String> getSelectedElements() { return selectedElements; }
-
-   @Override
    public void setClientOptions(final Map<String, String> options) { this.options = options; }
-
-   @Override
-   public void setExpandedElements(final Set<String> expandedElements) {
-      this.expandedElements = expandedElements;
-
-   }
-
-   @Override
-   public void setSelectedElements(final Set<String> selectedElements) { this.selectedElements = selectedElements; }
 
    @Override
    public GModelIndex getIndex() { return GModelIndex.get(currentModel); }
@@ -145,4 +122,9 @@ public class ModelStateImpl implements GraphicalModelState {
       commandStack.saveIsDone();
    }
 
+   @Override
+   public boolean isReadonly() { return readonly; }
+
+   @Override
+   public void setReadonly(final boolean readonly) { this.readonly = readonly; }
 }

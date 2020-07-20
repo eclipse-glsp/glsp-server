@@ -22,10 +22,10 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 
-import org.apache.log4j.Logger;
 import org.eclipse.glsp.api.action.kind.RequestModelAction;
 import org.eclipse.glsp.api.factory.GraphGsonConfiguratorFactory;
 import org.eclipse.glsp.api.factory.ModelFactory;
+import org.eclipse.glsp.api.jsonrpc.GLSPServerException;
 import org.eclipse.glsp.api.model.GraphicalModelState;
 import org.eclipse.glsp.api.utils.ClientOptions;
 import org.eclipse.glsp.graph.GGraph;
@@ -36,12 +36,10 @@ import com.google.inject.Inject;
 
 /**
  * A base class which can be used for all model factories that load an SModel
- * from a file (typically a json file).
+ * from a json file.
  *
- * @author Tobias Ortmayr
  */
-public class FileBasedModelFactory implements ModelFactory {
-   private static Logger LOGGER = Logger.getLogger(FileBasedModelFactory.class);
+public class JsonFileModelFactory implements ModelFactory {
    private static final String FILE_PREFIX = "file://";
 
    @Inject
@@ -57,7 +55,7 @@ public class FileBasedModelFactory implements ModelFactory {
             Gson gson = gsonConfigurationFactory.configureGson().create();
             modelRoot = gson.fromJson(reader, GGraph.class);
          } catch (IOException e) {
-            LOGGER.error(e);
+            throw new GLSPServerException("Could not load model from file: " + sourceURI, e);
          }
       }
       return modelRoot;

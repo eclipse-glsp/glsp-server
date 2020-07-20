@@ -27,6 +27,7 @@ import org.eclipse.glsp.api.model.GraphicalModelState;
 import org.eclipse.glsp.api.operation.CreateOperation;
 import org.eclipse.glsp.api.operation.Operation;
 import org.eclipse.glsp.api.registry.OperationHandlerRegistry;
+import org.eclipse.glsp.api.utils.ServerMessageUtil;
 import org.eclipse.glsp.server.command.GModelRecordingCommand;
 
 import com.google.inject.Inject;
@@ -42,12 +43,15 @@ public class OperationActionHandler extends BasicActionHandler<Operation> {
 
    @Override
    public List<Action> executeAction(final Operation operation, final GraphicalModelState modelState) {
+      if (modelState.isReadonly()) {
+         return listOf(ServerMessageUtil
+            .warn("Server is in readony-mode! Could not execute operation: " + operation.getKind()));
+      }
       Optional<? extends OperationHandler> operationHandler = getOperationHandler(operation, operationHandlerRegistry);
       if (operationHandler.isPresent()) {
          return executeHandler(operation, operationHandler.get(), modelState);
       }
       return none();
-
    }
 
    protected List<Action> executeHandler(final Operation operation, final OperationHandler handler,

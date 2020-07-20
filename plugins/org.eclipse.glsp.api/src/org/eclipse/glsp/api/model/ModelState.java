@@ -15,7 +15,7 @@
  ******************************************************************************/
 package org.eclipse.glsp.api.model;
 
-import org.eclipse.emf.common.command.Command;
+import java.util.Map;
 
 public interface ModelState<T> {
 
@@ -23,11 +23,13 @@ public interface ModelState<T> {
 
    void setClientId(String clientId);
 
+   Map<String, String> getClientOptions();
+
+   void setClientOptions(Map<String, String> options);
+
    T getRoot();
 
    void setRoot(T newRoot);
-
-   void execute(Command command);
 
    boolean canUndo();
 
@@ -39,6 +41,7 @@ public interface ModelState<T> {
 
    boolean isDirty();
 
-   void saveIsDone();
+   boolean isReadonly();
 
+   void setReadonly(boolean readonly);
 }

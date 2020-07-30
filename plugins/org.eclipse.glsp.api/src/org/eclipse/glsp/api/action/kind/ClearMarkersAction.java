@@ -1,5 +1,5 @@
-/*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+/********************************************************************************
+ * Copyright (c) 2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -12,15 +12,29 @@
  * https://www.gnu.org/software/classpath/license.html.
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
- ******************************************************************************/
+ ********************************************************************************/
 package org.eclipse.glsp.api.action.kind;
 
+import java.util.List;
+
 import org.eclipse.glsp.api.action.Action;
+import org.eclipse.glsp.api.markers.Marker;
 
-public class RequestExportSvgAction extends Action {
+public class ClearMarkersAction extends Action {
 
-   public RequestExportSvgAction() {
-      super(Action.Kind.REQUEST_EXPORT_SVG);
+   private List<Marker> markers;
+
+   public ClearMarkersAction() {
+      super(Action.Kind.CLEAR_MARKERS);
    }
+
+   public ClearMarkersAction(final List<Marker> markers) {
+      this();
+      this.markers = markers;
+   }
+
+   public List<Marker> getMarkers() { return markers; }
+
+   public void setMarkers(final List<Marker> markers) { this.markers = markers; }
 
 }

@@ -36,21 +36,19 @@ public abstract class Action {
 
    public static class Kind {
       public static final String CENTER = "center";
-      public static final String COLLAPSE_EXPAND = "collapseExpand";
-      public static final String COLLAPSE_EXPAND_ALL = "collapseExpandAll";
+      public static final String CLEAR_MARKERS = "clearMarkers";
       public static final String COMPUTED_BOUNDS = "computedBounds";
       public static final String CUT_ACTION = "cut";
       public static final String EXECUTE_OPERATION = "executeOperation";
       public static final String EXECUTE_SERVER_COMMAND = "executeServerCommand";
       public static final String EXPORT_SVG = "exportSvg";
       public static final String FIT_TO_SCREEN = "fit";
-      public static final String OPEN = "open";
+      public static final String NAVIGATE_TO_TARGET = "navigateToTarget";
       public static final String REDO = "glspRedo";
       public static final String REQUEST_BOUNDS = "requestBounds";
       public static final String REQUEST_CLIPBOARD_DATA = "requestClipboardData";
       public static final String REQUEST_CONTEXT_ACTIONS = "requestContextActions";
       public static final String REQUEST_EDIT_VALIDATION = "requestEditValidation";
-      public static final String REQUEST_EXPORT_SVG = "requestExportSvg";
       public static final String REQUEST_MARKERS = "requestMarkers";
       public static final String REQUEST_MODEL = "requestModel";
       public static final String REQUEST_NAVIGATION_TARGETS = "requestNavigationTargets";

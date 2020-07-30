@@ -19,13 +19,12 @@ import java.util.List;
 
 import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.action.kind.CenterAction;
-import org.eclipse.glsp.api.action.kind.CollapseExpandAction;
-import org.eclipse.glsp.api.action.kind.CollapseExpandAllAction;
+import org.eclipse.glsp.api.action.kind.ClearMarkersAction;
 import org.eclipse.glsp.api.action.kind.ExportSVGAction;
 import org.eclipse.glsp.api.action.kind.FitToScreenAction;
-import org.eclipse.glsp.api.action.kind.OpenAction;
+import org.eclipse.glsp.api.action.kind.GLSPServerStatusAction;
+import org.eclipse.glsp.api.action.kind.NavigateToTargetAction;
 import org.eclipse.glsp.api.action.kind.RequestBoundsAction;
-import org.eclipse.glsp.api.action.kind.RequestExportSvgAction;
 import org.eclipse.glsp.api.action.kind.SelectAction;
 import org.eclipse.glsp.api.action.kind.SelectAllAction;
 import org.eclipse.glsp.api.action.kind.ServerMessageAction;
@@ -34,6 +33,7 @@ import org.eclipse.glsp.api.action.kind.SetBoundsAction;
 import org.eclipse.glsp.api.action.kind.SetClipboardDataAction;
 import org.eclipse.glsp.api.action.kind.SetContextActions;
 import org.eclipse.glsp.api.action.kind.SetDirtyStateAction;
+import org.eclipse.glsp.api.action.kind.SetEditModeAction;
 import org.eclipse.glsp.api.action.kind.SetEditValidationResultAction;
 import org.eclipse.glsp.api.action.kind.SetMarkersAction;
 import org.eclipse.glsp.api.action.kind.SetModelAction;
@@ -79,13 +79,9 @@ public final class MultiBindingDefaults {
 
    public static final List<Class<? extends Action>> DEFAULT_ACTIONS = Lists.newArrayList(
       CenterAction.class,
-      CollapseExpandAction.class,
-      CollapseExpandAllAction.class,
       ExportSVGAction.class,
       FitToScreenAction.class,
-      OpenAction.class,
       RequestBoundsAction.class,
-      RequestExportSvgAction.class,
       SelectAction.class,
       SelectAllAction.class,
       ServerMessageAction.class,
@@ -98,18 +94,28 @@ public final class MultiBindingDefaults {
       UpdateModelAction.class);
 
    public static final List<Class<? extends Action>> DEFAULT_CLIENT_ACTIONS = Lists.newArrayList(
+      CenterAction.class,
+      ClearMarkersAction.class,
+      ExportSVGAction.class,
+      FitToScreenAction.class,
+      GLSPServerStatusAction.class,
+      NavigateToTargetAction.class,
+      RequestBoundsAction.class,
+      SelectAction.class,
+      SelectAllAction.class,
+      ServerMessageAction.class,
       SetClipboardDataAction.class,
       SetContextActions.class,
-      SetEditValidationResultAction.class,
-      SetNavigationTargetsAction.class,
-      SetResolvedNavigationTargetAction.class,
       SetDirtyStateAction.class,
-      RequestBoundsAction.class,
-      SetTypeHintsAction.class,
+      SetEditModeAction.class,
+      SetEditValidationResultAction.class,
       SetMarkersAction.class,
-      UpdateModelAction.class,
       SetModelAction.class,
-      SetPopupModelAction.class);
+      SetNavigationTargetsAction.class,
+      SetPopupModelAction.class,
+      SetResolvedNavigationTargetAction.class,
+      SetTypeHintsAction.class,
+      UpdateModelAction.class);
 
    public static final List<Class<? extends ActionHandler>> DEFAULT_ACTION_HANDLERS = Lists.newArrayList(
       ClientActionHandler.class,

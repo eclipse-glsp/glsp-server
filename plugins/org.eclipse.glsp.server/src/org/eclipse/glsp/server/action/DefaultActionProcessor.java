@@ -29,12 +29,11 @@ import org.eclipse.glsp.api.jsonrpc.GLSPClientProvider;
 import org.eclipse.glsp.api.model.GraphicalModelState;
 import org.eclipse.glsp.api.model.ModelStateProvider;
 import org.eclipse.glsp.api.registry.ActionHandlerRegistry;
-import org.eclipse.glsp.server.actionhandler.RequestEditValidationHandler;
 
 import com.google.inject.Inject;
 
 public class DefaultActionProcessor implements ActionProcessor {
-   private static Logger LOG = Logger.getLogger(RequestEditValidationHandler.class);
+   private static Logger LOG = Logger.getLogger(DefaultActionProcessor.class);
 
    @Inject
    protected GLSPClientProvider clientProvider;

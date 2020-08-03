@@ -19,25 +19,33 @@ import java.util.List;
 
 import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.action.kind.CenterAction;
-import org.eclipse.glsp.api.action.kind.CollapseExpandAction;
-import org.eclipse.glsp.api.action.kind.CollapseExpandAllAction;
+import org.eclipse.glsp.api.action.kind.ClearMarkersAction;
 import org.eclipse.glsp.api.action.kind.ExportSVGAction;
 import org.eclipse.glsp.api.action.kind.FitToScreenAction;
-import org.eclipse.glsp.api.action.kind.OpenAction;
+import org.eclipse.glsp.api.action.kind.GLSPServerStatusAction;
+import org.eclipse.glsp.api.action.kind.NavigateToTargetAction;
 import org.eclipse.glsp.api.action.kind.RequestBoundsAction;
-import org.eclipse.glsp.api.action.kind.RequestExportSvgAction;
 import org.eclipse.glsp.api.action.kind.SelectAction;
 import org.eclipse.glsp.api.action.kind.SelectAllAction;
 import org.eclipse.glsp.api.action.kind.ServerMessageAction;
-import org.eclipse.glsp.api.action.kind.ServerStatusAction;
 import org.eclipse.glsp.api.action.kind.SetBoundsAction;
+import org.eclipse.glsp.api.action.kind.SetClipboardDataAction;
+import org.eclipse.glsp.api.action.kind.SetContextActions;
+import org.eclipse.glsp.api.action.kind.SetDirtyStateAction;
+import org.eclipse.glsp.api.action.kind.SetEditModeAction;
+import org.eclipse.glsp.api.action.kind.SetEditValidationResultAction;
+import org.eclipse.glsp.api.action.kind.SetMarkersAction;
 import org.eclipse.glsp.api.action.kind.SetModelAction;
+import org.eclipse.glsp.api.action.kind.SetNavigationTargetsAction;
 import org.eclipse.glsp.api.action.kind.SetPopupModelAction;
+import org.eclipse.glsp.api.action.kind.SetResolvedNavigationTargetAction;
+import org.eclipse.glsp.api.action.kind.SetTypeHintsAction;
 import org.eclipse.glsp.api.action.kind.TriggerEdgeCreationAction;
 import org.eclipse.glsp.api.action.kind.TriggerNodeCreationAction;
 import org.eclipse.glsp.api.action.kind.UpdateModelAction;
 import org.eclipse.glsp.api.handler.ActionHandler;
 import org.eclipse.glsp.api.handler.OperationHandler;
+import org.eclipse.glsp.server.actionhandler.ClientActionHandler;
 import org.eclipse.glsp.server.actionhandler.ComputedBoundsActionHandler;
 import org.eclipse.glsp.server.actionhandler.ExecuteServerCommandActionHandler;
 import org.eclipse.glsp.server.actionhandler.OperationActionHandler;
@@ -68,27 +76,35 @@ import com.google.common.collect.Lists;
 public final class MultiBindingDefaults {
    private MultiBindingDefaults() {}
 
-   public static final List<Class<? extends Action>> DEFAULT_ACTIONS = Lists.newArrayList(
+   public static final List<Class<? extends Action>> DEFAULT_CLIENT_ACTIONS = Lists.newArrayList(
       CenterAction.class,
-      CollapseExpandAction.class,
-      CollapseExpandAllAction.class,
+      ClearMarkersAction.class,
       ExportSVGAction.class,
       FitToScreenAction.class,
-      OpenAction.class,
+      GLSPServerStatusAction.class,
+      NavigateToTargetAction.class,
       RequestBoundsAction.class,
-      RequestExportSvgAction.class,
       SelectAction.class,
       SelectAllAction.class,
       ServerMessageAction.class,
-      ServerStatusAction.class,
       SetBoundsAction.class,
+      SetClipboardDataAction.class,
+      SetContextActions.class,
+      SetDirtyStateAction.class,
+      SetEditModeAction.class,
+      SetEditValidationResultAction.class,
+      SetMarkersAction.class,
       SetModelAction.class,
+      SetNavigationTargetsAction.class,
       SetPopupModelAction.class,
+      SetResolvedNavigationTargetAction.class,
+      SetTypeHintsAction.class,
       TriggerNodeCreationAction.class,
       TriggerEdgeCreationAction.class,
       UpdateModelAction.class);
 
    public static final List<Class<? extends ActionHandler>> DEFAULT_ACTION_HANDLERS = Lists.newArrayList(
+      ClientActionHandler.class,
       ComputedBoundsActionHandler.class,
       OperationActionHandler.class,
       RequestModelActionHandler.class,

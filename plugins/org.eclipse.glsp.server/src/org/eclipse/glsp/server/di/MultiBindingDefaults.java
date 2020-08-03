@@ -28,7 +28,6 @@ import org.eclipse.glsp.api.action.kind.RequestBoundsAction;
 import org.eclipse.glsp.api.action.kind.SelectAction;
 import org.eclipse.glsp.api.action.kind.SelectAllAction;
 import org.eclipse.glsp.api.action.kind.ServerMessageAction;
-import org.eclipse.glsp.api.action.kind.ServerStatusAction;
 import org.eclipse.glsp.api.action.kind.SetBoundsAction;
 import org.eclipse.glsp.api.action.kind.SetClipboardDataAction;
 import org.eclipse.glsp.api.action.kind.SetContextActions;
@@ -77,22 +76,6 @@ import com.google.common.collect.Lists;
 public final class MultiBindingDefaults {
    private MultiBindingDefaults() {}
 
-   public static final List<Class<? extends Action>> DEFAULT_ACTIONS = Lists.newArrayList(
-      CenterAction.class,
-      ExportSVGAction.class,
-      FitToScreenAction.class,
-      RequestBoundsAction.class,
-      SelectAction.class,
-      SelectAllAction.class,
-      ServerMessageAction.class,
-      ServerStatusAction.class,
-      SetBoundsAction.class,
-      SetModelAction.class,
-      SetPopupModelAction.class,
-      TriggerNodeCreationAction.class,
-      TriggerEdgeCreationAction.class,
-      UpdateModelAction.class);
-
    public static final List<Class<? extends Action>> DEFAULT_CLIENT_ACTIONS = Lists.newArrayList(
       CenterAction.class,
       ClearMarkersAction.class,
@@ -104,6 +87,7 @@ public final class MultiBindingDefaults {
       SelectAction.class,
       SelectAllAction.class,
       ServerMessageAction.class,
+      SetBoundsAction.class,
       SetClipboardDataAction.class,
       SetContextActions.class,
       SetDirtyStateAction.class,
@@ -115,6 +99,8 @@ public final class MultiBindingDefaults {
       SetPopupModelAction.class,
       SetResolvedNavigationTargetAction.class,
       SetTypeHintsAction.class,
+      TriggerNodeCreationAction.class,
+      TriggerEdgeCreationAction.class,
       UpdateModelAction.class);
 
    public static final List<Class<? extends ActionHandler>> DEFAULT_ACTION_HANDLERS = Lists.newArrayList(

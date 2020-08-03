@@ -66,7 +66,6 @@ public abstract class DefaultGLSPModule extends GLSPModule {
    }
 
    protected void configureMultiBindConfigs() {
-      configure(MultiBindConfig.create(Action.class), this::configureActions);
       configure(MultiBindConfig.create(Action.class).setAnnotationName(CLIENT_ACTIONS), this::configureClientActions);
       configure(MultiBindConfig.create(ActionHandler.class), this::configureActionHandlers);
       configure(MultiBindConfig.create(ServerCommandHandler.class), this::configureServerCommandHandlers);
@@ -86,10 +85,6 @@ public abstract class DefaultGLSPModule extends GLSPModule {
    protected abstract void configureDiagramConfigurations(MultiBindConfig<DiagramConfiguration> config);
 
    protected void configureServerCommandHandlers(final MultiBindConfig<ServerCommandHandler> bindings) {}
-
-   protected void configureActions(final MultiBindConfig<Action> bindings) {
-      bindings.addAll(MultiBindingDefaults.DEFAULT_ACTIONS);
-   }
 
    protected void configureClientActions(final MultiBindConfig<Action> bindings) {
       bindings.addAll(MultiBindingDefaults.DEFAULT_CLIENT_ACTIONS);

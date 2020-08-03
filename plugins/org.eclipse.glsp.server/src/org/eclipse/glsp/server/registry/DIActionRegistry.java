@@ -32,11 +32,8 @@ import com.google.inject.Inject;
 public class DIActionRegistry extends MapRegistry<String, Action> implements ActionRegistry {
 
    @Inject
-   public DIActionRegistry(final Set<Action> actions, final Set<ActionHandler> actionHandlers,
-      final Set<OperationHandler> operationHandlers) {
-      actions.forEach(action -> register(action.getKind(), action));
-
-      // Add derived from the handledActionTypes of action & operation handlers
+   public DIActionRegistry(final Set<ActionHandler> actionHandlers, final Set<OperationHandler> operationHandlers) {
+      // Derive actions from the handledActionTypes of action & operation handlers
       List<? extends Action> derivedActions = ReflectionUtil.construct(actionHandlers.stream()
          .flatMap(h -> h.getHandledActionTypes().stream())
          .collect(Collectors.toList()));

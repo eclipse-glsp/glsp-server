@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.registry;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -50,7 +51,7 @@ public class DIActionHandlerRegistry extends MapMultiRegistry<Class<? extends Ac
             result.forEach(actionClass -> register(key, actionClass));
          }
       }
-
+      result.sort(Comparator.comparing(ActionHandler::getPriority));
       return result;
    }
 }

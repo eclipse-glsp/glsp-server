@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -16,19 +16,23 @@
 package org.eclipse.glsp.api.action.kind;
 
 import org.eclipse.glsp.api.action.Action;
+import org.eclipse.glsp.api.types.NavigationTarget;
 
-public class CollapseExpandAllAction extends Action {
-   private boolean expand = true;
+public class NavigateToTargetAction extends Action {
+   private NavigationTarget navigationTarget;
 
-   public CollapseExpandAllAction() {
-      super(Action.Kind.COLLAPSE_EXPAND_ALL);
-
+   public NavigateToTargetAction() {
+      super(Action.Kind.NAVIGATE_TO_TARGET);
    }
 
-   public CollapseExpandAllAction(final boolean expand) {
+   public NavigateToTargetAction(final NavigationTarget navigationTarget) {
       this();
-      this.expand = expand;
+      this.navigationTarget = navigationTarget;
    }
 
-   public boolean isExpand() { return expand; }
+   public NavigationTarget getNavigationTarget() { return navigationTarget; }
+
+   public void setNavigationTarget(final NavigationTarget navigationTarget) {
+      this.navigationTarget = navigationTarget;
+   }
 }

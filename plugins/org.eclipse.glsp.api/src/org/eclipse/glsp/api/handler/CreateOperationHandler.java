@@ -15,7 +15,6 @@
  ********************************************************************************/
 package org.eclipse.glsp.api.handler;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +33,6 @@ public interface CreateOperationHandler extends OperationHandler {
    Class<? extends CreateOperation> getHandledOperationType();
 
    default List<TriggerElementCreationAction> getTriggerActions() {
-      List<TriggerElementCreationAction> actions = new ArrayList<>();
       if (CreateNodeOperation.class.isAssignableFrom(getHandledOperationType())) {
          return getHandledElementTypeIds().stream().map(TriggerNodeCreationAction::new).collect(Collectors.toList());
       } else if (CreateEdgeOperation.class.isAssignableFrom(getHandledOperationType())) {

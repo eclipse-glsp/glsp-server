@@ -15,27 +15,9 @@
  ********************************************************************************/
 package org.eclipse.glsp.api.action;
 
-import static org.eclipse.glsp.api.action.kind.ResponseAction.respond;
-
-import java.util.Collections;
 import java.util.List;
 
 public interface ActionProcessor {
-
-   /**
-    * <p>
-    * Process the given action, dispatch to the corresponding handler, and optionally
-    * send the reply Action to the client.
-    * </p>
-    *
-    * @param clientId The client from which the action was received
-    * @param action   The action to process
-    */
-   default void process(final String clientId, final Action action) {
-      for (Action responseAction : dispatch(clientId, action)) {
-         send(clientId, respond(action, responseAction));
-      }
-   }
 
    /**
     * @see ActionProcessor#process(String, Action)
@@ -48,16 +30,25 @@ public interface ActionProcessor {
 
    /**
     * <p>
-    * Handle the given action, received from the specified clientId, and optionally
-    * return a reply Action.
+    * Processes the given action, received from the specified clientId, by dispatching it to all registered handlers.
     * </p>
     *
     * @param clientId The client from which the action was received
     * @param action   The action to dispatch
-    * @return An optional Action to be sent to the client as the result of handling
-    *         the received <code>action</code>
     */
-   List<Action> dispatch(String clientId, Action action);
+   void process(String clientId, Action action);
+
+   /**
+    * <p>
+    * Processes all given actions, received from the specified clientId, to the corresponding handlers.
+    * </p>
+    *
+    * @param clientId
+    * @param actions
+    */
+   default void processAll(final String clientId, final List<Action> actions) {
+      actions.forEach(action -> process(clientId, action));
+   }
 
    /**
     * Send the given action to the specified clientId.
@@ -70,8 +61,8 @@ public interface ActionProcessor {
    class NullImpl implements ActionProcessor {
 
       @Override
-      public List<Action> dispatch(final String clientId, final Action action) {
-         return Collections.emptyList();
+      public void process(final String clientId, final Action action) {
+         return;
       }
 
       @Override

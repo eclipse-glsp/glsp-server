@@ -20,21 +20,36 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import com.google.inject.Binder;
+import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
+import com.google.inject.name.Names;
 
 public final class MultiBindConfig<T> {
    public static <T> MultiBindConfig<T> create(final Class<T> type) {
+      return new MultiBindConfig<>(TypeLiteral.get(type));
+   }
+
+   public static <T> MultiBindConfig<T> create(final TypeLiteral<T> type) {
       return new MultiBindConfig<>(type);
    }
 
    private final Set<Class<? extends T>> bindings;
 
-   private final Class<T> type;
+   private final TypeLiteral<T> type;
 
-   private MultiBindConfig(final Class<T> type) {
+   private String annotationName;
+
+   private MultiBindConfig(final TypeLiteral<T> type) {
       this.type = type;
       bindings = new LinkedHashSet<>();
    }
+
+   public MultiBindConfig<T> setAnnotationName(final String annotationName) {
+      this.annotationName = annotationName;
+      return this;
+   }
+
+   public String getAnnotationName() { return annotationName; }
 
    /**
     * Applies the stored bindings to the given binder in form of a set binding.
@@ -42,7 +57,9 @@ public final class MultiBindConfig<T> {
     * @param binder binder
     */
    public void applyBinding(final Binder binder) {
-      Multibinder<T> multiBinder = Multibinder.newSetBinder(binder, getType());
+      Multibinder<T> multiBinder = this.annotationName == null
+         ? Multibinder.newSetBinder(binder, getType())
+         : Multibinder.newSetBinder(binder, getType(), Names.named(annotationName));
       bindings.forEach(b -> multiBinder.addBinding().to(b));
    }
 
@@ -76,6 +93,6 @@ public final class MultiBindConfig<T> {
       return bindings.contains(binding);
    }
 
-   Class<T> getType() { return type; }
+   TypeLiteral<T> getType() { return type; }
 
 }

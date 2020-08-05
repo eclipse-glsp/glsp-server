@@ -31,7 +31,7 @@ public class ModelStateImpl implements GraphicalModelState {
    private String clientId;
    private GModelRoot currentModel;
    private BasicCommandStack commandStack;
-   private boolean readonly;
+   private String editMode;
 
    @Override
    public Map<String, String> getClientOptions() { return options; }
@@ -123,8 +123,8 @@ public class ModelStateImpl implements GraphicalModelState {
    }
 
    @Override
-   public boolean isReadonly() { return readonly; }
+   public String getEditMode() { return this.editMode; }
 
    @Override
-   public void setReadonly(final boolean readonly) { this.readonly = readonly; }
+   public void setEditMode(final String editMode) { this.editMode = editMode; }
 }

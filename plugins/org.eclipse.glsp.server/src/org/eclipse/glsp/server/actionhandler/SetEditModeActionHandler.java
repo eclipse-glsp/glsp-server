@@ -25,7 +25,7 @@ public class SetEditModeActionHandler extends BasicActionHandler<SetEditModeActi
 
    @Override
    protected List<Action> executeAction(final SetEditModeAction action, final GraphicalModelState modelState) {
-      modelState.setReadonly(action.getEditMode().equals(SetEditModeAction.EDIT_MODE_READONLY));
+      modelState.setEditMode(action.getEditMode());
       return none();
    }
 

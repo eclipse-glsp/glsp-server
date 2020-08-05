@@ -17,6 +17,8 @@ package org.eclipse.glsp.api.model;
 
 import java.util.Map;
 
+import org.eclipse.glsp.api.action.kind.SetEditModeAction;
+
 public interface ModelState<T> {
 
    String getClientId();
@@ -41,7 +43,9 @@ public interface ModelState<T> {
 
    boolean isDirty();
 
-   boolean isReadonly();
+   String getEditMode();
 
-   void setReadonly(boolean readonly);
+   void setEditMode(String editMode);
+
+   default boolean isReadonly() { return getEditMode().equals(SetEditModeAction.EDIT_MODE_READONLY); }
 }

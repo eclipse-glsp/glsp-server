@@ -17,7 +17,7 @@ package org.eclipse.glsp.server.operationhandler;
 
 import java.util.List;
 
-import org.eclipse.glsp.api.action.ActionProcessor;
+import org.eclipse.glsp.api.action.ActionDispatcher;
 import org.eclipse.glsp.api.model.GraphicalModelState;
 import org.eclipse.glsp.api.operation.kind.CutOperation;
 import org.eclipse.glsp.api.operation.kind.DeleteOperation;
@@ -27,13 +27,13 @@ import com.google.inject.Inject;
 public class CutOperationHandler extends BasicOperationHandler<CutOperation> {
 
    @Inject
-   protected ActionProcessor actionProcessor;
+   protected ActionDispatcher actionDispatcher;
 
    @Override
    public void executeOperation(final CutOperation operation, final GraphicalModelState modelState) {
       List<String> cutableElementIds = getElementToCut(operation, modelState);
       if (!cutableElementIds.isEmpty()) {
-         actionProcessor.process(modelState.getClientId(), new DeleteOperation(cutableElementIds));
+         actionDispatcher.dispatch(modelState.getClientId(), new DeleteOperation(cutableElementIds));
       }
    }
 

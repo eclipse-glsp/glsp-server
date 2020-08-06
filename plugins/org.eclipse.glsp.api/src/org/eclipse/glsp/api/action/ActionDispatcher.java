@@ -17,15 +17,15 @@ package org.eclipse.glsp.api.action;
 
 import java.util.List;
 
-public interface ActionProcessor {
+public interface ActionDispatcher {
 
    /**
-    * @see ActionProcessor#process(String, Action)
+    * @see ActionDispatcher#dispatch(String, Action)
     *
     * @param message ActionMessage received from the client
     */
-   default void process(final ActionMessage message) {
-      process(message.getClientId(), message.getAction());
+   default void dispatch(final ActionMessage message) {
+      dispatch(message.getClientId(), message.getAction());
    }
 
    /**
@@ -36,37 +36,24 @@ public interface ActionProcessor {
     * @param clientId The client from which the action was received
     * @param action   The action to dispatch
     */
-   void process(String clientId, Action action);
+   void dispatch(String clientId, Action action);
 
    /**
     * <p>
-    * Processes all given actions, received from the specified clientId, to the corresponding handlers.
+    * Processes all given actions, received from the specified clientId, by dispatching to the corresponding handlers.
     * </p>
     *
     * @param clientId
     * @param actions
     */
-   default void processAll(final String clientId, final List<Action> actions) {
-      actions.forEach(action -> process(clientId, action));
+   default void dispatchAll(final String clientId, final List<Action> actions) {
+      actions.forEach(action -> dispatch(clientId, action));
    }
 
-   /**
-    * Send the given action to the specified clientId.
-    *
-    * @param clientId The client to which the action should be sent
-    * @param action   The action to send to the client
-    */
-   void send(String clientId, Action action);
-
-   class NullImpl implements ActionProcessor {
+   class NullImpl implements ActionDispatcher {
 
       @Override
-      public void process(final String clientId, final Action action) {
-         return;
-      }
-
-      @Override
-      public void send(final String clientId, final Action action) {
+      public void dispatch(final String clientId, final Action action) {
          return;
       }
    }

@@ -20,7 +20,7 @@ import static org.eclipse.glsp.server.actionhandler.ClientActionHandler.CLIENT_A
 import java.util.function.Consumer;
 
 import org.eclipse.glsp.api.action.Action;
-import org.eclipse.glsp.api.action.ActionProcessor;
+import org.eclipse.glsp.api.action.ActionDispatcher;
 import org.eclipse.glsp.api.di.GLSPModule;
 import org.eclipse.glsp.api.diagram.DiagramConfiguration;
 import org.eclipse.glsp.api.factory.GraphGsonConfiguratorFactory;
@@ -42,7 +42,7 @@ import org.eclipse.glsp.api.registry.DiagramConfigurationRegistry;
 import org.eclipse.glsp.api.registry.NavigationTargetProviderRegistry;
 import org.eclipse.glsp.api.registry.OperationHandlerRegistry;
 import org.eclipse.glsp.api.registry.ServerCommandHandlerRegistry;
-import org.eclipse.glsp.server.action.DefaultActionProcessor;
+import org.eclipse.glsp.server.action.DefaultActionDispatcher;
 import org.eclipse.glsp.server.factory.DefaultGraphGsonConfiguratorFactory;
 import org.eclipse.glsp.server.jsonrpc.DefaultGLSPClientProvider;
 import org.eclipse.glsp.server.jsonrpc.DefaultGLSPServer;
@@ -121,8 +121,8 @@ public abstract class DefaultGLSPModule extends GLSPModule {
    }
 
    @Override
-   protected Class<? extends ActionProcessor> bindActionProcessor() {
-      return DefaultActionProcessor.class;
+   protected Class<? extends ActionDispatcher> bindActionDispatcher() {
+      return DefaultActionDispatcher.class;
    }
 
    @Override

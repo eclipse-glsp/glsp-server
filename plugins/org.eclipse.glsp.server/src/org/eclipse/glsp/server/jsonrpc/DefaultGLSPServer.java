@@ -21,14 +21,14 @@ import java.util.concurrent.CompletableFuture;
 
 import org.apache.log4j.Logger;
 import org.eclipse.glsp.api.action.ActionMessage;
-import org.eclipse.glsp.api.action.ActionProcessor;
+import org.eclipse.glsp.api.action.ActionDispatcher;
 import org.eclipse.glsp.api.jsonrpc.GLSPClient;
 import org.eclipse.glsp.api.jsonrpc.GLSPClientProvider;
 import org.eclipse.glsp.api.jsonrpc.GLSPServer;
 import org.eclipse.glsp.api.jsonrpc.InitializeParameters;
 import org.eclipse.glsp.api.model.ModelStateProvider;
-import org.eclipse.glsp.api.types.Severity;
 import org.eclipse.glsp.api.types.ServerStatus;
+import org.eclipse.glsp.api.types.Severity;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -42,7 +42,7 @@ public class DefaultGLSPServer<T> implements GLSPServer {
    @Inject
    protected GLSPClientProvider clientProxyProvider;
    @Inject
-   protected ActionProcessor actionProcessor;
+   protected ActionDispatcher actionDispatcher;
    private static Logger log = Logger.getLogger(DefaultGLSPServer.class);
 
    private ServerStatus status;
@@ -93,11 +93,11 @@ public class DefaultGLSPServer<T> implements GLSPServer {
          // is initialized. ClientId is only retrieved through messages; so this
          // is currently the earliest we can register the clientProxy
          this.clientProxyProvider.register(clientId, clientProxy);
-         actionProcessor.process(message);
+         actionDispatcher.dispatch(message);
       } catch (RuntimeException e) {
          String errorMsg = "Could not process message:" + message;
          log.error("[ERROR] " + errorMsg, e);
-         actionProcessor.send(clientId, error("[GLSP-Server] " + errorMsg, e));
+         actionDispatcher.dispatch(clientId, error("[GLSP-Server] " + errorMsg, e));
       }
    }
 

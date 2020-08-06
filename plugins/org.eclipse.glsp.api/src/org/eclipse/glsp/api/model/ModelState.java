@@ -47,5 +47,5 @@ public interface ModelState<T> {
 
    void setEditMode(String editMode);
 
-   default boolean isReadonly() { return getEditMode().equals(SetEditModeAction.EDIT_MODE_READONLY); }
+   default boolean isReadonly() { return SetEditModeAction.EDIT_MODE_READONLY.equals(getEditMode()); }
 }

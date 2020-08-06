@@ -28,6 +28,7 @@ import org.eclipse.glsp.api.action.kind.RequestBoundsAction;
 import org.eclipse.glsp.api.action.kind.SelectAction;
 import org.eclipse.glsp.api.action.kind.SelectAllAction;
 import org.eclipse.glsp.api.action.kind.ServerMessageAction;
+import org.eclipse.glsp.api.action.kind.ServerStatusAction;
 import org.eclipse.glsp.api.action.kind.SetBoundsAction;
 import org.eclipse.glsp.api.action.kind.SetClipboardDataAction;
 import org.eclipse.glsp.api.action.kind.SetContextActions;
@@ -99,6 +100,7 @@ public final class MultiBindingDefaults {
       SetPopupModelAction.class,
       SetResolvedNavigationTargetAction.class,
       SetTypeHintsAction.class,
+      ServerStatusAction.class,
       TriggerNodeCreationAction.class,
       TriggerEdgeCreationAction.class,
       UpdateModelAction.class);

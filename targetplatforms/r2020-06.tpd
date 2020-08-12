@@ -8,6 +8,7 @@ location "http://download.eclipse.org/releases/2020-06" {
 
 location "https://download.eclipse.org/tools/orbit/downloads/drops/R20200529191137/repository/" {
 	org.apache.log4j
+	org.apache.commons.cli
 	org.apache.commons.io
 	javax.servlet
 	com.google.gson [2.8.2,3.0.0)

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="2020-06 - Release" sequenceNumber="1593006377">
+<target name="2020-06 - Release" sequenceNumber="1597185458">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.equinox.p2.discovery.feature.feature.group" version="1.2.600.v20200521-1852"/>
@@ -11,6 +11,7 @@
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.apache.log4j" version="1.2.15.v201012070815"/>
+      <unit id="org.apache.commons.cli" version="1.4.0.v20200417-1444"/>
       <unit id="org.apache.commons.io" version="2.6.0.v20190123-2029"/>
       <unit id="javax.servlet" version="3.1.0.v201410161800"/>
       <unit id="com.google.gson" version="2.8.2.v20180104-1110"/>

@@ -18,64 +18,98 @@ package org.eclipse.glsp.server.utils;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.apache.log4j.Appender;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
-import org.eclipse.glsp.server.launch.CLIParser;
+import org.eclipse.glsp.server.launch.DefaultCLIParser;
 
 public final class LaunchUtil {
+   private static Logger LOG = Logger.getLogger(LaunchUtil.class);
+
    private LaunchUtil() {}
 
-   public static final int DEFAULT_SERVER_PORT = 5007;
-   public static final Level DEFAULT_LOG_LEVEL = Level.INFO;
-   public static final String DEFAULT_LOG_DIR = new File("./logs/").getAbsolutePath();
+   public static final class DefaultOptions {
+      public static final int SERVER_PORT = 5007;
+      public static final Level LOG_LEVEL = Level.INFO;
+      public static final String LOG_DIR = new File("./logs/").getAbsolutePath();
+      public static final boolean CONSOLE_LOG_ENABLED = true;
+      public static final boolean FILE_LOG_ENABLED = false;
+   }
 
    public static boolean isValidPort(final Integer port) {
       return port >= 0 && port <= 65535;
    }
 
-   public static void configureConsoleLogger() {
-      configureConsoleLogger(DEFAULT_LOG_LEVEL);
-   }
-
-   public static void configureConsoleLogger(final Level logLevel) {
-      Logger root = Logger.getRootLogger();
-      if (!root.getAllAppenders().hasMoreElements()) {
-         root.addAppender(new ConsoleAppender(
-            new PatternLayout(PatternLayout.TTCC_CONVERSION_PATTERN)));
+   public static void configure(final DefaultCLIParser cli) throws ParseException, IOException {
+      if (cli.isHelp()) {
+         cli.printHelp();
+         System.exit(0);
       }
-      root.setLevel(logLevel);
-
+      configureLogger(cli);
+      if (cli.hasOption(DefaultCLIParser.OPTION_LOG_DIR) && !cli.isFileLog()) {
+         LOG.warn(String.format("File logging is disabled. The option '--%s' will be ignored.",
+            DefaultCLIParser.OPTION_LOG_DIR));
+      }
    }
 
-   public static void configureLogger(
-      final CLIParser parser) throws ParseException, IOException {
-      if (parser.isConsoleLog()) {
-         configureConsoleLogger();
+   public static void configureLogger(final DefaultCLIParser cli) throws ParseException, IOException {
+      if (cli.isFileLog()) {
+         configureLogger(cli.isConsoleLog(), cli.parseLogDir(), cli.parseLogLevel());
       } else {
-         String logDir = parser.parseLogDir();
+         configureLogger(cli.isConsoleLog(), cli.parseLogLevel());
+      }
+   }
+
+   public static void configureLogger(final boolean logToConsole, final Level logLevel) throws IOException {
+      configureLogger(logToConsole, null, logLevel);
+   }
+
+   public static void configureLogger(final boolean logToConsole, final String logDir, final Level logLevel)
+      throws IOException {
+      Logger root = Logger.getRootLogger();
+      List<ConsoleAppender> consoleAppenders = getAppenders(root, ConsoleAppender.class);
+      if (logToConsole) {
+         if (consoleAppenders.isEmpty()) {
+            root.addAppender(new ConsoleAppender(
+               new PatternLayout(PatternLayout.TTCC_CONVERSION_PATTERN)));
+         }
+      } else {
+         // Remove all console log appenders
+         consoleAppenders.forEach(root::removeAppender);
+      }
+      if (logDir != null && !logDir.isEmpty()) {
          SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy_HH:mm:ss");
          String fileName = formatter.format(new Date()) + ".log";
-         File logFile = new File(logDir, fileName);
-         Level level = parser.parseLogLevel();
-         configureLogger(logFile.getAbsolutePath(), level);
+         String logFile = new File(logDir, fileName).getAbsolutePath();
+         root.addAppender(
+            new FileAppender(new PatternLayout(PatternLayout.TTCC_CONVERSION_PATTERN), logFile));
       }
+      root.setLevel(logLevel);
    }
 
-   public static void configureLogger(final String logFile) throws IOException {
-      configureLogger(logFile, DEFAULT_LOG_LEVEL);
+   @SuppressWarnings("unchecked")
+   public static <T extends Appender> List<T> getAppenders(final Logger logger, final Class<T> clazz) {
+      List<T> result = new ArrayList<>();
+      logger.getAllAppenders().asIterator().forEachRemaining((appender) -> {
+         if (clazz.isInstance(appender)) {
+            result.add(clazz.cast(appender));
+         }
+      });
+      return result;
    }
 
-   public static void configureLogger(final String logFile, final Level logLevel) throws IOException {
-      Logger root = Logger.getRootLogger();
-      root.removeAllAppenders();
-      root.addAppender(
-         new FileAppender(new PatternLayout(PatternLayout.TTCC_CONVERSION_PATTERN), logFile));
+   public static void printHelp(final String processName, final Options options) {
+      HelpFormatter formatter = new HelpFormatter();
+      formatter.printHelp(90, processName, "\noptions:", options, "", true);
    }
-
 }

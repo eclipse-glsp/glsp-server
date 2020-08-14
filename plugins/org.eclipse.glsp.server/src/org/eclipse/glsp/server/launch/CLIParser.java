@@ -15,26 +15,22 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.launch;
 
-import java.io.File;
+import java.util.function.Predicate;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.eclipse.glsp.server.utils.LaunchUtil;
 
-public final class CLIParser {
+public abstract class CLIParser {
    private static final Logger LOG = Logger.getLogger(CLIParser.class);
-   private final CommandLine cmd;
-   private final Options options;
-   private final String processName;
+   protected static final String INVALID_ARGUMENT_MESSAGE = "%s' is not a valid argument for option '--%s'! The default value '%s' is used.";
 
-   public CLIParser(final String[] args, final String processName) throws ParseException {
-      this(args, getDefaultCLIOptions(), processName);
-   }
+   protected final CommandLine cmd;
+   protected final Options options;
+   protected final String processName;
 
    public CLIParser(final String[] args, final Options options, final String processName) throws ParseException {
       this.cmd = new DefaultParser().parse(options, args);
@@ -42,67 +38,55 @@ public final class CLIParser {
       this.processName = processName;
    }
 
-   public boolean optionExists(final String identifier) {
-      return cmd.hasOption(identifier);
+   public boolean hasOption(final String optionName) {
+      return cmd.hasOption(optionName);
    }
 
-   public Integer parsePort() {
-      String portArg = cmd.getOptionValue("p");
-      int port = LaunchUtil.DEFAULT_SERVER_PORT;
-      if (portArg != null) {
+   public String parseOption(final String optionName, final String defaultValue) {
+      return parseOption(optionName, defaultValue, null);
+   }
+
+   public String parseOption(final String optionName, final String defaultValue, final Predicate<String> validator) {
+      String arg = cmd.getOptionValue(optionName);
+      if (arg != null) {
+         if (validator == null || validator.test(arg)) {
+            return arg;
+         }
+         LOG.warn(String.format(INVALID_ARGUMENT_MESSAGE,
+            arg, optionName, defaultValue));
+      }
+      return defaultValue;
+   }
+
+   public int parseIntOption(final String optionName, final int defaultValue) {
+      return parseIntOption(optionName, defaultValue, null);
+   }
+
+   public int parseIntOption(final String optionName, final int defaultValue, final Predicate<Integer> validator) {
+      String intArg = cmd.getOptionValue(optionName);
+      int value = defaultValue;
+      if (intArg != null) {
          try {
-            port = Integer.parseInt(portArg);
-            if (!LaunchUtil.isValidPort(port)) {
+            value = Integer.parseInt(intArg);
+            if (validator != null && !validator.test(value)) {
                throw new NumberFormatException();
             }
          } catch (NumberFormatException e) {
-            LOG.warn(String.format("'%s' is not a valid port! The default port '%s' is used",
-               portArg, LaunchUtil.DEFAULT_SERVER_PORT));
+            LOG.warn(String.format(INVALID_ARGUMENT_MESSAGE,
+               intArg, optionName, defaultValue));
          }
       }
-
-      return port;
+      return value;
    }
 
-   public String parseLogDir() {
-      String logDirArg = cmd.getOptionValue("d");
-      String logDir = LaunchUtil.DEFAULT_LOG_DIR;
-      if (logDirArg != null) {
-         File file = new File(logDirArg);
-         if (!file.exists() || !file.isDirectory()) {
-            LOG.warn(String.format("'%s' is not a valid directory! The default log path directory '%s' is used",
-               logDirArg, logDir));
-         } else {
-            logDir = file.getAbsolutePath();
-         }
-      }
-      return logDir;
+   public boolean parseBoolOption(final String optionName, final boolean defaultValue) {
+      String arg = cmd.getOptionValue(optionName);
+      return arg != null ? Boolean.parseBoolean(arg) : defaultValue;
    }
-
-   public Level parseLogLevel() {
-      String levelArg = cmd.getOptionValue("ll");
-      return Level.toLevel(levelArg, LaunchUtil.DEFAULT_LOG_LEVEL);
-   }
-
-   public boolean isConsoleLog() { return optionExists("c"); }
 
    public void printHelp() {
-      printHelp(this.processName, options);
+      LaunchUtil.printHelp(this.processName, options);
    }
 
-   public static void printHelp(final String processName, final Options options) {
-      HelpFormatter formatter = new HelpFormatter();
-      formatter.printHelp(90, processName, "\noptions:", options, "", true);
-   }
-
-   public static Options getDefaultCLIOptions() {
-      Options options = new Options();
-      options.addOption("h", "help", false, "Display usage information about GLSPServerLauncher");
-      options.addOption("p", "port", true,
-         String.format("Set server port, otherwise default port %s is used", LaunchUtil.DEFAULT_SERVER_PORT));
-      options.addOption("c", "consoleLog", false, "Print logout in console");
-      options.addOption("d", "logDir", true, "Set the directory for log files");
-      options.addOption("l", "logLevel", true, "Set the log level");
-      return options;
-   }
+   public CommandLine getCmd() { return cmd; }
 }

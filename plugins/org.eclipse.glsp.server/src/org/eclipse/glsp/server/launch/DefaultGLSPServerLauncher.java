@@ -40,7 +40,6 @@ import org.eclipse.lsp4j.jsonrpc.Launcher;
 import org.eclipse.lsp4j.jsonrpc.MessageConsumer;
 
 import com.google.gson.GsonBuilder;
-import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 public class DefaultGLSPServerLauncher extends GLSPServerLauncher {
@@ -50,22 +49,20 @@ public class DefaultGLSPServerLauncher extends GLSPServerLauncher {
    private AsynchronousServerSocketChannel serverSocket;
    private CompletableFuture<Void> onShutdown;
 
-   public DefaultGLSPServerLauncher(final GLSPModule module) {
-      super(module);
+   public DefaultGLSPServerLauncher(final GLSPModule glspModule) {
+      super(glspModule);
    }
 
    @Override
-   public void run(final String hostname, final int port) {
+   public void start(final String hostname, final int port) {
       Future<Void> onClose;
       try {
          onClose = asyncRun(hostname, port);
          onClose.get();
          log.info("Stopped GLSP server");
       } catch (IOException | InterruptedException | ExecutionException e) {
-         log.error(e.getMessage());
-         e.printStackTrace();
+         log.error("Error during server close!", e);
       }
-
    }
 
    public Future<Void> asyncRun(final String hostname, final int port)
@@ -89,13 +86,13 @@ public class DefaultGLSPServerLauncher extends GLSPServerLauncher {
       };
 
       serverSocket.accept(null, handler);
-      log.info("The GLSP server is ready to accept new client requests");
+      log.info("The GLSP server is ready to accept new client requests on port: " + port);
 
       return onShutdown;
    }
 
    private void createClientConnection(final AsynchronousSocketChannel socketChannel) {
-      Injector injector = Guice.createInjector(getGLSPModule());
+      Injector injector = createInjector();
       GsonConfigurator gsonConf = injector.getInstance(GsonConfigurator.class);
       try {
          InputStream in = Channels.newInputStream(socketChannel);
@@ -117,7 +114,7 @@ public class DefaultGLSPServerLauncher extends GLSPServerLauncher {
          try {
             socketChannel.close();
          } catch (IOException e) {
-            log.debug("Excpetion occured when trying to close socketChannel", e);
+            log.error("Excpetion occured when trying to close socketChannel", e);
          }
       }
    }

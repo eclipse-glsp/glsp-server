@@ -15,40 +15,40 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.launch;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.eclipse.glsp.api.di.GLSPModule;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Module;
 
 public abstract class GLSPServerLauncher {
 
-   private GLSPModule module;
-   private Injector injector;
+   private final GLSPModule glspModule;
+   private final List<Module> modules;
 
-   public GLSPServerLauncher() {}
-
-   public GLSPServerLauncher(final GLSPModule module) {
-      this.module = module;
+   public GLSPServerLauncher(final GLSPModule glspModule) {
+      this.glspModule = glspModule;
+      modules = new ArrayList<>();
+      modules.add(glspModule);
    }
 
-   protected Injector doSetup() {
-      return Guice.createInjector(module);
+   public void addAdditionalModules(final Module... modules) {
+      Arrays.stream(modules)
+         .filter(module -> !this.modules.contains(module))
+         .forEach(this.modules::add);
    }
 
-   public void start(final String hostname, final int port) {
-      if (injector == null) {
-         injector = doSetup();
-      }
-      run(hostname, port);
+   public Injector createInjector() {
+      return Guice.createInjector(modules);
    }
 
-   protected abstract void run(String hostname, int port);
+   public abstract void start(String hostname, int port);
 
    public abstract void shutdown();
 
-   public GLSPModule getGLSPModule() { return module; }
-
-   public Injector getInjector() { return injector; }
-
-   public void setModule(final GLSPModule module) { this.module = module; }
+   public GLSPModule getGLSPModule() { return glspModule; }
 }

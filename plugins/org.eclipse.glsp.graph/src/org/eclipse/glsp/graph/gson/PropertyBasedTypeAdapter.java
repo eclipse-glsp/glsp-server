@@ -84,13 +84,14 @@ public abstract class PropertyBasedTypeAdapter<T> extends TypeAdapter<T> {
    protected abstract T createInstance(String parameter);
 
    protected void assignProperty(final T instance, final String propertyName, final JsonReader in)
-      throws IllegalAccessException {
+      throws IllegalAccessException, IOException {
       try {
          Field field = findField(instance.getClass(), propertyName);
          Object value = gson.fromJson(in, field.getGenericType());
          field.set(instance, value);
       } catch (NoSuchFieldException e) {
          // Ignore this property
+         in.skipValue();
       }
    }
 

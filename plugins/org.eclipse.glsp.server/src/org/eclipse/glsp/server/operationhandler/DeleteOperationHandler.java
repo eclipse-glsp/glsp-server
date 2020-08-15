@@ -42,7 +42,8 @@ public class DeleteOperationHandler extends BasicOperationHandler<DeleteOperatio
    public void executeOperation(final DeleteOperation operation, final GraphicalModelState modelState) {
       List<String> elementIds = operation.getElementIds();
       if (elementIds == null || elementIds.size() == 0) {
-         throw new IllegalArgumentException("Elements to delete are not specified");
+         log.warn("Elements to delete are not specified");
+         return;
       }
       GModelIndex index = modelState.getIndex();
       allDependantsIds = new HashSet<>();

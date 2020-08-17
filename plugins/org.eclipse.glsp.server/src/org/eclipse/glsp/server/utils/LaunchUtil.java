@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.List;
 
 import org.apache.commons.cli.HelpFormatter;
@@ -100,11 +101,13 @@ public final class LaunchUtil {
    @SuppressWarnings("unchecked")
    public static <T extends Appender> List<T> getAppenders(final Logger logger, final Class<T> clazz) {
       List<T> result = new ArrayList<>();
-      logger.getAllAppenders().asIterator().forEachRemaining((appender) -> {
+      Enumeration<Appender> allAppenders = logger.getAllAppenders();
+      while (allAppenders.hasMoreElements()) {
+         Appender appender = allAppenders.nextElement();
          if (clazz.isInstance(appender)) {
             result.add(clazz.cast(appender));
          }
-      });
+      }
       return result;
    }
 

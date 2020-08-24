@@ -1,5 +1,5 @@
-/*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+/********************************************************************************
+ * Copyright (c) 2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -12,14 +12,15 @@
  * https://www.gnu.org/software/classpath/license.html.
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
- ******************************************************************************/
-package org.eclipse.glsp.api.jsonrpc;
+ ********************************************************************************/
+package org.eclipse.glsp.api.action.kind;
 
-import org.eclipse.glsp.api.action.ActionMessage;
-import org.eclipse.lsp4j.jsonrpc.services.JsonNotification;
+import org.eclipse.glsp.api.action.Action;
 
-public interface GLSPClient {
+public class DisposeClientAction extends Action {
 
-   @JsonNotification("process")
-   void process(ActionMessage message);
+   public DisposeClientAction() {
+      super(Action.Kind.DISPOSE_CLIENT);
+   }
+
 }

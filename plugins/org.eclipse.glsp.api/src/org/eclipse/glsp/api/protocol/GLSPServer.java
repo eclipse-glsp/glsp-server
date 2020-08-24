@@ -13,16 +13,18 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ******************************************************************************/
-package org.eclipse.glsp.api.jsonrpc;
+package org.eclipse.glsp.api.protocol;
 
-/**
- * A registry to associate & retrieve a {@link GLSPClient} from a
- * <code>clientId</code>.
- */
-public interface GLSPClientProvider {
-   void register(String clientId, GLSPClient client);
+import java.util.concurrent.CompletableFuture;
 
-   GLSPClient resolve(String clientId);
+import org.eclipse.glsp.api.action.ActionMessage;
 
-   void remove(String clientId);
+public interface GLSPServer<T extends GLSPClient> {
+   CompletableFuture<Boolean> initialize(InitializeParameters params);
+
+   void process(ActionMessage message);
+
+   CompletableFuture<Boolean> shutdown();
+
+   void connect(T client);
 }

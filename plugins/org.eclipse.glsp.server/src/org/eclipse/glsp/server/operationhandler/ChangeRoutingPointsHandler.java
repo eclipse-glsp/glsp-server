@@ -15,7 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operationhandler;
 
-import static org.eclipse.glsp.api.jsonrpc.GLSPServerException.getOrThrow;
+import static org.eclipse.glsp.api.protocol.GLSPServerException.getOrThrow;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.api.model.GraphicalModelState;

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,34 +13,23 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.jsonrpc;
+package org.eclipse.glsp.api.protocol;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Optional;
 
-import org.eclipse.glsp.api.jsonrpc.GLSPClient;
-import org.eclipse.glsp.api.jsonrpc.GLSPClientProvider;
+public interface ClientSessionManager {
 
-import com.google.inject.Singleton;
+   boolean connectClient(GLSPClient client);
 
-@Singleton
-public class DefaultGLSPClientProvider implements GLSPClientProvider {
+   boolean createClientSession(GLSPClient glspClient, String clientId);
 
-   private final Map<String, GLSPClient> clients = new HashMap<>();
+   boolean disposeClientSession(String clientId);
 
-   @Override
-   public void register(final String clientId, final GLSPClient client) {
-      clients.put(clientId, client);
-   }
+   boolean disconnectClient(GLSPClient client);
 
-   @Override
-   public GLSPClient resolve(final String clientId) {
-      return clients.get(clientId);
-   }
+   boolean addListener(ClientSessionListener listener);
 
-   @Override
-   public void remove(final String clientId) {
-      clients.remove(clientId);
-   }
+   boolean removeListener(ClientSessionListener listener);
 
+   Optional<GLSPClient> resolve(String clientId);
 }

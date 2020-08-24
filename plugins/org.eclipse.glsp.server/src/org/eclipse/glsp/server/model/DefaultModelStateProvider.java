@@ -21,16 +21,28 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.eclipse.glsp.api.model.GraphicalModelState;
 import org.eclipse.glsp.api.model.ModelStateProvider;
+import org.eclipse.glsp.api.protocol.ClientSessionListener;
+import org.eclipse.glsp.api.protocol.ClientSessionManager;
+import org.eclipse.glsp.api.protocol.GLSPClient;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 @Singleton
-public class DefaultModelStateProvider implements ModelStateProvider {
+public class DefaultModelStateProvider implements ModelStateProvider, ClientSessionListener {
+   @Inject()
+   protected ClientSessionManager sessionManager;
 
    private final Map<String, GraphicalModelState> clientModelStates;
 
+   @Inject()
    public DefaultModelStateProvider() {
       clientModelStates = new ConcurrentHashMap<>();
+   }
+
+   @Inject()
+   public void postConstruct() {
+      sessionManager.addListener(this);
    }
 
    @Override
@@ -55,4 +67,8 @@ public class DefaultModelStateProvider implements ModelStateProvider {
       clientModelStates.remove(clientId);
    }
 
+   @Override
+   public void sessionClosed(final String clientId, final GLSPClient client) {
+      this.clientModelStates.remove(clientId);
+   }
 }

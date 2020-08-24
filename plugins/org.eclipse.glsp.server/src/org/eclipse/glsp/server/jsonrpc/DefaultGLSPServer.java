@@ -20,35 +20,38 @@ import static org.eclipse.glsp.api.utils.ServerMessageUtil.error;
 import java.util.concurrent.CompletableFuture;
 
 import org.apache.log4j.Logger;
-import org.eclipse.glsp.api.action.ActionMessage;
 import org.eclipse.glsp.api.action.ActionDispatcher;
-import org.eclipse.glsp.api.jsonrpc.GLSPClient;
-import org.eclipse.glsp.api.jsonrpc.GLSPClientProvider;
-import org.eclipse.glsp.api.jsonrpc.GLSPServer;
-import org.eclipse.glsp.api.jsonrpc.InitializeParameters;
+import org.eclipse.glsp.api.action.ActionMessage;
+import org.eclipse.glsp.api.action.kind.RequestModelAction;
+import org.eclipse.glsp.api.jsonrpc.GLSPJsonrpcClient;
+import org.eclipse.glsp.api.jsonrpc.GLSPJsonrpcServer;
 import org.eclipse.glsp.api.model.ModelStateProvider;
-import org.eclipse.glsp.api.types.ServerStatus;
-import org.eclipse.glsp.api.types.Severity;
+import org.eclipse.glsp.api.protocol.ClientSessionManager;
+import org.eclipse.glsp.api.protocol.GLSPClient;
+import org.eclipse.glsp.api.protocol.GLSPServerException;
+import org.eclipse.glsp.api.protocol.InitializeParameters;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.inject.Inject;
 
-public class DefaultGLSPServer<T> implements GLSPServer {
+public class DefaultGLSPServer<T> implements GLSPJsonrpcServer {
+   private static Logger log = Logger.getLogger(DefaultGLSPServer.class);
 
    @Inject
    protected ModelStateProvider modelStateProvider;
 
    @Inject
-   protected GLSPClientProvider clientProxyProvider;
+   protected ClientSessionManager sessionManager;
+
    @Inject
    protected ActionDispatcher actionDispatcher;
-   private static Logger log = Logger.getLogger(DefaultGLSPServer.class);
-
-   private ServerStatus status;
 
    private GLSPClient clientProxy;
-   private Class<T> optionsClazz;
+   private final Class<T> optionsClazz;
+   private boolean initialized;
+
+   private String applicationId;
 
    public DefaultGLSPServer() {
       this(null);
@@ -62,25 +65,33 @@ public class DefaultGLSPServer<T> implements GLSPServer {
    @SuppressWarnings("checkstyle:IllegalCatch")
    public CompletableFuture<Boolean> initialize(final InitializeParameters params) {
       try {
+         boolean completed;
+         this.applicationId = params.getApplicationId();
          if (optionsClazz != null && params.getOptions() instanceof JsonElement) {
             T options = new Gson().fromJson((JsonElement) params.getOptions(), optionsClazz);
-            return handleOptions(options);
+            completed = handleOptions(options);
+         } else {
+            completed = handleOptions(null);
          }
-         return handleOptions(null);
+         this.initialized = completed;
+         return CompletableFuture.completedFuture(completed);
       } catch (Throwable ex) {
          log.error("Could not initialize server due to corrupted options: " + params.getOptions(), ex);
+         this.initialized = false;
          return CompletableFuture.completedFuture(false);
       }
    }
 
-   protected CompletableFuture<Boolean> handleOptions(final T options) {
-      return CompletableFuture.completedFuture(true);
+   protected boolean handleOptions(final T options) {
+      return true;
    }
 
    @Override
-   public void connect(final GLSPClient clientProxy) {
+   public void connect(final GLSPJsonrpcClient clientProxy) {
       this.clientProxy = clientProxy;
-      status = new ServerStatus(Severity.OK, "Connection successfull");
+      if (clientProxy != null) {
+         this.sessionManager.connectClient(clientProxy);
+      }
    }
 
    @Override
@@ -89,10 +100,18 @@ public class DefaultGLSPServer<T> implements GLSPServer {
       log.debug("process " + message);
       String clientId = message.getClientId();
       try {
-         // FIXME: It seems we don't get access to the clientId when the connection
-         // is initialized. ClientId is only retrieved through messages; so this
-         // is currently the earliest we can register the clientProxy
-         this.clientProxyProvider.register(clientId, clientProxy);
+         if (message.getAction() instanceof RequestModelAction) {
+            if (!this.sessionManager.createClientSession(clientProxy, clientId)) {
+               throw new GLSPServerException(String.format(
+                  "Could not create session for client id '%s'. Another session with the same id already exists",
+                  clientId));
+            }
+         }
+
+         if (!initialized) {
+            throw new GLSPServerException(
+               String.format("Could not process action message '%s'. The server has not been initalized yet", message));
+         }
          actionDispatcher.dispatch(message);
       } catch (RuntimeException e) {
          String errorMsg = "Could not process message:" + message;
@@ -102,16 +121,15 @@ public class DefaultGLSPServer<T> implements GLSPServer {
    }
 
    @Override
-   public ServerStatus getStatus() { return status; }
-
-   @Override
-   public CompletableFuture<Object> shutdown() {
-      return new CompletableFuture<>();
+   public CompletableFuture<Boolean> shutdown() {
+      boolean completed = false;
+      if (this.clientProxy != null) {
+         this.initialized = false;
+         completed = sessionManager.disconnectClient(this.clientProxy);
+         this.clientProxy = null;
+      }
+      return CompletableFuture.completedFuture(completed);
    }
 
-   @Override
-   public void exit(final String clientId) {
-      modelStateProvider.remove(clientId);
-      clientProxyProvider.remove(clientId);
-   }
+   public String getApplicationId() { return applicationId; }
 }

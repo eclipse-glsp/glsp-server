@@ -39,6 +39,7 @@ public abstract class Action {
       public static final String CLEAR_MARKERS = "clearMarkers";
       public static final String COMPUTED_BOUNDS = "computedBounds";
       public static final String CUT_ACTION = "cut";
+      public static final String DISPOSE_CLIENT = "disposeClient";
       public static final String EXECUTE_OPERATION = "executeOperation";
       public static final String EXECUTE_SERVER_COMMAND = "executeServerCommand";
       public static final String EXPORT_SVG = "exportSvg";
@@ -55,6 +56,7 @@ public abstract class Action {
       public static final String REQUEST_OPERATIONS = "requestOperations";
       public static final String REQUEST_POPUP_MODEL = "requestPopupModel";
       public static final String REQUEST_TYPE_HINTS = "requestTypeHints";
+      public static final String RESOLVE_NAVIGATION_TARGET = "resolveNavigationTarget";
       public static final String SAVE_MODEL = "saveModel";
       public static final String SELECT = "selectElement";
       public static final String SELECT_ALL = "allSelected";
@@ -64,6 +66,7 @@ public abstract class Action {
       public static final String SET_CLIPBOARD_DATA = "setClipboardData";
       public static final String SET_CONTEXT_ACTIONS = "setContextActions";
       public static final String SET_DIRTY_STATE = "setDirtyState";
+      public static final String SET_EDIT_MODE = "setEditMode";
       public static final String SET_EDIT_VALIDATION_RESULT = "setEditValidationResult";
       public static final String SET_LABEL_EDIT_VALIDATION_RESULT_ACTION = "setLabelEditValidationResult";
       public static final String SET_LAYERS = "setLayers";
@@ -71,14 +74,13 @@ public abstract class Action {
       public static final String SET_MODEL = "setModel";
       public static final String SET_NAVIGATION_TARGETS = "setNavigationTargets";
       public static final String SET_POPUP_MODEL = "setPopupModel";
+      public static final String SET_RESOLVED_NAVIGATION_TARGET = "setResolvedNavigationTarget";
       public static final String SET_TYPE_HINTS = "setTypeHints";
-      public static final String TRIGGER_NODE_CREATION = "triggerNodeCreation";
       public static final String TRIGGER_EDGE_CREATION = "triggerEdgeCreation";
+      public static final String TRIGGER_NODE_CREATION = "triggerNodeCreation";
       public static final String UNDO = "glspUndo";
       public static final String UPDATE_MODEL = "updateModel";
       public static final String VALIDATE_LABEL_EDIT_ACTION = "validateLabelEdit";
-      public static final String RESOLVE_NAVIGATION_TARGET = "resolveNavigationTarget";
-      public static final String SET_RESOLVED_NAVIGATION_TARGET = "setResolvedNavigationTarget";
-      public static final String SET_EDIT_MODE = "setEditMode";
    }
+
 }

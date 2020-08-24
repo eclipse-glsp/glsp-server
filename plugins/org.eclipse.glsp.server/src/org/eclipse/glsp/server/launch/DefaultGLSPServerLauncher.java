@@ -32,10 +32,11 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import org.apache.log4j.Logger;
-import org.eclipse.glsp.api.di.GLSPModule;
-import org.eclipse.glsp.api.json.GsonConfigurator;
-import org.eclipse.glsp.api.jsonrpc.GLSPClient;
-import org.eclipse.glsp.api.jsonrpc.GLSPServer;
+import org.eclipse.glsp.api.jsonrpc.GLSPJsonrpcClient;
+import org.eclipse.glsp.api.jsonrpc.GLSPJsonrpcServer;
+import org.eclipse.glsp.api.protocol.GLSPServer;
+import org.eclipse.glsp.server.di.GLSPModule;
+import org.eclipse.glsp.server.json.GsonConfigurator;
 import org.eclipse.lsp4j.jsonrpc.Launcher;
 import org.eclipse.lsp4j.jsonrpc.MessageConsumer;
 
@@ -100,14 +101,14 @@ public class DefaultGLSPServerLauncher extends GLSPServerLauncher {
 
          Consumer<GsonBuilder> configureGson = (final GsonBuilder builder) -> gsonConf.configureGsonBuilder(builder);
          Function<MessageConsumer, MessageConsumer> wrapper = Function.identity();
-         GLSPServer languageServer = injector.getInstance(GLSPServer.class);
-
-         Launcher<GLSPClient> launcher = Launcher.createIoLauncher(languageServer, GLSPClient.class, in, out,
+         GLSPJsonrpcServer glspServer = (GLSPJsonrpcServer) injector.getInstance(GLSPServer.class);
+         Launcher<GLSPJsonrpcClient> launcher = Launcher.createIoLauncher(glspServer, GLSPJsonrpcClient.class, in, out,
             threadPool, wrapper, configureGson);
-         languageServer.connect(launcher.getRemoteProxy());
+         glspServer.connect(launcher.getRemoteProxy());
          log.info("Starting GLSP server connection for client " + socketChannel.getRemoteAddress());
          launcher.startListening().get();
          log.info("Stopping GLSP server connection for client" + socketChannel.getRemoteAddress());
+         glspServer.shutdown();
       } catch (IOException | InterruptedException | ExecutionException ex) {
          log.error("Failed to create client connection " + ex.getMessage(), ex);
       } finally {

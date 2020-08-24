@@ -27,7 +27,6 @@ public interface ClientSessionListener {
 
    default void sessionClosed(final String clientId, final GLSPClient client) {
       // No-op as default. This enables partial interface implementation.
-
    }
 
    default void clientDisconnected(final GLSPClient client) {

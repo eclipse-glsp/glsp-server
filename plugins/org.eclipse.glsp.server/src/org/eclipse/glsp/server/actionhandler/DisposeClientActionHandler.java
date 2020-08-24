@@ -25,12 +25,13 @@ import org.eclipse.glsp.api.protocol.ClientSessionManager;
 import com.google.inject.Inject;
 
 public class DisposeClientActionHandler extends BasicActionHandler<DisposeClientAction> {
+
    @Inject()
-   protected ClientSessionManager sessionMananger;
+   protected ClientSessionManager sessionManager;
 
    @Override
    protected List<Action> executeAction(final DisposeClientAction action, final GraphicalModelState modelState) {
-      sessionMananger.disposeClientSession(modelState.getClientId());
+      sessionManager.disposeClientSession(modelState.getClientId());
       return none();
    }
 

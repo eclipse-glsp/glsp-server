@@ -17,6 +17,7 @@ package org.eclipse.glsp.server.websocket;
 
 import java.util.Collection;
 
+import javax.websocket.CloseReason;
 import javax.websocket.EndpointConfig;
 import javax.websocket.Session;
 
@@ -31,8 +32,9 @@ import com.google.inject.Inject;
 
 public class GLSPServerEndpoint extends WebSocketEndpoint<GLSPJsonrpcClient> {
    public static final int MAX_TEXT_MESSAGE_BUFFER_SIZE = 8388608;
+   @SuppressWarnings("rawtypes")
    @Inject
-   private GLSPServer<?> glspServer;
+   private GLSPServer glspServer;
 
    @Inject
    private GsonConfigurator gsonConfigurator;
@@ -56,4 +58,8 @@ public class GLSPServerEndpoint extends WebSocketEndpoint<GLSPJsonrpcClient> {
       super.onOpen(session, config);
    }
 
+   @Override
+   public void onClose(final Session session, final CloseReason closeReason) {
+      glspServer.shutdown();
+   }
 }

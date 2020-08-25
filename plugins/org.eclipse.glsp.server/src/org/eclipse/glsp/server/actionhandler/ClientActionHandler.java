@@ -23,9 +23,10 @@ import java.util.stream.Collectors;
 import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.action.ActionMessage;
 import org.eclipse.glsp.api.handler.ActionHandler;
-import org.eclipse.glsp.api.jsonrpc.GLSPClient;
-import org.eclipse.glsp.api.jsonrpc.GLSPClientProvider;
 import org.eclipse.glsp.api.model.GraphicalModelState;
+import org.eclipse.glsp.api.protocol.ClientSessionManager;
+import org.eclipse.glsp.api.protocol.GLSPClient;
+import org.eclipse.glsp.api.protocol.GLSPServerException;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
@@ -33,8 +34,8 @@ import com.google.inject.name.Named;
 public class ClientActionHandler implements ActionHandler {
    public static final String CLIENT_ACTIONS = "ClientActionHandler";
 
-   @Inject
-   protected GLSPClientProvider clientProvider;
+   @Inject()
+   protected ClientSessionManager sessionManager;
 
    private final List<Class<? extends Action>> handledActionTypes;
 
@@ -53,11 +54,10 @@ public class ClientActionHandler implements ActionHandler {
    }
 
    protected void send(final String clientId, final Action action) {
-      GLSPClient client = clientProvider.resolve(clientId);
-      if (client == null) {
-         throw new IllegalStateException("Unable to send a message to Client ID:" + clientId
+      GLSPClient client = GLSPServerException.getOrThrow(sessionManager.resolve(clientId),
+         "Unable to send a message to Client ID:" + clientId
             + ". This ID does not match any known client (Client disconnected or not initialized yet?)");
-      }
+
       ActionMessage message = new ActionMessage(clientId, action);
       client.process(message);
    }

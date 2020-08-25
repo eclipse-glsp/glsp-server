@@ -63,7 +63,7 @@ public interface NavigationTargetResolver {
       args.put(ERROR, message);
    }
 
-   public class NullImpl implements NavigationTargetResolver {
+   class NullImpl implements NavigationTargetResolver {
       @Override
       public NavigationTargetResolution resolve(final NavigationTarget navigationTarget,
          final GraphicalModelState modelState) {

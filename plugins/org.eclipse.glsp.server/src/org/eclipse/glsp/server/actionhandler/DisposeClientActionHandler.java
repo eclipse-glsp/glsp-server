@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,34 +13,26 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.jsonrpc;
+package org.eclipse.glsp.server.actionhandler;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
-import org.eclipse.glsp.api.jsonrpc.GLSPClient;
-import org.eclipse.glsp.api.jsonrpc.GLSPClientProvider;
+import org.eclipse.glsp.api.action.Action;
+import org.eclipse.glsp.api.action.kind.DisposeClientAction;
+import org.eclipse.glsp.api.model.GraphicalModelState;
+import org.eclipse.glsp.api.protocol.ClientSessionManager;
 
-import com.google.inject.Singleton;
+import com.google.inject.Inject;
 
-@Singleton
-public class DefaultGLSPClientProvider implements GLSPClientProvider {
+public class DisposeClientActionHandler extends BasicActionHandler<DisposeClientAction> {
 
-   private final Map<String, GLSPClient> clients = new HashMap<>();
-
-   @Override
-   public void register(final String clientId, final GLSPClient client) {
-      clients.put(clientId, client);
-   }
+   @Inject()
+   protected ClientSessionManager sessionManager;
 
    @Override
-   public GLSPClient resolve(final String clientId) {
-      return clients.get(clientId);
-   }
-
-   @Override
-   public void remove(final String clientId) {
-      clients.remove(clientId);
+   protected List<Action> executeAction(final DisposeClientAction action, final GraphicalModelState modelState) {
+      sessionManager.disposeClientSession(modelState.getClientId());
+      return none();
    }
 
 }

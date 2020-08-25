@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ******************************************************************************/
-package org.eclipse.glsp.api.di;
+package org.eclipse.glsp.server.di;
 
 import java.util.Optional;
 
@@ -22,13 +22,13 @@ import org.eclipse.glsp.api.configuration.ServerConfiguration;
 import org.eclipse.glsp.api.factory.GraphGsonConfiguratorFactory;
 import org.eclipse.glsp.api.factory.ModelFactory;
 import org.eclipse.glsp.api.factory.PopupModelFactory;
-import org.eclipse.glsp.api.jsonrpc.GLSPClientProvider;
-import org.eclipse.glsp.api.jsonrpc.GLSPServer;
 import org.eclipse.glsp.api.labeledit.LabelEditValidator;
 import org.eclipse.glsp.api.layout.ILayoutEngine;
 import org.eclipse.glsp.api.markers.ModelValidator;
 import org.eclipse.glsp.api.model.ModelStateProvider;
 import org.eclipse.glsp.api.model.NavigationTargetResolver;
+import org.eclipse.glsp.api.protocol.ClientSessionManager;
+import org.eclipse.glsp.api.protocol.GLSPServer;
 import org.eclipse.glsp.api.provider.CommandPaletteActionProvider;
 import org.eclipse.glsp.api.provider.ContextMenuItemProvider;
 import org.eclipse.glsp.api.provider.ToolPaletteItemProvider;
@@ -59,13 +59,12 @@ public abstract class GLSPModule extends AbstractModule {
       bind(LabelEditValidator.class).to(bindLabelEditValidator());
       bind(ModelStateProvider.class).to(bindModelStateProvider());
       bind(GraphGsonConfiguratorFactory.class).to(bindGraphGsonConfiguratorFactory());
-      bind(GLSPClientProvider.class).to(bindGSLPClientProvider());
       bind(ServerConfiguration.class).to(bindServerConfiguration()).in(Singleton.class);
       bind(ToolPaletteItemProvider.class).to(bindToolPaletteItemProvider());
       bind(CommandPaletteActionProvider.class).to(bindCommandPaletteActionProvider());
       bind(ContextMenuItemProvider.class).to(bindContextMenuItemProvider());
       bind(NavigationTargetResolver.class).to(bindNavigationTargetResolver());
-
+      bind(ClientSessionManager.class).toInstance(getClientSessionManager());
       // Configure set suppliers
       bind(ActionRegistry.class).to(bindActionRegistry()).in(Singleton.class);
       bind(ActionHandlerRegistry.class).to(bindActionHandlerRegistry()).in(Singleton.class);
@@ -75,11 +74,12 @@ public abstract class GLSPModule extends AbstractModule {
       bind(NavigationTargetProviderRegistry.class).to(bindNavigationTargetProviderRegistry()).in(Singleton.class);
       bind(ContextEditValidatorRegistry.class).to(bindContextEditValidatorRegistry()).in(Singleton.class);
       bind(ServerCommandHandlerRegistry.class).to(bindServerCommandHandlerRegistry()).in(Singleton.class);
+
       // Configure Optional Bindings (Bindings that cannot be bound to a NullImpl)
       Optional.ofNullable(bindGraphExtension()).ifPresent(ext -> bind(GraphExtension.class).to(ext));
    }
 
-   protected abstract Class<? extends GLSPClientProvider> bindGSLPClientProvider();
+   protected abstract ClientSessionManager getClientSessionManager();
 
    protected abstract Class<? extends ModelStateProvider> bindModelStateProvider();
 

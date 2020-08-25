@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,16 +13,11 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ******************************************************************************/
-package org.eclipse.glsp.api.jsonrpc;
+package org.eclipse.glsp.api.protocol;
 
-/**
- * A registry to associate & retrieve a {@link GLSPClient} from a
- * <code>clientId</code>.
- */
-public interface GLSPClientProvider {
-   void register(String clientId, GLSPClient client);
+import org.eclipse.glsp.api.action.ActionMessage;
 
-   GLSPClient resolve(String clientId);
+public interface GLSPClient {
 
-   void remove(String clientId);
+   void process(ActionMessage message);
 }

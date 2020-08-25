@@ -13,21 +13,23 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.api.provider;
+package org.eclipse.glsp.api.protocol;
 
-import org.eclipse.glsp.api.action.kind.RequestEditValidationAction;
-import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.types.ValidationStatus;
+public interface ClientSessionListener {
 
-public interface ContextEditValidator {
-
-   String getContextId();
-
-   ValidationStatus validate(RequestEditValidationAction action,
-      GraphicalModelState modelState);
-
-   default boolean handles(final String contextId) {
-      return getContextId().equals(contextId);
+   default void clientConnected(final GLSPClient client) {
+      // No-op as default. This enables partial interface implementation.
    }
 
+   default void sessionCreated(final String clientId, final GLSPClient client) {
+      // No-op as default. This enables partial interface implementation.
+   }
+
+   default void sessionClosed(final String clientId, final GLSPClient client) {
+      // No-op as default. This enables partial interface implementation.
+   }
+
+   default void clientDisconnected(final GLSPClient client) {
+      // No-op as default. This enables partial interface implementation.
+   }
 }

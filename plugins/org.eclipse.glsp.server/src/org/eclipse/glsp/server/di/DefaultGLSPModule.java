@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -21,15 +21,14 @@ import java.util.function.Consumer;
 
 import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.action.ActionDispatcher;
-import org.eclipse.glsp.api.di.GLSPModule;
 import org.eclipse.glsp.api.diagram.DiagramConfiguration;
 import org.eclipse.glsp.api.factory.GraphGsonConfiguratorFactory;
 import org.eclipse.glsp.api.handler.ActionHandler;
 import org.eclipse.glsp.api.handler.OperationHandler;
 import org.eclipse.glsp.api.handler.ServerCommandHandler;
-import org.eclipse.glsp.api.jsonrpc.GLSPClientProvider;
-import org.eclipse.glsp.api.jsonrpc.GLSPServer;
 import org.eclipse.glsp.api.model.ModelStateProvider;
+import org.eclipse.glsp.api.protocol.ClientSessionManager;
+import org.eclipse.glsp.api.protocol.GLSPServer;
 import org.eclipse.glsp.api.provider.ContextActionsProvider;
 import org.eclipse.glsp.api.provider.ContextEditValidator;
 import org.eclipse.glsp.api.provider.NavigationTargetProvider;
@@ -44,7 +43,7 @@ import org.eclipse.glsp.api.registry.OperationHandlerRegistry;
 import org.eclipse.glsp.api.registry.ServerCommandHandlerRegistry;
 import org.eclipse.glsp.server.action.DefaultActionDispatcher;
 import org.eclipse.glsp.server.factory.DefaultGraphGsonConfiguratorFactory;
-import org.eclipse.glsp.server.jsonrpc.DefaultGLSPClientProvider;
+import org.eclipse.glsp.server.jsonrpc.DefaultClientSessionManager;
 import org.eclipse.glsp.server.jsonrpc.DefaultGLSPServer;
 import org.eclipse.glsp.server.model.DefaultModelStateProvider;
 import org.eclipse.glsp.server.provider.DefaultToolPaletteItemProvider;
@@ -126,11 +125,6 @@ public abstract class DefaultGLSPModule extends GLSPModule {
    }
 
    @Override
-   protected Class<? extends GLSPClientProvider> bindGSLPClientProvider() {
-      return DefaultGLSPClientProvider.class;
-   }
-
-   @Override
    protected Class<? extends ToolPaletteItemProvider> bindToolPaletteItemProvider() {
       return DefaultToolPaletteItemProvider.class;
    }
@@ -174,5 +168,8 @@ public abstract class DefaultGLSPModule extends GLSPModule {
    protected Class<? extends ServerCommandHandlerRegistry> bindServerCommandHandlerRegistry() {
       return DIServerCommandHandlerRegistry.class;
    }
+
+   @Override
+   protected ClientSessionManager getClientSessionManager() { return DefaultClientSessionManager.INSTANCE; }
 
 }

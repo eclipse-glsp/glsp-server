@@ -52,7 +52,6 @@ public class WebsocketServerLauncher extends GLSPServerLauncher {
       try {
          // Setup Jetty Server
          server = new Server(new InetSocketAddress(hostname, port));
-
          ServletContextHandler webAppContext;
 
          // (If a clientAppPath is given)setup client app serving

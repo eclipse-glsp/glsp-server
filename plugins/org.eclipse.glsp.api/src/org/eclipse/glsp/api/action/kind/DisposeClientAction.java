@@ -13,21 +13,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.api.provider;
+package org.eclipse.glsp.api.action.kind;
 
-import org.eclipse.glsp.api.action.kind.RequestEditValidationAction;
-import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.types.ValidationStatus;
+import org.eclipse.glsp.api.action.Action;
 
-public interface ContextEditValidator {
+public class DisposeClientAction extends Action {
 
-   String getContextId();
-
-   ValidationStatus validate(RequestEditValidationAction action,
-      GraphicalModelState modelState);
-
-   default boolean handles(final String contextId) {
-      return getContextId().equals(contextId);
+   public DisposeClientAction() {
+      super(Action.Kind.DISPOSE_CLIENT);
    }
 
 }

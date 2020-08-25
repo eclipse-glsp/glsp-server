@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -48,6 +48,7 @@ import org.eclipse.glsp.api.handler.ActionHandler;
 import org.eclipse.glsp.api.handler.OperationHandler;
 import org.eclipse.glsp.server.actionhandler.ClientActionHandler;
 import org.eclipse.glsp.server.actionhandler.ComputedBoundsActionHandler;
+import org.eclipse.glsp.server.actionhandler.DisposeClientActionHandler;
 import org.eclipse.glsp.server.actionhandler.ExecuteServerCommandActionHandler;
 import org.eclipse.glsp.server.actionhandler.OperationActionHandler;
 import org.eclipse.glsp.server.actionhandler.RequestClipboardDataActionHandler;
@@ -108,6 +109,7 @@ public final class MultiBindingDefaults {
    public static final List<Class<? extends ActionHandler>> DEFAULT_ACTION_HANDLERS = Lists.newArrayList(
       ClientActionHandler.class,
       ComputedBoundsActionHandler.class,
+      DisposeClientActionHandler.class,
       OperationActionHandler.class,
       RequestModelActionHandler.class,
       RequestPopupModelActionHandler.class,

@@ -15,7 +15,7 @@
  ******************************************************************************/
 package org.eclipse.glsp.api.utils;
 
-import static org.eclipse.glsp.api.jsonrpc.GLSPServerException.getOrThrow;
+import static org.eclipse.glsp.api.protocol.GLSPServerException.getOrThrow;
 
 import java.util.Optional;
 

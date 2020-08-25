@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -32,7 +32,7 @@ import com.google.inject.Inject;
 public class GLSPServerEndpoint extends WebSocketEndpoint<GLSPJsonrpcClient> {
    public static final int MAX_TEXT_MESSAGE_BUFFER_SIZE = 8388608;
    @Inject
-   private GLSPServer glspServer;
+   private GLSPServer<?> glspServer;
 
    @Inject
    private GsonConfigurator gsonConfigurator;

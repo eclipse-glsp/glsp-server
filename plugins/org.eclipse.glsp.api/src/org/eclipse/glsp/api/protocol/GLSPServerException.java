@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -51,7 +51,7 @@ public class GLSPServerException extends RuntimeException {
     * @return the value
     * @throws GLSPServerException if value not present
     */
-   public static <T> T getOrThrow(Optional<T> optional, String exceptionMessage) {
+   public static <T> T getOrThrow(final Optional<T> optional, final String exceptionMessage) {
       try {
          return optional.get();
       } catch (NoSuchElementException ex) {
@@ -71,7 +71,7 @@ public class GLSPServerException extends RuntimeException {
     * @throws GLSPServerException if value not present or could not an instance of
     *                                T
     */
-   public static <T> T getOrThrow(Optional<?> optional, Class<T> clazz, String exceptionMessage) {
+   public static <T> T getOrThrow(final Optional<?> optional, final Class<T> clazz, final String exceptionMessage) {
       try {
          Object toCast = optional.get();
          return clazz.cast(toCast);

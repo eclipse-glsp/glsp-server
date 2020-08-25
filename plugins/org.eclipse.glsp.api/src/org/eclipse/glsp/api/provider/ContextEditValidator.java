@@ -23,8 +23,8 @@ public interface ContextEditValidator {
 
    String getContextId();
 
-   ValidationStatus validate(final RequestEditValidationAction action,
-      final GraphicalModelState modelState);
+   ValidationStatus validate(RequestEditValidationAction action,
+      GraphicalModelState modelState);
 
    default boolean handles(final String contextId) {
       return getContextId().equals(contextId);

@@ -16,6 +16,8 @@
 package org.eclipse.glsp.api.action;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 public interface ActionDispatcher {
 
@@ -23,9 +25,11 @@ public interface ActionDispatcher {
     * @see ActionDispatcher#dispatch(String, Action)
     *
     * @param message ActionMessage received from the client
+    * @return
+    *         A {@link CompletableFuture} indicating when the action processing is complete
     */
-   default void dispatch(final ActionMessage message) {
-      dispatch(message.getClientId(), message.getAction());
+   default CompletableFuture<Void> dispatch(final ActionMessage message) {
+      return dispatch(message.getClientId(), message.getAction());
    }
 
    /**
@@ -35,8 +39,10 @@ public interface ActionDispatcher {
     *
     * @param clientId The client from which the action was received
     * @param action   The action to dispatch
+    * @return
+    *         A {@link CompletableFuture} indicating when the action processing is complete
     */
-   void dispatch(String clientId, Action action);
+   CompletableFuture<Void> dispatch(String clientId, Action action);
 
    /**
     * <p>
@@ -45,16 +51,17 @@ public interface ActionDispatcher {
     *
     * @param clientId
     * @param actions
+    * @return A list of {@link CompletableFuture CompletableFutures}; one for each dispatched action
     */
-   default void dispatchAll(final String clientId, final List<Action> actions) {
-      actions.forEach(action -> dispatch(clientId, action));
+   default List<CompletableFuture<Void>> dispatchAll(final String clientId, final List<Action> actions) {
+      return actions.stream().map(action -> dispatch(clientId, action)).collect(Collectors.toList());
    }
 
    class NullImpl implements ActionDispatcher {
 
       @Override
-      public void dispatch(final String clientId, final Action action) {
-         return;
+      public CompletableFuture<Void> dispatch(final String clientId, final Action action) {
+         return CompletableFuture.completedFuture(null);
       }
    }
 }

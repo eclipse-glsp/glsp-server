@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.jsonrpc;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -42,7 +43,7 @@ public final class DefaultClientSessionManager implements ClientSessionManager {
    public synchronized boolean connectClient(final GLSPClient client) {
       boolean success = clients.add(client);
       if (success) {
-         listeners.forEach(listener -> listener.clientConnected(client));
+         new ArrayList<>(this.listeners).forEach(listener -> listener.clientConnected(client));
       }
       return success;
    }
@@ -52,7 +53,7 @@ public final class DefaultClientSessionManager implements ClientSessionManager {
       connectClient(client);
       boolean success = clientSessions.putIfAbsent(clientId, client) == null;
       if (success) {
-         listeners.forEach(listener -> listener.sessionCreated(clientId, client));
+         new ArrayList<>(this.listeners).forEach(listener -> listener.sessionCreated(clientId, client));
       }
       return success;
    }
@@ -61,7 +62,7 @@ public final class DefaultClientSessionManager implements ClientSessionManager {
    public synchronized boolean disposeClientSession(final String clientId) {
       GLSPClient client = clientSessions.remove(clientId);
       if (client != null) {
-         listeners.forEach(listener -> listener.sessionClosed(clientId, client));
+         new ArrayList<>(this.listeners).forEach(listener -> listener.sessionClosed(clientId, client));
          return true;
       }
       return false;
@@ -77,7 +78,7 @@ public final class DefaultClientSessionManager implements ClientSessionManager {
 
          sessionsToDisconnect.forEach(this::disposeClientSession);
          this.clients.remove(client);
-         this.listeners.forEach(listener -> listener.clientDisconnected(client));
+         new ArrayList<>(this.listeners).forEach(listener -> listener.clientDisconnected(client));
          return true;
       }
       return false;

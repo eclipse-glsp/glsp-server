@@ -28,6 +28,7 @@ import org.eclipse.glsp.api.markers.ModelValidator;
 import org.eclipse.glsp.api.model.ModelStateProvider;
 import org.eclipse.glsp.api.model.NavigationTargetResolver;
 import org.eclipse.glsp.api.protocol.ClientSessionManager;
+import org.eclipse.glsp.api.protocol.GLSPClient;
 import org.eclipse.glsp.api.protocol.GLSPServer;
 import org.eclipse.glsp.api.provider.CommandPaletteActionProvider;
 import org.eclipse.glsp.api.provider.ContextMenuItemProvider;
@@ -43,6 +44,7 @@ import org.eclipse.glsp.api.registry.ServerCommandHandlerRegistry;
 import org.eclipse.glsp.graph.GraphExtension;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
 import com.google.inject.Singleton;
 
 public abstract class GLSPModule extends AbstractModule {
@@ -50,7 +52,7 @@ public abstract class GLSPModule extends AbstractModule {
    @Override
    protected void configure() {
       // Configure default bindings
-      bind(GLSPServer.class).to(bindGLSPServer());
+      bind(GLSPServer.class).to(bindGLSPServer()).in(Singleton.class);
       bind(PopupModelFactory.class).to(bindPopupModelFactory());
       bind(ModelFactory.class).to(bindModelFactory());
       bind(ILayoutEngine.class).to(bindLayoutEngine());
@@ -147,5 +149,10 @@ public abstract class GLSPModule extends AbstractModule {
 
    protected Class<? extends GraphExtension> bindGraphExtension() {
       return null;
+   }
+
+   @Provides
+   private GLSPClient getGLSPClient(final GLSPServer glspServer) {
+      return glspServer.getClient();
    }
 }

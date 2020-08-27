@@ -56,27 +56,27 @@ public class DefaultActionDispatcher implements ActionDispatcher, ClientSessionL
    private static final AtomicInteger COUNT = new AtomicInteger(0);
 
    @Inject
-   private ActionHandlerRegistry actionHandlerRegistry;
+   protected ActionHandlerRegistry actionHandlerRegistry;
 
    @Inject
-   private ModelStateProvider modelStateProvider;
+   protected ModelStateProvider modelStateProvider;
 
    private final ClientSessionManager clientSessionManager;
 
-   private final String name;
+   protected final String name;
 
-   private final Thread thread;
+   protected final Thread thread;
 
-   private final BlockingQueue<ActionMessage> actionsQueue = new ArrayBlockingQueue<>(100, true);
+   protected final BlockingQueue<ActionMessage> actionsQueue = new ArrayBlockingQueue<>(100, true);
 
    // Results will be placed in the map when the action dispatcher receives a new message (From arbitrary threads),
    // and will be removed from the dispatcher's thread.
-   private final Map<ActionMessage, CompletableFuture<Void>> results = Collections.synchronizedMap(new HashMap<>());
+   protected final Map<ActionMessage, CompletableFuture<Void>> results = Collections.synchronizedMap(new HashMap<>());
 
    // Use a provider, as the GLSPClient is probably not created yet. We won't receive
    // any message until it's ready anyway.
    @Inject
-   private Provider<GLSPClient> client;
+   protected Provider<GLSPClient> client;
 
    @Inject
    public DefaultActionDispatcher(final ClientSessionManager clientSessionManager) {
@@ -100,7 +100,8 @@ public class DefaultActionDispatcher implements ActionDispatcher, ClientSessionL
          String errorMsg = String.format("Received a null message in DefaultActionDispatcher: %s", name);
          throw new IllegalArgumentException(errorMsg);
       }
-      final CompletableFuture<Void> result = results.putIfAbsent(message, new CompletableFuture<Void>());
+      CompletableFuture<Void> result = new CompletableFuture<>();
+      results.put(message, result);
       if (thread == Thread.currentThread()) {
          // Actions dispatched from the ActionDispatcher thread don't have to go back
          // to the queue, as they are just fragments of the current action from the queue.
@@ -112,7 +113,7 @@ public class DefaultActionDispatcher implements ActionDispatcher, ClientSessionL
       return result;
    }
 
-   private void addToQueue(final ActionMessage message) {
+   protected void addToQueue(final ActionMessage message) {
       if (Thread.currentThread() == this.thread) {
          LOG.error("ActionMessages shouldn't be added to the actions queue from the dispatcher thread!");
          // Handle the message immediately, to avoid deadlocks when the queue if full
@@ -161,7 +162,7 @@ public class DefaultActionDispatcher implements ActionDispatcher, ClientSessionL
       }
    }
 
-   private void handleMessage(final ActionMessage message) {
+   protected void handleMessage(final ActionMessage message) {
       checkThread();
       final Action action = message.getAction();
       final String clientId = message.getClientId();
@@ -178,7 +179,7 @@ public class DefaultActionDispatcher implements ActionDispatcher, ClientSessionL
       }
    }
 
-   private void runAction(final Action action, final String clientId) {
+   protected void runAction(final Action action, final String clientId) {
       final List<ActionHandler> actionHandlers = actionHandlerRegistry.get(action);
       if (actionHandlers.isEmpty()) {
          throw new IllegalArgumentException("No handler registered for action: " + action);
@@ -194,7 +195,7 @@ public class DefaultActionDispatcher implements ActionDispatcher, ClientSessionL
       }
    }
 
-   private void checkThread() {
+   protected final void checkThread() {
       if (Thread.currentThread() != thread) {
          throw new IllegalStateException(
             "This method should only be invoked from the ActionDispatcher's thread: " + name);

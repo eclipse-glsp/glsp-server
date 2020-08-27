@@ -48,8 +48,9 @@ import org.eclipse.glsp.api.handler.ActionHandler;
 import org.eclipse.glsp.api.handler.OperationHandler;
 import org.eclipse.glsp.server.actionhandler.ClientActionHandler;
 import org.eclipse.glsp.server.actionhandler.ComputedBoundsActionHandler;
-import org.eclipse.glsp.server.actionhandler.DisposeClientActionHandler;
+import org.eclipse.glsp.server.actionhandler.DisposeClientSessionActionHandler;
 import org.eclipse.glsp.server.actionhandler.ExecuteServerCommandActionHandler;
+import org.eclipse.glsp.server.actionhandler.InitializeClientSessionActionHandler;
 import org.eclipse.glsp.server.actionhandler.OperationActionHandler;
 import org.eclipse.glsp.server.actionhandler.RequestClipboardDataActionHandler;
 import org.eclipse.glsp.server.actionhandler.RequestContextActionsHandler;
@@ -76,7 +77,28 @@ import org.eclipse.glsp.server.operationhandler.ReconnectOperationHandler;
 import com.google.common.collect.Lists;
 
 public final class MultiBindingDefaults {
+
    private MultiBindingDefaults() {}
+
+   public static final List<Class<? extends ActionHandler>> DEFAULT_ACTION_HANDLERS = Lists.newArrayList(
+      ClientActionHandler.class,
+      ComputedBoundsActionHandler.class,
+      DisposeClientSessionActionHandler.class,
+      InitializeClientSessionActionHandler.class,
+      OperationActionHandler.class,
+      RequestModelActionHandler.class,
+      RequestPopupModelActionHandler.class,
+      SaveModelActionHandler.class,
+      UndoRedoActionHandler.class,
+      ExecuteServerCommandActionHandler.class,
+      ResolveNavigationTargetActionHandler.class,
+      RequestClipboardDataActionHandler.class,
+      RequestNavigationTargetsActionHandler.class,
+      RequestTypeHintsActionHandler.class,
+      RequestContextActionsHandler.class,
+      RequestEditValidationHandler.class,
+      RequestMarkersHandler.class,
+      SetEditModeActionHandler.class);
 
    public static final List<Class<? extends Action>> DEFAULT_CLIENT_ACTIONS = Lists.newArrayList(
       CenterAction.class,
@@ -105,25 +127,6 @@ public final class MultiBindingDefaults {
       TriggerNodeCreationAction.class,
       TriggerEdgeCreationAction.class,
       UpdateModelAction.class);
-
-   public static final List<Class<? extends ActionHandler>> DEFAULT_ACTION_HANDLERS = Lists.newArrayList(
-      ClientActionHandler.class,
-      ComputedBoundsActionHandler.class,
-      DisposeClientActionHandler.class,
-      OperationActionHandler.class,
-      RequestModelActionHandler.class,
-      RequestPopupModelActionHandler.class,
-      SaveModelActionHandler.class,
-      UndoRedoActionHandler.class,
-      ExecuteServerCommandActionHandler.class,
-      ResolveNavigationTargetActionHandler.class,
-      RequestClipboardDataActionHandler.class,
-      RequestNavigationTargetsActionHandler.class,
-      RequestTypeHintsActionHandler.class,
-      RequestContextActionsHandler.class,
-      RequestEditValidationHandler.class,
-      RequestMarkersHandler.class,
-      SetEditModeActionHandler.class);
 
    public static final List<Class<? extends OperationHandler>> DEFAULT_OPERATION_HANDLERS = Lists.newArrayList(
       ApplyLabelEditOperationHandler.class,

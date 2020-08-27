@@ -15,45 +15,37 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actionhandler;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.eclipse.glsp.api.action.Action;
-import org.eclipse.glsp.api.action.ActionMessage;
-import org.eclipse.glsp.api.handler.ActionHandler;
+import org.eclipse.glsp.api.action.kind.InitializeClientSessionAction;
 import org.eclipse.glsp.api.model.GraphicalModelState;
+import org.eclipse.glsp.api.protocol.ClientSessionManager;
 import org.eclipse.glsp.api.protocol.GLSPClient;
+import org.eclipse.glsp.api.protocol.GLSPServerException;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import com.google.inject.name.Named;
 
-public class ClientActionHandler implements ActionHandler {
-   public static final String CLIENT_ACTIONS = "ClientActionHandler";
+public class InitializeClientSessionActionHandler extends BasicActionHandler<InitializeClientSessionAction> {
+
+   @Inject
+   protected ClientSessionManager clientSessionManager;
 
    @Inject
    protected Provider<GLSPClient> client;
 
-   private final List<Class<? extends Action>> handledActionTypes;
-
-   @Inject
-   public ClientActionHandler(@Named(CLIENT_ACTIONS) final Set<Action> clientActions) {
-      this.handledActionTypes = clientActions.stream().map(Action::getClass).collect(Collectors.toList());
-   }
-
    @Override
-   public List<Class<? extends Action>> getHandledActionTypes() { return handledActionTypes; }
-
-   @Override
-   public List<Action> execute(final Action action, final GraphicalModelState modelState) {
-      send(modelState.getClientId(), action);
-      return Collections.emptyList();
+   protected List<Action> executeAction(final InitializeClientSessionAction action,
+      final GraphicalModelState modelState) {
+      if (clientSessionManager.createClientSession(client.get(), action.getClientId())) {
+         modelState.setClientId(action.getClientId());
+      } else {
+         throw new GLSPServerException(String.format(
+            "Could not create session for client id '%s'. Another session with the same id already exists",
+            action.getClientId()));
+      }
+      return none();
    }
 
-   protected void send(final String clientId, final Action action) {
-      ActionMessage message = new ActionMessage(clientId, action);
-      client.get().process(message);
-   }
 }

@@ -39,11 +39,12 @@ public abstract class Action {
       public static final String CLEAR_MARKERS = "clearMarkers";
       public static final String COMPUTED_BOUNDS = "computedBounds";
       public static final String CUT_ACTION = "cut";
-      public static final String DISPOSE_CLIENT = "disposeClient";
+      public static final String DISPOSE_CLIENT_SESSION = "disposeClientSession";
       public static final String EXECUTE_OPERATION = "executeOperation";
       public static final String EXECUTE_SERVER_COMMAND = "executeServerCommand";
       public static final String EXPORT_SVG = "exportSvg";
       public static final String FIT_TO_SCREEN = "fit";
+      public static final String INITIALIZE_CLIENT_SESSION = "initializeClientSession";
       public static final String NAVIGATE_TO_TARGET = "navigateToTarget";
       public static final String REDO = "glspRedo";
       public static final String REQUEST_BOUNDS = "requestBounds";
@@ -68,7 +69,7 @@ public abstract class Action {
       public static final String SET_DIRTY_STATE = "setDirtyState";
       public static final String SET_EDIT_MODE = "setEditMode";
       public static final String SET_EDIT_VALIDATION_RESULT = "setEditValidationResult";
-      public static final String SET_LABEL_EDIT_VALIDATION_RESULT_ACTION = "setLabelEditValidationResult";
+      public static final String SET_LABEL_EDIT_VALIDATION_RESULT = "setLabelEditValidationResult";
       public static final String SET_LAYERS = "setLayers";
       public static final String SET_MARKERS = "setMarkers";
       public static final String SET_MODEL = "setModel";
@@ -82,5 +83,4 @@ public abstract class Action {
       public static final String UPDATE_MODEL = "updateModel";
       public static final String VALIDATE_LABEL_EDIT_ACTION = "validateLabelEdit";
    }
-
 }

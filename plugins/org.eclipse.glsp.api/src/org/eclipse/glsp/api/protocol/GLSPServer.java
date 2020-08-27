@@ -27,4 +27,6 @@ public interface GLSPServer<T extends GLSPClient> {
    CompletableFuture<Boolean> shutdown();
 
    void connect(T client);
+
+   T getClient();
 }

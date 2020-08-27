@@ -104,6 +104,7 @@ public abstract class DefaultGLSPModule extends GLSPModule {
 
    protected void configureNavigationTargetProviders(final MultiBindConfig<NavigationTargetProvider> config) {}
 
+   @SuppressWarnings("rawtypes")
    @Override
    protected Class<? extends GLSPServer> bindGLSPServer() {
       return DefaultGLSPServer.class;

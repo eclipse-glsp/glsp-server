@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CompletableFuture;
@@ -30,6 +31,7 @@ import org.apache.log4j.Logger;
 import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.action.ActionDispatcher;
 import org.eclipse.glsp.api.action.ActionMessage;
+import org.eclipse.glsp.api.action.kind.InitializeClientSessionAction;
 import org.eclipse.glsp.api.action.kind.ResponseAction;
 import org.eclipse.glsp.api.handler.ActionHandler;
 import org.eclipse.glsp.api.model.GraphicalModelState;
@@ -37,6 +39,7 @@ import org.eclipse.glsp.api.model.ModelStateProvider;
 import org.eclipse.glsp.api.protocol.ClientSessionListener;
 import org.eclipse.glsp.api.protocol.ClientSessionManager;
 import org.eclipse.glsp.api.protocol.GLSPClient;
+import org.eclipse.glsp.api.protocol.GLSPServerException;
 import org.eclipse.glsp.api.registry.ActionHandlerRegistry;
 
 import com.google.inject.Inject;
@@ -162,6 +165,7 @@ public class DefaultActionDispatcher implements ActionDispatcher, ClientSessionL
       }
    }
 
+   @SuppressWarnings("checkstyle:IllegalCatch")
    protected void handleMessage(final ActionMessage message) {
       checkThread();
       final Action action = message.getAction();
@@ -184,11 +188,22 @@ public class DefaultActionDispatcher implements ActionDispatcher, ClientSessionL
       if (actionHandlers.isEmpty()) {
          throw new IllegalArgumentException("No handler registered for action: " + action);
       }
-      final GraphicalModelState modelState = modelStateProvider.getModelState(clientId)
-         .orElseGet(() -> modelStateProvider.create(clientId));
+
+      Optional<GraphicalModelState> modelState = modelStateProvider.getModelState(clientId);
+
+      if (!modelState.isPresent()) {
+         if (action instanceof InitializeClientSessionAction) {
+            modelState = Optional.of(modelStateProvider.create(clientId));
+         } else {
+            String errorMsg = String.format(
+               "The session for client '%s' has not been initialized yet. Could not process action: %s", clientId,
+               action);
+            throw new GLSPServerException(errorMsg);
+         }
+      }
 
       for (final ActionHandler actionHandler : actionHandlers) {
-         final List<Action> responses = actionHandler.execute(action, modelState).stream()
+         final List<Action> responses = actionHandler.execute(action, modelState.get()).stream()
             .map(response -> ResponseAction.respond(action, response))
             .collect(Collectors.toList());
          dispatchAll(clientId, responses);

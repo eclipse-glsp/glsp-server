@@ -23,7 +23,6 @@ import java.util.function.Function;
 import org.apache.log4j.Logger;
 import org.eclipse.glsp.api.action.ActionDispatcher;
 import org.eclipse.glsp.api.action.ActionMessage;
-import org.eclipse.glsp.api.action.kind.RequestModelAction;
 import org.eclipse.glsp.api.jsonrpc.GLSPJsonrpcClient;
 import org.eclipse.glsp.api.jsonrpc.GLSPJsonrpcServer;
 import org.eclipse.glsp.api.model.ModelStateProvider;
@@ -107,22 +106,6 @@ public class DefaultGLSPServer<T> implements GLSPJsonrpcServer {
          return null;
       };
       try {
-         if (message.getAction() instanceof RequestModelAction) {
-            if (!this.sessionManager.createClientSession(clientProxy, clientId)) {
-               // FIXME: We currently initialize the session upon RequestModelAction. However,
-               // clients shouldn't be forbidden to send multiple RequestModelActions (even for the same
-               // diagram widget). We should use a specific "initializeClientSession" action, instead
-               // of relying on the RequestModelAction.
-               // For now, just log a warning, to avoid breaking existing clients.
-               log.warn(
-                  "Received a RequestModelAction with a clientId that already exists. This may lead to unexpected results. ClientID: "
-                     + clientId);
-               // throw new GLSPServerException(String.format(
-               // "Could not create session for client id '%s'. Another session with the same id already exists",
-               // clientId));
-            }
-         }
-
          if (!initialized) {
             throw new GLSPServerException(
                String.format("Could not process action message '%s'. The server has not been initalized yet", message));

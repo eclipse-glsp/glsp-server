@@ -31,7 +31,7 @@ public class DisposeClientSessionActionHandler extends BasicActionHandler<Dispos
 
    @Override
    protected List<Action> executeAction(final DisposeClientSessionAction action, final GraphicalModelState modelState) {
-      sessionManager.disposeClientSession(modelState.getClientId());
+      sessionManager.disposeClientSession(action.getClientId());
       return none();
    }
 

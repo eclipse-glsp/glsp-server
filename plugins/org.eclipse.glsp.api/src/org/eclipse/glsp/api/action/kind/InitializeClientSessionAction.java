@@ -17,10 +17,20 @@ package org.eclipse.glsp.api.action.kind;
 
 import org.eclipse.glsp.api.action.Action;
 
-public class DisposeClientAction extends Action {
+public class InitializeClientSessionAction extends Action {
 
-   public DisposeClientAction() {
-      super(Action.Kind.DISPOSE_CLIENT);
+   private String clientId;
+
+   public InitializeClientSessionAction() {
+      super(Action.Kind.INITIALIZE_CLIENT_SESSION);
    }
 
+   public InitializeClientSessionAction(final String clientId) {
+      this();
+      this.clientId = clientId;
+   }
+
+   public String getClientId() { return clientId; }
+
+   public void setClientId(final String clientId) { this.clientId = clientId; }
 }

@@ -13,26 +13,24 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.actionhandler;
-
-import java.util.List;
+package org.eclipse.glsp.api.action.kind;
 
 import org.eclipse.glsp.api.action.Action;
-import org.eclipse.glsp.api.action.kind.DisposeClientAction;
-import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.protocol.ClientSessionManager;
 
-import com.google.inject.Inject;
+public class DisposeClientSessionAction extends Action {
 
-public class DisposeClientActionHandler extends BasicActionHandler<DisposeClientAction> {
+   private String clientId;
 
-   @Inject()
-   protected ClientSessionManager sessionManager;
-
-   @Override
-   protected List<Action> executeAction(final DisposeClientAction action, final GraphicalModelState modelState) {
-      sessionManager.disposeClientSession(modelState.getClientId());
-      return none();
+   public DisposeClientSessionAction() {
+      super(Action.Kind.DISPOSE_CLIENT_SESSION);
    }
 
+   public DisposeClientSessionAction(final String clientId) {
+      this();
+      this.clientId = clientId;
+   }
+
+   public String getClientId() { return clientId; }
+
+   public void setClientId(final String clientId) { this.clientId = clientId; }
 }

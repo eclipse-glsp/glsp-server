@@ -16,6 +16,7 @@
 package org.eclipse.glsp.server.jsonrpc;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -68,7 +69,8 @@ public final class DefaultClientSessionManager implements ClientSessionManager {
    @Override
    public synchronized boolean disconnectClient(final GLSPClient client) {
       if (clientSessions.containsKey(client)) {
-         Set<String> sessionsToDisconnect = clientSessions.getOrDefault(client, Collections.emptySet());
+         Collection<String> sessionsToDisconnect = new ArrayList<>(
+            clientSessions.getOrDefault(client, Collections.emptySet()));
          sessionsToDisconnect.forEach(clientId -> this.disposeClientSession(client, clientId));
          this.clientSessions.remove(client);
          new ArrayList<>(this.listeners).forEach(listener -> listener.clientDisconnected(client));

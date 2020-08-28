@@ -15,15 +15,13 @@
  ********************************************************************************/
 package org.eclipse.glsp.api.protocol;
 
-import java.util.Optional;
-
 public interface ClientSessionManager {
 
    boolean connectClient(GLSPClient client);
 
    boolean createClientSession(GLSPClient glspClient, String clientId);
 
-   boolean disposeClientSession(String clientId);
+   boolean disposeClientSession(GLSPClient client, String clientId);
 
    boolean disconnectClient(GLSPClient client);
 
@@ -31,5 +29,4 @@ public interface ClientSessionManager {
 
    boolean removeListener(ClientSessionListener listener);
 
-   Optional<GLSPClient> resolve(String clientId);
 }

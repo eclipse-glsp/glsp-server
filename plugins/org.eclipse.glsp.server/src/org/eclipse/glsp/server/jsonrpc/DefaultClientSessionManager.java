@@ -16,14 +16,12 @@
 package org.eclipse.glsp.server.jsonrpc;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.eclipse.glsp.api.protocol.ClientSessionListener;
 import org.eclipse.glsp.api.protocol.ClientSessionManager;
@@ -31,9 +29,8 @@ import org.eclipse.glsp.api.protocol.GLSPClient;
 
 public final class DefaultClientSessionManager implements ClientSessionManager {
 
-   private final Set<GLSPClient> clients = new HashSet<>();
    private final Set<ClientSessionListener> listeners = new LinkedHashSet<>();
-   private final Map<String, GLSPClient> clientSessions = new HashMap<>();
+   private final Map<GLSPClient, Set<String>> clientSessions = new HashMap<>();
 
    public static final DefaultClientSessionManager INSTANCE = new DefaultClientSessionManager();
 
@@ -41,7 +38,7 @@ public final class DefaultClientSessionManager implements ClientSessionManager {
 
    @Override
    public synchronized boolean connectClient(final GLSPClient client) {
-      boolean success = clients.add(client);
+      boolean success = clientSessions.putIfAbsent(client, new HashSet<>()) == null;
       if (success) {
          new ArrayList<>(this.listeners).forEach(listener -> listener.clientConnected(client));
       }
@@ -51,7 +48,7 @@ public final class DefaultClientSessionManager implements ClientSessionManager {
    @Override
    public synchronized boolean createClientSession(final GLSPClient client, final String clientId) {
       connectClient(client);
-      boolean success = clientSessions.putIfAbsent(clientId, client) == null;
+      boolean success = clientSessions.computeIfAbsent(client, c -> new HashSet<>()).add(clientId);
       if (success) {
          new ArrayList<>(this.listeners).forEach(listener -> listener.sessionCreated(clientId, client));
       }
@@ -59,9 +56,9 @@ public final class DefaultClientSessionManager implements ClientSessionManager {
    }
 
    @Override
-   public synchronized boolean disposeClientSession(final String clientId) {
-      GLSPClient client = clientSessions.remove(clientId);
-      if (client != null) {
+   public synchronized boolean disposeClientSession(final GLSPClient client, final String clientId) {
+      boolean success = clientSessions.getOrDefault(client, Collections.emptySet()).remove(clientId);
+      if (success) {
          new ArrayList<>(this.listeners).forEach(listener -> listener.sessionClosed(clientId, client));
          return true;
       }
@@ -70,14 +67,10 @@ public final class DefaultClientSessionManager implements ClientSessionManager {
 
    @Override
    public synchronized boolean disconnectClient(final GLSPClient client) {
-      if (clients.contains(client)) {
-         List<String> sessionsToDisconnect = clientSessions.entrySet().stream()
-            .filter(entry -> entry.getValue().equals(client))
-            .map(Map.Entry::getKey)
-            .collect(Collectors.toList());
-
-         sessionsToDisconnect.forEach(this::disposeClientSession);
-         this.clients.remove(client);
+      if (clientSessions.containsKey(client)) {
+         Set<String> sessionsToDisconnect = clientSessions.getOrDefault(client, Collections.emptySet());
+         sessionsToDisconnect.forEach(clientId -> this.disposeClientSession(client, clientId));
+         this.clientSessions.remove(client);
          new ArrayList<>(this.listeners).forEach(listener -> listener.clientDisconnected(client));
          return true;
       }
@@ -92,11 +85,6 @@ public final class DefaultClientSessionManager implements ClientSessionManager {
    @Override
    public boolean removeListener(final ClientSessionListener listener) {
       return listeners.remove(listener);
-   }
-
-   @Override
-   public Optional<GLSPClient> resolve(final String clientId) {
-      return Optional.ofNullable(clientSessions.get(clientId));
    }
 
 }

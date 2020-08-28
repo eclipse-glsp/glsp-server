@@ -48,7 +48,7 @@ public final class DefaultClientSessionManager implements ClientSessionManager {
    @Override
    public synchronized boolean createClientSession(final GLSPClient client, final String clientId) {
       connectClient(client);
-      boolean success = clientSessions.computeIfAbsent(client, c -> new HashSet<>()).add(clientId);
+      boolean success = clientSessions.get(client).add(clientId);
       if (success) {
          new ArrayList<>(this.listeners).forEach(listener -> listener.sessionCreated(clientId, client));
       }

@@ -39,8 +39,9 @@ import org.eclipse.glsp.api.model.ModelStateProvider;
 import org.eclipse.glsp.api.protocol.ClientSessionListener;
 import org.eclipse.glsp.api.protocol.ClientSessionManager;
 import org.eclipse.glsp.api.protocol.GLSPClient;
-import org.eclipse.glsp.api.protocol.GLSPServerException;
 import org.eclipse.glsp.api.registry.ActionHandlerRegistry;
+import org.eclipse.glsp.api.utils.ServerMessageUtil;
+import org.eclipse.glsp.api.utils.ServerStatusUtil;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -198,7 +199,10 @@ public class DefaultActionDispatcher implements ActionDispatcher, ClientSessionL
             String errorMsg = String.format(
                "The session for client '%s' has not been initialized yet. Could not process action: %s", clientId,
                action);
-            throw new GLSPServerException(errorMsg);
+            LOG.error(errorMsg);
+            this.client.get().process(new ActionMessage(clientId, ServerStatusUtil.error(errorMsg)));
+            this.client.get().process(new ActionMessage(clientId, ServerMessageUtil.error(errorMsg)));
+            return;
          }
       }
 

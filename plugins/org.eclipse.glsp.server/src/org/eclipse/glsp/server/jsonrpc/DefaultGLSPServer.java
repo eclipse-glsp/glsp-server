@@ -102,7 +102,7 @@ public class DefaultGLSPServer<T> implements GLSPJsonrpcServer {
       Function<Throwable, Void> errorHandler = ex -> {
          String errorMsg = "Could not process message:" + message;
          log.error("[ERROR] " + errorMsg, ex);
-         actionDispatcher.dispatch(clientId, error("[GLSP-Server] " + errorMsg, ex));
+         getClient().process(new ActionMessage(clientId, error("[GLSP-Server] " + errorMsg, ex)));
          return null;
       };
       try {

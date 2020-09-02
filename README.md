@@ -9,6 +9,9 @@ Contains the code for the Java-based framework to create [GLSP](https://github.c
 - `org.eclipse.glsp.server`: Generic base implemenation for standalone GLSP servers (based on JSON-RPC)
 - `org.eclipse.glsp.server.websocket`: Extension of the base server implementation for communication over websockets
 
+
+- `org.eclipse.glsp.example.workflow`: GLSP server for the Workflow Language example
+
 ## Building
 
 The GLSP server bundles are built with `mvn clean install -Pm2` (for maven) or `mvn clean install -Pp2` (for p2). The nightly builds are available as maven repository or p2 update site.

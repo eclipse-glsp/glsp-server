@@ -3,9 +3,9 @@ Bundle-ManifestVersion: 2
 Bundle-Name: GLSP Graph
 Bundle-SymbolicName: org.eclipse.glsp.graph;singleton:=true
 Bundle-Version: 0.8.0.qualifier
-Bundle-Vendor: EclipseSource
+Bundle-Vendor: Eclipse GLSP
 Automatic-Module-Name: org.eclipse.glsp.graph
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: org.eclipse.emf.common;bundle-version="2.15.0",
  com.google.gson,
  org.eclipse.emf.ecore;bundle-version="2.15.0";visibility:=reexport,

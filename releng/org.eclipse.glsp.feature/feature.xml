@@ -3,7 +3,7 @@
       id="org.eclipse.glsp.feature"
       label="GLSP SDK"
       version="0.8.0.qualifier"
-      provider-name="EclipseSource">
+      provider-name="Eclipse GLSP">
 
    <description url="http://www.example.com/description">
       The base GLSP Server plugins

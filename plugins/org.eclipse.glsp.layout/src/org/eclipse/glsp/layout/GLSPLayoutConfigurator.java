@@ -95,9 +95,8 @@ public class GLSPLayoutConfigurator extends LayoutConfigurator {
    public LayoutConfigurator overrideWith(final LayoutConfigurator other) {
       if (other instanceof GLSPLayoutConfigurator) {
          return this.overrideWith((GLSPLayoutConfigurator) other);
-      } else {
-         return super.overrideWith(other);
       }
+      return super.overrideWith(other);
    }
 
    public GLSPLayoutConfigurator overrideWith(final GLSPLayoutConfigurator other) {

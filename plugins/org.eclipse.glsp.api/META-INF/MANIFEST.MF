@@ -3,9 +3,9 @@ Bundle-ManifestVersion: 2
 Bundle-Name: GLSP API
 Bundle-SymbolicName: org.eclipse.glsp.api
 Bundle-Version: 0.8.0.qualifier
-Bundle-Vendor: EclipseSource
+Bundle-Vendor: Eclipse GLSP
 Automatic-Module-Name: org.eclipse.glsp.api
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: org.eclipse.lsp4j,
  org.eclipse.lsp4j.jsonrpc;bundle-version="0.7.0",
  javax.websocket;bundle-version="1.0.0";visibility:=reexport,

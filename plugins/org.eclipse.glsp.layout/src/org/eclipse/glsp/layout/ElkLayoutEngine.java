@@ -72,8 +72,7 @@ import com.google.common.collect.Maps;
  * The layout engine must be initialized once during the lifecycle of the
  * application by calling {@link #initialize(ILayoutMetaDataProvider...)}. The
  * arguments of that method should be all meta data providers of the layout
- * algorithms that should be used by this layout engine, e.g.
- * {@link org.eclipse.elk.alg.layered.options.LayeredMetaDataProvider}.
+ * algorithms that should be used by this layout engine.
  * </p>
  */
 public class ElkLayoutEngine implements ILayoutEngine {

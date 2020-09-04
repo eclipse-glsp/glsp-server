@@ -33,7 +33,6 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 
-
 			<modules>
 				<module>org.eclipse.glsp.repository</module>
 				<module>org.eclipse.glsp.feature</module>

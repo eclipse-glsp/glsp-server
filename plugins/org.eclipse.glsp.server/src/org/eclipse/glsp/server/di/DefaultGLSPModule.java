@@ -42,6 +42,7 @@ import org.eclipse.glsp.api.registry.NavigationTargetProviderRegistry;
 import org.eclipse.glsp.api.registry.OperationHandlerRegistry;
 import org.eclipse.glsp.api.registry.ServerCommandHandlerRegistry;
 import org.eclipse.glsp.server.action.DefaultActionDispatcher;
+import org.eclipse.glsp.server.actionhandler.ClientActionHandler;
 import org.eclipse.glsp.server.factory.DefaultGraphGsonConfiguratorFactory;
 import org.eclipse.glsp.server.jsonrpc.DefaultClientSessionManager;
 import org.eclipse.glsp.server.jsonrpc.DefaultGLSPServer;
@@ -85,14 +86,23 @@ public abstract class DefaultGLSPModule extends GLSPModule {
 
    protected void configureServerCommandHandlers(final MultiBindConfig<ServerCommandHandler> bindings) {}
 
+   /**
+    * Actions that will be handled by delegating to the client, e.g. via {@link ClientActionHandler}
+    */
    protected void configureClientActions(final MultiBindConfig<Action> bindings) {
       bindings.addAll(MultiBindingDefaults.DEFAULT_CLIENT_ACTIONS);
    }
 
+   /**
+    * Actions that can be handled by the server.
+    */
    protected void configureActionHandlers(final MultiBindConfig<ActionHandler> bindings) {
       bindings.addAll(MultiBindingDefaults.DEFAULT_ACTION_HANDLERS);
    }
 
+   /***
+    * Operations that can be handled by the server.
+    */
    protected void configureOperationHandlers(
       final MultiBindConfig<OperationHandler> bindings) {
       bindings.addAll(MultiBindingDefaults.DEFAULT_OPERATION_HANDLERS);

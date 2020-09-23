@@ -20,6 +20,7 @@ import java.util.List;
 import org.eclipse.glsp.api.action.Action;
 import org.eclipse.glsp.api.action.kind.CenterAction;
 import org.eclipse.glsp.api.action.kind.ClearMarkersAction;
+import org.eclipse.glsp.api.action.kind.ConfigureServerHandlersAction;
 import org.eclipse.glsp.api.action.kind.ExportSVGAction;
 import org.eclipse.glsp.api.action.kind.FitToScreenAction;
 import org.eclipse.glsp.api.action.kind.GLSPServerStatusAction;
@@ -126,7 +127,8 @@ public final class MultiBindingDefaults {
       ServerStatusAction.class,
       TriggerNodeCreationAction.class,
       TriggerEdgeCreationAction.class,
-      UpdateModelAction.class);
+      UpdateModelAction.class,
+      ConfigureServerHandlersAction.class);
 
    public static final List<Class<? extends OperationHandler>> DEFAULT_OPERATION_HANDLERS = Lists.newArrayList(
       ApplyLabelEditOperationHandler.class,

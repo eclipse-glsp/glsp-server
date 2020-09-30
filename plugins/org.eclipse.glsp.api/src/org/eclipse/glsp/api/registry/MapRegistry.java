@@ -53,6 +53,11 @@ public abstract class MapRegistry<K, V> implements Registry<K, V> {
    @Override
    public Set<V> getAll() { return new HashSet<>(elements.values()); }
 
+   @Override
+   public Set<K> keys() {
+      return new HashSet<>(elements.keySet());
+   }
+
    protected GLSPServerException missing(final K key) {
       return new GLSPServerException("Unknown registry key: " + key);
    }

@@ -15,8 +15,11 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.registry;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.glsp.api.handler.CreateOperationHandler;
 import org.eclipse.glsp.api.handler.OperationHandler;
@@ -32,10 +35,12 @@ public class DIOperationHandlerRegistry
    implements OperationHandlerRegistry {
 
    private final MapRegistry<String, OperationHandler> internalRegistry;
+   private final Map<String, Operation> operations;
 
    @Inject
    public DIOperationHandlerRegistry(final Set<OperationHandler> handlers) {
-      internalRegistry = new MapRegistry<String, OperationHandler>() {};
+      operations = new HashMap<>();
+      internalRegistry = new MapRegistry<>() {};
       handlers.forEach(handler -> {
          ReflectionUtil.construct(handler.getHandledOperationType())
             .ifPresent(operation -> register(operation, handler));
@@ -62,7 +67,9 @@ public class DIOperationHandlerRegistry
             .allMatch(typeId -> internalRegistry.register(deriveKey(key, typeId), handler));
 
       }
-      return internalRegistry.register(deriveKey(key, null), handler);
+      final String strKey = deriveKey(key, null);
+      operations.put(strKey, key);
+      return internalRegistry.register(strKey, handler);
    }
 
    @Override
@@ -82,4 +89,9 @@ public class DIOperationHandlerRegistry
 
    @Override
    public Set<OperationHandler> getAll() { return internalRegistry.getAll(); }
+
+   @Override
+   public Set<Operation> keys() {
+      return internalRegistry.keys().stream().map(operations::get).collect(Collectors.toSet());
+   }
 }

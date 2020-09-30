@@ -82,5 +82,6 @@ public abstract class Action {
       public static final String UNDO = "glspUndo";
       public static final String UPDATE_MODEL = "updateModel";
       public static final String VALIDATE_LABEL_EDIT_ACTION = "validateLabelEdit";
+      public static final String CONFIGURE_SERVER_HANDLERS = "configureServerHandlers";
    }
 }

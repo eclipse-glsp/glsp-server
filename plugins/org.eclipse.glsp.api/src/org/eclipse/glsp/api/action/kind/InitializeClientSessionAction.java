@@ -16,7 +16,24 @@
 package org.eclipse.glsp.api.action.kind;
 
 import org.eclipse.glsp.api.action.Action;
+import org.eclipse.glsp.api.protocol.ClientSessionListener;
+import org.eclipse.glsp.api.protocol.ClientSessionManager;
 
+/**
+ * Initialize a new session. One client may open several sessions.
+ * Each session is associated to a unique clientId. The session
+ * is used to track the client lifecycle: it should be the first
+ * action sent by a client to the server. The server will then
+ * be able to dispose any resources associated to this client when
+ * either:
+ * <ol>
+ * <li>the client disconnects</li>
+ * <li>the client sends a DisposeClientSessionAction</li>
+ * </ol>
+ *
+ * @see ClientSessionManager
+ * @see ClientSessionListener
+ */
 public class InitializeClientSessionAction extends Action {
 
    private String clientId;

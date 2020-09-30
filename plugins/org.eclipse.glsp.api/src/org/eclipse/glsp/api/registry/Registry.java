@@ -29,4 +29,6 @@ public interface Registry<K, V> {
    Optional<V> get(K key);
 
    Set<V> getAll();
+
+   Set<K> keys();
 }

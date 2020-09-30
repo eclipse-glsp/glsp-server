@@ -16,17 +16,26 @@
 package org.eclipse.glsp.server.actionhandler;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.glsp.api.action.Action;
+import org.eclipse.glsp.api.action.kind.ConfigureServerHandlersAction;
 import org.eclipse.glsp.api.action.kind.InitializeClientSessionAction;
 import org.eclipse.glsp.api.model.GraphicalModelState;
 import org.eclipse.glsp.api.protocol.ClientSessionManager;
 import org.eclipse.glsp.api.protocol.GLSPClient;
 import org.eclipse.glsp.api.protocol.GLSPServerException;
+import org.eclipse.glsp.api.registry.ActionRegistry;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import com.google.inject.name.Named;
 
+/**
+ * Initializes the lifecycle for a ClientSession via the {@link ClientSessionManager},
+ * and notifies the client about all actions that this server can handle.
+ */
 public class InitializeClientSessionActionHandler extends BasicActionHandler<InitializeClientSessionAction> {
 
    @Inject
@@ -35,17 +44,29 @@ public class InitializeClientSessionActionHandler extends BasicActionHandler<Ini
    @Inject
    protected Provider<GLSPClient> client;
 
+   @Inject
+   protected Provider<ActionRegistry> actionRegistry;
+
+   @Inject
+   @Named(ClientActionHandler.CLIENT_ACTIONS)
+   protected Provider<Set<Action>> clientActions;
+
    @Override
    protected List<Action> executeAction(final InitializeClientSessionAction action,
       final GraphicalModelState modelState) {
       if (clientSessionManager.createClientSession(client.get(), action.getClientId())) {
          modelState.setClientId(action.getClientId());
       } else {
-         throw new GLSPServerException(String.format(
-            "Could not create session for client id '%s'. Another session with the same id already exists",
-            action.getClientId()));
+         throw new GLSPServerException(String.format("Could not create session for client id '%s'. "
+            + "Another session with the same id already exists", action.getClientId()));
       }
-      return none();
+      return listOf(configureServerHandlers());
+   }
+
+   protected Action configureServerHandlers() {
+      final Set<String> actionKinds = actionRegistry.get().keys();
+      actionKinds.removeAll(clientActions.get().stream().map(Action::getKind).collect(Collectors.toSet()));
+      return new ConfigureServerHandlersAction(actionKinds);
    }
 
 }

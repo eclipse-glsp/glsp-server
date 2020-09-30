@@ -15,20 +15,18 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.jsonrpc;
 
-import static org.eclipse.glsp.api.utils.ServerMessageUtil.error;
+import static org.eclipse.glsp.server.utils.ServerMessageUtil.error;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
 import org.apache.log4j.Logger;
-import org.eclipse.glsp.api.action.ActionDispatcher;
-import org.eclipse.glsp.api.action.ActionMessage;
-import org.eclipse.glsp.api.jsonrpc.GLSPJsonrpcClient;
-import org.eclipse.glsp.api.jsonrpc.GLSPJsonrpcServer;
-import org.eclipse.glsp.api.model.ModelStateProvider;
-import org.eclipse.glsp.api.protocol.ClientSessionManager;
-import org.eclipse.glsp.api.protocol.GLSPServerException;
-import org.eclipse.glsp.api.protocol.InitializeParameters;
+import org.eclipse.glsp.server.actions.ActionDispatcher;
+import org.eclipse.glsp.server.actions.ActionMessage;
+import org.eclipse.glsp.server.model.ModelStateProvider;
+import org.eclipse.glsp.server.protocol.ClientSessionManager;
+import org.eclipse.glsp.server.protocol.GLSPServerException;
+import org.eclipse.glsp.server.protocol.InitializeParameters;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;

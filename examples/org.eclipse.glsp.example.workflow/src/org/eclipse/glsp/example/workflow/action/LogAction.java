@@ -15,8 +15,8 @@
  ********************************************************************************/
 package org.eclipse.glsp.example.workflow.action;
 
-import org.eclipse.glsp.api.action.Action;
-import org.eclipse.glsp.api.types.Severity;
+import org.eclipse.glsp.server.actions.Action;
+import org.eclipse.glsp.server.types.Severity;
 
 public class LogAction extends Action {
    public static final String KIND = "logAction";

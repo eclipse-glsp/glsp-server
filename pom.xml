@@ -98,7 +98,6 @@
 
 			<modules>
 				<module>plugins/org.eclipse.glsp.server</module>
-				<module>plugins/org.eclipse.glsp.api</module>
 				<module>plugins/org.eclipse.glsp.server.websocket</module>
 				<module>plugins/org.eclipse.glsp.layout</module>
 				<module>plugins/org.eclipse.glsp.graph</module>
@@ -215,7 +214,6 @@
 
 			<modules>
 				<module>plugins/org.eclipse.glsp.server</module>
-				<module>plugins/org.eclipse.glsp.api</module>
 				<module>plugins/org.eclipse.glsp.server.websocket</module>
 				<module>plugins/org.eclipse.glsp.layout</module>
 				<module>plugins/org.eclipse.glsp.graph</module>
@@ -240,7 +238,6 @@
 
 			<modules>
 				<module>plugins/org.eclipse.glsp.graph</module>
-				<module>plugins/org.eclipse.glsp.api</module>
 				<module>plugins/org.eclipse.glsp.layout</module>
 				<module>plugins/org.eclipse.glsp.server</module>
 				<module>plugins/org.eclipse.glsp.server.websocket</module>
@@ -323,7 +320,6 @@
 			<id>m2-release</id>
 			<modules>
 				<module>plugins/org.eclipse.glsp.graph</module>
-				<module>plugins/org.eclipse.glsp.api</module>
 				<module>plugins/org.eclipse.glsp.layout</module>
 				<module>plugins/org.eclipse.glsp.server</module>
 				<module>plugins/org.eclipse.glsp.server.websocket</module>

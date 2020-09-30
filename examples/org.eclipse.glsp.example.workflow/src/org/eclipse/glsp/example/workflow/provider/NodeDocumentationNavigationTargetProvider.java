@@ -21,12 +21,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.provider.NavigationTargetProvider;
-import org.eclipse.glsp.api.types.EditorContext;
-import org.eclipse.glsp.api.types.NavigationTarget;
-import org.eclipse.glsp.api.utils.ClientOptions;
 import org.eclipse.glsp.example.workflow.wfgraph.TaskNode;
+import org.eclipse.glsp.server.features.navigation.NavigationTarget;
+import org.eclipse.glsp.server.features.navigation.NavigationTargetProvider;
+import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.types.EditorContext;
+import org.eclipse.glsp.server.utils.ClientOptions;
 
 /**
  * An example {@link NavigationTargetProvider} that opens an md file and selects a specified range.
@@ -40,8 +40,7 @@ public class NodeDocumentationNavigationTargetProvider implements NavigationTarg
    public String getTargetTypeId() { return "documentation"; }
 
    @Override
-   public List<? extends NavigationTarget> getTargets(final EditorContext editorContext,
-      final GraphicalModelState modelState) {
+   public List<? extends NavigationTarget> getTargets(final EditorContext editorContext, final GModelState modelState) {
       if (editorContext.getSelectedElementIds().size() == 1) {
          Optional<TaskNode> taskNode = modelState.getIndex()
             .findElementByClass(editorContext.getSelectedElementIds().get(0), TaskNode.class);

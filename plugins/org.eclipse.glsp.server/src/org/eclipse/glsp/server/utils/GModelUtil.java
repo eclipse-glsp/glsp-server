@@ -21,12 +21,12 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.glsp.api.model.GraphicalModelState;
 import org.eclipse.glsp.graph.GBoundsAware;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.GPort;
+import org.eclipse.glsp.server.model.GModelState;
 
 public final class GModelUtil {
    private GModelUtil() {}
@@ -35,11 +35,11 @@ public final class GModelUtil {
       return i -> id + i;
    }
 
-   public static int generateId(final EClass eClass, final String id, final GraphicalModelState modelState) {
+   public static int generateId(final EClass eClass, final String id, final GModelState modelState) {
       return modelState.getIndex().getCounter(eClass, idAndIndex(id));
    }
 
-   public static int generateId(final GModelElement element, final String id, final GraphicalModelState modelState) {
+   public static int generateId(final GModelElement element, final String id, final GModelState modelState) {
       int index = generateId(element.eClass(), id, modelState);
       element.setId(idAndIndex(id).apply(index));
       return index;

@@ -19,16 +19,16 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
 
-import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.model.NavigationTargetResolver;
-import org.eclipse.glsp.api.types.NavigationTarget;
-import org.eclipse.glsp.api.types.NavigationTargetResolution;
 import org.eclipse.glsp.example.workflow.wfgraph.TaskNode;
+import org.eclipse.glsp.server.features.navigation.NavigationTarget;
+import org.eclipse.glsp.server.features.navigation.NavigationTargetResolution;
+import org.eclipse.glsp.server.features.navigation.NavigationTargetResolver;
+import org.eclipse.glsp.server.model.GModelState;
 
 public class WorkflowNavigationTargetResolver implements NavigationTargetResolver {
    @Override
    public NavigationTargetResolution resolve(final NavigationTarget navigationTarget,
-      final GraphicalModelState modelState) {
+      final GModelState modelState) {
       if (navigationTarget.getArgs().containsKey("name")) {
          String name = navigationTarget.getArgs().get("name");
          Set<TaskNode> taskNodes = modelState.getIndex().findAll(modelState.getRoot(), TaskNode.class);

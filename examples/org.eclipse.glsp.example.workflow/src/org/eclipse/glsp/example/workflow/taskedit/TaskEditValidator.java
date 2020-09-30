@@ -15,10 +15,10 @@
  ********************************************************************************/
 package org.eclipse.glsp.example.workflow.taskedit;
 
-import org.eclipse.glsp.api.action.kind.RequestEditValidationAction;
-import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.provider.ContextEditValidator;
-import org.eclipse.glsp.api.types.ValidationStatus;
+import org.eclipse.glsp.server.features.directediting.ContextEditValidator;
+import org.eclipse.glsp.server.features.directediting.RequestEditValidationAction;
+import org.eclipse.glsp.server.features.directediting.ValidationStatus;
+import org.eclipse.glsp.server.model.GModelState;
 
 public class TaskEditValidator implements ContextEditValidator {
 
@@ -27,8 +27,7 @@ public class TaskEditValidator implements ContextEditValidator {
 
    @SuppressWarnings("checkstyle:cyclomaticComplexity")
    @Override
-   public ValidationStatus validate(final RequestEditValidationAction action,
-      final GraphicalModelState modelState) {
+   public ValidationStatus validate(final RequestEditValidationAction action, final GModelState modelState) {
       String text = action.getText();
       if (text.startsWith(TaskEditContextActionProvider.DURATION_PREFIX)) {
          String durationString = text.substring(TaskEditContextActionProvider.DURATION_PREFIX.length());

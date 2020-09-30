@@ -17,12 +17,12 @@ package org.eclipse.glsp.server.internal.labeledit;
 
 import java.util.Optional;
 
-import org.eclipse.glsp.api.action.kind.RequestEditValidationAction;
-import org.eclipse.glsp.api.labeledit.LabelEditValidator;
-import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.provider.ContextEditValidator;
-import org.eclipse.glsp.api.types.ValidationStatus;
 import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.glsp.server.features.directediting.ContextEditValidator;
+import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
+import org.eclipse.glsp.server.features.directediting.RequestEditValidationAction;
+import org.eclipse.glsp.server.features.directediting.ValidationStatus;
+import org.eclipse.glsp.server.model.GModelState;
 
 public class ValidateLabelEditAdapter implements ContextEditValidator {
 
@@ -37,7 +37,7 @@ public class ValidateLabelEditAdapter implements ContextEditValidator {
    public String getContextId() { return LabelEditValidator.CONTEXT_ID; }
 
    @Override
-   public ValidationStatus validate(final RequestEditValidationAction action, final GraphicalModelState modelState) {
+   public ValidationStatus validate(final RequestEditValidationAction action, final GModelState modelState) {
       Optional<GModelElement> element = modelState.getIndex().get(action.getModelElementId());
       if (element.isPresent()) {
          return editLabelValidator.validate(modelState, action.getText(), element.get());

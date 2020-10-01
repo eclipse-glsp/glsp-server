@@ -15,7 +15,7 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.features.servercommands;
 
-import org.eclipse.glsp.server.internal.Registry;
+import org.eclipse.glsp.server.Registry;
 
 public interface ServerCommandHandlerRegistry extends Registry<String, ServerCommandHandler> {
 

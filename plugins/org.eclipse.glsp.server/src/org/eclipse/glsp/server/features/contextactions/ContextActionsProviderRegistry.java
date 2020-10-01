@@ -15,6 +15,6 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.features.contextactions;
 
-import org.eclipse.glsp.server.internal.Registry;
+import org.eclipse.glsp.server.Registry;
 
 public interface ContextActionsProviderRegistry extends Registry<String, ContextActionsProvider> {}

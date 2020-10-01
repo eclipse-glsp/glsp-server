@@ -19,8 +19,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.glsp.server.Handler;
 import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.internal.Handler;
 import org.eclipse.glsp.server.model.GModelState;
 
 public interface ServerCommandHandler extends Handler<String> {

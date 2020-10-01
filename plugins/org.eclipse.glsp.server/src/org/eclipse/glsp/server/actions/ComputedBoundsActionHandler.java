@@ -18,8 +18,8 @@ package org.eclipse.glsp.server.actions;
 import java.util.List;
 
 import org.eclipse.glsp.graph.GModelRoot;
-import org.eclipse.glsp.server.internal.util.LayoutUtil;
 import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.utils.LayoutUtil;
 
 import com.google.inject.Inject;
 

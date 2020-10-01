@@ -1,5 +1,5 @@
-/*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+/********************************************************************************
+ * Copyright (c) 2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -12,13 +12,21 @@
  * https://www.gnu.org/software/classpath/license.html.
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
- ******************************************************************************/
-package org.eclipse.glsp.server.internal;
+ ********************************************************************************/
+package org.eclipse.glsp.server;
 
-public interface Handler<T> {
+import java.util.List;
 
-   default int getPriority() { return Integer.MIN_VALUE; }
+public interface MultiRegistry<K, V> {
+   boolean register(K key, V element);
 
-   boolean handles(T object);
+   boolean deregister(K key, V element);
 
+   boolean deregisterAll(K key);
+
+   boolean hasKey(K key);
+
+   List<V> get(K key);
+
+   List<V> getAll();
 }

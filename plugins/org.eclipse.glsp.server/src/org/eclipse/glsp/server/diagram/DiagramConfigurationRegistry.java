@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.glsp.server.internal.Registry;
+import org.eclipse.glsp.server.Registry;
 
 public interface DiagramConfigurationRegistry extends Registry<String, DiagramConfiguration> {
 

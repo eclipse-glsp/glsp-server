@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.eclipse.glsp.server.internal.MultiRegistry;
+import org.eclipse.glsp.server.MultiRegistry;
 import org.eclipse.glsp.server.protocol.GLSPServerException;
 
 public abstract class MapMultiRegistry<K, V> implements MultiRegistry<K, V> {

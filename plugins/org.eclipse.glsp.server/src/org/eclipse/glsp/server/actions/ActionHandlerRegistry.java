@@ -17,7 +17,7 @@ package org.eclipse.glsp.server.actions;
 
 import java.util.List;
 
-import org.eclipse.glsp.server.internal.MultiRegistry;
+import org.eclipse.glsp.server.MultiRegistry;
 
 public interface ActionHandlerRegistry extends MultiRegistry<Class<? extends Action>, ActionHandler> {
    default List<ActionHandler> get(final Action action) {

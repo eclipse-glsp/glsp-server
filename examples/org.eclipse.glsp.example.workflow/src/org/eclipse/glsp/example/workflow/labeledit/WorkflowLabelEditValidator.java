@@ -17,17 +17,16 @@ package org.eclipse.glsp.example.workflow.labeledit;
 
 import java.util.Set;
 
-import org.eclipse.glsp.api.labeledit.LabelEditValidator;
-import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.types.ValidationStatus;
 import org.eclipse.glsp.example.workflow.wfgraph.TaskNode;
 import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
+import org.eclipse.glsp.server.features.directediting.ValidationStatus;
+import org.eclipse.glsp.server.model.GModelState;
 
 public class WorkflowLabelEditValidator implements LabelEditValidator {
 
    @Override
-   public ValidationStatus validate(final GraphicalModelState modelState, final String label,
-      final GModelElement element) {
+   public ValidationStatus validate(final GModelState modelState, final String label, final GModelElement element) {
       if (label.length() < 1) {
          return ValidationStatus.error("Name must not be empty");
       }

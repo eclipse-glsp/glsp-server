@@ -17,11 +17,11 @@ package org.eclipse.glsp.example.workflow.handler;
 
 import java.util.Optional;
 
-import org.eclipse.glsp.api.model.GraphicalModelState;
 import org.eclipse.glsp.example.workflow.utils.ModelTypes;
 import org.eclipse.glsp.example.workflow.utils.WorkflowBuilder.ActivityNodeBuilder;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.server.model.GModelState;
 
 public abstract class CreateActivityNodeHandler extends CreateWorkflowNodeOperationHandler {
 
@@ -37,7 +37,7 @@ public abstract class CreateActivityNodeHandler extends CreateWorkflowNodeOperat
    protected String getElementTypeId() { return elementTypeId; }
 
    @Override
-   protected GNode createNode(final Optional<GPoint> point, final GraphicalModelState modelState) {
+   protected GNode createNode(final Optional<GPoint> point, final GModelState modelState) {
       String nodeType = ModelTypes.toNodeType(getElementTypeId());
       return new ActivityNodeBuilder(getElementTypeId(), nodeType) //
          .position(point.orElse(null)) //

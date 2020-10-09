@@ -17,12 +17,12 @@ package org.eclipse.glsp.example.workflow.handler;
 
 import java.util.Optional;
 
-import org.eclipse.glsp.api.model.GraphicalModelState;
 import org.eclipse.glsp.example.workflow.utils.ModelTypes;
 import org.eclipse.glsp.example.workflow.utils.WorkflowBuilder.WeightedEdgeBuilder;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.server.operationhandler.CreateEdgeOperationHandler;
+import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.operations.gmodel.CreateEdgeOperationHandler;
 
 public class CreateWeightedEdgeHandler extends CreateEdgeOperationHandler {
 
@@ -32,7 +32,7 @@ public class CreateWeightedEdgeHandler extends CreateEdgeOperationHandler {
 
    @Override
    protected Optional<GEdge> createEdge(final GModelElement source, final GModelElement target,
-      final GraphicalModelState modelState) {
+      final GModelState modelState) {
       return Optional.of(new WeightedEdgeBuilder() //
          .source(source) //
          .target(target) //

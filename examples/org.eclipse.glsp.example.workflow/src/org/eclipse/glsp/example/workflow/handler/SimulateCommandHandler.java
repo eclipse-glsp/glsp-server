@@ -23,11 +23,11 @@ import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.log4j.Logger;
-import org.eclipse.glsp.api.action.Action;
-import org.eclipse.glsp.api.handler.ServerCommandHandler;
-import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.utils.ClientOptions;
 import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.glsp.server.actions.Action;
+import org.eclipse.glsp.server.features.servercommands.ServerCommandHandler;
+import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.utils.ClientOptions;
 
 public class SimulateCommandHandler implements ServerCommandHandler {
    private static Logger logger = Logger.getLogger(SimulateCommandHandler.class);
@@ -36,7 +36,7 @@ public class SimulateCommandHandler implements ServerCommandHandler {
 
    @Override
    public List<Action> execute(final String commandId, final Map<String, String> options,
-      final GraphicalModelState modelState) {
+      final GModelState modelState) {
       if (SIMULATE_COMMAND_ID.equals(commandId)) {
          ClientOptions.getValue(options, OPTIONS_INVOKER_ID).ifPresent(id -> {
             Optional<GModelElement> invoker = modelState.getIndex().get(id);

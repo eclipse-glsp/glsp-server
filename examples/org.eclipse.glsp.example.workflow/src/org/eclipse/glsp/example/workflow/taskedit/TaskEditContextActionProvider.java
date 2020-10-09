@@ -19,12 +19,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import org.eclipse.glsp.api.action.kind.SetAutoCompleteValueAction;
-import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.provider.ContextActionsProvider;
-import org.eclipse.glsp.api.types.EditorContext;
-import org.eclipse.glsp.api.types.LabeledAction;
 import org.eclipse.glsp.example.workflow.wfgraph.TaskNode;
+import org.eclipse.glsp.server.features.contextactions.ContextActionsProvider;
+import org.eclipse.glsp.server.features.contextactions.SetAutoCompleteValueAction;
+import org.eclipse.glsp.server.features.directediting.LabeledAction;
+import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.types.EditorContext;
 
 import com.google.common.collect.Lists;
 
@@ -38,8 +38,7 @@ public class TaskEditContextActionProvider implements ContextActionsProvider {
    public String getContextId() { return "task-editor"; }
 
    @Override
-   public List<? extends LabeledAction> getActions(final EditorContext editorContext,
-      final GraphicalModelState modelState) {
+   public List<? extends LabeledAction> getActions(final EditorContext editorContext, final GModelState modelState) {
       String text = editorContext.getArgs().getOrDefault("text", "");
       Optional<TaskNode> taskNode = modelState.getIndex()
          .findElementByClass(editorContext.getSelectedElementIds().get(0), TaskNode.class);

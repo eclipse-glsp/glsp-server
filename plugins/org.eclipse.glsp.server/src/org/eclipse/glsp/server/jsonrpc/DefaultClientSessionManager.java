@@ -24,9 +24,9 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.glsp.api.protocol.ClientSessionListener;
-import org.eclipse.glsp.api.protocol.ClientSessionManager;
-import org.eclipse.glsp.api.protocol.GLSPClient;
+import org.eclipse.glsp.server.protocol.ClientSessionListener;
+import org.eclipse.glsp.server.protocol.ClientSessionManager;
+import org.eclipse.glsp.server.protocol.GLSPClient;
 
 public final class DefaultClientSessionManager implements ClientSessionManager {
 

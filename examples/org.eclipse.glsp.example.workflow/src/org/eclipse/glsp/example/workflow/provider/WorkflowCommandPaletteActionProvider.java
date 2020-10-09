@@ -23,13 +23,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.operation.kind.CreateEdgeOperation;
-import org.eclipse.glsp.api.operation.kind.CreateNodeOperation;
-import org.eclipse.glsp.api.operation.kind.DeleteOperation;
-import org.eclipse.glsp.api.provider.CommandPaletteActionProvider;
-import org.eclipse.glsp.api.types.EditorContext;
-import org.eclipse.glsp.api.types.LabeledAction;
 import org.eclipse.glsp.example.workflow.handler.GridSnapper;
 import org.eclipse.glsp.example.workflow.utils.ModelTypes;
 import org.eclipse.glsp.example.workflow.wfgraph.TaskNode;
@@ -37,6 +30,13 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.server.features.commandpalette.CommandPaletteActionProvider;
+import org.eclipse.glsp.server.features.directediting.LabeledAction;
+import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.operations.CreateEdgeOperation;
+import org.eclipse.glsp.server.operations.CreateNodeOperation;
+import org.eclipse.glsp.server.operations.DeleteOperation;
+import org.eclipse.glsp.server.types.EditorContext;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -45,7 +45,7 @@ public class WorkflowCommandPaletteActionProvider implements CommandPaletteActio
 
    @Override
    @SuppressWarnings("checkstyle:CyclomaticComplexity")
-   public List<LabeledAction> getActions(final EditorContext editorContext, final GraphicalModelState modelState) {
+   public List<LabeledAction> getActions(final EditorContext editorContext, final GModelState modelState) {
       List<LabeledAction> actions = Lists.newArrayList();
       if (modelState.isReadonly()) {
          return actions;

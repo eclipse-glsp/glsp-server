@@ -17,9 +17,9 @@ package org.eclipse.glsp.example.workflow.provider;
 
 import java.util.Collection;
 
-import org.eclipse.glsp.api.model.GraphicalModelState;
 import org.eclipse.glsp.example.workflow.wfgraph.TaskNode;
 import org.eclipse.glsp.graph.GEdge;
+import org.eclipse.glsp.server.model.GModelState;
 
 public class NextNodeNavigationTargetProvider extends AbstractNextOrPreviousNavigationTargetProvider {
 
@@ -27,7 +27,7 @@ public class NextNodeNavigationTargetProvider extends AbstractNextOrPreviousNavi
    public String getTargetTypeId() { return "next"; }
 
    @Override
-   protected Collection<GEdge> getEdges(final TaskNode taskNode, final GraphicalModelState modelState) {
+   protected Collection<GEdge> getEdges(final TaskNode taskNode, final GModelState modelState) {
       return modelState.getIndex().getOutgoingEdges(taskNode);
    }
 

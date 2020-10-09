@@ -20,15 +20,15 @@ import static org.eclipse.glsp.graph.util.GraphUtil.bounds;
 import java.util.Arrays;
 import java.util.Optional;
 
-import org.eclipse.glsp.api.action.kind.RequestPopupModelAction;
-import org.eclipse.glsp.api.factory.PopupModelFactory;
-import org.eclipse.glsp.api.model.GraphicalModelState;
 import org.eclipse.glsp.example.workflow.wfgraph.TaskNode;
 import org.eclipse.glsp.graph.GBounds;
 import org.eclipse.glsp.graph.GHtmlRoot;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPreRenderedElement;
 import org.eclipse.glsp.graph.GraphFactory;
+import org.eclipse.glsp.server.factory.PopupModelFactory;
+import org.eclipse.glsp.server.features.popup.RequestPopupModelAction;
+import org.eclipse.glsp.server.model.GModelState;
 
 public class WorkflowPopupFactory implements PopupModelFactory {
 
@@ -45,7 +45,7 @@ public class WorkflowPopupFactory implements PopupModelFactory {
 
    @Override
    public Optional<GHtmlRoot> createPopupModel(final GModelElement element, final RequestPopupModelAction action,
-      final GraphicalModelState modelState) {
+      final GModelState modelState) {
       if (element != null && element instanceof TaskNode) {
          TaskNode task = (TaskNode) element;
          GHtmlRoot root = GraphFactory.eINSTANCE.createGHtmlRoot();

@@ -47,8 +47,6 @@ import org.eclipse.elk.graph.properties.Property;
 import org.eclipse.elk.graph.util.ElkGraphUtil;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.api.layout.ILayoutEngine;
-import org.eclipse.glsp.api.model.GraphicalModelState;
 import org.eclipse.glsp.graph.GBoundsAware;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GEdge;
@@ -61,6 +59,8 @@ import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.GPort;
 import org.eclipse.glsp.graph.GraphFactory;
+import org.eclipse.glsp.server.layout.ILayoutEngine;
+import org.eclipse.glsp.server.model.GModelState;
 
 import com.google.common.collect.Maps;
 
@@ -95,7 +95,7 @@ public class ElkLayoutEngine implements ILayoutEngine {
     * for your model using a {@link SprottyLayoutConfigurator}.
     */
    @Override
-   public void layout(final GraphicalModelState modelState) {
+   public void layout(final GModelState modelState) {
       if (modelState.getRoot() instanceof GGraph) {
          layout((GGraph) modelState.getRoot(), null);
       }

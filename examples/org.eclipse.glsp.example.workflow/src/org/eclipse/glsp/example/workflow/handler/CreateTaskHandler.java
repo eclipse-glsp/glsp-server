@@ -18,12 +18,12 @@ package org.eclipse.glsp.example.workflow.handler;
 import java.util.Optional;
 import java.util.function.Function;
 
-import org.eclipse.glsp.api.model.GraphicalModelState;
 import org.eclipse.glsp.example.workflow.utils.ModelTypes;
 import org.eclipse.glsp.example.workflow.utils.WorkflowBuilder.TaskNodeBuilder;
 import org.eclipse.glsp.example.workflow.wfgraph.WfgraphPackage;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.GModelUtil;
 
 public abstract class CreateTaskHandler extends CreateWorkflowNodeOperationHandler {
@@ -40,7 +40,7 @@ public abstract class CreateTaskHandler extends CreateWorkflowNodeOperationHandl
    protected String getElementTypeId() { return elementTypeId; }
 
    @Override
-   protected GNode createNode(final Optional<GPoint> point, final GraphicalModelState modelState) {
+   protected GNode createNode(final Optional<GPoint> point, final GModelState modelState) {
       int nodeCounter = GModelUtil.generateId(WfgraphPackage.Literals.TASK_NODE, "task", modelState);
       String name = labelProvider.apply(nodeCounter);
       String taskType = ModelTypes.toNodeType(getElementTypeId());

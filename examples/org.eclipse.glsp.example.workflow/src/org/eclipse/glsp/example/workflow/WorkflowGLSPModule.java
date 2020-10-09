@@ -15,23 +15,6 @@
  ********************************************************************************/
 package org.eclipse.glsp.example.workflow;
 
-import org.eclipse.glsp.api.configuration.ServerConfiguration;
-import org.eclipse.glsp.api.diagram.DiagramConfiguration;
-import org.eclipse.glsp.api.factory.ModelFactory;
-import org.eclipse.glsp.api.factory.PopupModelFactory;
-import org.eclipse.glsp.api.handler.ActionHandler;
-import org.eclipse.glsp.api.handler.OperationHandler;
-import org.eclipse.glsp.api.handler.ServerCommandHandler;
-import org.eclipse.glsp.api.labeledit.LabelEditValidator;
-import org.eclipse.glsp.api.layout.ILayoutEngine;
-import org.eclipse.glsp.api.markers.ModelValidator;
-import org.eclipse.glsp.api.model.NavigationTargetResolver;
-import org.eclipse.glsp.api.protocol.GLSPServer;
-import org.eclipse.glsp.api.provider.CommandPaletteActionProvider;
-import org.eclipse.glsp.api.provider.ContextActionsProvider;
-import org.eclipse.glsp.api.provider.ContextEditValidator;
-import org.eclipse.glsp.api.provider.ContextMenuItemProvider;
-import org.eclipse.glsp.api.provider.NavigationTargetProvider;
 import org.eclipse.glsp.example.workflow.handler.CreateAutomatedTaskHandler;
 import org.eclipse.glsp.example.workflow.handler.CreateDecisionNodeHandler;
 import org.eclipse.glsp.example.workflow.handler.CreateEdgeHandler;
@@ -58,74 +41,91 @@ import org.eclipse.glsp.example.workflow.taskedit.EditTaskOperationHandler;
 import org.eclipse.glsp.example.workflow.taskedit.TaskEditContextActionProvider;
 import org.eclipse.glsp.example.workflow.taskedit.TaskEditValidator;
 import org.eclipse.glsp.graph.GraphExtension;
-import org.eclipse.glsp.server.actionhandler.RequestContextActionsHandler;
-import org.eclipse.glsp.server.di.DefaultGLSPModule;
-import org.eclipse.glsp.server.di.MultiBindConfig;
+import org.eclipse.glsp.server.DefaultGLSPModule;
+import org.eclipse.glsp.server.actions.ActionHandler;
+import org.eclipse.glsp.server.diagram.DiagramConfiguration;
+import org.eclipse.glsp.server.factory.ModelFactory;
+import org.eclipse.glsp.server.factory.PopupModelFactory;
+import org.eclipse.glsp.server.features.commandpalette.CommandPaletteActionProvider;
+import org.eclipse.glsp.server.features.contextactions.ContextActionsProvider;
+import org.eclipse.glsp.server.features.contextactions.RequestContextActionsHandler;
+import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
+import org.eclipse.glsp.server.features.directediting.ContextEditValidator;
+import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
+import org.eclipse.glsp.server.features.navigation.NavigationTargetProvider;
+import org.eclipse.glsp.server.features.navigation.NavigationTargetResolver;
+import org.eclipse.glsp.server.features.servercommands.ServerCommandHandler;
+import org.eclipse.glsp.server.features.validation.ModelValidator;
+import org.eclipse.glsp.server.layout.ILayoutEngine;
+import org.eclipse.glsp.server.layout.ServerLayoutConfiguration;
+import org.eclipse.glsp.server.operations.OperationHandler;
+import org.eclipse.glsp.server.protocol.GLSPServer;
+import org.eclipse.glsp.server.utils.MultiBinding;
 
 public class WorkflowGLSPModule extends DefaultGLSPModule {
 
-   @SuppressWarnings("rawtypes")
    @Override
+   @SuppressWarnings("rawtypes")
    protected Class<? extends GLSPServer> bindGLSPServer() {
       return WorkflowGLSPServer.class;
    }
 
    @Override
-   protected Class<? extends ServerConfiguration> bindServerConfiguration() {
-      return WorkflowServerConfiguration.class;
+   protected Class<? extends ServerLayoutConfiguration> bindServerLayoutConfiguration() {
+      return WorkflowServerLayoutConfiguration.class;
    }
 
    @Override
-   protected void configureContextActionsProviders(final MultiBindConfig<ContextActionsProvider> config) {
-      super.configureContextActionsProviders(config);
-      config.add(TaskEditContextActionProvider.class);
+   protected void configureContextActionsProviders(final MultiBinding<ContextActionsProvider> binding) {
+      super.configureContextActionsProviders(binding);
+      binding.add(TaskEditContextActionProvider.class);
    }
 
    @Override
-   protected void configureContextEditValidators(final MultiBindConfig<ContextEditValidator> config) {
-      super.configureContextEditValidators(config);
-      config.add(TaskEditValidator.class);
+   protected void configureContextEditValidators(final MultiBinding<ContextEditValidator> binding) {
+      super.configureContextEditValidators(binding);
+      binding.add(TaskEditValidator.class);
    }
 
    @Override
-   protected void configureDiagramConfigurations(final MultiBindConfig<DiagramConfiguration> config) {
-      config.add(WorkflowDiagramConfiguration.class);
+   protected void configureDiagramConfigurations(final MultiBinding<DiagramConfiguration> binding) {
+      binding.add(WorkflowDiagramConfiguration.class);
    }
 
    @Override
-   protected void configureServerCommandHandlers(final MultiBindConfig<ServerCommandHandler> config) {
-      super.configureServerCommandHandlers(config);
-      config.add(SimulateCommandHandler.class);
+   protected void configureServerCommandHandlers(final MultiBinding<ServerCommandHandler> binding) {
+      super.configureServerCommandHandlers(binding);
+      binding.add(SimulateCommandHandler.class);
    }
 
    @Override
-   protected void configureNavigationTargetProviders(final MultiBindConfig<NavigationTargetProvider> config) {
-      super.configureNavigationTargetProviders(config);
-      config.add(NextNodeNavigationTargetProvider.class);
-      config.add(PreviousNodeNavigationTargetProvider.class);
-      config.add(NodeDocumentationNavigationTargetProvider.class);
+   protected void configureNavigationTargetProviders(final MultiBinding<NavigationTargetProvider> binding) {
+      super.configureNavigationTargetProviders(binding);
+      binding.add(NextNodeNavigationTargetProvider.class);
+      binding.add(PreviousNodeNavigationTargetProvider.class);
+      binding.add(NodeDocumentationNavigationTargetProvider.class);
    }
 
    @Override
-   protected void configureOperationHandlers(final MultiBindConfig<OperationHandler> config) {
-      super.configureOperationHandlers(config);
-      config.add(CreateAutomatedTaskHandler.class);
-      config.add(CreateManualTaskHandler.class);
-      config.add(CreateDecisionNodeHandler.class);
-      config.add(CreateMergeNodeHandler.class);
-      config.add(CreateForkNodeHandler.class);
-      config.add(CreateJoinNodeHandler.class);
-      config.add(CreateEdgeHandler.class);
-      config.add(CreateWeightedEdgeHandler.class);
-      config.add(EditTaskOperationHandler.class);
-      config.add(ApplyTaskEditOperationHandler.class);
+   protected void configureOperationHandlers(final MultiBinding<OperationHandler> binding) {
+      super.configureOperationHandlers(binding);
+      binding.add(CreateAutomatedTaskHandler.class);
+      binding.add(CreateManualTaskHandler.class);
+      binding.add(CreateDecisionNodeHandler.class);
+      binding.add(CreateMergeNodeHandler.class);
+      binding.add(CreateForkNodeHandler.class);
+      binding.add(CreateJoinNodeHandler.class);
+      binding.add(CreateEdgeHandler.class);
+      binding.add(CreateWeightedEdgeHandler.class);
+      binding.add(EditTaskOperationHandler.class);
+      binding.add(ApplyTaskEditOperationHandler.class);
    }
 
    @Override
-   protected void configureActionHandlers(final MultiBindConfig<ActionHandler> bindings) {
-      super.configureActionHandlers(bindings);
-      bindings.rebind(RequestContextActionsHandler.class, WorkflowRequestContextActionsHandler.class);
-      bindings.add(LogActionHandler.class);
+   protected void configureActionHandlers(final MultiBinding<ActionHandler> binding) {
+      super.configureActionHandlers(binding);
+      binding.rebind(RequestContextActionsHandler.class, WorkflowRequestContextActionsHandler.class);
+      binding.add(LogActionHandler.class);
    }
 
    @Override

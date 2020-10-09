@@ -15,13 +15,13 @@
  ********************************************************************************/
 package org.eclipse.glsp.example.workflow.model;
 
-import org.eclipse.glsp.api.action.ActionDispatcher;
-import org.eclipse.glsp.api.action.kind.RequestModelAction;
-import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.utils.ServerMessageUtil;
-import org.eclipse.glsp.api.utils.ServerStatusUtil;
 import org.eclipse.glsp.graph.GModelRoot;
-import org.eclipse.glsp.server.model.JsonFileModelFactory;
+import org.eclipse.glsp.server.actions.ActionDispatcher;
+import org.eclipse.glsp.server.actions.RequestModelAction;
+import org.eclipse.glsp.server.factory.JsonFileModelFactory;
+import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.utils.ServerMessageUtil;
+import org.eclipse.glsp.server.utils.ServerStatusUtil;
 
 import com.google.inject.Inject;
 
@@ -30,7 +30,7 @@ public class WorkflowModelFactory extends JsonFileModelFactory {
    private ActionDispatcher actionDispatcher;
 
    @Override
-   public GModelRoot loadModel(final RequestModelAction action, final GraphicalModelState modelState) {
+   public GModelRoot loadModel(final RequestModelAction action, final GModelState modelState) {
       String clientId = modelState.getClientId();
       actionDispatcher.dispatch(clientId, ServerStatusUtil.info("Model loading in progress!"));
       actionDispatcher.dispatch(clientId, ServerMessageUtil.info("Model loading in progress!"));

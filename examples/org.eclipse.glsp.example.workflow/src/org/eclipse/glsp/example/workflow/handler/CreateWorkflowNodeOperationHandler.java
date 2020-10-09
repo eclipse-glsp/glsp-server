@@ -17,9 +17,9 @@ package org.eclipse.glsp.example.workflow.handler;
 
 import java.util.Optional;
 
-import org.eclipse.glsp.api.operation.kind.CreateNodeOperation;
 import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.server.operationhandler.CreateNodeOperationHandler;
+import org.eclipse.glsp.server.operations.CreateNodeOperation;
+import org.eclipse.glsp.server.operations.gmodel.CreateNodeOperationHandler;
 
 public abstract class CreateWorkflowNodeOperationHandler extends CreateNodeOperationHandler {
 

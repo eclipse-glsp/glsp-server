@@ -23,12 +23,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.operation.kind.CreateNodeOperation;
-import org.eclipse.glsp.api.provider.ContextMenuItemProvider;
-import org.eclipse.glsp.api.types.MenuItem;
 import org.eclipse.glsp.example.workflow.handler.GridSnapper;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
+import org.eclipse.glsp.server.features.contextmenu.MenuItem;
+import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.operations.CreateNodeOperation;
 
 import com.google.common.collect.Lists;
 
@@ -37,7 +37,7 @@ public class WorkflowContextMenuItemProvider implements ContextMenuItemProvider 
    @Override
    public List<MenuItem> getItems(final List<String> selectedElementIds, final GPoint position,
       final Map<String, String> args,
-      final GraphicalModelState modelState) {
+      final GModelState modelState) {
       if (modelState.isReadonly()) {
          return Collections.emptyList();
       }

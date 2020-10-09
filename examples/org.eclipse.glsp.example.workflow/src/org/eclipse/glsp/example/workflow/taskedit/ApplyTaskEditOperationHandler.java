@@ -15,10 +15,10 @@
  ********************************************************************************/
 package org.eclipse.glsp.example.workflow.taskedit;
 
-import org.eclipse.glsp.api.action.ActionDispatcher;
-import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.protocol.GLSPServerException;
-import org.eclipse.glsp.server.operationhandler.BasicOperationHandler;
+import org.eclipse.glsp.server.actions.ActionDispatcher;
+import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.operations.BasicOperationHandler;
+import org.eclipse.glsp.server.protocol.GLSPServerException;
 
 import com.google.inject.Inject;
 
@@ -28,7 +28,7 @@ public class ApplyTaskEditOperationHandler extends BasicOperationHandler<ApplyTa
    private ActionDispatcher actionProcessor;
 
    @Override
-   protected void executeOperation(final ApplyTaskEditOperation operation, final GraphicalModelState modelState) {
+   protected void executeOperation(final ApplyTaskEditOperation operation, final GModelState modelState) {
       String text = operation.getExpression();
       if (text.startsWith(TaskEditContextActionProvider.DURATION_PREFIX)) {
          String durationString = text.substring(TaskEditContextActionProvider.DURATION_PREFIX.length());

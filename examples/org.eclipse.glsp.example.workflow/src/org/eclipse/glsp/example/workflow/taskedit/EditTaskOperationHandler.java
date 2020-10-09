@@ -17,15 +17,15 @@ package org.eclipse.glsp.example.workflow.taskedit;
 
 import java.util.Optional;
 
-import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.protocol.GLSPServerException;
 import org.eclipse.glsp.example.workflow.wfgraph.TaskNode;
-import org.eclipse.glsp.server.operationhandler.BasicOperationHandler;
+import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.operations.BasicOperationHandler;
+import org.eclipse.glsp.server.protocol.GLSPServerException;
 
 public class EditTaskOperationHandler extends BasicOperationHandler<EditTaskOperation> {
 
    @Override
-   protected void executeOperation(final EditTaskOperation operation, final GraphicalModelState modelState) {
+   protected void executeOperation(final EditTaskOperation operation, final GModelState modelState) {
       Optional<TaskNode> task = modelState.getIndex().findElementByClass(operation.getTaskId(), TaskNode.class);
       if (task.isEmpty()) {
          throw new RuntimeException("Cannot find task with id '" + operation.getTaskId() + "'");

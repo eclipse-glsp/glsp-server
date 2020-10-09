@@ -15,7 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.example.workflow.taskedit;
 
-import org.eclipse.glsp.api.operation.Operation;
+import org.eclipse.glsp.server.operations.Operation;
 
 public class ApplyTaskEditOperation extends Operation {
 

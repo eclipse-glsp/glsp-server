@@ -20,17 +20,17 @@ import java.util.List;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.eclipse.glsp.api.action.Action;
-import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.types.Severity;
 import org.eclipse.glsp.example.workflow.action.LogAction;
-import org.eclipse.glsp.server.actionhandler.BasicActionHandler;
+import org.eclipse.glsp.server.actions.Action;
+import org.eclipse.glsp.server.actions.BasicActionHandler;
+import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.types.Severity;
 
 public class LogActionHandler extends BasicActionHandler<LogAction> {
    private static Logger LOG = Logger.getLogger(LogActionHandler.class);
 
    @Override
-   protected List<Action> executeAction(final LogAction action, final GraphicalModelState modelState) {
+   protected List<Action> executeAction(final LogAction action, final GModelState modelState) {
       LOG.log(toLevel(action.getSeverity()), action.getMessage());
       return Collections.emptyList();
    }

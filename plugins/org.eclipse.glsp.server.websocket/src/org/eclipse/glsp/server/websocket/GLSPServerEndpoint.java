@@ -21,10 +21,10 @@ import javax.websocket.CloseReason;
 import javax.websocket.EndpointConfig;
 import javax.websocket.Session;
 
-import org.eclipse.glsp.api.jsonrpc.GLSPJsonrpcClient;
-import org.eclipse.glsp.api.jsonrpc.GLSPJsonrpcServer;
-import org.eclipse.glsp.api.protocol.GLSPServer;
-import org.eclipse.glsp.server.json.GsonConfigurator;
+import org.eclipse.glsp.server.jsonrpc.GLSPJsonrpcClient;
+import org.eclipse.glsp.server.jsonrpc.GLSPJsonrpcServer;
+import org.eclipse.glsp.server.jsonrpc.GsonConfigurator;
+import org.eclipse.glsp.server.protocol.GLSPServer;
 import org.eclipse.lsp4j.jsonrpc.Launcher.Builder;
 import org.eclipse.lsp4j.websocket.WebSocketEndpoint;
 

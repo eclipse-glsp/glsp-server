@@ -19,11 +19,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.eclipse.glsp.api.model.GraphicalModelState;
-import org.eclipse.glsp.api.model.ModelStateProvider;
-import org.eclipse.glsp.api.protocol.ClientSessionListener;
-import org.eclipse.glsp.api.protocol.ClientSessionManager;
-import org.eclipse.glsp.api.protocol.GLSPClient;
+import org.eclipse.glsp.server.protocol.ClientSessionListener;
+import org.eclipse.glsp.server.protocol.ClientSessionManager;
+import org.eclipse.glsp.server.protocol.GLSPClient;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -33,7 +31,7 @@ public class DefaultModelStateProvider implements ModelStateProvider, ClientSess
    @Inject()
    protected ClientSessionManager sessionManager;
 
-   private final Map<String, GraphicalModelState> clientModelStates;
+   private final Map<String, GModelState> clientModelStates;
 
    @Inject()
    public DefaultModelStateProvider() {
@@ -46,20 +44,20 @@ public class DefaultModelStateProvider implements ModelStateProvider, ClientSess
    }
 
    @Override
-   public Optional<GraphicalModelState> getModelState(final String clientId) {
+   public Optional<GModelState> getModelState(final String clientId) {
       return Optional.ofNullable(clientModelStates.get(clientId));
    }
 
    @Override
-   public GraphicalModelState create(final String clientId) {
-      GraphicalModelState modelState = createModelState();
+   public GModelState create(final String clientId) {
+      GModelState modelState = createModelState();
       modelState.setClientId(clientId);
       clientModelStates.put(clientId, modelState);
       return modelState;
    }
 
-   protected GraphicalModelState createModelState() {
-      return new ModelStateImpl();
+   protected GModelState createModelState() {
+      return new GModelStateImpl();
    }
 
    @Override

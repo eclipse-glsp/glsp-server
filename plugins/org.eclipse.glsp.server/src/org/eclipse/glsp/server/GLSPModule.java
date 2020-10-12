@@ -32,7 +32,6 @@ import org.eclipse.glsp.server.features.directediting.ContextEditValidatorRegist
 import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
 import org.eclipse.glsp.server.features.navigation.NavigationTargetProviderRegistry;
 import org.eclipse.glsp.server.features.navigation.NavigationTargetResolver;
-import org.eclipse.glsp.server.features.servercommands.ServerCommandHandlerRegistry;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.layout.ILayoutEngine;
@@ -75,7 +74,6 @@ public abstract class GLSPModule extends AbstractModule {
       bind(ContextActionsProviderRegistry.class).to(bindContextActionsProviderRegistry()).in(Singleton.class);
       bind(NavigationTargetProviderRegistry.class).to(bindNavigationTargetProviderRegistry()).in(Singleton.class);
       bind(ContextEditValidatorRegistry.class).to(bindContextEditValidatorRegistry()).in(Singleton.class);
-      bind(ServerCommandHandlerRegistry.class).to(bindServerCommandHandlerRegistry()).in(Singleton.class);
 
       // Configure Optional Bindings (Bindings that cannot be bound to a NullImpl)
       Optional.ofNullable(bindGraphExtension()).ifPresent(ext -> bind(GraphExtension.class).to(ext));
@@ -85,6 +83,7 @@ public abstract class GLSPModule extends AbstractModule {
 
    protected abstract Class<? extends ModelStateProvider> bindModelStateProvider();
 
+   @SuppressWarnings("rawtypes")
    protected abstract Class<? extends GLSPServer> bindGLSPServer();
 
    protected abstract Class<? extends GraphGsonConfiguratorFactory> bindGraphGsonConfiguratorFactory();
@@ -144,8 +143,6 @@ public abstract class GLSPModule extends AbstractModule {
    protected abstract Class<? extends NavigationTargetProviderRegistry> bindNavigationTargetProviderRegistry();
 
    protected abstract Class<? extends ContextEditValidatorRegistry> bindContextEditValidatorRegistry();
-
-   protected abstract Class<? extends ServerCommandHandlerRegistry> bindServerCommandHandlerRegistry();
 
    protected Class<? extends GraphExtension> bindGraphExtension() {
       return null;

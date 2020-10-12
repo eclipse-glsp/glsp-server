@@ -6,7 +6,7 @@
     editPluginClass="org.eclipse.glsp.graph.provider.GlspgraphEditPlugin" updateClasspath="false"
     rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" codeFormatting="true"
     testsDirectory="" testSuiteClass="org.eclipse.glsp.graph.tests.GlspGraphAllTests"
-    importerID="org.eclipse.emf.importer.ecore" bundleManifest="false" complianceLevel="8.0"
+    importerID="org.eclipse.emf.importer.ecore" bundleManifest="false" complianceLevel="11.0"
     copyrightFields="false" publicConstructors="true" runtimeVersion="2.15" operationReflection="true"
     importOrganizing="true" pluginKey="">
   <foreignModel>glsp-graph.ecore</foreignModel>

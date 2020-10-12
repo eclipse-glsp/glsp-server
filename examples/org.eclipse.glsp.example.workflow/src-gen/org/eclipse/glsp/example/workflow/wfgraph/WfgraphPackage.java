@@ -488,22 +488,13 @@ public interface WfgraphPackage extends EPackage {
    int ICON__LAYOUT_OPTIONS = GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS;
 
    /**
-    * The feature id for the '<em><b>Command Id</b></em>' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int ICON__COMMAND_ID = GraphPackage.GCOMPARTMENT_FEATURE_COUNT + 0;
-
-   /**
     * The number of structural features of the '<em>Icon</em>' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int ICON_FEATURE_COUNT = GraphPackage.GCOMPARTMENT_FEATURE_COUNT + 1;
+   int ICON_FEATURE_COUNT = GraphPackage.GCOMPARTMENT_FEATURE_COUNT + 0;
 
    /**
     * The number of operations of the '<em>Icon</em>' class.
@@ -757,17 +748,6 @@ public interface WfgraphPackage extends EPackage {
    EClass getIcon();
 
    /**
-    * Returns the meta object for the attribute '{@link org.eclipse.glsp.example.workflow.wfgraph.Icon#getCommandId <em>Command Id</em>}'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the meta object for the attribute '<em>Command Id</em>'.
-    * @see org.eclipse.glsp.example.workflow.wfgraph.Icon#getCommandId()
-    * @see #getIcon()
-    * @generated
-    */
-   EAttribute getIcon_CommandId();
-
-   /**
     * Returns the meta object for class '{@link org.eclipse.glsp.example.workflow.wfgraph.WeightedEdge <em>Weighted Edge</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -888,14 +868,6 @@ public interface WfgraphPackage extends EPackage {
        * @generated
        */
       EClass ICON = eINSTANCE.getIcon();
-
-      /**
-       * The meta object literal for the '<em><b>Command Id</b></em>' attribute feature.
-       * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-       * @generated
-       */
-      EAttribute ICON__COMMAND_ID = eINSTANCE.getIcon_CommandId();
 
       /**
        * The meta object literal for the '{@link org.eclipse.glsp.example.workflow.wfgraph.impl.WeightedEdgeImpl <em>Weighted Edge</em>}' class.

@@ -51,7 +51,7 @@ public class GEdgePlacementImpl extends MinimalEObjectImpl.Container implements 
     * @generated
     * @ordered
     */
-   protected static final Double POSITION_EDEFAULT = new Double(0.0);
+   protected static final Double POSITION_EDEFAULT = Double.valueOf(0.0);
 
    /**
     * The cached value of the '{@link #getPosition() <em>Position</em>}' attribute.
@@ -71,7 +71,7 @@ public class GEdgePlacementImpl extends MinimalEObjectImpl.Container implements 
     * @generated
     * @ordered
     */
-   protected static final Double OFFSET_EDEFAULT = new Double(0.0);
+   protected static final Double OFFSET_EDEFAULT = Double.valueOf(0.0);
 
    /**
     * The cached value of the '{@link #getOffset() <em>Offset</em>}' attribute.

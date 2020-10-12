@@ -19,7 +19,7 @@ public class ReconnectEdgeOperation extends Operation {
 
    public static final String ID = "reconnectEdge";
 
-   private String connectionElementId;
+   private String edgeElementId;
    private String sourceElementId;
    private String targetElementId;
 
@@ -27,19 +27,17 @@ public class ReconnectEdgeOperation extends Operation {
       super(ID);
    }
 
-   public ReconnectEdgeOperation(final String connectionElementId, final String sourceElementId,
+   public ReconnectEdgeOperation(final String edgeElementId, final String sourceElementId,
       final String targetElementId) {
       this();
-      this.connectionElementId = connectionElementId;
+      this.edgeElementId = edgeElementId;
       this.sourceElementId = sourceElementId;
       this.targetElementId = targetElementId;
    }
 
-   public String getConnectionElementId() { return connectionElementId; }
+   public String getEdgeElementId() { return edgeElementId; }
 
-   public void setConnectionElementId(final String connectionElementId) {
-      this.connectionElementId = connectionElementId;
-   }
+   public void setEdgeElementId(final String edgeElementId) { this.edgeElementId = edgeElementId; }
 
    public String getSourceElementId() { return sourceElementId; }
 

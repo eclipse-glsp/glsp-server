@@ -22,9 +22,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute workflow-graph.ecore#//TaskNode/taskType"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute workflow-graph.ecore#//TaskNode/reference"/>
     </genClasses>
-    <genClasses ecoreClass="workflow-graph.ecore#//Icon">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute workflow-graph.ecore#//Icon/commandId"/>
-    </genClasses>
+    <genClasses ecoreClass="workflow-graph.ecore#//Icon"/>
     <genClasses ecoreClass="workflow-graph.ecore#//WeightedEdge">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute workflow-graph.ecore#//WeightedEdge/probability"/>
     </genClasses>

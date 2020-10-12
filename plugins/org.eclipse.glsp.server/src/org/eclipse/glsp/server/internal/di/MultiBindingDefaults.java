@@ -24,7 +24,6 @@ import org.eclipse.glsp.server.actions.ClientActionHandler;
 import org.eclipse.glsp.server.actions.ComputedBoundsActionHandler;
 import org.eclipse.glsp.server.actions.ConfigureServerHandlersAction;
 import org.eclipse.glsp.server.actions.DisposeClientSessionActionHandler;
-import org.eclipse.glsp.server.actions.ExportSVGAction;
 import org.eclipse.glsp.server.actions.FitToScreenAction;
 import org.eclipse.glsp.server.actions.GLSPServerStatusAction;
 import org.eclipse.glsp.server.actions.InitializeClientSessionActionHandler;
@@ -60,8 +59,7 @@ import org.eclipse.glsp.server.features.navigation.SetNavigationTargetsAction;
 import org.eclipse.glsp.server.features.navigation.SetResolvedNavigationTargetAction;
 import org.eclipse.glsp.server.features.popup.RequestPopupModelActionHandler;
 import org.eclipse.glsp.server.features.popup.SetPopupModelAction;
-import org.eclipse.glsp.server.features.servercommands.ExecuteServerCommandActionHandler;
-import org.eclipse.glsp.server.features.validation.ClearMarkersAction;
+import org.eclipse.glsp.server.features.validation.DeleteMarkersAction;
 import org.eclipse.glsp.server.features.validation.RequestMarkersHandler;
 import org.eclipse.glsp.server.features.validation.SetMarkersAction;
 import org.eclipse.glsp.server.operations.OperationActionHandler;
@@ -73,7 +71,7 @@ import org.eclipse.glsp.server.operations.gmodel.CutOperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.DeleteOperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.PasteOperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.ReconnectOperationHandler;
+import org.eclipse.glsp.server.operations.gmodel.ReconnectEdgeOperationHandler;
 
 import com.google.common.collect.Lists;
 
@@ -91,7 +89,6 @@ public final class MultiBindingDefaults {
       RequestPopupModelActionHandler.class,
       SaveModelActionHandler.class,
       UndoRedoActionHandler.class,
-      ExecuteServerCommandActionHandler.class,
       ResolveNavigationTargetActionHandler.class,
       RequestClipboardDataActionHandler.class,
       RequestNavigationTargetsActionHandler.class,
@@ -103,8 +100,7 @@ public final class MultiBindingDefaults {
 
    public static final List<Class<? extends Action>> DEFAULT_CLIENT_ACTIONS = Lists.newArrayList(
       CenterAction.class,
-      ClearMarkersAction.class,
-      ExportSVGAction.class,
+      DeleteMarkersAction.class,
       FitToScreenAction.class,
       GLSPServerStatusAction.class,
       NavigateToTargetAction.class,
@@ -138,6 +134,6 @@ public final class MultiBindingDefaults {
       DeleteOperationHandler.class,
       LayoutOperationHandler.class,
       PasteOperationHandler.class,
-      ReconnectOperationHandler.class,
+      ReconnectEdgeOperationHandler.class,
       CompoundOperationHandler.class);
 }

@@ -15,7 +15,6 @@
  ********************************************************************************/
 package org.eclipse.glsp.example.workflow.utils;
 
-import org.eclipse.glsp.example.workflow.handler.SimulateCommandHandler;
 import org.eclipse.glsp.example.workflow.wfgraph.ActivityNode;
 import org.eclipse.glsp.example.workflow.wfgraph.Icon;
 import org.eclipse.glsp.example.workflow.wfgraph.TaskNode;
@@ -143,7 +142,6 @@ public final class WorkflowBuilder {
          return new IconBuilder() //
             .id(taskNode.getId() + "_icon") //
             .layout(GConstants.Layout.STACK) //
-            .commandId(SimulateCommandHandler.SIMULATE_COMMAND_ID) //
             .layoutOptions(new GLayoutOptions() //
                .hAlign(HAlign.CENTER) //
                .resizeContainer(false)) //
@@ -160,26 +158,14 @@ public final class WorkflowBuilder {
    }
 
    public static class IconBuilder extends AbstractGCompartmentBuilder<Icon, IconBuilder> {
-      private String commandId;
 
       public IconBuilder() {
          super(ModelTypes.ICON);
       }
 
-      public IconBuilder commandId(final String commandId) {
-         this.commandId = commandId;
-         return self();
-      }
-
       @Override
       protected Icon instantiate() {
          return WfgraphFactory.eINSTANCE.createIcon();
-      }
-
-      @Override
-      protected void setProperties(final Icon comp) {
-         super.setProperties(comp);
-         comp.setCommandId(commandId);
       }
 
       @Override

@@ -225,16 +225,6 @@ public class WfgraphPackageImpl extends EPackageImpl implements WfgraphPackage {
     * @generated
     */
    @Override
-   public EAttribute getIcon_CommandId() {
-      return (EAttribute)iconEClass.getEStructuralFeatures().get(0);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
    public EClass getWeightedEdge() {
       return weightedEdgeEClass;
    }
@@ -289,7 +279,6 @@ public class WfgraphPackageImpl extends EPackageImpl implements WfgraphPackage {
       createEAttribute(taskNodeEClass, TASK_NODE__REFERENCE);
 
       iconEClass = createEClass(ICON);
-      createEAttribute(iconEClass, ICON__COMMAND_ID);
 
       weightedEdgeEClass = createEClass(WEIGHTED_EDGE);
       createEAttribute(weightedEdgeEClass, WEIGHTED_EDGE__PROBABILITY);
@@ -343,7 +332,6 @@ public class WfgraphPackageImpl extends EPackageImpl implements WfgraphPackage {
       initEAttribute(getTaskNode_Reference(), ecorePackage.getEString(), "reference", null, 0, 1, TaskNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
       initEClass(iconEClass, Icon.class, "Icon", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-      initEAttribute(getIcon_CommandId(), ecorePackage.getEString(), "commandId", null, 0, 1, Icon.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
       initEClass(weightedEdgeEClass, WeightedEdge.class, "WeightedEdge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
       initEAttribute(getWeightedEdge_Probability(), ecorePackage.getEString(), "probability", null, 0, 1, WeightedEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

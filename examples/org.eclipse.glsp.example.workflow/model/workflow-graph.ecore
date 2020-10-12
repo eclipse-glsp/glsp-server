@@ -14,9 +14,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="taskType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="reference" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Icon" eSuperTypes="../../org.eclipse.glsp.graph/model/glsp-graph.ecore#//GCompartment">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="commandId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Icon" eSuperTypes="../../org.eclipse.glsp.graph/model/glsp-graph.ecore#//GCompartment"/>
   <eClassifiers xsi:type="ecore:EClass" name="WeightedEdge" eSuperTypes="../../org.eclipse.glsp.graph/model/glsp-graph.ecore#//GEdge">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="probability" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>

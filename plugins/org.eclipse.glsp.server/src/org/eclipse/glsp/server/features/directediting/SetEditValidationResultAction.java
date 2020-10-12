@@ -15,6 +15,9 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.features.directediting;
 
+import java.util.Collections;
+import java.util.Map;
+
 import org.eclipse.glsp.server.actions.ResponseAction;
 
 public class SetEditValidationResultAction extends ResponseAction {
@@ -22,18 +25,27 @@ public class SetEditValidationResultAction extends ResponseAction {
    public static final String ID = "setEditValidationResult";
 
    private ValidationStatus status;
+   private Map<String, String> args;
 
    public SetEditValidationResultAction() {
       super(ID);
    }
 
-   public SetEditValidationResultAction(final ValidationStatus status) {
+   public SetEditValidationResultAction(final ValidationStatus status, final Map<String, String> args) {
       this();
       this.status = status;
+      this.args = args;
+   }
+
+   public SetEditValidationResultAction(final ValidationStatus status) {
+      this(status, Collections.emptyMap());
    }
 
    public ValidationStatus getStatus() { return status; }
 
    public void setStatus(final ValidationStatus status) { this.status = status; }
 
+   public Map<String, String> getArgs() { return args; }
+
+   public void setArgs(final Map<String, String> args) { this.args = args; }
 }

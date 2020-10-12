@@ -25,12 +25,12 @@ import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.BasicOperationHandler;
 import org.eclipse.glsp.server.operations.ReconnectEdgeOperation;
 
-public class ReconnectOperationHandler extends BasicOperationHandler<ReconnectEdgeOperation> {
+public class ReconnectEdgeOperationHandler extends BasicOperationHandler<ReconnectEdgeOperation> {
    @Override
    @SuppressWarnings("checkstyle:CyclomaticComplexity")
    public void executeOperation(final ReconnectEdgeOperation operation, final GModelState modelState) {
 
-      if (operation.getConnectionElementId() == null || operation.getSourceElementId() == null
+      if (operation.getEdgeElementId() == null || operation.getSourceElementId() == null
          || operation.getTargetElementId() == null) {
          throw new IllegalArgumentException("Incomplete reconnect connection action");
       }
@@ -38,8 +38,8 @@ public class ReconnectOperationHandler extends BasicOperationHandler<ReconnectEd
       // check for existence of matching elements
       GModelIndex index = modelState.getIndex();
 
-      GEdge edge = getOrThrow(index.findElementByClass(operation.getConnectionElementId(), GEdge.class),
-         "Invalid edge: edge ID " + operation.getConnectionElementId());
+      GEdge edge = getOrThrow(index.findElementByClass(operation.getEdgeElementId(), GEdge.class),
+         "Invalid edge: edge ID " + operation.getEdgeElementId());
       GModelElement source = getOrThrow(index.findElement(operation.getSourceElementId(), IS_CONNECTABLE),
          "Invalid source: source ID " + operation.getSourceElementId());
       GModelElement target = getOrThrow(index.findElement(operation.getTargetElementId(), IS_CONNECTABLE),

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,22 +13,29 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.internal.di;
+package org.eclipse.glsp.server.features.validation;
 
-import java.util.Set;
+import java.util.List;
 
-import org.eclipse.glsp.server.features.servercommands.ServerCommandHandler;
-import org.eclipse.glsp.server.features.servercommands.ServerCommandHandlerRegistry;
+import org.eclipse.glsp.server.actions.Action;
 
-import com.google.inject.Inject;
+public class DeleteMarkersAction extends Action {
 
-public class DIServerCommandHandlerRegistry extends MapRegistry<String, ServerCommandHandler>
-   implements ServerCommandHandlerRegistry {
+   public static final String ID = "deleteMarkers";
 
-   @Inject
-   public DIServerCommandHandlerRegistry(final Set<ServerCommandHandler> handlers) {
-      handlers.forEach(handler -> {
-         handler.handledCommandIds().forEach(id -> register(id, handler));
-      });
+   private List<Marker> markers;
+
+   public DeleteMarkersAction() {
+      super(ID);
    }
+
+   public DeleteMarkersAction(final List<Marker> markers) {
+      this();
+      this.markers = markers;
+   }
+
+   public List<Marker> getMarkers() { return markers; }
+
+   public void setMarkers(final List<Marker> markers) { this.markers = markers; }
+
 }

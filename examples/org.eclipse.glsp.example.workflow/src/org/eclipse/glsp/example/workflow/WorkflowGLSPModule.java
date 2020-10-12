@@ -24,7 +24,6 @@ import org.eclipse.glsp.example.workflow.handler.CreateManualTaskHandler;
 import org.eclipse.glsp.example.workflow.handler.CreateMergeNodeHandler;
 import org.eclipse.glsp.example.workflow.handler.CreateWeightedEdgeHandler;
 import org.eclipse.glsp.example.workflow.handler.LogActionHandler;
-import org.eclipse.glsp.example.workflow.handler.SimulateCommandHandler;
 import org.eclipse.glsp.example.workflow.handler.WorkflowRequestContextActionsHandler;
 import org.eclipse.glsp.example.workflow.labeledit.WorkflowLabelEditValidator;
 import org.eclipse.glsp.example.workflow.layout.WorkflowLayoutEngine;
@@ -54,7 +53,6 @@ import org.eclipse.glsp.server.features.directediting.ContextEditValidator;
 import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
 import org.eclipse.glsp.server.features.navigation.NavigationTargetProvider;
 import org.eclipse.glsp.server.features.navigation.NavigationTargetResolver;
-import org.eclipse.glsp.server.features.servercommands.ServerCommandHandler;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.layout.ILayoutEngine;
 import org.eclipse.glsp.server.layout.ServerLayoutConfiguration;
@@ -90,12 +88,6 @@ public class WorkflowGLSPModule extends DefaultGLSPModule {
    @Override
    protected void configureDiagramConfigurations(final MultiBinding<DiagramConfiguration> binding) {
       binding.add(WorkflowDiagramConfiguration.class);
-   }
-
-   @Override
-   protected void configureServerCommandHandlers(final MultiBinding<ServerCommandHandler> binding) {
-      super.configureServerCommandHandlers(binding);
-      binding.add(SimulateCommandHandler.class);
    }
 
    @Override

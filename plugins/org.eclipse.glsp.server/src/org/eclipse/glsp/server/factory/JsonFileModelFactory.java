@@ -38,10 +38,12 @@ import com.google.inject.Inject;
  *
  */
 public class JsonFileModelFactory implements ModelFactory {
+
    private static final String FILE_PREFIX = "file://";
 
    @Inject
    private GraphGsonConfiguratorFactory gsonConfigurationFactory;
+
    private GModelRoot modelRoot;
 
    @Override

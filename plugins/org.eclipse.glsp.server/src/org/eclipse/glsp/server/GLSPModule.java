@@ -30,6 +30,7 @@ import org.eclipse.glsp.server.features.contextactions.ContextActionsProviderReg
 import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
 import org.eclipse.glsp.server.features.directediting.ContextEditValidatorRegistry;
 import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
+import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
 import org.eclipse.glsp.server.features.navigation.NavigationTargetProviderRegistry;
 import org.eclipse.glsp.server.features.navigation.NavigationTargetResolver;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
@@ -65,6 +66,7 @@ public abstract class GLSPModule extends AbstractModule {
       bind(CommandPaletteActionProvider.class).to(bindCommandPaletteActionProvider());
       bind(ContextMenuItemProvider.class).to(bindContextMenuItemProvider());
       bind(NavigationTargetResolver.class).to(bindNavigationTargetResolver());
+      bind(ModelSourceWatcher.class).to(bindModelSourceWatcher()).in(Singleton.class);
       bind(ClientSessionManager.class).toInstance(getClientSessionManager());
       // Configure set suppliers
       bind(ActionRegistry.class).to(bindActionRegistry()).in(Singleton.class);
@@ -128,6 +130,10 @@ public abstract class GLSPModule extends AbstractModule {
 
    protected Class<? extends NavigationTargetResolver> bindNavigationTargetResolver() {
       return NavigationTargetResolver.NullImpl.class;
+   }
+
+   protected Class<? extends ModelSourceWatcher> bindModelSourceWatcher() {
+      return ModelSourceWatcher.NullImpl.class;
    }
 
    protected abstract Class<? extends ActionRegistry> bindActionRegistry();

@@ -23,6 +23,7 @@
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<modules>
+				<module>org.eclipse.glsp.server.test</module>
 				<module>org.eclipse.glsp.graph.test</module>
 			</modules>
 		</profile>

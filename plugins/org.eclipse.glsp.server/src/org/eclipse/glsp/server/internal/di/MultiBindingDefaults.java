@@ -52,6 +52,7 @@ import org.eclipse.glsp.server.features.contextactions.SetContextActions;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperationHandler;
 import org.eclipse.glsp.server.features.directediting.RequestEditValidationHandler;
 import org.eclipse.glsp.server.features.directediting.SetEditValidationResultAction;
+import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceChangedAction;
 import org.eclipse.glsp.server.features.navigation.NavigateToTargetAction;
 import org.eclipse.glsp.server.features.navigation.RequestNavigationTargetsActionHandler;
 import org.eclipse.glsp.server.features.navigation.ResolveNavigationTargetActionHandler;
@@ -103,6 +104,7 @@ public final class MultiBindingDefaults {
       DeleteMarkersAction.class,
       FitToScreenAction.class,
       GLSPServerStatusAction.class,
+      ModelSourceChangedAction.class,
       NavigateToTargetAction.class,
       RequestBoundsAction.class,
       SelectAction.class,

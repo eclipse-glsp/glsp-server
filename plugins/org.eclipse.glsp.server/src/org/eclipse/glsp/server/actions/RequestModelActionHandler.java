@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.server.factory.ModelFactory;
+import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.ClientOptions;
 
@@ -29,18 +30,23 @@ public class RequestModelActionHandler extends BasicActionHandler<RequestModelAc
    @Inject
    protected ModelFactory modelFactory;
 
+   @Inject
+   private ModelSourceWatcher modelSourceWatcher;
+
    @Override
    public List<Action> executeAction(final RequestModelAction action, final GModelState modelState) {
-
       GModelRoot model = modelFactory.loadModel(action, modelState);
       modelState.setRoot(model);
       modelState.setClientOptions(action.getOptions());
+
+      modelSourceWatcher.startWatching(modelState);
+
       boolean needsClientLayout = ClientOptions.getBoolValue(action.getOptions(),
          ClientOptions.NEEDS_CLIENT_LAYOUT);
 
       Action responseAction = needsClientLayout ? new RequestBoundsAction(modelState.getRoot())
          : new SetModelAction(modelState.getRoot());
       return listOf(responseAction);
-
    }
+
 }

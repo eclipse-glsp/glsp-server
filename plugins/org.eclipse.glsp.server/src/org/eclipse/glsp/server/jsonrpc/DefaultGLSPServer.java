@@ -46,7 +46,7 @@ public class DefaultGLSPServer<T> implements GLSPJsonrpcServer {
 
    private GLSPJsonrpcClient clientProxy;
    private final Class<T> optionsClazz;
-   private boolean initialized;
+   protected CompletableFuture<Boolean> initialized;
 
    private String applicationId;
 
@@ -56,31 +56,30 @@ public class DefaultGLSPServer<T> implements GLSPJsonrpcServer {
 
    public DefaultGLSPServer(final Class<T> optionsClazz) {
       this.optionsClazz = optionsClazz;
+      this.initialized = new CompletableFuture<>();
    }
 
    @Override
    @SuppressWarnings("checkstyle:IllegalCatch")
    public CompletableFuture<Boolean> initialize(final InitializeParameters params) {
       try {
-         boolean completed;
          this.applicationId = params.getApplicationId();
          if (optionsClazz != null && params.getOptions() instanceof JsonElement) {
             T options = new Gson().fromJson((JsonElement) params.getOptions(), optionsClazz);
-            completed = handleOptions(options);
+            initialized = handleOptions(options);
          } else {
-            completed = handleOptions(null);
+            initialized = handleOptions(null);
          }
-         this.initialized = completed;
-         return CompletableFuture.completedFuture(completed);
+         return initialized;
       } catch (Throwable ex) {
          log.error("Could not initialize server due to corrupted options: " + params.getOptions(), ex);
-         this.initialized = false;
-         return CompletableFuture.completedFuture(false);
+         initialized.complete(false);
+         return initialized;
       }
    }
 
-   protected boolean handleOptions(final T options) {
-      return true;
+   protected CompletableFuture<Boolean> handleOptions(final T options) {
+      return CompletableFuture.completedFuture(true);
    }
 
    @Override
@@ -104,7 +103,7 @@ public class DefaultGLSPServer<T> implements GLSPJsonrpcServer {
          return null;
       };
       try {
-         if (!initialized) {
+         if (!isInitialized()) {
             throw new GLSPServerException(
                String.format("Could not process action message '%s'. The server has not been initalized yet", message));
          }
@@ -114,11 +113,12 @@ public class DefaultGLSPServer<T> implements GLSPJsonrpcServer {
       }
    }
 
+   public boolean isInitialized() { return initialized.getNow(false); }
+
    @Override
    public CompletableFuture<Boolean> shutdown() {
       boolean completed = false;
       if (this.clientProxy != null) {
-         this.initialized = false;
          completed = sessionManager.disconnectClient(this.clientProxy);
          this.clientProxy = null;
       }

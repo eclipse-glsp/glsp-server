@@ -17,16 +17,50 @@ package org.eclipse.glsp.server.features.modelsourcewatcher;
 
 import org.eclipse.glsp.server.model.GModelState;
 
+/**
+ * A model source watcher observes the model source and notifies the client if the model
+ * source has changed.
+ */
 public interface ModelSourceWatcher {
 
+   /**
+    * Starts watching the model source in the specified <code>modelState</code>.
+    *
+    * @param modelState The model state indicating the model source.
+    */
    default void startWatching(final GModelState modelState) {}
 
+   /**
+    * Stops watching the model source in the specified <code>modelState</code>.
+    * <p>
+    * If the watching hasn't been started before, this won't do anything.
+    * </p>
+    *
+    * @param modelState The model state indicating the model source.
+    */
    default void stopWatching(final GModelState modelState) {}
 
+   /**
+    * Pauses the client notifications of this watcher.
+    * <p>
+    * If the watching hasn't been started before, this won't do anything.
+    * </p>
+    *
+    * @param modelState The model state indicating the model source.
+    */
    default void pauseWatching(final GModelState modelState) {}
 
+   /**
+    * Continues the client notifications of this watcher.
+    * <p>
+    * If the watching hasn't been started or paused before, this won't do anything.
+    * </p>
+    *
+    * @param modelState The model state indicating the model source.
+    */
    default void continueWatching(final GModelState modelState) {}
 
+   /** A no-op watcher that can be bound if no watching is intended or supported. */
    final class NullImpl implements ModelSourceWatcher {}
 
 }

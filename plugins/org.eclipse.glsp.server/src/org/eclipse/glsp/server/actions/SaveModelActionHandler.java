@@ -45,13 +45,16 @@ public class SaveModelActionHandler extends BasicActionHandler<SaveModelAction> 
 
    @Override
    public List<Action> executeAction(final SaveModelAction action, final GModelState modelState) {
-      saveModelState(modelState);
-
+      modelSourceWatcher.pauseWatching(modelState);
+      try {
+         saveModelState(modelState);
+      } finally {
+         modelSourceWatcher.continueWatching(modelState);
+      }
       return listOf(new SetDirtyStateAction(modelState.isDirty()));
    }
 
-   private void saveModelState(final GModelState modelState) {
-      modelSourceWatcher.pauseWatching(modelState);
+   protected void saveModelState(final GModelState modelState) {
       convertToFile(modelState).ifPresent(file -> {
          try (Writer writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)) {
             Gson gson = gsonConfigurationFactory.configureGson().setPrettyPrinting().create();
@@ -61,10 +64,9 @@ public class SaveModelActionHandler extends BasicActionHandler<SaveModelAction> 
             LOG.error(e);
          }
       });
-      modelSourceWatcher.continueWatching(modelState);
    }
 
-   private Optional<File> convertToFile(final GModelState modelState) {
+   protected Optional<File> convertToFile(final GModelState modelState) {
       Optional<String> sourceUriOpt = ClientOptions.getValue(modelState.getClientOptions(), ClientOptions.SOURCE_URI);
       if (sourceUriOpt.isPresent()) {
          return Optional.of(new File(sourceUriOpt.get()));

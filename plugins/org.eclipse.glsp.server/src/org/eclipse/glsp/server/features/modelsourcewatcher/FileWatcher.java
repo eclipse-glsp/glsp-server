@@ -18,7 +18,6 @@ package org.eclipse.glsp.server.features.modelsourcewatcher;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.ClosedWatchServiceException;
 import java.nio.file.FileSystems;
@@ -27,28 +26,30 @@ import java.nio.file.Path;
 import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.protocol.ClientSessionListener;
 import org.eclipse.glsp.server.protocol.ClientSessionManager;
 import org.eclipse.glsp.server.protocol.GLSPClient;
 import org.eclipse.glsp.server.utils.ClientOptions;
+import org.eclipse.glsp.server.utils.Debouncer;
 
 import com.google.inject.Inject;
 
 public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
 
-   private static final String FILE = "file://";
+   private static final int DEBOUNCE_DELAY = 500;
+
+   private final Debouncer<ClientNotification> clientNotificationDebouncer;
 
    @Inject
    private ActionDispatcher actionDispatcher;
@@ -58,6 +59,7 @@ public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
    @Inject
    public FileWatcher(final ClientSessionManager sessionManager) {
       sessionManager.addListener(this);
+      clientNotificationDebouncer = new Debouncer<>(this::notifyClient, DEBOUNCE_DELAY, TimeUnit.MILLISECONDS);
    }
 
    public FileWatcher(final ClientSessionManager sessionManager, final ActionDispatcher actionDispatcher) {
@@ -68,6 +70,7 @@ public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
    @Override
    public void sessionClosed(final String clientId, final GLSPClient client) {
       disposeAllWorkers(clientId);
+      clientNotificationDebouncer.dispose();
    }
 
    @Override
@@ -91,13 +94,8 @@ public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
    }
 
    protected List<Path> getPaths(final GModelState modelState) {
-      final Optional<String> uriString = ClientOptions.getValue(modelState.getClientOptions(),
-         ClientOptions.SOURCE_URI);
-      URI sourceUri = URI.createFileURI(uriString.map(uri -> uri.replace(FILE, "")).orElseThrow());
-      sourceUri = URI.createURI(URI.decode(sourceUri.toString()));
-      final List<Path> paths = new ArrayList<>();
-      paths.add(new File(sourceUri.toFileString()).toPath());
-      return paths;
+      return ClientOptions.getSourceUriAsFile(modelState.getClientOptions()).stream()
+         .map(file -> file.toPath()).collect(Collectors.toList());
    }
 
    private List<FileWatchWorker> createWorkers(final GModelState modelState) {
@@ -125,8 +123,13 @@ public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
          .collect(Collectors.toList());
    }
 
-   protected void notifyClient(final String clientId, final Path filePath) {
-      actionDispatcher.dispatch(clientId, new ModelSourceChangedAction(filePath.toAbsolutePath().toString()));
+   protected void scheduleClientNotification(final String clientId, final Path filePath) {
+      clientNotificationDebouncer.accept(new ClientNotification(clientId, filePath.getFileName().toString()));
+   }
+
+   protected void notifyClient(final ClientNotification clientNotification) {
+      actionDispatcher.dispatch(clientNotification.clientId,
+         new ModelSourceChangedAction(clientNotification.modelSourceName));
    }
 
    class FileWatchWorker extends Thread {
@@ -169,7 +172,7 @@ public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
          throws IOException {
          for (final WatchEvent<?> event : key.pollEvents()) {
             if (!paused && !stopped && Files.isSameFile(directory.resolve((Path) event.context()), filePath)) {
-               notifyClient(clientId, filePath);
+               scheduleClientNotification(clientId, filePath);
             }
          }
       }
@@ -189,6 +192,63 @@ public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
       public void continueNotifications() {
          paused = false;
       }
+
+   }
+
+   class ClientNotification {
+
+      String clientId;
+      String modelSourceName;
+
+      ClientNotification(final String clientId, final String modelSourceName) {
+         super();
+         this.clientId = clientId;
+         this.modelSourceName = modelSourceName;
+      }
+
+      @Override
+      public int hashCode() {
+         final int prime = 31;
+         int result = 1;
+         result = prime * result + getEnclosingInstance().hashCode();
+         result = prime * result + ((clientId == null) ? 0 : clientId.hashCode());
+         result = prime * result + ((modelSourceName == null) ? 0 : modelSourceName.hashCode());
+         return result;
+      }
+
+      @Override
+      public boolean equals(final Object obj) {
+         if (this == obj) {
+            return true;
+         }
+         if (obj == null) {
+            return false;
+         }
+         if (getClass() != obj.getClass()) {
+            return false;
+         }
+         final ClientNotification other = (ClientNotification) obj;
+         if (!getEnclosingInstance().equals(other.getEnclosingInstance())) {
+            return false;
+         }
+         if (clientId == null) {
+            if (other.clientId != null) {
+               return false;
+            }
+         } else if (!clientId.equals(other.clientId)) {
+            return false;
+         }
+         if (modelSourceName == null) {
+            if (other.modelSourceName != null) {
+               return false;
+            }
+         } else if (!modelSourceName.equals(other.modelSourceName)) {
+            return false;
+         }
+         return true;
+      }
+
+      private FileWatcher getEnclosingInstance() { return FileWatcher.this; }
 
    }
 

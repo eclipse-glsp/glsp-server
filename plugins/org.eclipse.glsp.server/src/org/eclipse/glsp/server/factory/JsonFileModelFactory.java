@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GModelRoot;
@@ -39,8 +40,6 @@ import com.google.inject.Inject;
  */
 public class JsonFileModelFactory implements ModelFactory {
 
-   private static final String FILE_PREFIX = "file://";
-
    @Inject
    private GraphGsonConfiguratorFactory gsonConfigurationFactory;
 
@@ -48,24 +47,16 @@ public class JsonFileModelFactory implements ModelFactory {
 
    @Override
    public GModelRoot loadModel(final RequestModelAction action, final GModelState modelState) {
-      String sourceURI = action.getOptions().get(ClientOptions.SOURCE_URI);
-      File modelFile = convertToFile(sourceURI);
-      if (modelFile != null && modelFile.exists()) {
-         try (Reader reader = new InputStreamReader(new FileInputStream(modelFile), StandardCharsets.UTF_8)) {
+      final Optional<File> file = ClientOptions.getSourceUriAsFile(action.getOptions());
+      if (file.isPresent() && file.get().exists()) {
+         try (Reader reader = new InputStreamReader(new FileInputStream(file.get()), StandardCharsets.UTF_8)) {
             Gson gson = gsonConfigurationFactory.configureGson().create();
             modelRoot = gson.fromJson(reader, GGraph.class);
          } catch (IOException e) {
-            throw new GLSPServerException("Could not load model from file: " + sourceURI, e);
+            throw new GLSPServerException("Could not load model from file: " + file.get().toURI().toString(), e);
          }
       }
       return modelRoot;
-   }
-
-   protected File convertToFile(final String sourceURI) {
-      if (sourceURI != null) {
-         return new File(sourceURI.replace(FILE_PREFIX, ""));
-      }
-      return null;
    }
 
 }

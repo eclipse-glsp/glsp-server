@@ -49,16 +49,16 @@ import com.google.inject.Inject;
 
 public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
 
-   private static final int DEBOUNCE_DELAY = 500;
-
-   private Debouncer<ClientNotification> clientNotificationDebouncer;
+   protected Debouncer<ClientNotification> clientNotificationDebouncer;
 
    @Inject
-   private ActionDispatcher actionDispatcher;
+   protected ActionDispatcher actionDispatcher;
 
-   private final ClientSessionManager sessionManager;
+   protected final ClientSessionManager sessionManager;
 
-   private final Map<String, List<FileWatchWorker>> workers = new HashMap<>();
+   protected int debounceDelay = 500;
+
+   protected final Map<String, List<FileWatchWorker>> workers = new HashMap<>();
 
    @Inject
    public FileWatcher(final ClientSessionManager sessionManager) {
@@ -70,6 +70,10 @@ public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
       this(sessionManager);
       this.actionDispatcher = actionDispatcher;
    }
+
+   public int getDebounceDelay() { return debounceDelay; }
+
+   public void setDebounceDelay(final int debounceDelay) { this.debounceDelay = debounceDelay; }
 
    @Override
    public void clientDisconnected(final GLSPClient client) {
@@ -102,7 +106,8 @@ public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
    }
 
    protected void start(final GModelState modelState) {
-      clientNotificationDebouncer = new Debouncer<>(this::notifyClient, DEBOUNCE_DELAY, TimeUnit.MILLISECONDS);
+      IDisposable.disposeIfExists(clientNotificationDebouncer);
+      clientNotificationDebouncer = new Debouncer<>(this::notifyClient, getDebounceDelay(), TimeUnit.MILLISECONDS);
       createWorkers(modelState).forEach(FileWatchWorker::start);
    }
 

@@ -69,4 +69,9 @@ public class DefaultModelStateProvider implements ModelStateProvider, ClientSess
    public void sessionClosed(final String clientId, final GLSPClient client) {
       this.clientModelStates.remove(clientId);
    }
+
+   @Override
+   public void clientDisconnected(final GLSPClient client) {
+      sessionManager.removeListener(this);
+   }
 }

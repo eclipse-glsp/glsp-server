@@ -51,6 +51,8 @@ import org.eclipse.glsp.server.features.contextactions.RequestContextActionsHand
 import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
 import org.eclipse.glsp.server.features.directediting.ContextEditValidator;
 import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
+import org.eclipse.glsp.server.features.modelsourcewatcher.FileWatcher;
+import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
 import org.eclipse.glsp.server.features.navigation.NavigationTargetProvider;
 import org.eclipse.glsp.server.features.navigation.NavigationTargetResolver;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
@@ -163,5 +165,10 @@ public class WorkflowGLSPModule extends DefaultGLSPModule {
    @Override
    protected Class<? extends ModelFactory> bindModelFactory() {
       return WorkflowModelFactory.class;
+   }
+
+   @Override
+   protected Class<? extends ModelSourceWatcher> bindModelSourceWatcher() {
+      return FileWatcher.class;
    }
 }

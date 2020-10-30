@@ -26,6 +26,7 @@ import org.eclipse.glsp.server.utils.ServerStatusUtil;
 import com.google.inject.Inject;
 
 public class WorkflowModelFactory extends JsonFileModelFactory {
+
    @Inject
    private ActionDispatcher actionDispatcher;
 
@@ -39,6 +40,8 @@ public class WorkflowModelFactory extends JsonFileModelFactory {
 
       actionDispatcher.dispatch(clientId, ServerStatusUtil.clear());
       actionDispatcher.dispatch(clientId, ServerMessageUtil.clear());
+
       return modelRoot;
    }
+
 }

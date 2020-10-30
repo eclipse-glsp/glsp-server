@@ -27,6 +27,7 @@ import java.util.Optional;
 import org.apache.log4j.Logger;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.server.factory.GraphGsonConfiguratorFactory;
+import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.ClientOptions;
 
@@ -39,14 +40,21 @@ public class SaveModelActionHandler extends BasicActionHandler<SaveModelAction> 
    @Inject
    protected GraphGsonConfiguratorFactory gsonConfigurationFactory;
 
+   @Inject
+   private ModelSourceWatcher modelSourceWatcher;
+
    @Override
    public List<Action> executeAction(final SaveModelAction action, final GModelState modelState) {
-      saveModelState(modelState);
-
+      modelSourceWatcher.pauseWatching(modelState);
+      try {
+         saveModelState(modelState);
+      } finally {
+         modelSourceWatcher.continueWatching(modelState);
+      }
       return listOf(new SetDirtyStateAction(modelState.isDirty()));
    }
 
-   private void saveModelState(final GModelState modelState) {
+   protected void saveModelState(final GModelState modelState) {
       convertToFile(modelState).ifPresent(file -> {
          try (Writer writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)) {
             Gson gson = gsonConfigurationFactory.configureGson().setPrettyPrinting().create();
@@ -58,7 +66,7 @@ public class SaveModelActionHandler extends BasicActionHandler<SaveModelAction> 
       });
    }
 
-   private Optional<File> convertToFile(final GModelState modelState) {
+   protected Optional<File> convertToFile(final GModelState modelState) {
       Optional<String> sourceUriOpt = ClientOptions.getValue(modelState.getClientOptions(), ClientOptions.SOURCE_URI);
       if (sourceUriOpt.isPresent()) {
          return Optional.of(new File(sourceUriOpt.get()));

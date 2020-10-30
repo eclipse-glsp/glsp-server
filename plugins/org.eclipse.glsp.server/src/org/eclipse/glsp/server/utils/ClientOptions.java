@@ -15,12 +15,14 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.utils;
 
+import java.io.File;
 import java.util.Map;
 import java.util.Optional;
 
 public final class ClientOptions {
    public static final String DIAGRAM_TYPE = "diagramType";
    public static final String SOURCE_URI = "sourceUri";
+   private static final String FILE_PREFIX = "file://";
    public static final String NEEDS_CLIENT_LAYOUT = "needsClientLayout";
 
    private ClientOptions() {}
@@ -47,5 +49,10 @@ public final class ClientOptions {
 
    public static boolean getBoolValue(final Map<String, String> options, final String key) {
       return Optional.ofNullable(options).map(opt -> Boolean.parseBoolean(opt.get(key))).orElse(false);
+   }
+
+   public static Optional<File> getSourceUriAsFile(final Map<String, String> options) {
+      final Optional<String> uriString = getValue(options, SOURCE_URI);
+      return uriString.map(uri -> uri.replace(FILE_PREFIX, "")).map(path -> new File(path));
    }
 }

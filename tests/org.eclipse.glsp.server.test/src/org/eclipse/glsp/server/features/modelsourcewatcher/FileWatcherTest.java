@@ -75,6 +75,7 @@ class FileWatcherTest {
       final GModelState modelState = modelState(clientId, fileUri(file));
 
       final FileWatcher fileWatcher = new FileWatcher(sessionManager, actionDispatcher);
+      fileWatcher.setDebounceDelay(0);
       fileWatcher.startWatching(modelState);
       sleep();
       changeFile(file);
@@ -92,6 +93,7 @@ class FileWatcherTest {
       final GModelState modelState = modelState(clientId, fileUri(file));
 
       final FileWatcher fileWatcher = new FileWatcher(sessionManager, actionDispatcher);
+      fileWatcher.setDebounceDelay(0);
       fileWatcher.startWatching(modelState);
       sleep();
       deleteFile(file);
@@ -109,6 +111,7 @@ class FileWatcherTest {
       final GModelState modelState = modelState(clientId, fileUri(file));
 
       final FileWatcher fileWatcher = new FileWatcher(sessionManager, actionDispatcher);
+      fileWatcher.setDebounceDelay(0);
       fileWatcher.startWatching(modelState);
       sleep();
       fileWatcher.pauseWatching(modelState);
@@ -128,6 +131,7 @@ class FileWatcherTest {
       final GModelState modelState = modelState(clientId, fileUri(file));
 
       final FileWatcher fileWatcher = new FileWatcher(sessionManager, actionDispatcher);
+      fileWatcher.setDebounceDelay(0);
       fileWatcher.startWatching(modelState);
       sleep();
       fileWatcher.pauseWatching(modelState);
@@ -152,6 +156,7 @@ class FileWatcherTest {
       final GModelState modelState2 = modelState(clientId2, fileUri(file2));
 
       final FileWatcher fileWatcher = new FileWatcher(sessionManager, actionDispatcher);
+      fileWatcher.setDebounceDelay(0);
       fileWatcher.startWatching(modelState1);
       fileWatcher.startWatching(modelState2);
       sleep();
@@ -189,6 +194,7 @@ class FileWatcherTest {
       final GModelState modelState2 = modelState(clientId2, fileUri(file2));
 
       final FileWatcher fileWatcher = new FileWatcher(sessionManager, actionDispatcher);
+      fileWatcher.setDebounceDelay(0);
       fileWatcher.startWatching(modelState1);
       fileWatcher.startWatching(modelState2);
       sleep();
@@ -213,7 +219,7 @@ class FileWatcherTest {
       }
    }
 
-   private void assertNotifications(final String clientId, final int size) {
+   private void assertNotifications(final String clientId, final int size) throws InterruptedException {
       final List<Action> actionsDispatchedToClient1 = actionDispatcher.dispatchedActions.get(clientId);
       assertEquals(actionsDispatchedToClient1.size(), size);
       for (int i = 0; i < size; i++) {

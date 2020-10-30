@@ -30,12 +30,14 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.eclipse.glsp.server.actions.ActionDispatcher;
+import org.eclipse.glsp.server.disposable.IDisposable;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.protocol.ClientSessionListener;
 import org.eclipse.glsp.server.protocol.ClientSessionManager;
@@ -49,17 +51,19 @@ public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
 
    private static final int DEBOUNCE_DELAY = 500;
 
-   private final Debouncer<ClientNotification> clientNotificationDebouncer;
+   private Debouncer<ClientNotification> clientNotificationDebouncer;
 
    @Inject
    private ActionDispatcher actionDispatcher;
+
+   private final ClientSessionManager sessionManager;
 
    private final Map<String, List<FileWatchWorker>> workers = new HashMap<>();
 
    @Inject
    public FileWatcher(final ClientSessionManager sessionManager) {
-      sessionManager.addListener(this);
-      clientNotificationDebouncer = new Debouncer<>(this::notifyClient, DEBOUNCE_DELAY, TimeUnit.MILLISECONDS);
+      this.sessionManager = sessionManager;
+      this.sessionManager.addListener(this);
    }
 
    public FileWatcher(final ClientSessionManager sessionManager, final ActionDispatcher actionDispatcher) {
@@ -68,19 +72,23 @@ public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
    }
 
    @Override
+   public void clientDisconnected(final GLSPClient client) {
+      sessionManager.removeListener(this);
+   }
+
+   @Override
    public void sessionClosed(final String clientId, final GLSPClient client) {
-      disposeAllWorkers(clientId);
-      clientNotificationDebouncer.dispose();
+      stop(clientId);
    }
 
    @Override
    public void startWatching(final GModelState modelState) {
-      createWorkers(modelState).forEach(FileWatchWorker::start);
+      start(modelState);
    }
 
    @Override
    public void stopWatching(final GModelState modelState) {
-      disposeAllWorkers(modelState.getClientId());
+      stop(modelState.getClientId());
    }
 
    @Override
@@ -91,6 +99,16 @@ public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
    @Override
    public void continueWatching(final GModelState modelState) {
       getAllWorkers(modelState.getClientId()).forEach(FileWatchWorker::continueNotifications);
+   }
+
+   protected void start(final GModelState modelState) {
+      clientNotificationDebouncer = new Debouncer<>(this::notifyClient, DEBOUNCE_DELAY, TimeUnit.MILLISECONDS);
+      createWorkers(modelState).forEach(FileWatchWorker::start);
+   }
+
+   protected void stop(final String clientId) {
+      disposeAllWorkers(clientId);
+      IDisposable.disposeIfExists(clientNotificationDebouncer);
    }
 
    protected List<Path> getPaths(final GModelState modelState) {
@@ -195,10 +213,10 @@ public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
 
    }
 
-   class ClientNotification {
+   protected class ClientNotification {
 
-      String clientId;
-      String modelSourceName;
+      private final String clientId;
+      private final String modelSourceName;
 
       ClientNotification(final String clientId, final String modelSourceName) {
          super();
@@ -211,8 +229,7 @@ public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
          final int prime = 31;
          int result = 1;
          result = prime * result + getEnclosingInstance().hashCode();
-         result = prime * result + ((clientId == null) ? 0 : clientId.hashCode());
-         result = prime * result + ((modelSourceName == null) ? 0 : modelSourceName.hashCode());
+         result = prime * result + Objects.hash(clientId, modelSourceName);
          return result;
       }
 
@@ -221,31 +238,14 @@ public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
          if (this == obj) {
             return true;
          }
-         if (obj == null) {
+         if (!(obj instanceof ClientNotification)) {
             return false;
          }
-         if (getClass() != obj.getClass()) {
-            return false;
-         }
-         final ClientNotification other = (ClientNotification) obj;
+         ClientNotification other = (ClientNotification) obj;
          if (!getEnclosingInstance().equals(other.getEnclosingInstance())) {
             return false;
          }
-         if (clientId == null) {
-            if (other.clientId != null) {
-               return false;
-            }
-         } else if (!clientId.equals(other.clientId)) {
-            return false;
-         }
-         if (modelSourceName == null) {
-            if (other.modelSourceName != null) {
-               return false;
-            }
-         } else if (!modelSourceName.equals(other.modelSourceName)) {
-            return false;
-         }
-         return true;
+         return Objects.equals(clientId, other.clientId) && Objects.equals(modelSourceName, other.modelSourceName);
       }
 
       private FileWatcher getEnclosingInstance() { return FileWatcher.this; }

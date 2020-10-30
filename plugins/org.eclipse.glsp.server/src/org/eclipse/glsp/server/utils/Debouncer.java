@@ -47,7 +47,9 @@ public class Debouncer<T> implements Consumer<T>, IDisposable {
       if (previousExecution != null) {
          previousExecution.cancel(true);
       }
-      return executorService.schedule(() -> execute(argument), delay, timeUnit);
+      return !isDisposed()
+         ? executorService.schedule(() -> execute(argument), delay, timeUnit)
+         : null;
    }
 
    private void execute(final T argument) {

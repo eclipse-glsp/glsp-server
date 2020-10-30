@@ -15,6 +15,8 @@
  ********************************************************************************/
 package org.eclipse.glsp.example.workflow;
 
+import java.util.concurrent.CompletableFuture;
+
 import org.apache.log4j.Logger;
 import org.eclipse.glsp.server.jsonrpc.DefaultGLSPServer;
 
@@ -26,10 +28,10 @@ public class WorkflowGLSPServer extends DefaultGLSPServer<WorkflowInitializeOpti
    }
 
    @Override
-   public boolean handleOptions(final WorkflowInitializeOptions options) {
+   public CompletableFuture<Boolean> handleOptions(final WorkflowInitializeOptions options) {
       if (options != null) {
          LOGGER.debug(options.getTimestamp() + ": " + options.getMessage());
       }
-      return true;
+      return CompletableFuture.completedFuture(true);
    }
 }

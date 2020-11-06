@@ -24,6 +24,7 @@ import org.eclipse.glsp.server.actions.ClientActionHandler;
 import org.eclipse.glsp.server.actions.ComputedBoundsActionHandler;
 import org.eclipse.glsp.server.actions.ConfigureServerHandlersAction;
 import org.eclipse.glsp.server.actions.DisposeClientSessionActionHandler;
+import org.eclipse.glsp.server.actions.ExportSVGAction;
 import org.eclipse.glsp.server.actions.FitToScreenAction;
 import org.eclipse.glsp.server.actions.GLSPServerStatusAction;
 import org.eclipse.glsp.server.actions.InitializeClientSessionActionHandler;
@@ -101,6 +102,7 @@ public final class MultiBindingDefaults {
 
    public static final List<Class<? extends Action>> DEFAULT_CLIENT_ACTIONS = Lists.newArrayList(
       CenterAction.class,
+      ExportSVGAction.class,
       DeleteMarkersAction.class,
       FitToScreenAction.class,
       GLSPServerStatusAction.class,

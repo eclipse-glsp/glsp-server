@@ -44,11 +44,11 @@ public class DefaultGLSPServer<T> implements GLSPJsonrpcServer {
    @Inject
    protected ActionDispatcher actionDispatcher;
 
-   private GLSPJsonrpcClient clientProxy;
-   private final Class<T> optionsClazz;
+   protected GLSPJsonrpcClient clientProxy;
+   protected final Class<T> optionsClazz;
    protected CompletableFuture<Boolean> initialized;
 
-   private String applicationId;
+   protected String applicationId;
 
    public DefaultGLSPServer() {
       this(null);

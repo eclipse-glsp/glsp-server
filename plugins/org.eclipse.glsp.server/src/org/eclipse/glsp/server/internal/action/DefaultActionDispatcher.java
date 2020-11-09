@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.internal.action;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +42,7 @@ import org.eclipse.glsp.server.protocol.ClientSessionListener;
 import org.eclipse.glsp.server.protocol.ClientSessionManager;
 import org.eclipse.glsp.server.protocol.GLSPClient;
 import org.eclipse.glsp.server.protocol.GLSPServerException;
+import org.eclipse.glsp.server.utils.FutureUtil;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -176,14 +178,20 @@ public class DefaultActionDispatcher implements ActionDispatcher, ClientSessionL
       }
 
       try {
-         runAction(action, clientId);
-         results.remove(message).complete(null);
+         List<CompletableFuture<Void>> results = runAction(action, clientId);
+         CompletableFuture<Void> result = FutureUtil.aggregateResults(results);
+         result.thenAccept(any -> {
+            this.results.remove(message).complete(null);
+         }).exceptionally(t -> {
+            this.results.remove(message).completeExceptionally(t);
+            return null;
+         });
       } catch (Throwable t) {
          results.remove(message).completeExceptionally(t);
       }
    }
 
-   protected void runAction(final Action action, final String clientId) {
+   protected List<CompletableFuture<Void>> runAction(final Action action, final String clientId) {
       final List<ActionHandler> actionHandlers = actionHandlerRegistry.get(action);
       if (actionHandlers.isEmpty()) {
          throw new IllegalArgumentException("No handler registered for action: " + action);
@@ -202,12 +210,14 @@ public class DefaultActionDispatcher implements ActionDispatcher, ClientSessionL
          }
       }
 
+      List<CompletableFuture<Void>> results = new ArrayList<>();
       for (final ActionHandler actionHandler : actionHandlers) {
          final List<Action> responses = actionHandler.execute(action, modelState.get()).stream()
             .map(response -> ResponseAction.respond(action, response))
             .collect(Collectors.toList());
-         dispatchAll(clientId, responses);
+         results.addAll(dispatchAll(clientId, responses));
       }
+      return results;
    }
 
    protected final void checkThread() {

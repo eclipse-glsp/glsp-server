@@ -21,7 +21,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
 
-public class FutureUtil {
+public final class FutureUtil {
+
+   private FutureUtil() {}
 
    /**
     * <p>
@@ -42,6 +44,7 @@ public class FutureUtil {
     *         A single {@link CompletableFuture}, that will be completed once all of the actions are complete.
     *         The future will be completed exceptionally if any of the actions completes exceptionally.
     */
+   @SuppressWarnings("checkstyle:cyclomaticComplexity")
    public static CompletableFuture<Void> aggregateResults(final Collection<CompletableFuture<Void>> actions) {
       if (actions.isEmpty()) {
          return CompletableFuture.completedFuture(null);

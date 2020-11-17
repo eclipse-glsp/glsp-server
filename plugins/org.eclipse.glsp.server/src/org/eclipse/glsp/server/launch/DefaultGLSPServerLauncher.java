@@ -44,6 +44,7 @@ import com.google.gson.GsonBuilder;
 import com.google.inject.Injector;
 
 public class DefaultGLSPServerLauncher extends GLSPServerLauncher {
+   public static final String START_UP_COMPLETE_MSG = "[GLSP-Server]:Startup completed";
    private static Logger log = Logger.getLogger(DefaultGLSPServerLauncher.class);
 
    private ExecutorService threadPool;
@@ -73,7 +74,7 @@ public class DefaultGLSPServerLauncher extends GLSPServerLauncher {
       serverSocket = AsynchronousServerSocketChannel.open().bind(new InetSocketAddress(hostname, port));
       threadPool = Executors.newCachedThreadPool();
 
-      CompletionHandler<AsynchronousSocketChannel, Void> handler = new CompletionHandler<AsynchronousSocketChannel, Void>() {
+      CompletionHandler<AsynchronousSocketChannel, Void> handler = new CompletionHandler<>() {
          @Override
          public void completed(final AsynchronousSocketChannel result, final Void attachment) {
             serverSocket.accept(null, this); // Prepare for the next connection
@@ -88,6 +89,9 @@ public class DefaultGLSPServerLauncher extends GLSPServerLauncher {
 
       serverSocket.accept(null, handler);
       log.info("The GLSP server is ready to accept new client requests on port: " + port);
+      // Print a message to the output stream that indicates that the start is completed.
+      // This indicates to the client that the sever process is ready (in an embedded scenario).
+      System.out.println(START_UP_COMPLETE_MSG);
 
       return onShutdown;
    }

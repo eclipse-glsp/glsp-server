@@ -22,7 +22,7 @@ import javax.websocket.server.ServerContainer;
 import javax.websocket.server.ServerEndpointConfig;
 
 import org.apache.log4j.Logger;
-import org.eclipse.glsp.server.GLSPModule;
+import org.eclipse.glsp.server.di.GLSPModule;
 import org.eclipse.glsp.server.launch.GLSPServerLauncher;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;

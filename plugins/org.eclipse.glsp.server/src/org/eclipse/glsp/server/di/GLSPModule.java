@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ******************************************************************************/
-package org.eclipse.glsp.server;
+package org.eclipse.glsp.server.di;
 
 import java.util.Optional;
 
@@ -22,19 +22,19 @@ import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.ActionHandlerRegistry;
 import org.eclipse.glsp.server.actions.ActionRegistry;
 import org.eclipse.glsp.server.diagram.DiagramConfigurationRegistry;
-import org.eclipse.glsp.server.factory.GraphGsonConfiguratorFactory;
-import org.eclipse.glsp.server.factory.ModelFactory;
-import org.eclipse.glsp.server.factory.PopupModelFactory;
 import org.eclipse.glsp.server.features.commandpalette.CommandPaletteActionProvider;
 import org.eclipse.glsp.server.features.contextactions.ContextActionsProviderRegistry;
 import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
+import org.eclipse.glsp.server.features.core.model.ModelFactory;
 import org.eclipse.glsp.server.features.directediting.ContextEditValidatorRegistry;
 import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
 import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
 import org.eclipse.glsp.server.features.navigation.NavigationTargetProviderRegistry;
 import org.eclipse.glsp.server.features.navigation.NavigationTargetResolver;
+import org.eclipse.glsp.server.features.popup.PopupModelFactory;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
+import org.eclipse.glsp.server.jsonrpc.GraphGsonConfiguratorFactory;
 import org.eclipse.glsp.server.layout.ILayoutEngine;
 import org.eclipse.glsp.server.layout.ServerLayoutConfiguration;
 import org.eclipse.glsp.server.model.ModelStateProvider;

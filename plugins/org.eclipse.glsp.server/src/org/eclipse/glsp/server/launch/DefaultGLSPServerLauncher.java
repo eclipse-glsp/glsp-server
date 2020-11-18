@@ -32,7 +32,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import org.apache.log4j.Logger;
-import org.eclipse.glsp.server.GLSPModule;
+import org.eclipse.glsp.server.di.GLSPModule;
 import org.eclipse.glsp.server.jsonrpc.GLSPJsonrpcClient;
 import org.eclipse.glsp.server.jsonrpc.GLSPJsonrpcServer;
 import org.eclipse.glsp.server.jsonrpc.GsonConfigurator;

@@ -23,7 +23,7 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.BasicActionHandler;
-import org.eclipse.glsp.server.factory.GraphGsonConfiguratorFactory;
+import org.eclipse.glsp.server.jsonrpc.GraphGsonConfiguratorFactory;
 import org.eclipse.glsp.server.model.GModelState;
 
 import com.google.gson.Gson;

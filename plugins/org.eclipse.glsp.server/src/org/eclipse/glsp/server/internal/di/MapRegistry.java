@@ -21,8 +21,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import org.eclipse.glsp.server.Registry;
 import org.eclipse.glsp.server.protocol.GLSPServerException;
+import org.eclipse.glsp.server.utils.Registry;
 
 public abstract class MapRegistry<K, V> implements Registry<K, V> {
    protected Map<K, V> elements;

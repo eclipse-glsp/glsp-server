@@ -20,8 +20,8 @@ import java.util.Optional;
 
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.BasicActionHandler;
-import org.eclipse.glsp.server.actions.RequestBoundsAction;
 import org.eclipse.glsp.server.actions.SetDirtyStateAction;
+import org.eclipse.glsp.server.features.core.model.RequestBoundsAction;
 import org.eclipse.glsp.server.internal.gmodel.commandstack.GModelRecordingCommand;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.ServerMessageUtil;

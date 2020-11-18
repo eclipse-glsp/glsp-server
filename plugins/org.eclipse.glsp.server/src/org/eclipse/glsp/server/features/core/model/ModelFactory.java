@@ -13,31 +13,22 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ******************************************************************************/
-package org.eclipse.glsp.server.actions;
+package org.eclipse.glsp.server.features.core.model;
 
 import org.eclipse.glsp.graph.GModelRoot;
+import org.eclipse.glsp.server.model.GModelState;
 
-public class UpdateModelAction extends Action {
+public interface ModelFactory {
 
-   public static final String ID = "updateModel";
+   GModelRoot loadModel(RequestModelAction action, GModelState modelState);
 
-   private GModelRoot newRoot;
-   private boolean animate = true;
+   final class NullImpl implements ModelFactory {
 
-   public UpdateModelAction() {
-      super(ID);
+      @Override
+      public GModelRoot loadModel(final RequestModelAction action, final GModelState modelState) {
+         return null;
+      }
+
    }
-
-   public UpdateModelAction(final GModelRoot newRoot, final boolean animate) {
-      this();
-      this.newRoot = newRoot;
-      this.animate = animate;
-   }
-
-   public GModelRoot getNewRoot() { return newRoot; }
-
-   public boolean isAnimate() { return animate; }
-
-   public void setAnimate(final boolean animate) { this.animate = animate; }
 
 }

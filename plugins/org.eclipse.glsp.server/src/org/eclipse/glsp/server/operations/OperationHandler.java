@@ -15,8 +15,8 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.operations;
 
-import org.eclipse.glsp.server.Handler;
 import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.utils.Handler;
 
 public interface OperationHandler extends Handler<Operation> {
 

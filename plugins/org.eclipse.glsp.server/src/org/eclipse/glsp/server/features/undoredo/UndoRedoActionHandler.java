@@ -13,11 +13,15 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.actions;
+package org.eclipse.glsp.server.features.undoredo;
 
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.eclipse.glsp.server.actions.Action;
+import org.eclipse.glsp.server.actions.ActionHandler;
+import org.eclipse.glsp.server.actions.SetDirtyStateAction;
+import org.eclipse.glsp.server.features.core.model.RequestBoundsAction;
 import org.eclipse.glsp.server.model.GModelState;
 
 import com.google.common.collect.Lists;

@@ -17,8 +17,8 @@ package org.eclipse.glsp.example.workflow.model;
 
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
-import org.eclipse.glsp.server.actions.RequestModelAction;
-import org.eclipse.glsp.server.factory.JsonFileModelFactory;
+import org.eclipse.glsp.server.features.core.model.JsonFileModelFactory;
+import org.eclipse.glsp.server.features.core.model.RequestModelAction;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.ServerMessageUtil;
 import org.eclipse.glsp.server.utils.ServerStatusUtil;

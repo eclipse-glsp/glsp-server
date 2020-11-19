@@ -31,7 +31,7 @@ import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.GraphFactory;
 import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.glsp.server.actions.ComputedBoundsAction;
+import org.eclipse.glsp.server.features.core.model.ComputedBoundsAction;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.types.ElementAndAlignment;
 import org.eclipse.glsp.server.types.ElementAndBounds;

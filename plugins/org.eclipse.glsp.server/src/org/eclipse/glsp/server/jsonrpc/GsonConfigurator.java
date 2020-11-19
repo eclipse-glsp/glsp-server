@@ -17,7 +17,6 @@ package org.eclipse.glsp.server.jsonrpc;
 
 import org.eclipse.glsp.graph.gson.EnumTypeAdapter;
 import org.eclipse.glsp.server.actions.ActionRegistry;
-import org.eclipse.glsp.server.factory.GraphGsonConfiguratorFactory;
 import org.eclipse.glsp.server.internal.json.ActionTypeAdapter;
 
 import com.google.gson.GsonBuilder;

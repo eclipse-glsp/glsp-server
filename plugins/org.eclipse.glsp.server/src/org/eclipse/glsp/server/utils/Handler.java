@@ -13,14 +13,12 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ******************************************************************************/
-package org.eclipse.glsp.server.actions;
+package org.eclipse.glsp.server.utils;
 
-public class RedoAction extends Action {
+public interface Handler<T> {
 
-   public static final String ID = "glspRedo";
+   default int getPriority() { return Integer.MIN_VALUE; }
 
-   public RedoAction() {
-      super(ID);
-   }
+   boolean handles(T object);
 
 }

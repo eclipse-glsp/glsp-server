@@ -15,7 +15,7 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.operations;
 
-import org.eclipse.glsp.server.Registry;
+import org.eclipse.glsp.server.utils.Registry;
 
 public interface OperationHandlerRegistry extends Registry<Operation, OperationHandler> {
 

@@ -13,29 +13,32 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ******************************************************************************/
-package org.eclipse.glsp.server.actions;
+package org.eclipse.glsp.server.features.core.model;
 
-import java.util.List;
+import org.eclipse.glsp.graph.GModelRoot;
+import org.eclipse.glsp.server.actions.Action;
 
-import org.eclipse.glsp.server.types.ElementAndBounds;
+public class UpdateModelAction extends Action {
 
-public class SetBoundsAction extends Action {
+   public static final String ID = "updateModel";
 
-   public static final String ID = "setBounds";
+   private GModelRoot newRoot;
+   private boolean animate = true;
 
-   private List<ElementAndBounds> bounds;
-
-   public SetBoundsAction() {
+   public UpdateModelAction() {
       super(ID);
    }
 
-   public SetBoundsAction(final String kind, final List<ElementAndBounds> bounds) {
-      super(kind);
-      this.bounds = bounds;
+   public UpdateModelAction(final GModelRoot newRoot, final boolean animate) {
+      this();
+      this.newRoot = newRoot;
+      this.animate = animate;
    }
 
-   public List<ElementAndBounds> getBounds() { return bounds; }
+   public GModelRoot getNewRoot() { return newRoot; }
 
-   public void setBounds(final List<ElementAndBounds> bounds) { this.bounds = bounds; }
+   public boolean isAnimate() { return animate; }
+
+   public void setAnimate(final boolean animate) { this.animate = animate; }
 
 }

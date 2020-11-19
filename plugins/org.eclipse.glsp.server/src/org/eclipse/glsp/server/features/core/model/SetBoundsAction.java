@@ -13,27 +13,30 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ******************************************************************************/
-package org.eclipse.glsp.server.factory;
+package org.eclipse.glsp.server.features.core.model;
 
-import java.util.Optional;
+import java.util.List;
 
-import org.eclipse.glsp.graph.GHtmlRoot;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.server.features.popup.RequestPopupModelAction;
-import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.actions.Action;
+import org.eclipse.glsp.server.types.ElementAndBounds;
 
-public interface PopupModelFactory {
+public class SetBoundsAction extends Action {
 
-   Optional<GHtmlRoot> createPopupModel(GModelElement element, RequestPopupModelAction action,
-      GModelState modelState);
+   public static final String ID = "setBounds";
 
-   final class NullImpl implements PopupModelFactory {
+   private List<ElementAndBounds> bounds;
 
-      @Override
-      public Optional<GHtmlRoot> createPopupModel(final GModelElement element, final RequestPopupModelAction action,
-         final GModelState modelState) {
-         return Optional.empty();
-      }
-
+   public SetBoundsAction() {
+      super(ID);
    }
+
+   public SetBoundsAction(final String kind, final List<ElementAndBounds> bounds) {
+      super(kind);
+      this.bounds = bounds;
+   }
+
+   public List<ElementAndBounds> getBounds() { return bounds; }
+
+   public void setBounds(final List<ElementAndBounds> bounds) { this.bounds = bounds; }
+
 }

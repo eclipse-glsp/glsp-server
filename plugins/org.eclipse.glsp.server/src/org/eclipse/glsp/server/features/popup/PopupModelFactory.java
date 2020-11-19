@@ -13,25 +13,26 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ******************************************************************************/
-package org.eclipse.glsp.server.actions;
+package org.eclipse.glsp.server.features.popup;
 
-import org.eclipse.glsp.graph.GModelRoot;
+import java.util.Optional;
 
-public class RequestBoundsAction extends Action {
+import org.eclipse.glsp.graph.GHtmlRoot;
+import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.glsp.server.model.GModelState;
 
-   public static final String ID = "requestBounds";
+public interface PopupModelFactory {
 
-   private GModelRoot newRoot;
+   Optional<GHtmlRoot> createPopupModel(GModelElement element, RequestPopupModelAction action,
+      GModelState modelState);
 
-   public RequestBoundsAction() {
-      super(ID);
+   final class NullImpl implements PopupModelFactory {
+
+      @Override
+      public Optional<GHtmlRoot> createPopupModel(final GModelElement element, final RequestPopupModelAction action,
+         final GModelState modelState) {
+         return Optional.empty();
+      }
+
    }
-
-   public RequestBoundsAction(final GModelRoot newRoot) {
-      this();
-      this.newRoot = newRoot;
-   }
-
-   public GModelRoot getNewRoot() { return newRoot; }
-
 }

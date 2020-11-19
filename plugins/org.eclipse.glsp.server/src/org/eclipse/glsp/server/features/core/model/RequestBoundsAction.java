@@ -13,21 +13,22 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ******************************************************************************/
-package org.eclipse.glsp.server.actions;
+package org.eclipse.glsp.server.features.core.model;
 
 import org.eclipse.glsp.graph.GModelRoot;
+import org.eclipse.glsp.server.actions.Action;
 
-public class SetModelAction extends Action {
+public class RequestBoundsAction extends Action {
 
-   public static final String ID = "setModel";
+   public static final String ID = "requestBounds";
 
    private GModelRoot newRoot;
 
-   public SetModelAction() {
+   public RequestBoundsAction() {
       super(ID);
    }
 
-   public SetModelAction(final GModelRoot newRoot) {
+   public RequestBoundsAction(final GModelRoot newRoot) {
       this();
       this.newRoot = newRoot;
    }

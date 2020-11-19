@@ -26,7 +26,7 @@ import org.eclipse.glsp.graph.GHtmlRoot;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPreRenderedElement;
 import org.eclipse.glsp.graph.GraphFactory;
-import org.eclipse.glsp.server.factory.PopupModelFactory;
+import org.eclipse.glsp.server.features.popup.PopupModelFactory;
 import org.eclipse.glsp.server.features.popup.RequestPopupModelAction;
 import org.eclipse.glsp.server.model.GModelState;
 

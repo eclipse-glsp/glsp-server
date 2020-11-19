@@ -13,12 +13,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.actions;
+package org.eclipse.glsp.server.features.core.model;
 
 import java.util.List;
 
 import org.eclipse.glsp.graph.GModelRoot;
-import org.eclipse.glsp.server.factory.ModelFactory;
+import org.eclipse.glsp.server.actions.Action;
+import org.eclipse.glsp.server.actions.BasicActionHandler;
 import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.ClientOptions;

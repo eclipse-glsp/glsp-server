@@ -15,6 +15,6 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actions;
 
-import org.eclipse.glsp.server.Registry;
+import org.eclipse.glsp.server.utils.Registry;
 
 public interface ActionRegistry extends Registry<String, Action> {}

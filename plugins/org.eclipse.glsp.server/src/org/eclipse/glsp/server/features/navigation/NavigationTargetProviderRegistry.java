@@ -15,6 +15,6 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.features.navigation;
 
-import org.eclipse.glsp.server.Registry;
+import org.eclipse.glsp.server.utils.Registry;
 
 public interface NavigationTargetProviderRegistry extends Registry<String, NavigationTargetProvider> {}

@@ -26,8 +26,8 @@ import java.util.Optional;
 
 import org.apache.log4j.Logger;
 import org.eclipse.glsp.graph.GGraph;
-import org.eclipse.glsp.server.factory.GraphGsonConfiguratorFactory;
 import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
+import org.eclipse.glsp.server.jsonrpc.GraphGsonConfiguratorFactory;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.ClientOptions;
 

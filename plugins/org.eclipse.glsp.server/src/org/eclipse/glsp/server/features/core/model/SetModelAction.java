@@ -13,18 +13,26 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ******************************************************************************/
-package org.eclipse.glsp.server.factory;
+package org.eclipse.glsp.server.features.core.model;
 
-import org.eclipse.glsp.graph.gson.GGraphGsonConfigurator;
+import org.eclipse.glsp.graph.GModelRoot;
+import org.eclipse.glsp.server.actions.Action;
 
-import com.google.gson.GsonBuilder;
+public class SetModelAction extends Action {
 
-public interface GraphGsonConfiguratorFactory {
+   public static final String ID = "setModel";
 
-   GGraphGsonConfigurator create();
+   private GModelRoot newRoot;
 
-   default GsonBuilder configureGson() {
-      return this.create().configureGsonBuilder(new GsonBuilder());
+   public SetModelAction() {
+      super(ID);
    }
+
+   public SetModelAction(final GModelRoot newRoot) {
+      this();
+      this.newRoot = newRoot;
+   }
+
+   public GModelRoot getNewRoot() { return newRoot; }
 
 }

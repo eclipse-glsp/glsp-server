@@ -1,5 +1,5 @@
-/********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+/*******************************************************************************
+ * Copyright (c) 2019 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -12,21 +12,19 @@
  * https://www.gnu.org/software/classpath/license.html.
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
- ********************************************************************************/
-package org.eclipse.glsp.server;
+ ******************************************************************************/
+package org.eclipse.glsp.server.jsonrpc;
 
-import java.util.List;
+import org.eclipse.glsp.graph.gson.GGraphGsonConfigurator;
 
-public interface MultiRegistry<K, V> {
-   boolean register(K key, V element);
+import com.google.gson.GsonBuilder;
 
-   boolean deregister(K key, V element);
+public interface GraphGsonConfiguratorFactory {
 
-   boolean deregisterAll(K key);
+   GGraphGsonConfigurator create();
 
-   boolean hasKey(K key);
+   default GsonBuilder configureGson() {
+      return this.create().configureGsonBuilder(new GsonBuilder());
+   }
 
-   List<V> get(K key);
-
-   List<V> getAll();
 }

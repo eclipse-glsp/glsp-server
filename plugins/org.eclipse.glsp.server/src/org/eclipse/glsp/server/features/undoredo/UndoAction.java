@@ -13,23 +13,16 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ******************************************************************************/
-package org.eclipse.glsp.server.factory;
+package org.eclipse.glsp.server.features.undoredo;
 
-import org.eclipse.glsp.graph.GModelRoot;
-import org.eclipse.glsp.server.actions.RequestModelAction;
-import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.actions.Action;
 
-public interface ModelFactory {
+public class UndoAction extends Action {
 
-   GModelRoot loadModel(RequestModelAction action, GModelState modelState);
+   public static final String ID = "glspUndo";
 
-   final class NullImpl implements ModelFactory {
-
-      @Override
-      public GModelRoot loadModel(final RequestModelAction action, final GModelState modelState) {
-         return null;
-      }
-
+   public UndoAction() {
+      super(ID);
    }
 
 }

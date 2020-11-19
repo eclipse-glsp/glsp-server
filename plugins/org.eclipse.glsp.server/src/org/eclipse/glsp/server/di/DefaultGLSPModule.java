@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server;
+package org.eclipse.glsp.server.di;
 
 import static org.eclipse.glsp.server.actions.ClientActionHandler.CLIENT_ACTIONS;
 
@@ -27,7 +27,6 @@ import org.eclipse.glsp.server.actions.ActionRegistry;
 import org.eclipse.glsp.server.actions.ClientActionHandler;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
 import org.eclipse.glsp.server.diagram.DiagramConfigurationRegistry;
-import org.eclipse.glsp.server.factory.GraphGsonConfiguratorFactory;
 import org.eclipse.glsp.server.features.contextactions.ContextActionsProvider;
 import org.eclipse.glsp.server.features.contextactions.ContextActionsProviderRegistry;
 import org.eclipse.glsp.server.features.directediting.ContextEditValidator;
@@ -48,6 +47,7 @@ import org.eclipse.glsp.server.internal.di.MultiBindingDefaults;
 import org.eclipse.glsp.server.internal.json.DefaultGraphGsonConfiguratorFactory;
 import org.eclipse.glsp.server.jsonrpc.DefaultClientSessionManager;
 import org.eclipse.glsp.server.jsonrpc.DefaultGLSPServer;
+import org.eclipse.glsp.server.jsonrpc.GraphGsonConfiguratorFactory;
 import org.eclipse.glsp.server.model.DefaultModelStateProvider;
 import org.eclipse.glsp.server.model.ModelStateProvider;
 import org.eclipse.glsp.server.operations.OperationHandler;

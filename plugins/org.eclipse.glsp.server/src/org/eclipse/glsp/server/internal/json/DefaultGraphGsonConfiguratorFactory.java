@@ -18,7 +18,7 @@ package org.eclipse.glsp.server.internal.json;
 import org.eclipse.glsp.graph.GraphExtension;
 import org.eclipse.glsp.graph.gson.GGraphGsonConfigurator;
 import org.eclipse.glsp.server.diagram.DiagramConfigurationRegistry;
-import org.eclipse.glsp.server.factory.GraphGsonConfiguratorFactory;
+import org.eclipse.glsp.server.jsonrpc.GraphGsonConfiguratorFactory;
 
 import com.google.inject.Inject;
 

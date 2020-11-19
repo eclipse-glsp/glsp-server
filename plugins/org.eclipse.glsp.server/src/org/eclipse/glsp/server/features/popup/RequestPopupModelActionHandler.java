@@ -21,7 +21,6 @@ import java.util.Optional;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.BasicActionHandler;
-import org.eclipse.glsp.server.factory.PopupModelFactory;
 import org.eclipse.glsp.server.model.GModelState;
 
 import com.google.inject.Inject;

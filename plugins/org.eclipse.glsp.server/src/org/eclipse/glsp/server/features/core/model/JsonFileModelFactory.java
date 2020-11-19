@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.factory;
+package org.eclipse.glsp.server.features.core.model;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,7 +25,7 @@ import java.util.Optional;
 
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GModelRoot;
-import org.eclipse.glsp.server.actions.RequestModelAction;
+import org.eclipse.glsp.server.jsonrpc.GraphGsonConfiguratorFactory;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.protocol.GLSPServerException;
 import org.eclipse.glsp.server.utils.ClientOptions;

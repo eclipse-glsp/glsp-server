@@ -15,7 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operations.gmodel;
 
-import org.eclipse.glsp.server.actions.ModelSubmissionHandler;
+import org.eclipse.glsp.server.features.core.model.ModelSubmissionHandler;
 import org.eclipse.glsp.server.layout.ILayoutEngine;
 import org.eclipse.glsp.server.layout.ServerLayoutConfiguration;
 import org.eclipse.glsp.server.layout.ServerLayoutKind;

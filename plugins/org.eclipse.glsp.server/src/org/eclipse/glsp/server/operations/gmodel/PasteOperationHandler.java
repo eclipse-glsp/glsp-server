@@ -32,7 +32,7 @@ import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.impl.GPointImpl;
-import org.eclipse.glsp.server.factory.GraphGsonConfiguratorFactory;
+import org.eclipse.glsp.server.jsonrpc.GraphGsonConfiguratorFactory;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.BasicOperationHandler;
 import org.eclipse.glsp.server.operations.PasteOperation;

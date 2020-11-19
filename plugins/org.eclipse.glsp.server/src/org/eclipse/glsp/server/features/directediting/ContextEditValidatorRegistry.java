@@ -15,6 +15,6 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.features.directediting;
 
-import org.eclipse.glsp.server.Registry;
+import org.eclipse.glsp.server.utils.Registry;
 
 public interface ContextEditValidatorRegistry extends Registry<String, ContextEditValidator> {}

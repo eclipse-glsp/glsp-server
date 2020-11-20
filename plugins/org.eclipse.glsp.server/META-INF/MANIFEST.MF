@@ -2,14 +2,14 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: GLSP Server
 Bundle-SymbolicName: org.eclipse.glsp.server
-Bundle-Version: 0.8.0.qualifier
+Bundle-Version: 0.8.0
 Bundle-Vendor: Eclipse GLSP
 Automatic-Module-Name: org.eclipse.glsp.server
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: org.apache.commons.io;bundle-version="2.2.0",
  org.eclipse.emf.ecore.change;bundle-version="2.13.0",
  com.google.gson;bundle-version="2.8.2",
- org.eclipse.lsp4j;bundle-version="0.7.0",
+ org.eclipse.lsp4j;bundle-version="0.8.0",
  org.eclipse.lsp4j.jsonrpc,
  org.apache.commons.cli;bundle-version="1.4.0";visibility:=reexport,
  com.google.inject;bundle-version="3.0.0";visibility:=reexport,

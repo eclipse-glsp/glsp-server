@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.eclipse.glsp</groupId>
 		<artifactId>org.eclipse.glsp.parent</artifactId>
-		<version>0.8.0-SNAPSHOT</version>
+		<version>0.8.0</version>
 		<relativePath>../../pom.xml</relativePath>
 	</parent>
 
@@ -63,17 +63,17 @@
 		<dependency>
 			<groupId>org.eclipse.glsp</groupId>
 			<artifactId>org.eclipse.glsp.server</artifactId>
-			<version>0.8.0-SNAPSHOT</version>
+			<version>0.8.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.glsp</groupId>
 			<artifactId>org.eclipse.glsp.server.websocket</artifactId>
-			<version>0.8.0-SNAPSHOT</version>
+			<version>0.8.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.glsp</groupId>
 			<artifactId>org.eclipse.glsp.layout</artifactId>
-			<version>0.8.0-SNAPSHOT</version>
+			<version>0.8.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.elk</groupId>

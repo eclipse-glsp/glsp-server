@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: GLSP Server Websocket
 Bundle-SymbolicName: org.eclipse.glsp.server.websocket
-Bundle-Version: 0.8.0.qualifier
+Bundle-Version: 0.8.0
 Bundle-Vendor: Eclipse GLSP
 Automatic-Module-Name: com.eclipsesource.glps.server.websocket
 Bundle-RequiredExecutionEnvironment: JavaSE-11
@@ -13,8 +13,8 @@ Require-Bundle: javax.websocket;bundle-version="1.1.0";visibility:=reexport,
  org.eclipse.jetty.util;bundle-version="9.4.14";visibility:=reexport,
  org.eclipse.jetty.websocket.javax.websocket;bundle-version="9.4.14";visibility:=reexport,
  org.eclipse.jetty.websocket.javax.websocket.server;bundle-version="9.4.14";visibility:=reexport,
- org.eclipse.glsp.server;bundle-version="0.7.0",
- org.eclipse.lsp4j.websocket;bundle-version="0.7.0",
+ org.eclipse.glsp.server;bundle-version="0.8.0",
+ org.eclipse.lsp4j.websocket;bundle-version="0.8.0",
  org.eclipse.jetty.webapp;bundle-version="9.4.14";visibility:=reexport,
  org.eclipse.jetty.websocket.api;bundle-version="9.4.14";visibility:=reexport,
  com.google.gson,

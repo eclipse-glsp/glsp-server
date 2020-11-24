@@ -20,8 +20,7 @@ import java.util.Optional;
 
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.BasicActionHandler;
-import org.eclipse.glsp.server.actions.SetDirtyStateAction;
-import org.eclipse.glsp.server.features.core.model.RequestBoundsAction;
+import org.eclipse.glsp.server.features.core.model.ModelSubmissionHandler;
 import org.eclipse.glsp.server.internal.gmodel.commandstack.GModelRecordingCommand;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.ServerMessageUtil;
@@ -31,6 +30,9 @@ import com.google.inject.Inject;
 public class OperationActionHandler extends BasicActionHandler<Operation> {
    @Inject
    protected OperationHandlerRegistry operationHandlerRegistry;
+
+   @Inject
+   protected ModelSubmissionHandler modelSubmissionHandler;
 
    @Override
    public boolean handles(final Action action) {
@@ -55,7 +57,7 @@ public class OperationActionHandler extends BasicActionHandler<Operation> {
       GModelRecordingCommand command = new GModelRecordingCommand(modelState.getRoot(), handler.getLabel(),
          () -> handler.execute(operation, modelState));
       modelState.execute(command);
-      return listOf(new RequestBoundsAction(modelState.getRoot()), new SetDirtyStateAction(modelState.isDirty()));
+      return modelSubmissionHandler.submitModel(true, modelState);
    }
 
    public static Optional<? extends OperationHandler> getOperationHandler(final Operation operation,

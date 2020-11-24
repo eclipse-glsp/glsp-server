@@ -22,7 +22,6 @@ import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.BasicActionHandler;
 import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.utils.ClientOptions;
 
 import com.google.inject.Inject;
 
@@ -34,20 +33,16 @@ public class RequestModelActionHandler extends BasicActionHandler<RequestModelAc
    @Inject
    private ModelSourceWatcher modelSourceWatcher;
 
+   @Inject
+   protected ModelSubmissionHandler modelSubmissionHandler;
+
    @Override
    public List<Action> executeAction(final RequestModelAction action, final GModelState modelState) {
+      modelState.setClientOptions(action.getOptions());
       GModelRoot model = modelFactory.loadModel(action, modelState);
       modelState.setRoot(model);
-      modelState.setClientOptions(action.getOptions());
-
       modelSourceWatcher.startWatching(modelState);
-
-      boolean needsClientLayout = ClientOptions.getBoolValue(action.getOptions(),
-         ClientOptions.NEEDS_CLIENT_LAYOUT);
-
-      Action responseAction = needsClientLayout ? new RequestBoundsAction(modelState.getRoot())
-         : new SetModelAction(modelState.getRoot());
-      return listOf(responseAction);
+      return modelSubmissionHandler.submitModel(false, modelState);
    }
 
 }

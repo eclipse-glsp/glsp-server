@@ -15,10 +15,15 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.diagram;
 
+import static org.eclipse.glsp.server.protocol.GLSPServerException.getOrThrow;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.protocol.GLSPServerException;
+import org.eclipse.glsp.server.utils.ClientOptions;
 import org.eclipse.glsp.server.utils.Registry;
 
 public interface DiagramConfigurationRegistry extends Registry<String, DiagramConfiguration> {
@@ -27,5 +32,23 @@ public interface DiagramConfigurationRegistry extends Registry<String, DiagramCo
       Map<String, EClass> collectiveTypeMappings = new HashMap<>();
       getAll().stream().map(DiagramConfiguration::getTypeMappings).forEach(collectiveTypeMappings::putAll);
       return collectiveTypeMappings;
+   }
+
+   /**
+    * Return the {@link DiagramConfiguration} from this registry, corresponding to the specified
+    * modelState. The modelState is expected to have the {@link ClientOptions#DIAGRAM_TYPE} option,
+    * and this DiagramType should exist in this registry. Otherwise, a {@link GLSPServerException}
+    * will be thrown.
+    *
+    * @param modelState
+    *                      the {@link GModelState}
+    * @return
+    *         the {@link DiagramConfiguration} corresponding to the specified modelState
+    * @throws GLSPServerException if the {@link ClientOptions#DIAGRAM_TYPE} associated to the modelState
+    *                                doesn't exist in this registry
+    */
+   default DiagramConfiguration get(final GModelState modelState) {
+      return getOrThrow(ClientOptions.getValue(modelState.getClientOptions(), ClientOptions.DIAGRAM_TYPE)
+         .flatMap(this::get), "Unsupported diagram kind");
    }
 }

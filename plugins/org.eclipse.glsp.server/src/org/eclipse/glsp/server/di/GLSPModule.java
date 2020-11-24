@@ -36,7 +36,6 @@ import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.jsonrpc.GraphGsonConfiguratorFactory;
 import org.eclipse.glsp.server.layout.ILayoutEngine;
-import org.eclipse.glsp.server.layout.ServerLayoutConfiguration;
 import org.eclipse.glsp.server.model.ModelStateProvider;
 import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
 import org.eclipse.glsp.server.protocol.ClientSessionManager;
@@ -61,7 +60,6 @@ public abstract class GLSPModule extends AbstractModule {
       bind(LabelEditValidator.class).to(bindLabelEditValidator());
       bind(ModelStateProvider.class).to(bindModelStateProvider());
       bind(GraphGsonConfiguratorFactory.class).to(bindGraphGsonConfiguratorFactory());
-      bind(ServerLayoutConfiguration.class).to(bindServerLayoutConfiguration()).in(Singleton.class);
       bind(ToolPaletteItemProvider.class).to(bindToolPaletteItemProvider());
       bind(CommandPaletteActionProvider.class).to(bindCommandPaletteActionProvider());
       bind(ContextMenuItemProvider.class).to(bindContextMenuItemProvider());
@@ -110,10 +108,6 @@ public abstract class GLSPModule extends AbstractModule {
 
    protected Class<? extends LabelEditValidator> bindLabelEditValidator() {
       return LabelEditValidator.NullImpl.class;
-   }
-
-   protected Class<? extends ServerLayoutConfiguration> bindServerLayoutConfiguration() {
-      return ServerLayoutConfiguration.NullImpl.class;
    }
 
    protected Class<? extends CommandPaletteActionProvider> bindCommandPaletteActionProvider() {

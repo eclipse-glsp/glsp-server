@@ -57,7 +57,6 @@ import org.eclipse.glsp.server.features.navigation.NavigationTargetResolver;
 import org.eclipse.glsp.server.features.popup.PopupModelFactory;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.layout.ILayoutEngine;
-import org.eclipse.glsp.server.layout.ServerLayoutConfiguration;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.glsp.server.protocol.GLSPServer;
 import org.eclipse.glsp.server.utils.MultiBinding;
@@ -68,11 +67,6 @@ public class WorkflowGLSPModule extends DefaultGLSPModule {
    @SuppressWarnings("rawtypes")
    protected Class<? extends GLSPServer> bindGLSPServer() {
       return WorkflowGLSPServer.class;
-   }
-
-   @Override
-   protected Class<? extends ServerLayoutConfiguration> bindServerLayoutConfiguration() {
-      return WorkflowServerLayoutConfiguration.class;
    }
 
    @Override

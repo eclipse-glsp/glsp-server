@@ -20,23 +20,26 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionHandler;
-import org.eclipse.glsp.server.actions.SetDirtyStateAction;
-import org.eclipse.glsp.server.features.core.model.RequestBoundsAction;
+import org.eclipse.glsp.server.features.core.model.ModelSubmissionHandler;
 import org.eclipse.glsp.server.model.GModelState;
 
 import com.google.common.collect.Lists;
+import com.google.inject.Inject;
 
 public class UndoRedoActionHandler implements ActionHandler {
    private static final Logger LOG = Logger.getLogger(UndoRedoActionHandler.class);
+
+   @Inject
+   protected ModelSubmissionHandler modelSubmissionHandler;
 
    @Override
    public List<Action> execute(final Action action, final GModelState modelState) {
       if (action instanceof UndoAction && modelState.canUndo()) {
          modelState.undo();
-         return listOf(new RequestBoundsAction(modelState.getRoot()), new SetDirtyStateAction(modelState.isDirty()));
+         return modelSubmissionHandler.doSubmitModel(true, modelState);
       } else if (action instanceof RedoAction && modelState.canRedo()) {
          modelState.redo();
-         return listOf(new RequestBoundsAction(modelState.getRoot()), new SetDirtyStateAction(modelState.isDirty()));
+         return modelSubmissionHandler.doSubmitModel(true, modelState);
       }
       LOG.warn("Cannot undo or redo");
       return none();

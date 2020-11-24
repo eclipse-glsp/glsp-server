@@ -21,6 +21,7 @@ import java.util.Optional;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.glsp.server.layout.ServerLayoutKind;
 
 public interface DiagramConfiguration {
 
@@ -40,5 +41,11 @@ public interface DiagramConfiguration {
 
    default ShapeTypeHint createDefaultNodeTypeHint(final String elementId) {
       return new ShapeTypeHint(elementId, true, true, true, false);
+   }
+
+   default ServerLayoutKind getLayoutKind() { return ServerLayoutKind.NONE; }
+
+   default boolean needsClientLayout() {
+      return false;
    }
 }

@@ -17,6 +17,7 @@ package org.eclipse.glsp.server.websocket;
 
 import java.util.List;
 import java.util.ServiceLoader;
+import java.util.function.Supplier;
 
 import javax.websocket.Extension;
 import javax.websocket.HandshakeResponse;
@@ -30,9 +31,9 @@ import com.google.inject.Injector;
 
 public class GLSPConfigurator extends Configurator {
    private Configurator containerConfigurator;
-   private final Injector injector;
+   private final Supplier<Injector> injector;
 
-   public GLSPConfigurator(final Injector injector) {
+   public GLSPConfigurator(final Supplier<Injector> injector) {
       this.injector = injector;
    }
 
@@ -66,6 +67,8 @@ public class GLSPConfigurator extends Configurator {
 
    @Override
    public <T> T getEndpointInstance(final Class<T> endpointClass) throws InstantiationException {
+      // This is invoked on each new client connection; so we need a new Injector instance.
+      Injector injector = this.injector.get();
       return injector.getInstance(endpointClass);
    }
 

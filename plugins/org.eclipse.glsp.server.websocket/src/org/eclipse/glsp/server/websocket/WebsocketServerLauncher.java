@@ -74,7 +74,7 @@ public class WebsocketServerLauncher extends GLSPServerLauncher {
          ServerContainer container = WebSocketServerContainerInitializer.configureContext(webAppContext);
          ServerEndpointConfig.Builder builder = ServerEndpointConfig.Builder.create(GLSPServerEndpoint.class,
             "/" + endpointPath);
-         builder.configurator(new GLSPConfigurator(createInjector()));
+         builder.configurator(new GLSPConfigurator(this::createInjector));
          container.addEndpoint(builder.build());
 
          // Start the server

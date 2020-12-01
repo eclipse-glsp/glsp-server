@@ -53,6 +53,7 @@ import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperationHan
 import org.eclipse.glsp.server.features.directediting.RequestEditValidationHandler;
 import org.eclipse.glsp.server.features.directediting.SetEditValidationResultAction;
 import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceChangedAction;
+import org.eclipse.glsp.server.features.navigation.NavigateToExternalTargetAction;
 import org.eclipse.glsp.server.features.navigation.NavigateToTargetAction;
 import org.eclipse.glsp.server.features.navigation.RequestNavigationTargetsActionHandler;
 import org.eclipse.glsp.server.features.navigation.ResolveNavigationTargetActionHandler;
@@ -108,6 +109,7 @@ public final class MultiBindingDefaults {
       GLSPServerStatusAction.class,
       ModelSourceChangedAction.class,
       NavigateToTargetAction.class,
+      NavigateToExternalTargetAction.class,
       RequestBoundsAction.class,
       SelectAction.class,
       SelectAllAction.class,

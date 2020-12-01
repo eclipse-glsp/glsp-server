@@ -17,24 +17,22 @@ package org.eclipse.glsp.server.features.navigation;
 
 import org.eclipse.glsp.server.actions.Action;
 
-public class NavigateToTargetAction extends Action {
+public class NavigateToExternalTargetAction extends Action {
 
-   public static final String ID = "navigateToTarget";
+   public static final String ID = "navigateToExternalTarget";
 
    private NavigationTarget target;
 
-   public NavigateToTargetAction() {
+   public NavigateToExternalTargetAction() {
       super(ID);
    }
 
-   public NavigateToTargetAction(final NavigationTarget target) {
+   public NavigateToExternalTargetAction(final NavigationTarget target) {
       this();
       this.target = target;
    }
 
    public NavigationTarget getTarget() { return target; }
 
-   public void setTarget(final NavigationTarget navigationTarget) {
-      this.target = navigationTarget;
-   }
+   public void setTarget(final NavigationTarget navigationTarget) { this.target = navigationTarget; }
 }

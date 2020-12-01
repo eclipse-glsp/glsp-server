@@ -16,12 +16,13 @@
 package org.eclipse.glsp.example.workflow.provider;
 
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.glsp.example.workflow.wfgraph.TaskNode;
+import org.eclipse.glsp.server.features.navigation.JsonOpenerOptions;
 import org.eclipse.glsp.server.features.navigation.NavigationTarget;
 import org.eclipse.glsp.server.features.navigation.NavigationTargetProvider;
 import org.eclipse.glsp.server.model.GModelState;
@@ -54,11 +55,9 @@ public class NodeDocumentationNavigationTargetProvider implements NavigationTarg
          }
 
          String docUri = sourceUri.get().replace(".wf", ".md");
-         Map<String, String> args = new HashMap<>();
-         args.put(JSON_OPENER_OPTIONS, "{"
-            + "\"selection\": { \"start\": { \"line\": 2, \"character\": 3 }, "
-            + "\"end\": { \"line\": 2, \"character\": 7 } } "
-            + "}");
+         Map<String, String> args = Collections.singletonMap(
+            JSON_OPENER_OPTIONS,
+            new JsonOpenerOptions(2, 3, 2, 7).toJson());
          return Arrays.asList(new NavigationTarget(docUri, args));
       }
       return Arrays.asList();

@@ -26,20 +26,19 @@ import org.eclipse.glsp.server.utils.LayoutUtil;
 import com.google.inject.Inject;
 
 public class ComputedBoundsActionHandler extends BasicActionHandler<ComputedBoundsAction> {
+
    @Inject
    protected ModelSubmissionHandler submissionHandler;
 
    @Override
    public List<Action> executeAction(final ComputedBoundsAction action, final GModelState modelState) {
-
       synchronized (submissionHandler.getModelLock()) {
          GModelRoot model = modelState.getRoot();
          if (model != null && model.getRevision() == action.getRevision()) {
             LayoutUtil.applyBounds(model, action, modelState);
-            return submissionHandler.doSubmitModel(true, modelState);
+            return submissionHandler.submitModel(true, modelState, false);
          }
       }
-
       return none();
    }
 

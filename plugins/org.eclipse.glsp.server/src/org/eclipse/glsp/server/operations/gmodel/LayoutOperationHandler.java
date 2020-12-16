@@ -15,9 +15,9 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operations.gmodel;
 
+import org.eclipse.glsp.server.diagram.DiagramConfigurationRegistry;
 import org.eclipse.glsp.server.features.core.model.ModelSubmissionHandler;
 import org.eclipse.glsp.server.layout.ILayoutEngine;
-import org.eclipse.glsp.server.layout.ServerLayoutConfiguration;
 import org.eclipse.glsp.server.layout.ServerLayoutKind;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.BasicOperationHandler;
@@ -31,11 +31,11 @@ public class LayoutOperationHandler extends BasicOperationHandler<LayoutOperatio
    @Inject
    protected ModelSubmissionHandler modelSubmissionHandler;
    @Inject
-   protected ServerLayoutConfiguration serverConfiguration;
+   protected DiagramConfigurationRegistry diagramConfigurationRegistry;
 
    @Override
    protected void executeOperation(final LayoutOperation action, final GModelState modelState) {
-      if (serverConfiguration.getLayoutKind() == ServerLayoutKind.MANUAL) {
+      if (diagramConfigurationRegistry.get(modelState).getLayoutKind() == ServerLayoutKind.MANUAL) {
          if (layoutEngine != null) {
             layoutEngine.layout(modelState);
          }

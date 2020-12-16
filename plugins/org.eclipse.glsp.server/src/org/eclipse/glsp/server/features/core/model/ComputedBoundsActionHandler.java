@@ -36,7 +36,7 @@ public class ComputedBoundsActionHandler extends BasicActionHandler<ComputedBoun
          GModelRoot model = modelState.getRoot();
          if (model != null && model.getRevision() == action.getRevision()) {
             LayoutUtil.applyBounds(model, action, modelState);
-            return submissionHandler.submitModel(true, modelState, false);
+            return submissionHandler.submitModelDirectly(modelState);
          }
       }
       return none();

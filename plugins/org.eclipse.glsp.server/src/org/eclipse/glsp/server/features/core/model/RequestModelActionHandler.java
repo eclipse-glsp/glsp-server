@@ -17,18 +17,23 @@ package org.eclipse.glsp.server.features.core.model;
 
 import java.util.List;
 
-import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.server.actions.Action;
+import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.BasicActionHandler;
 import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
 import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.utils.ServerMessageUtil;
+import org.eclipse.glsp.server.utils.ServerStatusUtil;
 
 import com.google.inject.Inject;
 
 public class RequestModelActionHandler extends BasicActionHandler<RequestModelAction> {
 
    @Inject
-   protected ModelFactory modelFactory;
+   protected ModelSourceLoader sourceModelLoader;
+
+   @Inject
+   private ActionDispatcher actionDispatcher;
 
    @Inject
    private ModelSourceWatcher modelSourceWatcher;
@@ -39,10 +44,24 @@ public class RequestModelActionHandler extends BasicActionHandler<RequestModelAc
    @Override
    public List<Action> executeAction(final RequestModelAction action, final GModelState modelState) {
       modelState.setClientOptions(action.getOptions());
-      GModelRoot model = modelFactory.loadModel(action, modelState);
-      modelState.setRoot(model);
+
+      notifyStartLoading(modelState);
+      sourceModelLoader.loadSourceModel(action, modelState);
+      notifyFinishedLoading(modelState);
+
       modelSourceWatcher.startWatching(modelState);
-      return modelSubmissionHandler.submitModel(false, modelState);
+
+      return modelSubmissionHandler.submitModel(modelState);
+   }
+
+   protected void notifyStartLoading(final GModelState modelState) {
+      actionDispatcher.dispatch(modelState.getClientId(), ServerStatusUtil.info("Model loading in progress!"));
+      actionDispatcher.dispatch(modelState.getClientId(), ServerMessageUtil.info("Model loading in progress!"));
+   }
+
+   protected void notifyFinishedLoading(final GModelState modelState) {
+      actionDispatcher.dispatch(modelState.getClientId(), ServerStatusUtil.clear());
+      actionDispatcher.dispatch(modelState.getClientId(), ServerMessageUtil.clear());
    }
 
 }

@@ -25,7 +25,8 @@ import org.eclipse.glsp.server.diagram.DiagramConfigurationRegistry;
 import org.eclipse.glsp.server.features.commandpalette.CommandPaletteActionProvider;
 import org.eclipse.glsp.server.features.contextactions.ContextActionsProviderRegistry;
 import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
-import org.eclipse.glsp.server.features.core.model.ModelFactory;
+import org.eclipse.glsp.server.features.core.model.GModelFactory;
+import org.eclipse.glsp.server.features.core.model.ModelSourceLoader;
 import org.eclipse.glsp.server.features.directediting.ContextEditValidatorRegistry;
 import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
 import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
@@ -52,8 +53,10 @@ public abstract class GLSPModule extends AbstractModule {
    protected void configure() {
       // Configure default bindings
       bind(GLSPServer.class).to(bindGLSPServer()).in(Singleton.class);
+      bind(ModelSourceLoader.class).to(bindSourceModelLoader());
+      bind(GModelFactory.class).to(bindGModelFactory());
+      bind(ModelSourceWatcher.class).to(bindModelSourceWatcher()).in(Singleton.class);
       bind(PopupModelFactory.class).to(bindPopupModelFactory());
-      bind(ModelFactory.class).to(bindModelFactory());
       bind(ILayoutEngine.class).to(bindLayoutEngine());
       bind(ModelValidator.class).to(bindModelValidator());
       bind(ActionDispatcher.class).to(bindActionDispatcher()).in(Singleton.class);
@@ -64,7 +67,6 @@ public abstract class GLSPModule extends AbstractModule {
       bind(CommandPaletteActionProvider.class).to(bindCommandPaletteActionProvider());
       bind(ContextMenuItemProvider.class).to(bindContextMenuItemProvider());
       bind(NavigationTargetResolver.class).to(bindNavigationTargetResolver());
-      bind(ModelSourceWatcher.class).to(bindModelSourceWatcher()).in(Singleton.class);
       bind(ClientSessionManager.class).toInstance(getClientSessionManager());
       // Configure set suppliers
       bind(ActionRegistry.class).to(bindActionRegistry()).in(Singleton.class);
@@ -88,7 +90,9 @@ public abstract class GLSPModule extends AbstractModule {
 
    protected abstract Class<? extends GraphGsonConfiguratorFactory> bindGraphGsonConfiguratorFactory();
 
-   protected abstract Class<? extends ModelFactory> bindModelFactory();
+   protected abstract Class<? extends ModelSourceLoader> bindSourceModelLoader();
+
+   protected abstract Class<? extends GModelFactory> bindGModelFactory();
 
    protected Class<? extends PopupModelFactory> bindPopupModelFactory() {
       return PopupModelFactory.NullImpl.class;

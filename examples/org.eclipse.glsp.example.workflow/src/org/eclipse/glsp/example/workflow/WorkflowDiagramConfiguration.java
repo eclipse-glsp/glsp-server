@@ -43,6 +43,7 @@ import org.eclipse.glsp.graph.GraphPackage;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
 import org.eclipse.glsp.server.diagram.EdgeTypeHint;
 import org.eclipse.glsp.server.diagram.ShapeTypeHint;
+import org.eclipse.glsp.server.layout.ServerLayoutKind;
 
 public class WorkflowDiagramConfiguration implements DiagramConfiguration {
 
@@ -94,6 +95,14 @@ public class WorkflowDiagramConfiguration implements DiagramConfiguration {
       hint.setTargetElementTypeIds(
          Arrays.asList(MANUAL_TASK, AUTOMATED_TASK, DECISION_NODE, MERGE_NODE, FORK_NODE, JOIN_NODE));
       return hint;
+   }
+
+   @Override
+   public ServerLayoutKind getLayoutKind() { return ServerLayoutKind.MANUAL; }
+
+   @Override
+   public boolean needsClientLayout() {
+      return true;
    }
 
 }

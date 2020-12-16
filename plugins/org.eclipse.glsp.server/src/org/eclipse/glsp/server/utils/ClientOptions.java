@@ -23,7 +23,6 @@ public final class ClientOptions {
    public static final String DIAGRAM_TYPE = "diagramType";
    public static final String SOURCE_URI = "sourceUri";
    private static final String FILE_PREFIX = "file://";
-   public static final String NEEDS_CLIENT_LAYOUT = "needsClientLayout";
 
    private ClientOptions() {}
 

@@ -2,6 +2,27 @@
 
 Contains the code for the Java-based framework to create [GLSP](https://github.com/eclipse-glsp/glsp) server components.
 
+## Workflow Diagram Example
+
+The workflow diagram is a consistent example provided by all GLSP components. The example implements a simple flow chart diagram editor with different types of nodes and edges (see screenshot below). The example can be used to try out different GLSP features, as well as several available integrations with IDE platforms (Theia, VSCode, Eclipse, Standalone).
+As the example is fully open source, you can also use it as a blueprint for a custom implementation of a GLSP diagram editor.
+See [our project website](https://www.eclipse.org/glsp/documentation/#workflowoverview) for an overview of the workflow example and all components implementing it.
+
+![Workflow Diagram](/documentation/standalone-diagram.gif)
+
+### How to start the Workflow Diagram example?
+
+To see the diagram in action, you will need to choose and launch one diagram client, see [here for an overview](https://www.eclipse.org/glsp/documentation/#workflowoverview).
+
+### Where to find the sources?
+
+In addition to this repository, the related source code can be found here:
+
+-   https://github.com/eclipse-glsp/glsp-client
+-   https://github.com/eclipse-glsp/glsp-theia-integration
+-   https://github.com/eclipse-glsp/glsp-eclipse-integration
+-	https://github.com/eclipsesource/glsp-vscode-integration
+
 ## Structure
 - `org.eclipse.glsp.graph`: EMF-based implementation of graphical model that's used for client-server communication
 - `org.eclipse.glsp.layout`: Server-based layout using the [Eclipse Layout Kernel](https://www.eclipse.org/elk/) framework (adapted from [Eclipse Sprotty Server](https://www.github.com/eclipse/sprotty-server))

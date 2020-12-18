@@ -36,7 +36,7 @@ See [our project website](https://www.eclipse.org/glsp/documentation/#workflowov
 
 To see the diagram in action, you will need to choose and launch one diagram client, see [here for an overview](https://www.eclipse.org/glsp/documentation/#workflowoverview).
 
-### Building the Workflow Diagram example server?
+### Building the Workflow Diagram example server
 
 In the root of this repository, run
 

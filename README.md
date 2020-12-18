@@ -49,6 +49,8 @@ In the folder `examples/org.eclipse.glsp.example.workflow/target`, you should ha
 
 To start the example server from within your IDE, run the main method of the class [ExampleServerLauncher.java](https://github.com/eclipse-glsp/glsp-server/blob/master/examples/org.eclipse.glsp.example.workflow/src/org/eclipse/glsp/example/workflow/launch/WorkflowServerLauncher.java) in the module `glsp-server/examples/org.eclipse.glsp.example.workflow`.
 
+Once the server is running, choose a diagram client integration (such as Eclipse Theia, VSCode, Eclipse, or Standalone) below.
+
 ### Where to find the sources?
 
 In addition to this repository, the related source code can be found here:

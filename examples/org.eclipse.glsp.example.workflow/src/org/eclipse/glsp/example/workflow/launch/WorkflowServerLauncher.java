@@ -35,7 +35,8 @@ public final class WorkflowServerLauncher {
       try {
          WorkflowCLIParser parser = new WorkflowCLIParser(args, processName);
          LaunchUtil.configure(parser);
-         ElkLayoutEngine.initialize(new LayeredMetaDataProvider());
+         // TODO throws an exception currently when started from fat jar
+         // ElkLayoutEngine.initialize(new LayeredMetaDataProvider());
 
          int port = parser.parsePort();
 

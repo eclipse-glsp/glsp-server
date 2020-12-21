@@ -40,7 +40,7 @@ To see the diagram in action, you will need to choose and launch one diagram cli
 
 In the root of this repository, run
 
-    mvn clean install -Pfatjar
+    mvn clean verify -Pm2 -Pfatjar
 
 In the folder `examples/org.eclipse.glsp.example.workflow/target`, you should have a jar file `org.eclipse.glsp.example.workflow-X.X.X-SNAPSHOT-glsp.jar` whereas `X.X.X` is the current version. You can now start the server by executing the following commands:
 

@@ -33,10 +33,10 @@ public class RequestModelActionHandler extends BasicActionHandler<RequestModelAc
    protected ModelSourceLoader sourceModelLoader;
 
    @Inject
-   private ActionDispatcher actionDispatcher;
+   protected ActionDispatcher actionDispatcher;
 
    @Inject
-   private ModelSourceWatcher modelSourceWatcher;
+   protected ModelSourceWatcher modelSourceWatcher;
 
    @Inject
    protected ModelSubmissionHandler modelSubmissionHandler;

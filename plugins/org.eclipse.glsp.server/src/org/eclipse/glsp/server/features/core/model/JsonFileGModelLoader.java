@@ -24,7 +24,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 import org.eclipse.glsp.graph.GGraph;
-import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.server.jsonrpc.GraphGsonConfiguratorFactory;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.protocol.GLSPServerException;
@@ -34,29 +33,23 @@ import com.google.gson.Gson;
 import com.google.inject.Inject;
 
 /**
- * A base class which can be used for all model factories that load an SModel
- * from a json file.
- *
+ * A source model loader that reads the graph model directly from a JSON file.
  */
-public class JsonFileModelFactory implements ModelFactory {
+public class JsonFileGModelLoader implements ModelSourceLoader {
 
    @Inject
    private GraphGsonConfiguratorFactory gsonConfigurationFactory;
 
-   private GModelRoot modelRoot;
-
    @Override
-   public GModelRoot loadModel(final RequestModelAction action, final GModelState modelState) {
+   public void loadSourceModel(final RequestModelAction action, final GModelState modelState) {
       final Optional<File> file = ClientOptions.getSourceUriAsFile(action.getOptions());
-      if (file.isPresent() && file.get().exists()) {
-         try (Reader reader = new InputStreamReader(new FileInputStream(file.get()), StandardCharsets.UTF_8)) {
-            Gson gson = gsonConfigurationFactory.configureGson().create();
-            modelRoot = gson.fromJson(reader, GGraph.class);
-         } catch (IOException e) {
-            throw new GLSPServerException("Could not load model from file: " + file.get().toURI().toString(), e);
-         }
+      try (Reader reader = new InputStreamReader(new FileInputStream(file.get()), StandardCharsets.UTF_8)) {
+         Gson gson = gsonConfigurationFactory.configureGson().create();
+         modelState.setRoot(gson.fromJson(reader, GGraph.class));
+         modelState.getRoot().setRevision(-1);
+      } catch (IOException e) {
+         throw new GLSPServerException("Could not load model from file: " + file.get().toURI().toString(), e);
       }
-      return modelRoot;
    }
 
 }

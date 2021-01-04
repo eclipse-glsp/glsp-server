@@ -28,7 +28,6 @@ import org.eclipse.glsp.example.workflow.handler.WorkflowRequestContextActionsHa
 import org.eclipse.glsp.example.workflow.labeledit.WorkflowLabelEditValidator;
 import org.eclipse.glsp.example.workflow.layout.WorkflowLayoutEngine;
 import org.eclipse.glsp.example.workflow.marker.WorkflowModelValidator;
-import org.eclipse.glsp.example.workflow.model.WorkflowModelFactory;
 import org.eclipse.glsp.example.workflow.model.WorkflowNavigationTargetResolver;
 import org.eclipse.glsp.example.workflow.provider.NextNodeNavigationTargetProvider;
 import org.eclipse.glsp.example.workflow.provider.NodeDocumentationNavigationTargetProvider;
@@ -47,7 +46,9 @@ import org.eclipse.glsp.server.features.commandpalette.CommandPaletteActionProvi
 import org.eclipse.glsp.server.features.contextactions.ContextActionsProvider;
 import org.eclipse.glsp.server.features.contextactions.RequestContextActionsHandler;
 import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
-import org.eclipse.glsp.server.features.core.model.ModelFactory;
+import org.eclipse.glsp.server.features.core.model.GModelFactory;
+import org.eclipse.glsp.server.features.core.model.JsonFileGModelLoader;
+import org.eclipse.glsp.server.features.core.model.ModelSourceLoader;
 import org.eclipse.glsp.server.features.directediting.ContextEditValidator;
 import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
 import org.eclipse.glsp.server.features.modelsourcewatcher.FileWatcher;
@@ -67,6 +68,26 @@ public class WorkflowGLSPModule extends DefaultGLSPModule {
    @SuppressWarnings("rawtypes")
    protected Class<? extends GLSPServer> bindGLSPServer() {
       return WorkflowGLSPServer.class;
+   }
+
+   @Override
+   protected Class<? extends ModelSourceLoader> bindSourceModelLoader() {
+      return JsonFileGModelLoader.class;
+   }
+
+   @Override
+   protected Class<? extends GModelFactory> bindGModelFactory() {
+      return GModelFactory.NullImpl.class;
+   }
+
+   @Override
+   protected Class<? extends ModelSourceWatcher> bindModelSourceWatcher() {
+      return FileWatcher.class;
+   }
+
+   @Override
+   protected Class<? extends GraphExtension> bindGraphExtension() {
+      return WFGraphExtension.class;
    }
 
    @Override
@@ -117,11 +138,6 @@ public class WorkflowGLSPModule extends DefaultGLSPModule {
    }
 
    @Override
-   protected Class<? extends GraphExtension> bindGraphExtension() {
-      return WFGraphExtension.class;
-   }
-
-   @Override
    public Class<? extends PopupModelFactory> bindPopupModelFactory() {
       return WorkflowPopupFactory.class;
    }
@@ -156,13 +172,4 @@ public class WorkflowGLSPModule extends DefaultGLSPModule {
       return WorkflowNavigationTargetResolver.class;
    }
 
-   @Override
-   protected Class<? extends ModelFactory> bindModelFactory() {
-      return WorkflowModelFactory.class;
-   }
-
-   @Override
-   protected Class<? extends ModelSourceWatcher> bindModelSourceWatcher() {
-      return FileWatcher.class;
-   }
 }

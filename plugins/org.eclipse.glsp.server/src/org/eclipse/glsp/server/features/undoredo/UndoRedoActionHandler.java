@@ -36,10 +36,10 @@ public class UndoRedoActionHandler implements ActionHandler {
    public List<Action> execute(final Action action, final GModelState modelState) {
       if (action instanceof UndoAction && modelState.canUndo()) {
          modelState.undo();
-         return modelSubmissionHandler.submitModel(true, modelState);
+         return modelSubmissionHandler.submitModel(modelState);
       } else if (action instanceof RedoAction && modelState.canRedo()) {
          modelState.redo();
-         return modelSubmissionHandler.submitModel(true, modelState);
+         return modelSubmissionHandler.submitModel(modelState);
       }
       LOG.warn("Cannot undo or redo");
       return none();

@@ -19,8 +19,7 @@ import java.util.Optional;
 
 public interface ModelStateProvider {
    /**
-    * Returns the model state for a given clientId. Note that each sprotty diagram
-    * is counted as an individual client.
+    * Returns the model state for a given clientId. Note that each diagram is counted as an individual client.
     *
     * @param clientId clientId/widgetId
     * @return the corresponding model state

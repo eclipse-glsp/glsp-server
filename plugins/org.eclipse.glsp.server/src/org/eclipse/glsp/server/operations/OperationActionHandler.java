@@ -57,7 +57,7 @@ public class OperationActionHandler extends BasicActionHandler<Operation> {
       GModelRecordingCommand command = new GModelRecordingCommand(modelState.getRoot(), handler.getLabel(),
          () -> handler.execute(operation, modelState));
       modelState.execute(command);
-      return modelSubmissionHandler.submitModel(true, modelState);
+      return modelSubmissionHandler.submitModel(modelState);
    }
 
    public static Optional<? extends OperationHandler> getOperationHandler(final Operation operation,

@@ -29,6 +29,10 @@ public class UpdateModelAction extends Action {
       super(ID);
    }
 
+   public UpdateModelAction(final GModelRoot newRoot) {
+      this(newRoot, true);
+   }
+
    public UpdateModelAction(final GModelRoot newRoot, final boolean animate) {
       this();
       this.newRoot = newRoot;

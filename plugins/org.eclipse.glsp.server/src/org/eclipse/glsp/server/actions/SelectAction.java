@@ -19,7 +19,7 @@ import java.util.List;
 
 public class SelectAction extends Action {
 
-   public static final String ID = "selectElement";
+   public static final String ID = "elementSelected";
 
    private List<String> selectedElementsIDs;
    private List<String> deselectedElementsIDs;

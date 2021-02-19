@@ -35,6 +35,7 @@ import org.eclipse.glsp.server.actions.ServerStatusAction;
 import org.eclipse.glsp.server.actions.SetDirtyStateAction;
 import org.eclipse.glsp.server.actions.SetEditModeAction;
 import org.eclipse.glsp.server.actions.SetEditModeActionHandler;
+import org.eclipse.glsp.server.actions.SetViewportAction;
 import org.eclipse.glsp.server.actions.TriggerEdgeCreationAction;
 import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;
 import org.eclipse.glsp.server.diagram.RequestTypeHintsActionHandler;
@@ -126,6 +127,7 @@ public final class MultiBindingDefaults {
       SetPopupModelAction.class,
       SetResolvedNavigationTargetAction.class,
       SetTypeHintsAction.class,
+      SetViewportAction.class,
       ServerStatusAction.class,
       TriggerNodeCreationAction.class,
       TriggerEdgeCreationAction.class,

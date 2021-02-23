@@ -23,16 +23,20 @@ import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.eclipse.glsp.graph.GArgumentable;
 import org.eclipse.glsp.graph.GBoundsAware;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GEdgeLayoutable;
@@ -52,6 +56,7 @@ import org.eclipse.glsp.graph.GraphPackage;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.glsp.graph.impl.GLabelImpl#getEdgePlacement <em>Edge Placement</em>}</li>
+ *   <li>{@link org.eclipse.glsp.graph.impl.GLabelImpl#getArgs <em>Args</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GLabelImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GLabelImpl#getCssClasses <em>Css Classes</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GLabelImpl#getChildren <em>Children</em>}</li>
@@ -77,83 +82,93 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
    protected GEdgePlacement edgePlacement;
 
    /**
-    * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+    * The cached value of the '{@link #getArgs() <em>Args</em>}' map.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @see #getId()
+    * @see #getArgs()
     * @generated
     * @ordered
     */
+   protected EMap<String, Object> args;
+
+   /**
+   	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+   	 * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+   	 * @see #getId()
+   	 * @generated
+   	 * @ordered
+   	 */
    protected static final String ID_EDEFAULT = null;
 
    /**
-    * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
-    * <!-- begin-user-doc -->
+   	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+   	 * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @see #getId()
-    * @generated
-    * @ordered
-    */
+   	 * @see #getId()
+   	 * @generated
+   	 * @ordered
+   	 */
    protected String id = ID_EDEFAULT;
 
    /**
-    * The cached value of the '{@link #getCssClasses() <em>Css Classes</em>}' attribute list.
-    * <!-- begin-user-doc -->
+   	 * The cached value of the '{@link #getCssClasses() <em>Css Classes</em>}' attribute list.
+   	 * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @see #getCssClasses()
-    * @generated
-    * @ordered
-    */
+   	 * @see #getCssClasses()
+   	 * @generated
+   	 * @ordered
+   	 */
    protected EList<String> cssClasses;
 
    /**
-    * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
-    * <!-- begin-user-doc -->
+   	 * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
+   	 * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @see #getChildren()
-    * @generated
-    * @ordered
-    */
+   	 * @see #getChildren()
+   	 * @generated
+   	 * @ordered
+   	 */
    protected EList<GModelElement> children;
 
    /**
-    * The default value of the '{@link #getTrace() <em>Trace</em>}' attribute.
-    * <!-- begin-user-doc -->
+   	 * The default value of the '{@link #getTrace() <em>Trace</em>}' attribute.
+   	 * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @see #getTrace()
-    * @generated
-    * @ordered
-    */
+   	 * @see #getTrace()
+   	 * @generated
+   	 * @ordered
+   	 */
    protected static final String TRACE_EDEFAULT = null;
 
    /**
-    * The cached value of the '{@link #getTrace() <em>Trace</em>}' attribute.
-    * <!-- begin-user-doc -->
+   	 * The cached value of the '{@link #getTrace() <em>Trace</em>}' attribute.
+   	 * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @see #getTrace()
-    * @generated
-    * @ordered
-    */
+   	 * @see #getTrace()
+   	 * @generated
+   	 * @ordered
+   	 */
    protected String trace = TRACE_EDEFAULT;
 
    /**
-    * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-    * <!-- begin-user-doc -->
+   	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+   	 * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @see #getType()
-    * @generated
-    * @ordered
-    */
+   	 * @see #getType()
+   	 * @generated
+   	 * @ordered
+   	 */
    protected static final String TYPE_EDEFAULT = null;
 
    /**
-    * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-    * <!-- begin-user-doc -->
+   	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+   	 * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @see #getType()
-    * @generated
-    * @ordered
-    */
+   	 * @see #getType()
+   	 * @generated
+   	 * @ordered
+   	 */
    protected String type = TYPE_EDEFAULT;
 
    /**
@@ -407,6 +422,20 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
     * @generated
     */
    @Override
+   public EMap<String, Object> getArgs() {
+      if (args == null) {
+         args = new EcoreEMap<String, Object>(GraphPackage.Literals.STRING_TO_OBJECT_MAP_ENTRY,
+            StringToObjectMapEntryImpl.class, this, GraphPackage.GLABEL__ARGS);
+      }
+      return args;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
    public GPoint getPosition() { return position; }
 
    /**
@@ -550,6 +579,8 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
       switch (featureID) {
          case GraphPackage.GLABEL__EDGE_PLACEMENT:
             return basicSetEdgePlacement(null, msgs);
+         case GraphPackage.GLABEL__ARGS:
+            return ((InternalEList<?>) getArgs()).basicRemove(otherEnd, msgs);
          case GraphPackage.GLABEL__CHILDREN:
             return ((InternalEList<?>) getChildren()).basicRemove(otherEnd, msgs);
          case GraphPackage.GLABEL__PARENT:
@@ -587,6 +618,11 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
       switch (featureID) {
          case GraphPackage.GLABEL__EDGE_PLACEMENT:
             return getEdgePlacement();
+         case GraphPackage.GLABEL__ARGS:
+            if (coreType)
+               return getArgs();
+            else
+               return getArgs().map();
          case GraphPackage.GLABEL__ID:
             return getId();
          case GraphPackage.GLABEL__CSS_CLASSES:
@@ -620,6 +656,9 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
       switch (featureID) {
          case GraphPackage.GLABEL__EDGE_PLACEMENT:
             setEdgePlacement((GEdgePlacement) newValue);
+            return;
+         case GraphPackage.GLABEL__ARGS:
+            ((EStructuralFeature.Setting) getArgs()).set(newValue);
             return;
          case GraphPackage.GLABEL__ID:
             setId((String) newValue);
@@ -665,6 +704,9 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
          case GraphPackage.GLABEL__EDGE_PLACEMENT:
             setEdgePlacement((GEdgePlacement) null);
             return;
+         case GraphPackage.GLABEL__ARGS:
+            getArgs().clear();
+            return;
          case GraphPackage.GLABEL__ID:
             setId(ID_EDEFAULT);
             return;
@@ -706,6 +748,8 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
       switch (featureID) {
          case GraphPackage.GLABEL__EDGE_PLACEMENT:
             return edgePlacement != null;
+         case GraphPackage.GLABEL__ARGS:
+            return args != null && !args.isEmpty();
          case GraphPackage.GLABEL__ID:
             return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
          case GraphPackage.GLABEL__CSS_CLASSES:
@@ -739,6 +783,14 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
          switch (derivedFeatureID) {
             case GraphPackage.GLABEL__EDGE_PLACEMENT:
                return GraphPackage.GEDGE_LAYOUTABLE__EDGE_PLACEMENT;
+            default:
+               return -1;
+         }
+      }
+      if (baseClass == GArgumentable.class) {
+         switch (derivedFeatureID) {
+            case GraphPackage.GLABEL__ARGS:
+               return GraphPackage.GARGUMENTABLE__ARGS;
             default:
                return -1;
          }
@@ -791,6 +843,14 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
          switch (baseFeatureID) {
             case GraphPackage.GEDGE_LAYOUTABLE__EDGE_PLACEMENT:
                return GraphPackage.GLABEL__EDGE_PLACEMENT;
+            default:
+               return -1;
+         }
+      }
+      if (baseClass == GArgumentable.class) {
+         switch (baseFeatureID) {
+            case GraphPackage.GARGUMENTABLE__ARGS:
+               return GraphPackage.GLABEL__ARGS;
             default:
                return -1;
          }

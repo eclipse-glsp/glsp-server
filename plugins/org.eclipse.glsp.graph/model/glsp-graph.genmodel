@@ -87,6 +87,9 @@
     <genClasses ecoreClass="glsp-graph.ecore#//GAlignable">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GAlignable/alignment"/>
     </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GArgumentable">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GArgumentable/args"/>
+    </genClasses>
     <genClasses ecoreClass="glsp-graph.ecore#//GIssue">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GIssue/severity"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GIssue/message"/>

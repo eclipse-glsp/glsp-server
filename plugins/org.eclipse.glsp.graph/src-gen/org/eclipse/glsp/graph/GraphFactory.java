@@ -162,12 +162,21 @@ public interface GraphFactory extends EFactory {
    GAlignable createGAlignable();
 
    /**
-    * Returns a new object of class '<em>GIssue</em>'.
+    * Returns a new object of class '<em>GArgumentable</em>'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @return a new object of class '<em>GIssue</em>'.
+    * @return a new object of class '<em>GArgumentable</em>'.
     * @generated
     */
+   GArgumentable createGArgumentable();
+
+   /**
+   	 * Returns a new object of class '<em>GIssue</em>'.
+   	 * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+   	 * @return a new object of class '<em>GIssue</em>'.
+   	 * @generated
+   	 */
    GIssue createGIssue();
 
    /**

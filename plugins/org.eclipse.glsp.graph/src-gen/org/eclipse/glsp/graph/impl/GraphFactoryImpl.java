@@ -100,6 +100,8 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
             return createGBounds();
          case GraphPackage.GALIGNABLE:
             return createGAlignable();
+         case GraphPackage.GARGUMENTABLE:
+            return createGArgumentable();
          case GraphPackage.GISSUE:
             return createGIssue();
          case GraphPackage.GHTML_ROOT:
@@ -302,6 +304,17 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
     * <!-- end-user-doc -->
     * @generated
     */
+   @Override
+   public GArgumentable createGArgumentable() {
+      GArgumentableImpl gArgumentable = new GArgumentableImpl();
+      return gArgumentable;
+   }
+
+   /**
+   	 * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+   	 * @generated
+   	 */
    @Override
    public GIssue createGIssue() {
       GIssueImpl gIssue = new GIssueImpl();

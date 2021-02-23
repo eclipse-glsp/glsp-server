@@ -29,8 +29,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
@@ -70,7 +68,7 @@ import org.eclipse.glsp.graph.GraphPackage;
  *
  * @generated
  */
-public class GNodeImpl extends MinimalEObjectImpl.Container implements GNode {
+public class GNodeImpl extends GArgumentableImpl implements GNode {
    /**
     * The default value of the '{@link #getId() <em>Id</em>}' attribute.
     * <!-- begin-user-doc -->

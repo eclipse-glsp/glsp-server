@@ -92,83 +92,83 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
    protected EMap<String, Object> args;
 
    /**
-   	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
-   	 * <!-- begin-user-doc -->
+    * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+    * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-   	 * @see #getId()
-   	 * @generated
-   	 * @ordered
-   	 */
+    * @see #getId()
+    * @generated
+    * @ordered
+    */
    protected static final String ID_EDEFAULT = null;
 
    /**
-   	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
-   	 * <!-- begin-user-doc -->
+    * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+    * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-   	 * @see #getId()
-   	 * @generated
-   	 * @ordered
-   	 */
+    * @see #getId()
+    * @generated
+    * @ordered
+    */
    protected String id = ID_EDEFAULT;
 
    /**
-   	 * The cached value of the '{@link #getCssClasses() <em>Css Classes</em>}' attribute list.
-   	 * <!-- begin-user-doc -->
+    * The cached value of the '{@link #getCssClasses() <em>Css Classes</em>}' attribute list.
+    * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-   	 * @see #getCssClasses()
-   	 * @generated
-   	 * @ordered
-   	 */
+    * @see #getCssClasses()
+    * @generated
+    * @ordered
+    */
    protected EList<String> cssClasses;
 
    /**
-   	 * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
-   	 * <!-- begin-user-doc -->
+    * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
+    * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-   	 * @see #getChildren()
-   	 * @generated
-   	 * @ordered
-   	 */
+    * @see #getChildren()
+    * @generated
+    * @ordered
+    */
    protected EList<GModelElement> children;
 
    /**
-   	 * The default value of the '{@link #getTrace() <em>Trace</em>}' attribute.
-   	 * <!-- begin-user-doc -->
+    * The default value of the '{@link #getTrace() <em>Trace</em>}' attribute.
+    * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-   	 * @see #getTrace()
-   	 * @generated
-   	 * @ordered
-   	 */
+    * @see #getTrace()
+    * @generated
+    * @ordered
+    */
    protected static final String TRACE_EDEFAULT = null;
 
    /**
-   	 * The cached value of the '{@link #getTrace() <em>Trace</em>}' attribute.
-   	 * <!-- begin-user-doc -->
+    * The cached value of the '{@link #getTrace() <em>Trace</em>}' attribute.
+    * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-   	 * @see #getTrace()
-   	 * @generated
-   	 * @ordered
-   	 */
+    * @see #getTrace()
+    * @generated
+    * @ordered
+    */
    protected String trace = TRACE_EDEFAULT;
 
    /**
-   	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-   	 * <!-- begin-user-doc -->
+    * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+    * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-   	 * @see #getType()
-   	 * @generated
-   	 * @ordered
-   	 */
+    * @see #getType()
+    * @generated
+    * @ordered
+    */
    protected static final String TYPE_EDEFAULT = null;
 
    /**
-   	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-   	 * <!-- begin-user-doc -->
+    * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+    * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-   	 * @see #getType()
-   	 * @generated
-   	 * @ordered
-   	 */
+    * @see #getType()
+    * @generated
+    * @ordered
+    */
    protected String type = TYPE_EDEFAULT;
 
    /**

@@ -201,10 +201,10 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
    private EClass gArgumentableEClass = null;
 
    /**
-   	 * <!-- begin-user-doc -->
+    * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-   	 * @generated
-   	 */
+    * @generated
+    */
    private EClass gIssueEClass = null;
 
    /**
@@ -776,20 +776,20 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
    public EClass getGArgumentable() { return gArgumentableEClass; }
 
    /**
-   	 * <!-- begin-user-doc -->
+    * <!-- begin-user-doc -->
    	 * <!-- end-user-doc -->
-   	 * @generated
-   	 */
+    * @generated
+    */
    @Override
    public EReference getGArgumentable_Args() {
       return (EReference) gArgumentableEClass.getEStructuralFeatures().get(0);
    }
 
    /**
-   	 * <!-- begin-user-doc -->
+    * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-   	 * @generated
-   	 */
+    * @generated
+    */
    @Override
    public EClass getGIssue() { return gIssueEClass; }
 

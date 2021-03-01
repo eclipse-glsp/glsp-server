@@ -171,12 +171,12 @@ public interface GraphFactory extends EFactory {
    GArgumentable createGArgumentable();
 
    /**
-   	 * Returns a new object of class '<em>GIssue</em>'.
-   	 * <!-- begin-user-doc -->
+    * Returns a new object of class '<em>GIssue</em>'.
+    * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-   	 * @return a new object of class '<em>GIssue</em>'.
-   	 * @generated
-   	 */
+    * @return a new object of class '<em>GIssue</em>'.
+    * @generated
+    */
    GIssue createGIssue();
 
    /**

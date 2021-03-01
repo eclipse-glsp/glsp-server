@@ -178,6 +178,11 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
       }
 
       @Override
+      public Adapter caseGArgumentable(GArgumentable object) {
+         return createGArgumentableAdapter();
+      }
+
+      @Override
       public Adapter caseGIssue(GIssue object) {
          return createGIssueAdapter();
       }
@@ -479,6 +484,20 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
     * @generated
     */
    public Adapter createGAlignableAdapter() {
+      return null;
+   }
+
+   /**
+    * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GArgumentable <em>GArgumentable</em>}'.
+    * <!-- begin-user-doc -->
+    * This default implementation returns null so that we can easily ignore cases;
+    * it's useful to ignore a case when inheritance will catch all the cases anyway.
+    * <!-- end-user-doc -->
+    * @return the new adapter.
+    * @see org.eclipse.glsp.graph.GArgumentable
+    * @generated
+    */
+   public Adapter createGArgumentableAdapter() {
       return null;
    }
 

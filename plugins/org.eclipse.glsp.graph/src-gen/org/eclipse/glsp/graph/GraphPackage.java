@@ -72,6 +72,43 @@ public interface GraphPackage extends EPackage {
    GraphPackage eINSTANCE = org.eclipse.glsp.graph.impl.GraphPackageImpl.init();
 
    /**
+    * The meta object id for the '{@link org.eclipse.glsp.graph.impl.GArgumentableImpl <em>GArgumentable</em>}' class.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see org.eclipse.glsp.graph.impl.GArgumentableImpl
+    * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGArgumentable()
+    * @generated
+    */
+   int GARGUMENTABLE = 19;
+
+   /**
+    * The feature id for the '<em><b>Args</b></em>' map.
+    * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GARGUMENTABLE__ARGS = 0;
+
+   /**
+    * The number of structural features of the '<em>GArgumentable</em>' class.
+    * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GARGUMENTABLE_FEATURE_COUNT = 1;
+
+   /**
+    * The number of operations of the '<em>GArgumentable</em>' class.
+    * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GARGUMENTABLE_OPERATION_COUNT = 0;
+
+   /**
     * The meta object id for the '{@link org.eclipse.glsp.graph.GModelElement <em>GModel Element</em>}' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -82,13 +119,22 @@ public interface GraphPackage extends EPackage {
    int GMODEL_ELEMENT = 0;
 
    /**
+    * The feature id for the '<em><b>Args</b></em>' map.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GMODEL_ELEMENT__ARGS = GARGUMENTABLE__ARGS;
+
+   /**
     * The feature id for the '<em><b>Id</b></em>' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int GMODEL_ELEMENT__ID = 0;
+   int GMODEL_ELEMENT__ID = GARGUMENTABLE_FEATURE_COUNT + 0;
 
    /**
     * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -97,7 +143,7 @@ public interface GraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GMODEL_ELEMENT__CSS_CLASSES = 1;
+   int GMODEL_ELEMENT__CSS_CLASSES = GARGUMENTABLE_FEATURE_COUNT + 1;
 
    /**
     * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -106,7 +152,7 @@ public interface GraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GMODEL_ELEMENT__CHILDREN = 2;
+   int GMODEL_ELEMENT__CHILDREN = GARGUMENTABLE_FEATURE_COUNT + 2;
 
    /**
     * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -115,7 +161,7 @@ public interface GraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GMODEL_ELEMENT__PARENT = 3;
+   int GMODEL_ELEMENT__PARENT = GARGUMENTABLE_FEATURE_COUNT + 3;
 
    /**
     * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -124,7 +170,7 @@ public interface GraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GMODEL_ELEMENT__TRACE = 4;
+   int GMODEL_ELEMENT__TRACE = GARGUMENTABLE_FEATURE_COUNT + 4;
 
    /**
     * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -133,7 +179,7 @@ public interface GraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GMODEL_ELEMENT__TYPE = 5;
+   int GMODEL_ELEMENT__TYPE = GARGUMENTABLE_FEATURE_COUNT + 5;
 
    /**
     * The number of structural features of the '<em>GModel Element</em>' class.
@@ -142,7 +188,7 @@ public interface GraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GMODEL_ELEMENT_FEATURE_COUNT = 6;
+   int GMODEL_ELEMENT_FEATURE_COUNT = GARGUMENTABLE_FEATURE_COUNT + 6;
 
    /**
     * The number of operations of the '<em>GModel Element</em>' class.
@@ -151,7 +197,7 @@ public interface GraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GMODEL_ELEMENT_OPERATION_COUNT = 0;
+   int GMODEL_ELEMENT_OPERATION_COUNT = GARGUMENTABLE_OPERATION_COUNT + 0;
 
    /**
     * The meta object id for the '{@link org.eclipse.glsp.graph.GShapeElement <em>GShape Element</em>}' class.
@@ -162,6 +208,15 @@ public interface GraphPackage extends EPackage {
     * @generated
     */
    int GSHAPE_ELEMENT = 1;
+
+   /**
+    * The feature id for the '<em><b>Args</b></em>' map.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GSHAPE_ELEMENT__ARGS = GMODEL_ELEMENT__ARGS;
 
    /**
     * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -264,6 +319,15 @@ public interface GraphPackage extends EPackage {
    int GMODEL_ROOT = 3;
 
    /**
+    * The feature id for the '<em><b>Args</b></em>' map.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GMODEL_ROOT__ARGS = GMODEL_ELEMENT__ARGS;
+
+   /**
     * The feature id for the '<em><b>Id</b></em>' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -362,6 +426,15 @@ public interface GraphPackage extends EPackage {
     * @generated
     */
    int GGRAPH = 2;
+
+   /**
+    * The feature id for the '<em><b>Args</b></em>' map.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GGRAPH__ARGS = GMODEL_ROOT__ARGS;
 
    /**
     * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -491,6 +564,15 @@ public interface GraphPackage extends EPackage {
    int GNODE = 4;
 
    /**
+    * The feature id for the '<em><b>Args</b></em>' map.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GNODE__ARGS = GSHAPE_ELEMENT__ARGS;
+
+   /**
     * The feature id for the '<em><b>Id</b></em>' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -616,6 +698,15 @@ public interface GraphPackage extends EPackage {
     * @generated
     */
    int GEDGE = 5;
+
+   /**
+    * The feature id for the '<em><b>Args</b></em>' map.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GEDGE__ARGS = GMODEL_ELEMENT__ARGS;
 
    /**
     * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -752,6 +843,15 @@ public interface GraphPackage extends EPackage {
     * @generated
     */
    int GCOMPARTMENT = 6;
+
+   /**
+    * The feature id for the '<em><b>Args</b></em>' map.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GCOMPARTMENT__ARGS = GSHAPE_ELEMENT__ARGS;
 
    /**
     * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -927,13 +1027,22 @@ public interface GraphPackage extends EPackage {
    int GLABEL__EDGE_PLACEMENT = GALIGNABLE_FEATURE_COUNT + 0;
 
    /**
+    * The feature id for the '<em><b>Args</b></em>' map.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GLABEL__ARGS = GALIGNABLE_FEATURE_COUNT + 1;
+
+   /**
     * The feature id for the '<em><b>Id</b></em>' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int GLABEL__ID = GALIGNABLE_FEATURE_COUNT + 1;
+   int GLABEL__ID = GALIGNABLE_FEATURE_COUNT + 2;
 
    /**
     * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -942,7 +1051,7 @@ public interface GraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GLABEL__CSS_CLASSES = GALIGNABLE_FEATURE_COUNT + 2;
+   int GLABEL__CSS_CLASSES = GALIGNABLE_FEATURE_COUNT + 3;
 
    /**
     * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -951,7 +1060,7 @@ public interface GraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GLABEL__CHILDREN = GALIGNABLE_FEATURE_COUNT + 3;
+   int GLABEL__CHILDREN = GALIGNABLE_FEATURE_COUNT + 4;
 
    /**
     * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -960,7 +1069,7 @@ public interface GraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GLABEL__PARENT = GALIGNABLE_FEATURE_COUNT + 4;
+   int GLABEL__PARENT = GALIGNABLE_FEATURE_COUNT + 5;
 
    /**
     * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -969,7 +1078,7 @@ public interface GraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GLABEL__TRACE = GALIGNABLE_FEATURE_COUNT + 5;
+   int GLABEL__TRACE = GALIGNABLE_FEATURE_COUNT + 6;
 
    /**
     * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -978,7 +1087,7 @@ public interface GraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GLABEL__TYPE = GALIGNABLE_FEATURE_COUNT + 6;
+   int GLABEL__TYPE = GALIGNABLE_FEATURE_COUNT + 7;
 
    /**
     * The feature id for the '<em><b>Position</b></em>' containment reference.
@@ -987,7 +1096,7 @@ public interface GraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GLABEL__POSITION = GALIGNABLE_FEATURE_COUNT + 7;
+   int GLABEL__POSITION = GALIGNABLE_FEATURE_COUNT + 8;
 
    /**
     * The feature id for the '<em><b>Size</b></em>' containment reference.
@@ -996,7 +1105,7 @@ public interface GraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GLABEL__SIZE = GALIGNABLE_FEATURE_COUNT + 8;
+   int GLABEL__SIZE = GALIGNABLE_FEATURE_COUNT + 9;
 
    /**
     * The feature id for the '<em><b>Text</b></em>' attribute.
@@ -1005,7 +1114,7 @@ public interface GraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GLABEL__TEXT = GALIGNABLE_FEATURE_COUNT + 9;
+   int GLABEL__TEXT = GALIGNABLE_FEATURE_COUNT + 10;
 
    /**
     * The number of structural features of the '<em>GLabel</em>' class.
@@ -1014,7 +1123,7 @@ public interface GraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GLABEL_FEATURE_COUNT = GALIGNABLE_FEATURE_COUNT + 10;
+   int GLABEL_FEATURE_COUNT = GALIGNABLE_FEATURE_COUNT + 11;
 
    /**
     * The number of operations of the '<em>GLabel</em>' class.
@@ -1034,6 +1143,15 @@ public interface GraphPackage extends EPackage {
     * @generated
     */
    int GISSUE_MARKER = 8;
+
+   /**
+    * The feature id for the '<em><b>Args</b></em>' map.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GISSUE_MARKER__ARGS = GSHAPE_ELEMENT__ARGS;
 
    /**
     * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1145,6 +1263,15 @@ public interface GraphPackage extends EPackage {
    int GPORT = 9;
 
    /**
+    * The feature id for the '<em><b>Args</b></em>' map.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GPORT__ARGS = GSHAPE_ELEMENT__ARGS;
+
+   /**
     * The feature id for the '<em><b>Id</b></em>' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -1243,6 +1370,15 @@ public interface GraphPackage extends EPackage {
     * @generated
     */
    int GBUTTON = 10;
+
+   /**
+    * The feature id for the '<em><b>Args</b></em>' map.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GBUTTON__ARGS = GSHAPE_ELEMENT__ARGS;
 
    /**
     * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1700,7 +1836,7 @@ public interface GraphPackage extends EPackage {
     * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGIssue()
     * @generated
     */
-   int GISSUE = 19;
+   int GISSUE = 20;
 
    /**
     * The feature id for the '<em><b>Severity</b></em>' attribute.
@@ -1746,7 +1882,16 @@ public interface GraphPackage extends EPackage {
     * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGHtmlRoot()
     * @generated
     */
-   int GHTML_ROOT = 20;
+   int GHTML_ROOT = 21;
+
+   /**
+    * The feature id for the '<em><b>Args</b></em>' map.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GHTML_ROOT__ARGS = GMODEL_ROOT__ARGS;
 
    /**
     * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1855,7 +2000,16 @@ public interface GraphPackage extends EPackage {
     * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGPreRenderedElement()
     * @generated
     */
-   int GPRE_RENDERED_ELEMENT = 21;
+   int GPRE_RENDERED_ELEMENT = 22;
+
+   /**
+    * The feature id for the '<em><b>Args</b></em>' map.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GPRE_RENDERED_ELEMENT__ARGS = GMODEL_ELEMENT__ARGS;
 
    /**
     * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1946,7 +2100,7 @@ public interface GraphPackage extends EPackage {
     * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getStringToObjectMapEntry()
     * @generated
     */
-   int STRING_TO_OBJECT_MAP_ENTRY = 22;
+   int STRING_TO_OBJECT_MAP_ENTRY = 23;
 
    /**
     * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -1992,7 +2146,7 @@ public interface GraphPackage extends EPackage {
     * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGSeverity()
     * @generated
     */
-   int GSEVERITY = 23;
+   int GSEVERITY = 24;
 
    /**
     * Returns the meta object for class '{@link org.eclipse.glsp.graph.GModelElement <em>GModel Element</em>}'.
@@ -2579,6 +2733,27 @@ public interface GraphPackage extends EPackage {
     * @generated
     */
    EReference getGAlignable_Alignment();
+
+   /**
+    * Returns the meta object for class '{@link org.eclipse.glsp.graph.GArgumentable <em>GArgumentable</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for class '<em>GArgumentable</em>'.
+    * @see org.eclipse.glsp.graph.GArgumentable
+    * @generated
+    */
+   EClass getGArgumentable();
+
+   /**
+    * Returns the meta object for the map '{@link org.eclipse.glsp.graph.GArgumentable#getArgs <em>Args</em>}'.
+    * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+    * @return the meta object for the map '<em>Args</em>'.
+    * @see org.eclipse.glsp.graph.GArgumentable#getArgs()
+    * @see #getGArgumentable()
+    * @generated
+    */
+   EReference getGArgumentable_Args();
 
    /**
     * Returns the meta object for class '{@link org.eclipse.glsp.graph.GIssue <em>GIssue</em>}'.
@@ -3198,6 +3373,24 @@ public interface GraphPackage extends EPackage {
        * @generated
        */
       EReference GALIGNABLE__ALIGNMENT = eINSTANCE.getGAlignable_Alignment();
+
+      /**
+       * The meta object literal for the '{@link org.eclipse.glsp.graph.impl.GArgumentableImpl <em>GArgumentable</em>}' class.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @see org.eclipse.glsp.graph.impl.GArgumentableImpl
+       * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGArgumentable()
+       * @generated
+       */
+      EClass GARGUMENTABLE = eINSTANCE.getGArgumentable();
+
+      /**
+       * The meta object literal for the '<em><b>Args</b></em>' map feature.
+       * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+       * @generated
+       */
+      EReference GARGUMENTABLE__ARGS = eINSTANCE.getGArgumentable_Args();
 
       /**
        * The meta object literal for the '{@link org.eclipse.glsp.graph.impl.GIssueImpl <em>GIssue</em>}' class.

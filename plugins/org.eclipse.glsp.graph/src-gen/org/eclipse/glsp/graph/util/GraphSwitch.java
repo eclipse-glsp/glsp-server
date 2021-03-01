@@ -86,6 +86,8 @@ public class GraphSwitch<T> extends Switch<T> {
             GModelElement gModelElement = (GModelElement) theEObject;
             T result = caseGModelElement(gModelElement);
             if (result == null)
+               result = caseGArgumentable(gModelElement);
+            if (result == null)
                result = defaultCase(theEObject);
             return result;
          }
@@ -96,6 +98,8 @@ public class GraphSwitch<T> extends Switch<T> {
                result = caseGModelElement(gShapeElement);
             if (result == null)
                result = caseGBoundsAware(gShapeElement);
+            if (result == null)
+               result = caseGArgumentable(gShapeElement);
             if (result == null)
                result = defaultCase(theEObject);
             return result;
@@ -110,6 +114,8 @@ public class GraphSwitch<T> extends Switch<T> {
             if (result == null)
                result = caseGModelElement(gGraph);
             if (result == null)
+               result = caseGArgumentable(gGraph);
+            if (result == null)
                result = defaultCase(theEObject);
             return result;
          }
@@ -118,6 +124,8 @@ public class GraphSwitch<T> extends Switch<T> {
             T result = caseGModelRoot(gModelRoot);
             if (result == null)
                result = caseGModelElement(gModelRoot);
+            if (result == null)
+               result = caseGArgumentable(gModelRoot);
             if (result == null)
                result = defaultCase(theEObject);
             return result;
@@ -136,6 +144,8 @@ public class GraphSwitch<T> extends Switch<T> {
             if (result == null)
                result = caseGBoundsAware(gNode);
             if (result == null)
+               result = caseGArgumentable(gNode);
+            if (result == null)
                result = defaultCase(theEObject);
             return result;
          }
@@ -144,6 +154,8 @@ public class GraphSwitch<T> extends Switch<T> {
             T result = caseGEdge(gEdge);
             if (result == null)
                result = caseGModelElement(gEdge);
+            if (result == null)
+               result = caseGArgumentable(gEdge);
             if (result == null)
                result = defaultCase(theEObject);
             return result;
@@ -159,6 +171,8 @@ public class GraphSwitch<T> extends Switch<T> {
                result = caseGModelElement(gCompartment);
             if (result == null)
                result = caseGBoundsAware(gCompartment);
+            if (result == null)
+               result = caseGArgumentable(gCompartment);
             if (result == null)
                result = defaultCase(theEObject);
             return result;
@@ -177,6 +191,8 @@ public class GraphSwitch<T> extends Switch<T> {
             if (result == null)
                result = caseGBoundsAware(gLabel);
             if (result == null)
+               result = caseGArgumentable(gLabel);
+            if (result == null)
                result = defaultCase(theEObject);
             return result;
          }
@@ -189,6 +205,8 @@ public class GraphSwitch<T> extends Switch<T> {
                result = caseGModelElement(gIssueMarker);
             if (result == null)
                result = caseGBoundsAware(gIssueMarker);
+            if (result == null)
+               result = caseGArgumentable(gIssueMarker);
             if (result == null)
                result = defaultCase(theEObject);
             return result;
@@ -203,6 +221,8 @@ public class GraphSwitch<T> extends Switch<T> {
             if (result == null)
                result = caseGBoundsAware(gPort);
             if (result == null)
+               result = caseGArgumentable(gPort);
+            if (result == null)
                result = defaultCase(theEObject);
             return result;
          }
@@ -215,6 +235,8 @@ public class GraphSwitch<T> extends Switch<T> {
                result = caseGModelElement(gButton);
             if (result == null)
                result = caseGBoundsAware(gButton);
+            if (result == null)
+               result = caseGArgumentable(gButton);
             if (result == null)
                result = defaultCase(theEObject);
             return result;
@@ -275,6 +297,13 @@ public class GraphSwitch<T> extends Switch<T> {
                result = defaultCase(theEObject);
             return result;
          }
+         case GraphPackage.GARGUMENTABLE: {
+            GArgumentable gArgumentable = (GArgumentable) theEObject;
+            T result = caseGArgumentable(gArgumentable);
+            if (result == null)
+               result = defaultCase(theEObject);
+            return result;
+         }
          case GraphPackage.GISSUE: {
             GIssue gIssue = (GIssue) theEObject;
             T result = caseGIssue(gIssue);
@@ -290,6 +319,8 @@ public class GraphSwitch<T> extends Switch<T> {
             if (result == null)
                result = caseGModelElement(gHtmlRoot);
             if (result == null)
+               result = caseGArgumentable(gHtmlRoot);
+            if (result == null)
                result = defaultCase(theEObject);
             return result;
          }
@@ -298,6 +329,8 @@ public class GraphSwitch<T> extends Switch<T> {
             T result = caseGPreRenderedElement(gPreRenderedElement);
             if (result == null)
                result = caseGModelElement(gPreRenderedElement);
+            if (result == null)
+               result = caseGArgumentable(gPreRenderedElement);
             if (result == null)
                result = defaultCase(theEObject);
             return result;
@@ -597,6 +630,21 @@ public class GraphSwitch<T> extends Switch<T> {
     * @generated
     */
    public T caseGAlignable(GAlignable object) {
+      return null;
+   }
+
+   /**
+    * Returns the result of interpreting the object as an instance of '<em>GArgumentable</em>'.
+    * <!-- begin-user-doc -->
+    * This implementation returns null;
+    * returning a non-null result will terminate the switch.
+    * <!-- end-user-doc -->
+    * @param object the target of the switch.
+    * @return the result of interpreting the object as an instance of '<em>GArgumentable</em>'.
+    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+    * @generated
+    */
+   public T caseGArgumentable(GArgumentable object) {
       return null;
    }
 

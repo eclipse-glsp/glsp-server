@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import org.eclipse.glsp.graph.GAlignable;
+import org.eclipse.glsp.graph.GArgumentable;
 import org.eclipse.glsp.graph.GBounds;
 import org.eclipse.glsp.graph.GBoundsAware;
 import org.eclipse.glsp.graph.GButton;
@@ -191,6 +192,13 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
     * @generated
     */
    private EClass gAlignableEClass = null;
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   private EClass gArgumentableEClass = null;
 
    /**
     * <!-- begin-user-doc -->
@@ -765,6 +773,24 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
     * @generated
     */
    @Override
+   public EClass getGArgumentable() { return gArgumentableEClass; }
+
+   /**
+    * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
+   public EReference getGArgumentable_Args() {
+      return (EReference) gArgumentableEClass.getEStructuralFeatures().get(0);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
    public EClass getGIssue() { return gIssueEClass; }
 
    /**
@@ -955,6 +981,9 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
       gAlignableEClass = createEClass(GALIGNABLE);
       createEReference(gAlignableEClass, GALIGNABLE__ALIGNMENT);
 
+      gArgumentableEClass = createEClass(GARGUMENTABLE);
+      createEReference(gArgumentableEClass, GARGUMENTABLE__ARGS);
+
       gIssueEClass = createEClass(GISSUE);
       createEAttribute(gIssueEClass, GISSUE__SEVERITY);
       createEAttribute(gIssueEClass, GISSUE__MESSAGE);
@@ -1002,6 +1031,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
       // Set bounds for type parameters
 
       // Add supertypes to classes
+      gModelElementEClass.getESuperTypes().add(this.getGArgumentable());
       gShapeElementEClass.getESuperTypes().add(this.getGModelElement());
       gShapeElementEClass.getESuperTypes().add(this.getGBoundsAware());
       gGraphEClass.getESuperTypes().add(this.getGModelRoot());
@@ -1159,6 +1189,12 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
       initEReference(getGAlignable_Alignment(), this.getGPoint(), null, "alignment", null, 0, 1, GAlignable.class,
          !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
          !IS_DERIVED, IS_ORDERED);
+
+      initEClass(gArgumentableEClass, GArgumentable.class, "GArgumentable", !IS_ABSTRACT, !IS_INTERFACE,
+         IS_GENERATED_INSTANCE_CLASS);
+      initEReference(getGArgumentable_Args(), this.getStringToObjectMapEntry(), null, "args", null, 0, -1,
+         GArgumentable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
       initEClass(gIssueEClass, GIssue.class, "GIssue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
       initEAttribute(getGIssue_Severity(), this.getGSeverity(), "severity", "info", 1, 1, GIssue.class, !IS_TRANSIENT,

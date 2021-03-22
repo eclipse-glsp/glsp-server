@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -36,10 +36,10 @@ public class UndoRedoActionHandler implements ActionHandler {
    public List<Action> execute(final Action action, final GModelState modelState) {
       if (action instanceof UndoAction && modelState.canUndo()) {
          modelState.undo();
-         return modelSubmissionHandler.submitModel(modelState);
+         return modelSubmissionHandler.submitModel(modelState, action);
       } else if (action instanceof RedoAction && modelState.canRedo()) {
          modelState.redo();
-         return modelSubmissionHandler.submitModel(modelState);
+         return modelSubmissionHandler.submitModel(modelState, action);
       }
       LOG.warn("Cannot undo or redo");
       return none();

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -20,18 +20,24 @@ public class SetDirtyStateAction extends Action {
    public static final String ID = "setDirtyState";
 
    private boolean isDirty;
+   private Action causedBy;
 
    public SetDirtyStateAction() {
       super(ID);
    }
 
-   public SetDirtyStateAction(final boolean isDirty) {
+   public SetDirtyStateAction(final boolean isDirty, final Action causedBy) {
       this();
       this.isDirty = isDirty;
+      this.causedBy = causedBy;
    }
 
    public boolean isDirty() { return isDirty; }
 
    public void setDirty(final boolean isDirty) { this.isDirty = isDirty; }
+
+   public Action getCausedBy() { return causedBy; }
+
+   public void setCausedBy(final Action causedBy) { this.causedBy = causedBy; }
 
 }

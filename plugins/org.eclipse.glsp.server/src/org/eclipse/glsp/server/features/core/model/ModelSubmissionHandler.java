@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,8 +15,10 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.features.core.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.server.actions.Action;
@@ -55,28 +57,61 @@ public class ModelSubmissionHandler {
     * </p>
     *
     * @param modelState The model state to submit.
+    * @param causedBy   The action/operation that caused the model update
     * @return A list of actions to be processed in order to submit the model.
     */
-   public List<Action> submitModel(final GModelState modelState) {
+   public List<Action> submitModel(final GModelState modelState, final Action causedBy) {
       modelFactory.createGModel(modelState);
       modelState.getRoot().setRevision(modelState.getRoot().getRevision() + 1);
       DiagramConfiguration diagramConfiguration = diagramConfigurationRegistry.get(modelState);
-      if (diagramConfiguration.getLayoutKind() == ServerLayoutKind.AUTOMATIC) {
-         layoutEngine.layout(modelState);
-      }
-      if (diagramConfiguration.needsClientLayout()) {
+      boolean needsClientLayout = diagramConfiguration.needsClientLayout();
+      if (needsClientLayout) {
          synchronized (modelLock) {
             return Arrays.asList(new RequestBoundsAction(modelState.getRoot()),
-               new SetDirtyStateAction(modelState.isDirty()));
+               new SetDirtyStateAction(modelState.isDirty(), causedBy));
          }
       }
-      return submitModelDirectly(modelState);
+      return submitModelDirectly(modelState, needsClientLayout ? null : causedBy);
    }
 
    /**
     * Returns a list of actions to directly update the client-side model without any server- or client-side layouting.
     * <p>
-    * Typically {@link ActionHandler action handlers} don't invoke this method but use {@link #submitModel(GModelState)}
+    * Typically {@link ActionHandler action handlers} don't invoke this method but use
+    * {@link #submitModel(GModelState,Action)}
+    * instead, as this is only used to eventually submit the model on the client directly after all layouting is already
+    * performed before. The only foreseen caller of this method is {@link ComputedBoundsActionHandler}.
+    * </p>
+    * <p>
+    * These actions are not processed by this {@link ModelSubmissionHandler}, but should be either manually dispatched
+    * to the {@link ActionDispatcher}, or simply returned as the result of an
+    * {@link ActionHandler#execute(Action, GModelState)} method.
+    * </p>
+    *
+    * @param modelState The model state to submit.
+    * @param causedBy   The optional action/operation that caused the model update.
+    * @return A list of actions to be processed in order to submit the model.
+    */
+   public List<Action> submitModelDirectly(final GModelState modelState, final Action causedBy) {
+      GModelRoot gModel = modelState.getRoot();
+      DiagramConfiguration diagramConfiguration = diagramConfigurationRegistry.get(modelState);
+      if (diagramConfiguration.getLayoutKind() == ServerLayoutKind.AUTOMATIC) {
+         layoutEngine.layout(modelState);
+      }
+      Action modelAction = gModel.getRevision() == 0 ? new SetModelAction(gModel) : new UpdateModelAction(gModel);
+      synchronized (modelLock) {
+         List<Action> result = new ArrayList<>();
+         result.add(modelAction);
+         Optional.ofNullable(causedBy).ifPresent(result::add);
+         return result;
+      }
+   }
+
+   /**
+    * Returns a list of actions to directly update the client-side model without any server- or client-side layouting.
+    * <p>
+    * Typically {@link ActionHandler action handlers} don't invoke this method but use
+    * {@link #submitModel(GModelState,Action)}
     * instead, as this is only used to eventually submit the model on the client directly after all layouting is already
     * performed before. The only foreseen caller of this method is {@link ComputedBoundsActionHandler}.
     * </p>
@@ -90,11 +125,7 @@ public class ModelSubmissionHandler {
     * @return A list of actions to be processed in order to submit the model.
     */
    public List<Action> submitModelDirectly(final GModelState modelState) {
-      GModelRoot gModel = modelState.getRoot();
-      Action action = gModel.getRevision() == 0 ? new SetModelAction(gModel) : new UpdateModelAction(gModel);
-      synchronized (modelLock) {
-         return Arrays.asList(action, new SetDirtyStateAction(modelState.isDirty()));
-      }
+      return submitModelDirectly(modelState, null);
    }
 
    public synchronized Object getModelLock() { return modelLock; }

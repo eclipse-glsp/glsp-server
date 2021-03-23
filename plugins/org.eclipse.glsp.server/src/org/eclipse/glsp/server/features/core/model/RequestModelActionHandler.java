@@ -51,7 +51,7 @@ public class RequestModelActionHandler extends BasicActionHandler<RequestModelAc
 
       modelSourceWatcher.startWatching(modelState);
 
-      return modelSubmissionHandler.submitModel(modelState, action);
+      return modelSubmissionHandler.submitModel(modelState);
    }
 
    protected void notifyStartLoading(final GModelState modelState) {

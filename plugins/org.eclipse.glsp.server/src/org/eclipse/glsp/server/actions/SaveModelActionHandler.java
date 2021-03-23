@@ -51,7 +51,7 @@ public class SaveModelActionHandler extends BasicActionHandler<SaveModelAction> 
       } finally {
          modelSourceWatcher.continueWatching(modelState);
       }
-      return listOf(new SetDirtyStateAction(modelState.isDirty(), action));
+      return listOf(new SetDirtyStateAction(modelState.isDirty(), SetDirtyStateAction.Reason.SAVE));
    }
 
    protected void saveModelState(final GModelState modelState) {

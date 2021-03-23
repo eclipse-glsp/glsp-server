@@ -16,28 +16,39 @@
 package org.eclipse.glsp.server.actions;
 
 public class SetDirtyStateAction extends Action {
-
    public static final String ID = "setDirtyState";
 
    private boolean isDirty;
-   private Action causedBy;
+   private String reason;
 
    public SetDirtyStateAction() {
       super(ID);
    }
 
-   public SetDirtyStateAction(final boolean isDirty, final Action causedBy) {
+   public SetDirtyStateAction(final boolean isDirty) {
       this();
       this.isDirty = isDirty;
-      this.causedBy = causedBy;
+   }
+
+   public SetDirtyStateAction(final boolean isDirty, final String reason) {
+      this(isDirty);
+      this.reason = reason;
    }
 
    public boolean isDirty() { return isDirty; }
 
    public void setDirty(final boolean isDirty) { this.isDirty = isDirty; }
 
-   public Action getCausedBy() { return causedBy; }
+   public String getReason() { return reason; }
 
-   public void setCausedBy(final Action causedBy) { this.causedBy = causedBy; }
+   public void setReason(final String reason) { this.reason = reason; }
+
+   public static class Reason {
+      public static final String OPERATION = "operation";
+      public static final String UNDO = "undo";
+      public static final String REDO = "redo";
+      public static final String SAVE = "save";
+      public static final String EXTERNAL = "external";
+   }
 
 }

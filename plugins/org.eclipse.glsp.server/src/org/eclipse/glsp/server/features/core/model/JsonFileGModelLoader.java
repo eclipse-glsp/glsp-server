@@ -15,6 +15,8 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.features.core.model;
 
+import static org.eclipse.glsp.server.protocol.GLSPServerException.getOrThrow;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -23,7 +25,11 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
+import org.apache.log4j.Logger;
+import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GGraph;
+import org.eclipse.glsp.graph.GModelRoot;
+import org.eclipse.glsp.graph.GraphFactory;
 import org.eclipse.glsp.server.jsonrpc.GraphGsonConfiguratorFactory;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.protocol.GLSPServerException;
@@ -37,19 +43,48 @@ import com.google.inject.Inject;
  */
 public class JsonFileGModelLoader implements ModelSourceLoader {
 
+   private static Logger LOG = Logger.getLogger(JsonFileGModelLoader.class);
+   private static String EMPTY_ROOT_ID = "glsp-graph";
    @Inject
    private GraphGsonConfiguratorFactory gsonConfigurationFactory;
 
    @Override
    public void loadSourceModel(final RequestModelAction action, final GModelState modelState) {
-      final Optional<File> file = ClientOptions.getSourceUriAsFile(action.getOptions());
-      try (Reader reader = new InputStreamReader(new FileInputStream(file.get()), StandardCharsets.UTF_8)) {
-         Gson gson = gsonConfigurationFactory.configureGson().create();
-         modelState.setRoot(gson.fromJson(reader, GGraph.class));
+      final File file = convertToFile(modelState);
+      loadSourceModel(file, modelState).ifPresent(root -> {
+         modelState.setRoot(root);
          modelState.getRoot().setRevision(-1);
+      });
+   }
+
+   protected File convertToFile(final GModelState modelState) {
+      return getOrThrow(ClientOptions.getSourceUriAsFile(modelState.getClientOptions()),
+         "Invalid file URI:" + ClientOptions.getValue(modelState.getClientOptions(), ClientOptions.SOURCE_URI));
+   }
+
+   protected Optional<GModelRoot> loadSourceModel(final File file, final GModelState modelState) {
+      try (Reader reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)) {
+         Gson gson = gsonConfigurationFactory.configureGson().create();
+         GGraph root = gson.fromJson(reader, GGraph.class);
+         if (root == null) {
+            boolean isEmpty = file.length() == 0;
+            if (isEmpty) {
+               return Optional.of(createNewEmptyRoot(modelState));
+            }
+            throw new IOException("Could not deserialize file contents of: " + file.toURI().toString());
+         }
+         return Optional.ofNullable(root);
       } catch (IOException e) {
-         throw new GLSPServerException("Could not load model from file: " + file.get().toURI().toString(), e);
+         LOG.error(e);
+         throw new GLSPServerException("Could not load model from file: " + file.toURI().toString(), e);
       }
+   }
+
+   protected GModelRoot createNewEmptyRoot(final GModelState modelState) {
+      GModelRoot root = GraphFactory.eINSTANCE.createGModelRoot();
+      root.setId(EMPTY_ROOT_ID);
+      root.setType(DefaultTypes.GRAPH);
+      return root;
    }
 
 }

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -20,6 +20,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionHandler;
+import org.eclipse.glsp.server.actions.SetDirtyStateAction;
 import org.eclipse.glsp.server.features.core.model.ModelSubmissionHandler;
 import org.eclipse.glsp.server.model.GModelState;
 
@@ -36,10 +37,10 @@ public class UndoRedoActionHandler implements ActionHandler {
    public List<Action> execute(final Action action, final GModelState modelState) {
       if (action instanceof UndoAction && modelState.canUndo()) {
          modelState.undo();
-         return modelSubmissionHandler.submitModel(modelState);
+         return modelSubmissionHandler.submitModel(modelState, SetDirtyStateAction.Reason.UNDO);
       } else if (action instanceof RedoAction && modelState.canRedo()) {
          modelState.redo();
-         return modelSubmissionHandler.submitModel(modelState);
+         return modelSubmissionHandler.submitModel(modelState, SetDirtyStateAction.Reason.REDO);
       }
       LOG.warn("Cannot undo or redo");
       return none();

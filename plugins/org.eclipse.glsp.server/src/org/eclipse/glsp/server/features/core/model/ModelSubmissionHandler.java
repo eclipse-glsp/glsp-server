@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.features.core.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -55,28 +56,32 @@ public class ModelSubmissionHandler {
     * </p>
     *
     * @param modelState The model state to submit.
+    * @param reason     The optional reason that caused the model update.
     * @return A list of actions to be processed in order to submit the model.
     */
-   public List<Action> submitModel(final GModelState modelState) {
+   public List<Action> submitModel(final GModelState modelState, final String reason) {
       modelFactory.createGModel(modelState);
       modelState.getRoot().setRevision(modelState.getRoot().getRevision() + 1);
       DiagramConfiguration diagramConfiguration = diagramConfigurationRegistry.get(modelState);
-      if (diagramConfiguration.getLayoutKind() == ServerLayoutKind.AUTOMATIC) {
-         layoutEngine.layout(modelState);
-      }
-      if (diagramConfiguration.needsClientLayout()) {
+      boolean needsClientLayout = diagramConfiguration.needsClientLayout();
+      if (needsClientLayout) {
          synchronized (modelLock) {
             return Arrays.asList(new RequestBoundsAction(modelState.getRoot()),
-               new SetDirtyStateAction(modelState.isDirty()));
+               new SetDirtyStateAction(modelState.isDirty(), reason));
          }
       }
-      return submitModelDirectly(modelState);
+      return submitModelDirectly(modelState, reason);
+   }
+
+   public List<Action> submitModel(final GModelState modelState) {
+      return submitModel(modelState, null);
    }
 
    /**
     * Returns a list of actions to directly update the client-side model without any server- or client-side layouting.
     * <p>
-    * Typically {@link ActionHandler action handlers} don't invoke this method but use {@link #submitModel(GModelState)}
+    * Typically {@link ActionHandler action handlers} don't invoke this method but use
+    * {@link #submitModel(GModelState,String)}
     * instead, as this is only used to eventually submit the model on the client directly after all layouting is already
     * performed before. The only foreseen caller of this method is {@link ComputedBoundsActionHandler}.
     * </p>
@@ -87,14 +92,29 @@ public class ModelSubmissionHandler {
     * </p>
     *
     * @param modelState The model state to submit.
+    * @param reason     The optional reason that caused the model update.
     * @return A list of actions to be processed in order to submit the model.
     */
-   public List<Action> submitModelDirectly(final GModelState modelState) {
+   public List<Action> submitModelDirectly(final GModelState modelState, final String reason) {
       GModelRoot gModel = modelState.getRoot();
-      Action action = gModel.getRevision() == 0 ? new SetModelAction(gModel) : new UpdateModelAction(gModel);
-      synchronized (modelLock) {
-         return Arrays.asList(action, new SetDirtyStateAction(modelState.isDirty()));
+      DiagramConfiguration diagramConfiguration = diagramConfigurationRegistry.get(modelState);
+      if (diagramConfiguration.getLayoutKind() == ServerLayoutKind.AUTOMATIC) {
+         layoutEngine.layout(modelState);
       }
+      Action modelAction = gModel.getRevision() == 0 ? new SetModelAction(gModel)
+         : new UpdateModelAction(gModel, diagramConfiguration.animatedUpdate());
+      synchronized (modelLock) {
+         List<Action> result = new ArrayList<>();
+         result.add(modelAction);
+         if (!diagramConfiguration.needsClientLayout()) {
+            result.add(new SetDirtyStateAction(modelState.isDirty(), reason));
+         }
+         return result;
+      }
+   }
+
+   public List<Action> submitModelDirectly(final GModelState modelState) {
+      return submitModelDirectly(modelState, null);
    }
 
    public synchronized Object getModelLock() { return modelLock; }

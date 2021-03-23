@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -20,6 +20,7 @@ import java.util.Optional;
 
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.BasicActionHandler;
+import org.eclipse.glsp.server.actions.SetDirtyStateAction;
 import org.eclipse.glsp.server.features.core.model.ModelSubmissionHandler;
 import org.eclipse.glsp.server.internal.gmodel.commandstack.GModelRecordingCommand;
 import org.eclipse.glsp.server.model.GModelState;
@@ -57,7 +58,7 @@ public class OperationActionHandler extends BasicActionHandler<Operation> {
       GModelRecordingCommand command = new GModelRecordingCommand(modelState.getRoot(), handler.getLabel(),
          () -> handler.execute(operation, modelState));
       modelState.execute(command);
-      return modelSubmissionHandler.submitModel(modelState);
+      return modelSubmissionHandler.submitModel(modelState, SetDirtyStateAction.Reason.OPERATION);
    }
 
    public static Optional<? extends OperationHandler> getOperationHandler(final Operation operation,

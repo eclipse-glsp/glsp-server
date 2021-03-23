@@ -15,6 +15,8 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actions;
 
+import static org.eclipse.glsp.server.protocol.GLSPServerException.getOrThrow;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -22,13 +24,13 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Optional;
 
 import org.apache.log4j.Logger;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
 import org.eclipse.glsp.server.jsonrpc.GraphGsonConfiguratorFactory;
 import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.protocol.GLSPServerException;
 import org.eclipse.glsp.server.utils.ClientOptions;
 
 import com.google.gson.Gson;
@@ -55,22 +57,19 @@ public class SaveModelActionHandler extends BasicActionHandler<SaveModelAction> 
    }
 
    protected void saveModelState(final GModelState modelState) {
-      convertToFile(modelState).ifPresent(file -> {
-         try (Writer writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)) {
-            Gson gson = gsonConfigurationFactory.configureGson().setPrettyPrinting().create();
-            gson.toJson(modelState.getRoot(), GGraph.class, writer);
-            modelState.saveIsDone();
-         } catch (IOException e) {
-            LOG.error(e);
-         }
-      });
+      File file = convertToFile(modelState);
+      try (Writer writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)) {
+         Gson gson = gsonConfigurationFactory.configureGson().setPrettyPrinting().create();
+         gson.toJson(modelState.getRoot(), GGraph.class, writer);
+         modelState.saveIsDone();
+      } catch (IOException e) {
+         LOG.error(e);
+         throw new GLSPServerException("An error occured during save process.", e);
+      }
    }
 
-   protected Optional<File> convertToFile(final GModelState modelState) {
-      Optional<String> sourceUriOpt = ClientOptions.getValue(modelState.getClientOptions(), ClientOptions.SOURCE_URI);
-      if (sourceUriOpt.isPresent()) {
-         return Optional.of(new File(sourceUriOpt.get()));
-      }
-      return Optional.empty();
+   protected File convertToFile(final GModelState modelState) {
+      return getOrThrow(ClientOptions.getSourceUriAsFile(modelState.getClientOptions()),
+         "Invalid file URI:" + ClientOptions.getValue(modelState.getClientOptions(), ClientOptions.SOURCE_URI));
    }
 }

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -16,10 +16,10 @@
 package org.eclipse.glsp.server.actions;
 
 public class SetDirtyStateAction extends Action {
-
    public static final String ID = "setDirtyState";
 
    private boolean isDirty;
+   private String reason;
 
    public SetDirtyStateAction() {
       super(ID);
@@ -30,8 +30,25 @@ public class SetDirtyStateAction extends Action {
       this.isDirty = isDirty;
    }
 
+   public SetDirtyStateAction(final boolean isDirty, final String reason) {
+      this(isDirty);
+      this.reason = reason;
+   }
+
    public boolean isDirty() { return isDirty; }
 
    public void setDirty(final boolean isDirty) { this.isDirty = isDirty; }
+
+   public String getReason() { return reason; }
+
+   public void setReason(final String reason) { this.reason = reason; }
+
+   public static class Reason {
+      public static final String OPERATION = "operation";
+      public static final String UNDO = "undo";
+      public static final String REDO = "redo";
+      public static final String SAVE = "save";
+      public static final String EXTERNAL = "external";
+   }
 
 }

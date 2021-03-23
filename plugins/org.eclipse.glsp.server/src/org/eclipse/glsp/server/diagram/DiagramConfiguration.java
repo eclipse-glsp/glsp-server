@@ -48,4 +48,8 @@ public interface DiagramConfiguration {
    default boolean needsClientLayout() {
       return true;
    }
+
+   default boolean animatedUpdate() {
+      return true;
+   }
 }

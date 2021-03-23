@@ -56,7 +56,7 @@ public class ModelSubmissionHandler {
     * </p>
     *
     * @param modelState The model state to submit.
-    * @param reason     The action/operation that caused the model update
+    * @param reason     The optional reason that caused the model update.
     * @return A list of actions to be processed in order to submit the model.
     */
    public List<Action> submitModel(final GModelState modelState, final String reason) {

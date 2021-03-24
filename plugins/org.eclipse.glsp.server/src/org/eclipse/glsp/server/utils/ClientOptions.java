@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -51,7 +51,14 @@ public final class ClientOptions {
    }
 
    public static Optional<File> getSourceUriAsFile(final Map<String, String> options) {
-      final Optional<String> uriString = getValue(options, SOURCE_URI);
-      return uriString.map(uri -> uri.replace(FILE_PREFIX, "")).map(path -> new File(path));
+      return getValue(options, SOURCE_URI).map(ClientOptions::getAsFile);
+   }
+
+   public static String adaptUri(final String uri) {
+      return uri.replace(FILE_PREFIX, "");
+   }
+
+   public static File getAsFile(final String uri) {
+      return new File(adaptUri(uri));
    }
 }

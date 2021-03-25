@@ -49,26 +49,36 @@ public class SaveModelActionHandler extends BasicActionHandler<SaveModelAction> 
    public List<Action> executeAction(final SaveModelAction action, final GModelState modelState) {
       modelSourceWatcher.pauseWatching(modelState);
       try {
-         saveModelState(modelState);
+         saveModelState(action, modelState);
       } finally {
          modelSourceWatcher.continueWatching(modelState);
       }
       return listOf(new SetDirtyStateAction(modelState.isDirty(), SetDirtyStateAction.Reason.SAVE));
    }
 
-   protected void saveModelState(final GModelState modelState) {
-      File file = convertToFile(modelState);
+   protected void saveModelState(final SaveModelAction action, final GModelState modelState) {
+      File file = convertToFile(action, modelState);
       try (Writer writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)) {
          Gson gson = gsonConfigurationFactory.configureGson().setPrettyPrinting().create();
          gson.toJson(modelState.getRoot(), GGraph.class, writer);
-         modelState.saveIsDone();
+         if (saveIsDone(action, modelState)) {
+            modelState.saveIsDone();
+         }
       } catch (IOException e) {
          LOG.error(e);
          throw new GLSPServerException("An error occured during save process.", e);
       }
    }
 
-   protected File convertToFile(final GModelState modelState) {
+   protected boolean saveIsDone(final SaveModelAction action, final GModelState modelState) {
+      String sourceUri = ClientOptions.adaptUri(modelState.getClientOptions().get(ClientOptions.SOURCE_URI));
+      return action.getFileUri().map(uri -> ClientOptions.adaptUri(uri).equals(sourceUri)).orElse(true);
+   }
+
+   protected File convertToFile(final SaveModelAction action, final GModelState modelState) {
+      if (action.getFileUri().isPresent()) {
+         return ClientOptions.getAsFile(action.getFileUri().get());
+      }
       return getOrThrow(ClientOptions.getSourceUriAsFile(modelState.getClientOptions()),
          "Invalid file URI:" + ClientOptions.getValue(modelState.getClientOptions(), ClientOptions.SOURCE_URI));
    }

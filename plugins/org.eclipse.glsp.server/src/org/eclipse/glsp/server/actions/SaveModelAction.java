@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,12 +15,23 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.actions;
 
+import java.util.Optional;
+
 public class SaveModelAction extends Action {
 
    public static final String ID = "saveModel";
+   private String fileUri;
 
    public SaveModelAction() {
       super(ID);
    }
 
+   public SaveModelAction(final String fileUri) {
+      this();
+      this.fileUri = fileUri;
+   }
+
+   public void setFileUri(final String fileUri) { this.fileUri = fileUri; }
+
+   public Optional<String> getFileUri() { return Optional.ofNullable(fileUri); }
 }

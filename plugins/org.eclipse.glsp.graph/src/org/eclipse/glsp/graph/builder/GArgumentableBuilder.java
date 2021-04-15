@@ -13,29 +13,28 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.example.workflow.handler;
+package org.eclipse.glsp.graph.builder;
 
-import java.util.Optional;
+import java.util.Map;
 
-import org.eclipse.glsp.example.workflow.utils.ModelTypes;
-import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.builder.impl.GArguments;
-import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.graph.GArgumentable;
 
-public class CreateManualTaskHandler extends CreateTaskHandler {
+public abstract class GArgumentableBuilder<T extends GArgumentable, E extends GArgumentableBuilder<T, E>>
+   extends GBuilder<T> {
 
-   public CreateManualTaskHandler() {
-      super(ModelTypes.MANUAL_TASK, i -> "ManualTask" + i);
+   protected Map<String, Object> arguments;
+
+   public E arguments(final Map<String, Object> arguments) {
+      this.arguments = arguments;
+      return self();
    }
 
-   @Override
-   public String getLabel() { return "Manual Task"; }
+   protected abstract E self();
 
    @Override
-   protected GNode createNode(final Optional<GPoint> point, final GModelState modelState) {
-      GNode node = super.createNode(point, modelState);
-      node.getArgs().putAll(new GArguments().cornerRadius(10, 20));
-      return node;
+   protected void setProperties(final T element) {
+      if (arguments != null) {
+         element.getArgs().putAll(arguments);
+      }
    }
 }

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,14 +15,10 @@
  ********************************************************************************/
 package org.eclipse.glsp.graph.builder.impl;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
-import org.eclipse.emf.common.util.EMap;
-
-public final class GArguments extends LinkedHashMap<String, Object> {
-   private static final long serialVersionUID = 6774411049255781611L;
-
+public final class GArguments {
    public static final String KEY_EDGE_PADDING = "edgePadding";
 
    public static final String KEY_RADIUS_TOP_LEFT = "radiusTopLeft";
@@ -30,54 +26,52 @@ public final class GArguments extends LinkedHashMap<String, Object> {
    public static final String KEY_RADIUS_BOTTOM_RIGHT = "radiusBottomRight";
    public static final String KEY_RADIUS_BOTTOM_LEFT = "radiusBottomLeft";
 
-   public GArguments() {}
+   private GArguments() {}
 
-   public GArguments(final Map<String, Object> values) {
-      putAll(values);
+   public static Map<String, Object> cornerRadius(final double radius) {
+      return cornerRadius(radius, radius, radius, radius);
    }
 
-   public GArguments(final EMap<String, Object> values) {
-      putAll(values.map());
+   public static Map<String, Object> cornerRadius(final double topLeftBottomRight, final double topRightBottomLeft) {
+      return cornerRadius(topLeftBottomRight, topRightBottomLeft, topLeftBottomRight, topRightBottomLeft);
    }
 
-   public GArguments cornerRadius(final double radius) {
-      cornerRadius(radius, radius, radius, radius);
-      return this;
+   public static Map<String, Object> cornerRadius(final double topLeft, final double topRight,
+      final double bottomRight, final double bottomLeft) {
+      return Map.of(KEY_RADIUS_TOP_LEFT, topLeft,
+         KEY_RADIUS_TOP_RIGHT, topRight,
+         KEY_RADIUS_BOTTOM_RIGHT, bottomRight,
+         KEY_RADIUS_BOTTOM_LEFT, bottomLeft);
    }
 
-   public GArguments cornerRadius(final double topLeftBottomRight, final double topRightBottomLeft) {
-      cornerRadius(topLeftBottomRight, topRightBottomLeft, topLeftBottomRight, topRightBottomLeft);
-      return this;
+   public static Map.Entry<String, Object> edgePadding(final double edgePadding) {
+      return Map.entry(KEY_EDGE_PADDING, edgePadding);
    }
 
-   public GArguments cornerRadius(final double topLeft, final double topRight, final double bottomRight,
-      final double bottomLeft) {
-      put(KEY_RADIUS_TOP_LEFT, topLeft);
-      put(KEY_RADIUS_TOP_RIGHT, topRight);
-      put(KEY_RADIUS_BOTTOM_RIGHT, bottomRight);
-      put(KEY_RADIUS_BOTTOM_LEFT, bottomLeft);
-      return this;
+   public static Optional<Double> getEdgePadding(final Map<String, Object> arguments) {
+      return getDouble(arguments, KEY_EDGE_PADDING);
    }
 
-   public GArguments edgePadding(final double edgePadding) {
-      put(KEY_EDGE_PADDING, edgePadding);
-      return this;
+   public static Optional<Double> getDouble(final Map<String, Object> arguments, final String key) {
+      return getNumber(arguments, key).map(Number::doubleValue);
    }
 
-   public Double getEdgePadding() { return getDouble(KEY_EDGE_PADDING); }
-
-   protected Double getDouble(final String key) {
-      Object value = get(key);
-      return value instanceof Double ? (Double) value : null;
+   public static Optional<Integer> getInteger(final Map<String, Object> arguments, final String key) {
+      return getNumber(arguments, key).map(Number::intValue);
    }
 
-   protected Boolean getBoolean(final String key) {
-      Object value = get(key);
-      return value instanceof Boolean ? (Boolean) value : null;
+   public static Optional<Number> getNumber(final Map<String, Object> arguments, final String key) {
+      Object value = arguments.get(key);
+      return value instanceof Number ? Optional.of((Number) value) : Optional.empty();
    }
 
-   protected String getString(final String key) {
-      Object value = get(key);
-      return value != null ? value.toString() : null;
+   public static Optional<Boolean> getBoolean(final Map<String, Object> arguments, final String key) {
+      Object value = arguments.get(key);
+      return value instanceof Boolean ? Optional.of((Boolean) value) : Optional.empty();
+   }
+
+   public static Optional<String> getString(final Map<String, Object> arguments, final String key) {
+      Object value = arguments.get(key);
+      return value instanceof String ? Optional.of((String) value) : Optional.empty();
    }
 }

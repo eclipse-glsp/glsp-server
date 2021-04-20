@@ -18,7 +18,7 @@ package org.eclipse.glsp.example.workflow.handler;
 import java.util.Optional;
 
 import org.eclipse.glsp.example.workflow.utils.ModelTypes;
-import org.eclipse.glsp.graph.GNode;
+import org.eclipse.glsp.example.workflow.utils.WorkflowBuilder.TaskNodeBuilder;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.server.model.GModelState;
@@ -33,9 +33,8 @@ public class CreateManualTaskHandler extends CreateTaskHandler {
    public String getLabel() { return "Manual Task"; }
 
    @Override
-   protected GNode createNode(final Optional<GPoint> point, final GModelState modelState) {
-      GNode node = super.createNode(point, modelState);
-      node.getArgs().putAll(new GArguments().cornerRadius(10, 20));
-      return node;
+   protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
+      return super.builder(point, modelState)
+         .addArguments(GArguments.cornerRadius(10, 20));
    }
 }

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.graph.builder;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.eclipse.glsp.graph.GArgumentable;
@@ -22,11 +23,20 @@ import org.eclipse.glsp.graph.GArgumentable;
 public abstract class GArgumentableBuilder<T extends GArgumentable, E extends GArgumentableBuilder<T, E>>
    extends GBuilder<T> {
 
-   protected Map<String, Object> arguments;
+   protected Map<String, Object> arguments = new LinkedHashMap<>();
 
-   public E arguments(final Map<String, Object> arguments) {
-      this.arguments = arguments;
+   public E addArgument(final String key, final Object value) {
+      this.arguments.put(key, value);
       return self();
+   }
+
+   public E addArguments(final Map<String, Object> arguments) {
+      this.arguments.putAll(arguments);
+      return self();
+   }
+
+   public E addArgument(final Map.Entry<String, Object> argument) {
+      return addArgument(argument.getKey(), argument.getValue());
    }
 
    protected abstract E self();

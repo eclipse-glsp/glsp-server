@@ -37,7 +37,7 @@ public class CreateEdgeHandler extends CreateEdgeOperationHandler {
       return Optional.of(new GEdgeBuilder() //
          .source(source) //
          .target(target) //
-         .arguments(new GArguments().edgePadding(10)) //
+         .addArgument(GArguments.edgePadding(10)) //
          .build());
    }
 

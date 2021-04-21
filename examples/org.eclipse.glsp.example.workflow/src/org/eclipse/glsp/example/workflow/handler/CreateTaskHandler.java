@@ -39,14 +39,17 @@ public abstract class CreateTaskHandler extends CreateWorkflowNodeOperationHandl
 
    protected String getElementTypeId() { return elementTypeId; }
 
-   @Override
-   protected GNode createNode(final Optional<GPoint> point, final GModelState modelState) {
+   protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
       int nodeCounter = GModelUtil.generateId(WfgraphPackage.Literals.TASK_NODE, "task", modelState);
       String name = labelProvider.apply(nodeCounter);
       String taskType = ModelTypes.toNodeType(getElementTypeId());
       return new TaskNodeBuilder(getElementTypeId(), name, taskType, 0) //
-         .position(point.orElse(null)) //
-         .build();
+         .position(point.orElse(null));
+   }
+
+   @Override
+   protected GNode createNode(final Optional<GPoint> point, final GModelState modelState) {
+      return builder(point, modelState).build();
    }
 
 }

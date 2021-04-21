@@ -22,7 +22,7 @@ import java.util.UUID;
 import org.eclipse.glsp.graph.GModelElement;
 
 public abstract class GModelElementBuilder<T extends GModelElement, E extends GModelElementBuilder<T, E>>
-   extends GBuilder<T> {
+   extends GArgumentableBuilder<T, E> {
 
    protected String type;
    protected String id;
@@ -44,27 +44,27 @@ public abstract class GModelElementBuilder<T extends GModelElement, E extends GM
       return self();
    }
 
-   public E trace(String trace) {
+   public E trace(final String trace) {
       this.trace = trace;
       return self();
    }
 
-   public E addCssClass(String cssClass) {
+   public E addCssClass(final String cssClass) {
       this.cssClasses.add(cssClass);
       return self();
    }
 
-   public E addCssClasses(List<String> cssClasses) {
+   public E addCssClasses(final List<String> cssClasses) {
       this.cssClasses.addAll(cssClasses);
       return self();
    }
 
-   public E add(GModelElement child) {
+   public E add(final GModelElement child) {
       this.children.add(child);
       return self();
    }
 
-   public E addAll(List<GModelElement> children) {
+   public E addAll(final List<GModelElement> children) {
       this.children.addAll(children);
       return self();
    }
@@ -72,15 +72,14 @@ public abstract class GModelElementBuilder<T extends GModelElement, E extends GM
    @Override
    protected abstract T instantiate();
 
-   protected T generateId(T element) {
+   protected T generateId(final T element) {
       element.setId(UUID.randomUUID().toString());
       return element;
    }
 
-   protected abstract E self();
-
    @Override
    protected void setProperties(final T element) {
+      super.setProperties(element);
       if (id == null) {
          generateId(element);
       } else {

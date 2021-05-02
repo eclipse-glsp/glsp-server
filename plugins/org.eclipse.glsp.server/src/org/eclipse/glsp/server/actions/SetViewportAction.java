@@ -23,7 +23,7 @@ public class SetViewportAction extends Action {
 
    private String elementId = "EMTPY";
    private Viewport newViewport = new Viewport();
-   private boolean animate = false;
+   private boolean animate;
 
    public SetViewportAction() {
       super(ID);

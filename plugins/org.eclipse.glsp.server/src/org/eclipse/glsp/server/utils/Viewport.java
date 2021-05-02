@@ -36,6 +36,7 @@ public class Viewport {
 
    public double getZoom() { return zoom; }
 
+   @SuppressWarnings("checkstyle:VisibilityModifier")
    class Point {
 
       final double x;

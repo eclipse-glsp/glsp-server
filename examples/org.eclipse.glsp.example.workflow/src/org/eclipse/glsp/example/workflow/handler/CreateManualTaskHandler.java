@@ -20,7 +20,6 @@ import java.util.Optional;
 import org.eclipse.glsp.example.workflow.utils.ModelTypes;
 import org.eclipse.glsp.example.workflow.utils.WorkflowBuilder.TaskNodeBuilder;
 import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.server.model.GModelState;
 
 public class CreateManualTaskHandler extends CreateTaskHandler {
@@ -35,6 +34,6 @@ public class CreateManualTaskHandler extends CreateTaskHandler {
    @Override
    protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
       return super.builder(point, modelState)
-         .addArguments(GArguments.cornerRadius(10, 20));
+         .addCssClass("manual");
    }
 }

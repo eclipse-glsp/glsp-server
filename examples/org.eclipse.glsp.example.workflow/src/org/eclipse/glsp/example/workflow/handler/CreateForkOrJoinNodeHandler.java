@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -17,37 +17,20 @@ package org.eclipse.glsp.example.workflow.handler;
 
 import java.util.Optional;
 
-import org.eclipse.glsp.example.workflow.utils.ModelTypes;
 import org.eclipse.glsp.example.workflow.utils.WorkflowBuilder.ActivityNodeBuilder;
-import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.model.GModelState;
 
-public abstract class CreateActivityNodeHandler extends CreateWorkflowNodeOperationHandler {
+public abstract class CreateForkOrJoinNodeHandler extends CreateActivityNodeHandler {
 
-   private final String label;
-   private final String elementTypeId;
-
-   public CreateActivityNodeHandler(final String elementTypeId, final String label) {
-      super(elementTypeId);
-      this.elementTypeId = elementTypeId;
-      this.label = label;
+   public CreateForkOrJoinNodeHandler(final String elementTypeId, final String label) {
+      super(elementTypeId, label);
    }
 
-   protected String getElementTypeId() { return elementTypeId; }
-
+   @Override
    protected ActivityNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-      String nodeType = ModelTypes.toNodeType(getElementTypeId());
-      return new ActivityNodeBuilder(getElementTypeId(), nodeType) //
-         .position(point.orElse(null));
+      return super.builder(point, modelState)
+         .addCssClass("forkOrJoin")
+         .size(10d, 50d);
    }
-
-   @Override
-   protected GNode createNode(final Optional<GPoint> point, final GModelState modelState) {
-      return builder(point, modelState).build();
-   }
-
-   @Override
-   public String getLabel() { return label; }
-
 }

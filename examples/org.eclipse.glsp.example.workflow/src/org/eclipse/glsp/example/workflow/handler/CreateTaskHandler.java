@@ -23,6 +23,7 @@ import org.eclipse.glsp.example.workflow.utils.WorkflowBuilder.TaskNodeBuilder;
 import org.eclipse.glsp.example.workflow.wfgraph.WfgraphPackage;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.GModelUtil;
 
@@ -44,7 +45,9 @@ public abstract class CreateTaskHandler extends CreateWorkflowNodeOperationHandl
       String name = labelProvider.apply(nodeCounter);
       String taskType = ModelTypes.toNodeType(getElementTypeId());
       return new TaskNodeBuilder(getElementTypeId(), name, taskType, 0) //
-         .position(point.orElse(null));
+         .position(point.orElse(null))
+         .addArguments(GArguments.cornerRadius(5))
+         .addCssClass("task");
    }
 
    @Override

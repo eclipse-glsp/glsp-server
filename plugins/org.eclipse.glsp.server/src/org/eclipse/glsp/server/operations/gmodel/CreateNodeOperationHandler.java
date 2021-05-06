@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operations.gmodel;
 
+import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.glsp.graph.GModelElement;
@@ -40,7 +41,7 @@ public abstract class CreateNodeOperationHandler extends BasicCreateOperationHan
          container = Optional.of(modelState.getRoot());
       }
 
-      GModelElement element = createNode(getLocation(operation), modelState);
+      GModelElement element = createNode(getLocation(operation), operation.getArgs(), modelState);
       container.get().getChildren().add(element);
    }
 
@@ -48,5 +49,5 @@ public abstract class CreateNodeOperationHandler extends BasicCreateOperationHan
       return operation.getLocation();
    }
 
-   protected abstract GNode createNode(Optional<GPoint> point, GModelState modelState);
+   protected abstract GNode createNode(Optional<GPoint> point, Map<String, String> args, GModelState modelState);
 }

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.types;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -26,7 +27,7 @@ public class EditorContext {
    private List<String> selectedElementIds;
    private GPoint lastMousePosition;
    private String sourceUri;
-   private Map<String, String> args;
+   private Map<String, String> args = new HashMap<>();
 
    public EditorContext() {}
 

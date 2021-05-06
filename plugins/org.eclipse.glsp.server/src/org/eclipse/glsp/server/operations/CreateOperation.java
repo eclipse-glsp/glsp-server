@@ -20,14 +20,15 @@ import java.util.Map;
 
 public abstract class CreateOperation extends Operation {
    private String elementTypeId;
-   private Map<String, String> args = new HashMap<>();
+   private Map<String, String> args;
 
    public CreateOperation(final String operationKind) {
       super(operationKind);
+      args = new HashMap<>();
    }
 
    public CreateOperation(final String operationKind, final String elementTypeId) {
-      super(operationKind);
+      this(operationKind);
       this.elementTypeId = elementTypeId;
    }
 

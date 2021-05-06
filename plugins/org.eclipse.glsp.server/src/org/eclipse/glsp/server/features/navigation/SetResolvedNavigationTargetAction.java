@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,6 +15,7 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.features.navigation;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,10 +30,11 @@ public class SetResolvedNavigationTargetAction extends ResponseAction {
 
    public SetResolvedNavigationTargetAction() {
       super(ID);
+      args = new HashMap<>();
    }
 
    public SetResolvedNavigationTargetAction(final List<String> elementIds, final Map<String, String> map) {
-      this();
+      super(ID);
       this.elementIds = elementIds;
       this.args = map;
    }

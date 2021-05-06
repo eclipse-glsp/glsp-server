@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.features.navigation;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,11 +27,11 @@ public class NavigationTargetResolution {
    private Map<String, String> args;
 
    public NavigationTargetResolution() {
-      this(null, null);
+      this(null, new HashMap<>());
    }
 
    public NavigationTargetResolution(final List<String> elementIds) {
-      this(elementIds, null);
+      this(elementIds, new HashMap<>());
    }
 
    public NavigationTargetResolution(final Map<String, String> args) {

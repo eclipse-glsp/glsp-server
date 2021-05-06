@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,6 +15,7 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.features.core.model;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.glsp.server.actions.Action;
@@ -23,14 +24,15 @@ public class RequestModelAction extends Action {
 
    public static final String ID = "requestModel";
 
-   private Map<String, String> options;
+   private final Map<String, String> options;
 
    public RequestModelAction() {
       super(ID);
+      options = new HashMap<>();
    }
 
    public RequestModelAction(final Map<String, String> options) {
-      this();
+      super(ID);
       this.options = options;
    }
 

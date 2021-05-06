@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -16,6 +16,7 @@
 package org.eclipse.glsp.server.features.directediting;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.glsp.server.actions.ResponseAction;
@@ -29,6 +30,7 @@ public class SetEditValidationResultAction extends ResponseAction {
 
    public SetEditValidationResultAction() {
       super(ID);
+      args = new HashMap<>();
    }
 
    public SetEditValidationResultAction(final ValidationStatus status, final Map<String, String> args) {

@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operations;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -33,19 +34,19 @@ public class CreateNodeOperation extends CreateOperation {
    }
 
    public CreateNodeOperation(final String elementTypeId) {
-      this(elementTypeId, null, null, null);
+      this(elementTypeId, null, null, new HashMap<>());
    }
 
    public CreateNodeOperation(final String elementTypeId, final GPoint location) {
-      this(elementTypeId, location, null, null);
+      this(elementTypeId, location, null, new HashMap<>());
    }
 
    public CreateNodeOperation(final String elementTypeId, final String containerId) {
-      this(elementTypeId, null, containerId, null);
+      this(elementTypeId, null, containerId, new HashMap<>());
    }
 
    public CreateNodeOperation(final String elementTypeId, final GPoint location, final String containerId) {
-      this(elementTypeId, location, containerId, null);
+      this(elementTypeId, location, containerId, new HashMap<>());
    }
 
    public CreateNodeOperation(final String elementTypeId, final GPoint location, final String containerId,

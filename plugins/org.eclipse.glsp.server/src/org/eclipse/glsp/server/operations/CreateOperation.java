@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operations;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public abstract class CreateOperation extends Operation {
@@ -23,10 +24,11 @@ public abstract class CreateOperation extends Operation {
 
    public CreateOperation(final String operationKind) {
       super(operationKind);
+      args = new HashMap<>();
    }
 
    public CreateOperation(final String operationKind, final String elementTypeId) {
-      super(operationKind);
+      this(operationKind);
       this.elementTypeId = elementTypeId;
    }
 

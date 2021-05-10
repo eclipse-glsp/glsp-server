@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.example.workflow.handler;
 
+import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.glsp.example.workflow.utils.ModelTypes;
@@ -31,7 +32,8 @@ public class CreateDecisionNodeHandler extends CreateActivityNodeHandler {
    }
 
    @Override
-   protected GNode createNode(final Optional<GPoint> point, final GModelState modelState) {
+   protected GNode createNode(final Optional<GPoint> point, final Map<String, String> args,
+      final GModelState modelState) {
       String nodeType = ModelTypes.toNodeType(getElementTypeId());
       return new ActivityNodeBuilder(getElementTypeId(), nodeType) //
          .layoutOptions(new GLayoutOptions().minHeight(32d).minWidth(32d)) //

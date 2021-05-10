@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operations;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class CreateEdgeOperation extends CreateOperation {
@@ -31,7 +32,7 @@ public class CreateEdgeOperation extends CreateOperation {
 
    public CreateEdgeOperation(final String elementTypeId, final String sourceElementId,
       final String targetElementId) {
-      this(elementTypeId, sourceElementId, targetElementId, null);
+      this(elementTypeId, sourceElementId, targetElementId, new HashMap<>());
    }
 
    public CreateEdgeOperation(final String elementTypeId, final String sourceElementId,

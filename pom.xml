@@ -55,6 +55,7 @@
 		<project.build.java.target>11</project.build.java.target>
 		<target.version>0.9.0-SNAPSHOT</target.version>
 	</properties>
+
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
@@ -90,8 +91,8 @@
 			</activation>
 
 			<properties>
-				<tycho-version>1.6.0</tycho-version>
-				<tychoExtrasVersion>1.6.0</tychoExtrasVersion>
+				<tycho-version>2.2.0</tycho-version>
+				<tychoExtrasVersion>2.2.0</tychoExtrasVersion>
 				<maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
 
 			</properties>
@@ -293,8 +294,9 @@
 						<artifactId>maven-checkstyle-plugin</artifactId>
 						<version>3.1.0</version>
 						<configuration>
-							<configLocation>releng/org.eclipse.glsp.codestyle/checkstyle/glsp-checkstyle.xml</configLocation>
+							<configLocation>emfcloud-checkstyle.xml</configLocation>
 							<consoleOutput>true</consoleOutput>
+							<sourceDirectories>src</sourceDirectories>
 						</configuration>
 						<executions>
 							<execution>
@@ -305,6 +307,11 @@
 							</execution>
 						</executions>
 						<dependencies>
+							<dependency>
+								<groupId>org.eclipse.emfcloud</groupId>
+								<artifactId>org.eclipse.emfcloud.checkstyle</artifactId>
+								<version>0.1.0-RC1</version>
+							</dependency>
 							<dependency>
 								<groupId>com.puppycrawl.tools</groupId>
 								<artifactId>checkstyle</artifactId>
@@ -349,39 +356,39 @@
 					<!-- To generate javadoc -->
 
 					<!-- Deactivate for now. Not needed for snapshot deployments -->
-<!-- 					<plugin> -->
-<!-- 						<groupId>org.apache.maven.plugins</groupId> -->
-<!-- 						<artifactId>maven-javadoc-plugin</artifactId> -->
-<!-- 						<version>3.1.0</version> -->
-<!-- 						<executions> -->
-<!-- 							<execution> -->
-<!-- 								<id>attach-javadocs</id> -->
-<!-- 								<goals> -->
-<!-- 									<goal>jar</goal> -->
-<!-- 								</goals> -->
-<!-- 								<configuration> -->
-<!-- 									<additionalJOption>-Xdoclint:none</additionalJOption> -->
-<!-- 									<tags> -->
-<!-- 										<tag> -->
-<!-- 											<name>generated</name> -->
-<!-- 											<placement>a</placement> -->
-<!-- 											<head></head> -->
-<!-- 										</tag> -->
-<!-- 										<tag> -->
-<!-- 											<name>ordered</name> -->
-<!-- 											<placement>a</placement> -->
-<!-- 											<head></head> -->
-<!-- 										</tag> -->
-<!-- 										<tag> -->
-<!-- 											<name>model</name> -->
-<!-- 											<placement>a</placement> -->
-<!-- 											<head>Model:</head> -->
-<!-- 										</tag> -->
-<!-- 									</tags> -->
-<!-- 								</configuration> -->
-<!-- 							</execution> -->
-<!-- 						</executions> -->
-<!-- 					</plugin> -->
+					<!-- <plugin> -->
+					<!-- <groupId>org.apache.maven.plugins</groupId> -->
+					<!-- <artifactId>maven-javadoc-plugin</artifactId> -->
+					<!-- <version>3.1.0</version> -->
+					<!-- <executions> -->
+					<!-- <execution> -->
+					<!-- <id>attach-javadocs</id> -->
+					<!-- <goals> -->
+					<!-- <goal>jar</goal> -->
+					<!-- </goals> -->
+					<!-- <configuration> -->
+					<!-- <additionalJOption>-Xdoclint:none</additionalJOption> -->
+					<!-- <tags> -->
+					<!-- <tag> -->
+					<!-- <name>generated</name> -->
+					<!-- <placement>a</placement> -->
+					<!-- <head></head> -->
+					<!-- </tag> -->
+					<!-- <tag> -->
+					<!-- <name>ordered</name> -->
+					<!-- <placement>a</placement> -->
+					<!-- <head></head> -->
+					<!-- </tag> -->
+					<!-- <tag> -->
+					<!-- <name>model</name> -->
+					<!-- <placement>a</placement> -->
+					<!-- <head>Model:</head> -->
+					<!-- </tag> -->
+					<!-- </tags> -->
+					<!-- </configuration> -->
+					<!-- </execution> -->
+					<!-- </executions> -->
+					<!-- </plugin> -->
 
 					<!-- To sign the artifacts -->
 					<plugin>

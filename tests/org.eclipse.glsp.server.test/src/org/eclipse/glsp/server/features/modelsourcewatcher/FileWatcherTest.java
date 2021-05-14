@@ -264,6 +264,7 @@ class FileWatcherTest {
       TimeUnit.MILLISECONDS.sleep(300);
    }
 
+   @SuppressWarnings("checkstyle:VisibilityModifier")
    class RecordingActionDispatcher implements ActionDispatcher {
       Map<String, List<Action>> dispatchedActions = new HashMap<>();
 

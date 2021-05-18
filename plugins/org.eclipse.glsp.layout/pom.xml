@@ -40,6 +40,12 @@
 			<organization>EclipseSource</organization>
 			<organizationUrl>http://www.eclipsesource.com</organizationUrl>
 		</developer>
+		<developer>
+			<name>Camille Letavernier</name>
+			<email>cletavernier@eclipsesource.com</email>
+			<organization>EclipseSource</organization>
+			<organizationUrl>http://www.eclipsesource.com</organizationUrl>
+		</developer>
 	</developers>
 
 	<scm>

@@ -40,6 +40,12 @@
 			<organization>EclipseSource</organization>
 			<organizationUrl>http://www.eclipsesource.com</organizationUrl>
 		</developer>
+		<developer>
+			<name>Camille Letavernier</name>
+			<email>cletavernier@eclipsesource.com</email>
+			<organization>EclipseSource</organization>
+			<organizationUrl>http://www.eclipsesource.com</organizationUrl>
+		</developer>
 	</developers>
 
 	<scm>
@@ -88,25 +94,6 @@
 
 			<build>
 				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>build-helper-maven-plugin</artifactId>
-						<version>1.7</version>
-						<executions>
-							<execution>
-								<id>add-source</id>
-								<phase>generate-sources</phase>
-								<goals>
-									<goal>add-source</goal>
-								</goals>
-								<configuration>
-									<sources>
-										<source>src-gen</source>
-									</sources>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-deploy-plugin</artifactId>

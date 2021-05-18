@@ -8,7 +8,7 @@ pipeline {
         stage ('Build: Plain Maven (M2)') {
             steps {
                 timeout(30){
-                     sh "mvn clean verify -Pm2 --batch-mode package"    
+                     sh "mvn clean verify -Pm2 -B"  
                 }
             }
         }
@@ -16,7 +16,7 @@ pipeline {
         stage ('Build: Eclipse-based (P2)') {
             steps {
                 timeout(30){
-                    sh "mvn clean verify -Pp2 --batch-mode package"    
+                    sh "mvn clean verify -Pp2 -B"    
                 }
             }
         }
@@ -39,6 +39,9 @@ pipeline {
     post {
         always {
                 junit 'tests/**/surefire-reports/*.xml'
+
+                // Record checkstyle
+                recordIssues  publishAllIssues: true,tool: checkStyle(reportEncoding: 'UTF-8'), qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true]]
         }
     }
 }

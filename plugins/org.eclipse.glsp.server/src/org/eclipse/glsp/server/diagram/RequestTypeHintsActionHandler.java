@@ -45,7 +45,7 @@ public class RequestTypeHintsActionHandler extends BasicActionHandler<RequestTyp
          return none();
       }
 
-      return listOf(new SetTypeHintsAction(configuration.get().getNodeTypeHints(),
+      return listOf(new SetTypeHintsAction(configuration.get().getShapeTypeHints(),
          configuration.get().getEdgeTypeHints()));
 
    }

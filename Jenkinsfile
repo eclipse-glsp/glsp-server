@@ -40,8 +40,12 @@ pipeline {
         always {
                 junit 'tests/**/surefire-reports/*.xml'
 
-                // Record checkstyle
+                // Record & publish checkstyle issues
                 recordIssues  publishAllIssues: true,tool: checkStyle(reportEncoding: 'UTF-8'), qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true]]
+
+                withChecks('My Custom Checks Name') {
+                recordIssues tool: java(pattern: '*.log')
+                }
         }
     }
 }

@@ -114,8 +114,7 @@ public class GArgumentableImpl extends MinimalEObjectImpl.Container implements G
          case GraphPackage.GARGUMENTABLE__ARGS:
             if (coreType)
                return getArgs();
-            else
-               return getArgs().map();
+            return getArgs().map();
       }
       return super.eGet(featureID, resolve, coreType);
    }

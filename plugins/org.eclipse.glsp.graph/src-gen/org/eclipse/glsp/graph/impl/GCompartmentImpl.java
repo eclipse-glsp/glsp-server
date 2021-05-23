@@ -571,8 +571,7 @@ public class GCompartmentImpl extends GArgumentableImpl implements GCompartment 
          case GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS:
             if (coreType)
                return getLayoutOptions();
-            else
-               return getLayoutOptions().map();
+            return getLayoutOptions().map();
       }
       return super.eGet(featureID, resolve, coreType);
    }

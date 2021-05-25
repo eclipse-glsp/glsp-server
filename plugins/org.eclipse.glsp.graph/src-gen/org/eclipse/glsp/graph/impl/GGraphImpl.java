@@ -247,8 +247,7 @@ public class GGraphImpl extends GModelRootImpl implements GGraph {
          case GraphPackage.GGRAPH__LAYOUT_OPTIONS:
             if (coreType)
                return getLayoutOptions();
-            else
-               return getLayoutOptions().map();
+            return getLayoutOptions().map();
       }
       return super.eGet(featureID, resolve, coreType);
    }

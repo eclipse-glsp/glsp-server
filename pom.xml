@@ -53,7 +53,6 @@
 		<java.source>11</java.source>
 		<java.target>11</java.target>
 		<project.build.java.target>11</project.build.java.target>
-		<target.version>0.9.0-SNAPSHOT</target.version>
 	</properties>
 
 	<build>
@@ -65,6 +64,7 @@
 				<configuration>
 					<source>${java.source}</source>
 					<target>${java.target}</target>
+					<generatedSourcesDirectory>src-gen</generatedSourcesDirectory>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -91,10 +91,9 @@
 			</activation>
 
 			<properties>
-				<tycho-version>2.2.0</tycho-version>
-				<tychoExtrasVersion>2.2.0</tychoExtrasVersion>
+				<tycho-version>2.3.0</tycho-version>
 				<maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
-
+				<target.version>0.9.0-SNAPSHOT</target.version>
 			</properties>
 
 			<modules>
@@ -154,7 +153,7 @@
 							<source>${java.source}</source>
 							<target>${java.target}</target>
 							<optimize>true</optimize>
-							<showWarnings>true</showWarnings>
+							<showWarnings>false</showWarnings>
 						</configuration>
 					</plugin>
 					<plugin>
@@ -229,13 +228,10 @@
 				<activeByDefault>false</activeByDefault>
 			</activation>
 
-			<repositories>
-				<repository>
-					<id>sonatype</id>
-					<name>Sonatype</name>
-					<url>https://oss.sonatype.org/content/groups/public</url>
-				</repository>
-			</repositories>
+			<properties>
+				<checkstyle.plugin>3.1.2</checkstyle.plugin>
+				<checkstyle>8.39</checkstyle>
+			</properties>
 
 			<modules>
 				<module>plugins/org.eclipse.glsp.graph</module>
@@ -287,23 +283,22 @@
 							</argLine>
 						</configuration>
 					</plugin>
-
 					<!-- to disable use -Dcheckstyle.skip -->
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-checkstyle-plugin</artifactId>
-						<version>3.1.0</version>
+						<version>${checkstyle.plugin}</version>
 						<configuration>
 							<configLocation>emfcloud-checkstyle.xml</configLocation>
 							<consoleOutput>true</consoleOutput>
-							<sourceDirectories>src</sourceDirectories>
+							<excludes>**/src-gen/**/*.java</excludes>
 						</configuration>
 						<executions>
 							<execution>
+								<phase>validate</phase>
 								<goals>
 									<goal>check</goal>
 								</goals>
-								<phase>verify</phase>
 							</execution>
 						</executions>
 						<dependencies>
@@ -315,7 +310,7 @@
 							<dependency>
 								<groupId>com.puppycrawl.tools</groupId>
 								<artifactId>checkstyle</artifactId>
-								<version>8.29</version>
+								<version>${checkstyle}</version>
 							</dependency>
 						</dependencies>
 					</plugin>

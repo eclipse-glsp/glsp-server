@@ -302,6 +302,7 @@ public class GEdgePlacementImpl extends MinimalEObjectImpl.Container implements 
     * <!-- end-user-doc -->
     * @generated
     */
+   @SuppressWarnings("null")
    @Override
    public boolean eIsSet(int featureID) {
       switch (featureID) {

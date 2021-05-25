@@ -29,7 +29,7 @@ public interface DiagramConfiguration {
 
    Map<String, EClass> getTypeMappings();
 
-   List<ShapeTypeHint> getNodeTypeHints();
+   List<ShapeTypeHint> getShapeTypeHints();
 
    List<EdgeTypeHint> getEdgeTypeHints();
 
@@ -39,7 +39,7 @@ public interface DiagramConfiguration {
       return new EdgeTypeHint(elementId, true, true, true, null, null);
    }
 
-   default ShapeTypeHint createDefaultNodeTypeHint(final String elementId) {
+   default ShapeTypeHint createDefaultShapeTypeHint(final String elementId) {
       return new ShapeTypeHint(elementId, true, true, true, false);
    }
 

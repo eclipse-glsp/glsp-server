@@ -74,6 +74,7 @@ public class GraphGsonConfigurator {
    public GsonBuilder configureGsonBuilder(final GsonBuilder gsonBuilder) {
       gsonBuilder.registerTypeAdapterFactory(new EMapTypeAdapter.Factory());
       gsonBuilder.registerTypeAdapterFactory(new GModelElementTypeAdapter.Factory(DEFAULT_TYPE_ATT, typeMap));
+      gsonBuilder.registerTypeAdapterFactory(new LayoutDataTypeAdapter.Factory());
       configureClassesOfPackages(gsonBuilder);
       gsonBuilder.addSerializationExclusionStrategy(new EObjectExclusionStrategy());
       return gsonBuilder;

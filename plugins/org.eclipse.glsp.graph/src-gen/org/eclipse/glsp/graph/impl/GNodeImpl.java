@@ -39,6 +39,7 @@ import org.eclipse.glsp.graph.GBoundsAware;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GEdgeLayoutable;
 import org.eclipse.glsp.graph.GEdgePlacement;
+import org.eclipse.glsp.graph.GLayoutData;
 import org.eclipse.glsp.graph.GLayouting;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
@@ -64,6 +65,7 @@ import org.eclipse.glsp.graph.GraphPackage;
  *   <li>{@link org.eclipse.glsp.graph.impl.GNodeImpl#getEdgePlacement <em>Edge Placement</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GNodeImpl#getLayout <em>Layout</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GNodeImpl#getLayoutOptions <em>Layout Options</em>}</li>
+ *   <li>{@link org.eclipse.glsp.graph.impl.GNodeImpl#getLayoutData <em>Layout Data</em>}</li>
  * </ul>
  *
  * @generated
@@ -208,6 +210,16 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
     * @ordered
     */
    protected EMap<String, Object> layoutOptions;
+
+   /**
+    * The cached value of the '{@link #getLayoutData() <em>Layout Data</em>}' reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #getLayoutData()
+    * @generated
+    * @ordered
+    */
+   protected GLayoutData layoutData;
 
    /**
     * <!-- begin-user-doc -->
@@ -552,6 +564,48 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
     * <!-- end-user-doc -->
     * @generated
     */
+   @Override
+   public GLayoutData getLayoutData() {
+      if (layoutData != null && layoutData.eIsProxy()) {
+         InternalEObject oldLayoutData = (InternalEObject) layoutData;
+         layoutData = (GLayoutData) eResolveProxy(oldLayoutData);
+         if (layoutData != oldLayoutData) {
+            if (eNotificationRequired())
+               eNotify(new ENotificationImpl(this, Notification.RESOLVE, GraphPackage.GNODE__LAYOUT_DATA, oldLayoutData,
+                  layoutData));
+         }
+      }
+      return layoutData;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+    * @generated
+    */
+   public GLayoutData basicGetLayoutData() {
+      return layoutData;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
+   public void setLayoutData(GLayoutData newLayoutData) {
+      GLayoutData oldLayoutData = layoutData;
+      layoutData = newLayoutData;
+      if (eNotificationRequired())
+         eNotify(
+            new ENotificationImpl(this, Notification.SET, GraphPackage.GNODE__LAYOUT_DATA, oldLayoutData, layoutData));
+   }
+
+   /**
+   	 * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+   	 * @generated
+   	 */
    @SuppressWarnings("unchecked")
    @Override
    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -636,7 +690,12 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
          case GraphPackage.GNODE__LAYOUT_OPTIONS:
             if (coreType)
                return getLayoutOptions();
-            return getLayoutOptions().map();
+            else
+               return getLayoutOptions().map();
+         case GraphPackage.GNODE__LAYOUT_DATA:
+            if (resolve)
+               return getLayoutData();
+            return basicGetLayoutData();
       }
       return super.eGet(featureID, resolve, coreType);
    }
@@ -685,6 +744,9 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
          case GraphPackage.GNODE__LAYOUT_OPTIONS:
             ((EStructuralFeature.Setting) getLayoutOptions()).set(newValue);
             return;
+         case GraphPackage.GNODE__LAYOUT_DATA:
+            setLayoutData((GLayoutData) newValue);
+            return;
       }
       super.eSet(featureID, newValue);
    }
@@ -730,6 +792,9 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
          case GraphPackage.GNODE__LAYOUT_OPTIONS:
             getLayoutOptions().clear();
             return;
+         case GraphPackage.GNODE__LAYOUT_DATA:
+            setLayoutData((GLayoutData) null);
+            return;
       }
       super.eUnset(featureID);
    }
@@ -764,6 +829,8 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
             return LAYOUT_EDEFAULT == null ? layout != null : !LAYOUT_EDEFAULT.equals(layout);
          case GraphPackage.GNODE__LAYOUT_OPTIONS:
             return layoutOptions != null && !layoutOptions.isEmpty();
+         case GraphPackage.GNODE__LAYOUT_DATA:
+            return layoutData != null;
       }
       return super.eIsSet(featureID);
    }
@@ -799,6 +866,8 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
                return GraphPackage.GLAYOUTING__LAYOUT;
             case GraphPackage.GNODE__LAYOUT_OPTIONS:
                return GraphPackage.GLAYOUTING__LAYOUT_OPTIONS;
+            case GraphPackage.GNODE__LAYOUT_DATA:
+               return GraphPackage.GLAYOUTING__LAYOUT_DATA;
             default:
                return -1;
          }
@@ -837,6 +906,8 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
                return GraphPackage.GNODE__LAYOUT;
             case GraphPackage.GLAYOUTING__LAYOUT_OPTIONS:
                return GraphPackage.GNODE__LAYOUT_OPTIONS;
+            case GraphPackage.GLAYOUTING__LAYOUT_DATA:
+               return GraphPackage.GNODE__LAYOUT_DATA;
             default:
                return -1;
          }

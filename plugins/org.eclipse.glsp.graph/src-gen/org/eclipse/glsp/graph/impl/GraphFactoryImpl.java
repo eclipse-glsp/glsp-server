@@ -110,6 +110,8 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
             return createGPreRenderedElement();
          case GraphPackage.STRING_TO_OBJECT_MAP_ENTRY:
             return (EObject) createStringToObjectMapEntry();
+         case GraphPackage.GLAYOUT_DATA:
+            return createGLayoutData();
          default:
             throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
       }
@@ -358,6 +360,17 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
     * <!-- end-user-doc -->
     * @generated
     */
+   @Override
+   public GLayoutData createGLayoutData() {
+      GLayoutDataImpl gLayoutData = new GLayoutDataImpl();
+      return gLayoutData;
+   }
+
+   /**
+   	 * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+   	 * @generated
+   	 */
    public GSeverity createGSeverityFromString(EDataType eDataType, String initialValue) {
       GSeverity result = GSeverity.get(initialValue);
       if (result == null)

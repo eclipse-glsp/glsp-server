@@ -621,7 +621,8 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
          case GraphPackage.GLABEL__ARGS:
             if (coreType)
                return getArgs();
-            return getArgs().map();
+            else
+               return getArgs().map();
          case GraphPackage.GLABEL__ID:
             return getId();
          case GraphPackage.GLABEL__CSS_CLASSES:

@@ -62,6 +62,9 @@ public interface GBoundsAware extends EObject {
     * Returns the value of the '<em><b>Size</b></em>' containment reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    * <!-- begin-model-doc -->
+    * Visual bounds of the node
+    * <!-- end-model-doc -->
     * @return the value of the '<em>Size</em>' containment reference.
     * @see #setSize(GDimension)
     * @see org.eclipse.glsp.graph.GraphPackage#getGBoundsAware_Size()

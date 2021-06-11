@@ -16,52 +16,48 @@
  */
 package org.eclipse.glsp.graph.impl;
 
-import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EMap;
+import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EcoreEMap;
-import org.eclipse.emf.ecore.util.InternalEList;
-
-import org.eclipse.glsp.graph.GArgumentable;
+import org.eclipse.glsp.graph.GDimension;
+import org.eclipse.glsp.graph.GLayoutData;
 import org.eclipse.glsp.graph.GraphPackage;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>GArgumentable</b></em>'.
+ * An implementation of the model object '<em><b>GLayout Data</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.glsp.graph.impl.GArgumentableImpl#getArgs <em>Args</em>}</li>
+ *   <li>{@link org.eclipse.glsp.graph.impl.GLayoutDataImpl#getPrefSize <em>Pref Size</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class GArgumentableImpl extends MinimalEObjectImpl.Container implements GArgumentable {
+public class GLayoutDataImpl extends MinimalEObjectImpl.Container implements GLayoutData {
    /**
-    * The cached value of the '{@link #getArgs() <em>Args</em>}' map.
+    * The cached value of the '{@link #getPrefSize() <em>Pref Size</em>}' reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @see #getArgs()
+    * @see #getPrefSize()
     * @generated
     * @ordered
     */
-   protected EMap<String, Object> args;
+   protected GDimension prefSize;
 
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     */
-   public GArgumentableImpl() {
+   public GLayoutDataImpl() {
       super();
    }
 
@@ -72,7 +68,7 @@ public class GArgumentableImpl extends MinimalEObjectImpl.Container implements G
     */
    @Override
    protected EClass eStaticClass() {
-      return GraphPackage.Literals.GARGUMENTABLE;
+      return GraphPackage.Literals.GLAYOUT_DATA;
    }
 
    /**
@@ -81,12 +77,26 @@ public class GArgumentableImpl extends MinimalEObjectImpl.Container implements G
     * @generated
     */
    @Override
-   public EMap<String, Object> getArgs() {
-      if (args == null) {
-         args = new EcoreEMap<String, Object>(GraphPackage.Literals.STRING_TO_OBJECT_MAP_ENTRY,
-            StringToObjectMapEntryImpl.class, this, GraphPackage.GARGUMENTABLE__ARGS);
+   public GDimension getPrefSize() {
+      if (prefSize != null && prefSize.eIsProxy()) {
+         InternalEObject oldPrefSize = (InternalEObject) prefSize;
+         prefSize = (GDimension) eResolveProxy(oldPrefSize);
+         if (prefSize != oldPrefSize) {
+            if (eNotificationRequired())
+               eNotify(new ENotificationImpl(this, Notification.RESOLVE, GraphPackage.GLAYOUT_DATA__PREF_SIZE,
+                  oldPrefSize, prefSize));
+         }
       }
-      return args;
+      return prefSize;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public GDimension basicGetPrefSize() {
+      return prefSize;
    }
 
    /**
@@ -95,12 +105,12 @@ public class GArgumentableImpl extends MinimalEObjectImpl.Container implements G
     * @generated
     */
    @Override
-   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-      switch (featureID) {
-         case GraphPackage.GARGUMENTABLE__ARGS:
-            return ((InternalEList<?>) getArgs()).basicRemove(otherEnd, msgs);
-      }
-      return super.eInverseRemove(otherEnd, featureID, msgs);
+   public void setPrefSize(GDimension newPrefSize) {
+      GDimension oldPrefSize = prefSize;
+      prefSize = newPrefSize;
+      if (eNotificationRequired())
+         eNotify(
+            new ENotificationImpl(this, Notification.SET, GraphPackage.GLAYOUT_DATA__PREF_SIZE, oldPrefSize, prefSize));
    }
 
    /**
@@ -111,11 +121,10 @@ public class GArgumentableImpl extends MinimalEObjectImpl.Container implements G
    @Override
    public Object eGet(int featureID, boolean resolve, boolean coreType) {
       switch (featureID) {
-         case GraphPackage.GARGUMENTABLE__ARGS:
-            if (coreType)
-               return getArgs();
-            else
-               return getArgs().map();
+         case GraphPackage.GLAYOUT_DATA__PREF_SIZE:
+            if (resolve)
+               return getPrefSize();
+            return basicGetPrefSize();
       }
       return super.eGet(featureID, resolve, coreType);
    }
@@ -128,8 +137,8 @@ public class GArgumentableImpl extends MinimalEObjectImpl.Container implements G
    @Override
    public void eSet(int featureID, Object newValue) {
       switch (featureID) {
-         case GraphPackage.GARGUMENTABLE__ARGS:
-            ((EStructuralFeature.Setting) getArgs()).set(newValue);
+         case GraphPackage.GLAYOUT_DATA__PREF_SIZE:
+            setPrefSize((GDimension) newValue);
             return;
       }
       super.eSet(featureID, newValue);
@@ -143,8 +152,8 @@ public class GArgumentableImpl extends MinimalEObjectImpl.Container implements G
    @Override
    public void eUnset(int featureID) {
       switch (featureID) {
-         case GraphPackage.GARGUMENTABLE__ARGS:
-            getArgs().clear();
+         case GraphPackage.GLAYOUT_DATA__PREF_SIZE:
+            setPrefSize((GDimension) null);
             return;
       }
       super.eUnset(featureID);
@@ -158,10 +167,10 @@ public class GArgumentableImpl extends MinimalEObjectImpl.Container implements G
    @Override
    public boolean eIsSet(int featureID) {
       switch (featureID) {
-         case GraphPackage.GARGUMENTABLE__ARGS:
-            return args != null && !args.isEmpty();
+         case GraphPackage.GLAYOUT_DATA__PREF_SIZE:
+            return prefSize != null;
       }
       return super.eIsSet(featureID);
    }
 
-} //GArgumentableImpl
+} //GLayoutDataImpl

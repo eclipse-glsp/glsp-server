@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -32,6 +32,8 @@ public final class ModelTypes {
    public static final String TASK = "task";
    public static final String MANUAL_TASK = TASK + ":manual";
    public static final String AUTOMATED_TASK = TASK + ":automated";
+   public static final String CATEGORY = "category";
+   public static final String STRUCTURE = "struct";
 
    public static String toNodeType(final String type) {
       switch (type) {
@@ -47,6 +49,8 @@ public final class ModelTypes {
             return "manual";
          case AUTOMATED_TASK:
             return "automated";
+         case CATEGORY:
+            return "category";
          default:
             break;
       }

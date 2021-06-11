@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.eclipse.glsp.graph.GLayouting#getLayout <em>Layout</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.GLayouting#getLayoutOptions <em>Layout Options</em>}</li>
+ *   <li>{@link org.eclipse.glsp.graph.GLayouting#getLayoutData <em>Layout Data</em>}</li>
  * </ul>
  *
  * @see org.eclipse.glsp.graph.GraphPackage#getGLayouting()
@@ -72,5 +73,27 @@ public interface GLayouting extends EObject {
     * @generated
     */
    EMap<String, Object> getLayoutOptions();
+
+   /**
+    * Returns the value of the '<em><b>Layout Data</b></em>' reference.
+    * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+    * @return the value of the '<em>Layout Data</em>' reference.
+    * @see #setLayoutData(GLayoutData)
+    * @see org.eclipse.glsp.graph.GraphPackage#getGLayouting_LayoutData()
+    * @model
+    * @generated
+    */
+   GLayoutData getLayoutData();
+
+   /**
+    * Sets the value of the '{@link org.eclipse.glsp.graph.GLayouting#getLayoutData <em>Layout Data</em>}' reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @param value the new value of the '<em>Layout Data</em>' reference.
+    * @see #getLayoutData()
+    * @generated
+    */
+   void setLayoutData(GLayoutData value);
 
 } // GLayouting

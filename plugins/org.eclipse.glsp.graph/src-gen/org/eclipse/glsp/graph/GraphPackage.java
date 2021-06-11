@@ -672,13 +672,22 @@ public interface GraphPackage extends EPackage {
    int GNODE__LAYOUT_OPTIONS = GSHAPE_ELEMENT_FEATURE_COUNT + 2;
 
    /**
+    * The feature id for the '<em><b>Layout Data</b></em>' reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GNODE__LAYOUT_DATA = GSHAPE_ELEMENT_FEATURE_COUNT + 3;
+
+   /**
     * The number of structural features of the '<em>GNode</em>' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int GNODE_FEATURE_COUNT = GSHAPE_ELEMENT_FEATURE_COUNT + 3;
+   int GNODE_FEATURE_COUNT = GSHAPE_ELEMENT_FEATURE_COUNT + 4;
 
    /**
     * The number of operations of the '<em>GNode</em>' class.
@@ -944,13 +953,22 @@ public interface GraphPackage extends EPackage {
    int GCOMPARTMENT__LAYOUT_OPTIONS = GSHAPE_ELEMENT_FEATURE_COUNT + 1;
 
    /**
+    * The feature id for the '<em><b>Layout Data</b></em>' reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GCOMPARTMENT__LAYOUT_DATA = GSHAPE_ELEMENT_FEATURE_COUNT + 2;
+
+   /**
     * The number of structural features of the '<em>GCompartment</em>' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int GCOMPARTMENT_FEATURE_COUNT = GSHAPE_ELEMENT_FEATURE_COUNT + 2;
+   int GCOMPARTMENT_FEATURE_COUNT = GSHAPE_ELEMENT_FEATURE_COUNT + 3;
 
    /**
     * The number of operations of the '<em>GCompartment</em>' class.
@@ -1747,13 +1765,22 @@ public interface GraphPackage extends EPackage {
    int GLAYOUTING__LAYOUT_OPTIONS = 1;
 
    /**
+    * The feature id for the '<em><b>Layout Data</b></em>' reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GLAYOUTING__LAYOUT_DATA = 2;
+
+   /**
     * The number of structural features of the '<em>GLayouting</em>' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int GLAYOUTING_FEATURE_COUNT = 2;
+   int GLAYOUTING_FEATURE_COUNT = 3;
 
    /**
     * The number of operations of the '<em>GLayouting</em>' class.
@@ -2139,14 +2166,51 @@ public interface GraphPackage extends EPackage {
    int STRING_TO_OBJECT_MAP_ENTRY_OPERATION_COUNT = 0;
 
    /**
-    * The meta object id for the '{@link org.eclipse.glsp.graph.GSeverity <em>GSeverity</em>}' enum.
+    * The meta object id for the '{@link org.eclipse.glsp.graph.impl.GLayoutDataImpl <em>GLayout Data</em>}' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @see org.eclipse.glsp.graph.GSeverity
-    * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGSeverity()
+    * @see org.eclipse.glsp.graph.impl.GLayoutDataImpl
+    * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGLayoutData()
     * @generated
     */
-   int GSEVERITY = 24;
+   int GLAYOUT_DATA = 24;
+
+   /**
+   	 * The feature id for the '<em><b>Pref Size</b></em>' reference.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @generated
+   	 * @ordered
+   	 */
+   int GLAYOUT_DATA__PREF_SIZE = 0;
+
+   /**
+   	 * The number of structural features of the '<em>GLayout Data</em>' class.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @generated
+   	 * @ordered
+   	 */
+   int GLAYOUT_DATA_FEATURE_COUNT = 1;
+
+   /**
+   	 * The number of operations of the '<em>GLayout Data</em>' class.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @generated
+   	 * @ordered
+   	 */
+   int GLAYOUT_DATA_OPERATION_COUNT = 0;
+
+   /**
+   	 * The meta object id for the '{@link org.eclipse.glsp.graph.GSeverity <em>GSeverity</em>}' enum.
+   	 * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+   	 * @see org.eclipse.glsp.graph.GSeverity
+   	 * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGSeverity()
+   	 * @generated
+   	 */
+   int GSEVERITY = 25;
 
    /**
     * Returns the meta object for class '{@link org.eclipse.glsp.graph.GModelElement <em>GModel Element</em>}'.
@@ -2660,6 +2724,17 @@ public interface GraphPackage extends EPackage {
    EReference getGLayouting_LayoutOptions();
 
    /**
+    * Returns the meta object for the reference '{@link org.eclipse.glsp.graph.GLayouting#getLayoutData <em>Layout Data</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for the reference '<em>Layout Data</em>'.
+    * @see org.eclipse.glsp.graph.GLayouting#getLayoutData()
+    * @see #getGLayouting()
+    * @generated
+    */
+   EReference getGLayouting_LayoutData();
+
+   /**
     * Returns the meta object for class '{@link org.eclipse.glsp.graph.GBounds <em>GBounds</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -2864,13 +2939,34 @@ public interface GraphPackage extends EPackage {
    EAttribute getStringToObjectMapEntry_Value();
 
    /**
-    * Returns the meta object for enum '{@link org.eclipse.glsp.graph.GSeverity <em>GSeverity</em>}'.
+    * Returns the meta object for class '{@link org.eclipse.glsp.graph.GLayoutData <em>GLayout Data</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @return the meta object for enum '<em>GSeverity</em>'.
-    * @see org.eclipse.glsp.graph.GSeverity
+    * @return the meta object for class '<em>GLayout Data</em>'.
+    * @see org.eclipse.glsp.graph.GLayoutData
     * @generated
     */
+   EClass getGLayoutData();
+
+   /**
+   	 * Returns the meta object for the reference '{@link org.eclipse.glsp.graph.GLayoutData#getPrefSize <em>Pref Size</em>}'.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @return the meta object for the reference '<em>Pref Size</em>'.
+   	 * @see org.eclipse.glsp.graph.GLayoutData#getPrefSize()
+   	 * @see #getGLayoutData()
+   	 * @generated
+   	 */
+   EReference getGLayoutData_PrefSize();
+
+   /**
+   	 * Returns the meta object for enum '{@link org.eclipse.glsp.graph.GSeverity <em>GSeverity</em>}'.
+   	 * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+   	 * @return the meta object for enum '<em>GSeverity</em>'.
+   	 * @see org.eclipse.glsp.graph.GSeverity
+   	 * @generated
+   	 */
    EEnum getGSeverity();
 
    /**
@@ -3315,6 +3411,14 @@ public interface GraphPackage extends EPackage {
       EReference GLAYOUTING__LAYOUT_OPTIONS = eINSTANCE.getGLayouting_LayoutOptions();
 
       /**
+       * The meta object literal for the '<em><b>Layout Data</b></em>' reference feature.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      EReference GLAYOUTING__LAYOUT_DATA = eINSTANCE.getGLayouting_LayoutData();
+
+      /**
        * The meta object literal for the '{@link org.eclipse.glsp.graph.impl.GBoundsImpl <em>GBounds</em>}' class.
        * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
@@ -3481,13 +3585,31 @@ public interface GraphPackage extends EPackage {
       EAttribute STRING_TO_OBJECT_MAP_ENTRY__VALUE = eINSTANCE.getStringToObjectMapEntry_Value();
 
       /**
-       * The meta object literal for the '{@link org.eclipse.glsp.graph.GSeverity <em>GSeverity</em>}' enum.
+       * The meta object literal for the '{@link org.eclipse.glsp.graph.impl.GLayoutDataImpl <em>GLayout Data</em>}' class.
        * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-       * @see org.eclipse.glsp.graph.GSeverity
-       * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGSeverity()
+       * @see org.eclipse.glsp.graph.impl.GLayoutDataImpl
+       * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGLayoutData()
        * @generated
        */
+      EClass GLAYOUT_DATA = eINSTANCE.getGLayoutData();
+
+      /**
+      	 * The meta object literal for the '<em><b>Pref Size</b></em>' reference feature.
+      	 * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+      	 * @generated
+      	 */
+      EReference GLAYOUT_DATA__PREF_SIZE = eINSTANCE.getGLayoutData_PrefSize();
+
+      /**
+      	 * The meta object literal for the '{@link org.eclipse.glsp.graph.GSeverity <em>GSeverity</em>}' enum.
+      	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+      	 * @see org.eclipse.glsp.graph.GSeverity
+      	 * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGSeverity()
+      	 * @generated
+      	 */
       EEnum GSEVERITY = eINSTANCE.getGSeverity();
 
    }

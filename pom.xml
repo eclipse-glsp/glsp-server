@@ -93,7 +93,6 @@
 			<properties>
 				<tycho-version>2.3.0</tycho-version>
 				<maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
-				<target.version>0.9.0-SNAPSHOT</target.version>
 			</properties>
 
 			<modules>
@@ -123,6 +122,12 @@
 							<!-- enable source bundle generation -->
 							<groupId>org.eclipse.tycho</groupId>
 							<artifactId>tycho-source-plugin</artifactId>
+							<version>${tycho-version}</version>
+						</plugin>
+						<plugin>
+							<!-- enable automated version updates -->
+							<groupId>org.eclipse.tycho</groupId>
+							<artifactId>tycho-versions-plugin</artifactId>
 							<version>${tycho-version}</version>
 						</plugin>
 						<plugin>
@@ -170,6 +175,12 @@
 						</executions>
 					</plugin>
 					<plugin>
+						<!-- enable automated version updates -->
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>tycho-versions-plugin</artifactId>
+						<version>${tycho-version}</version>
+					</plugin>
+					<plugin>
 						<groupId>org.eclipse.tycho</groupId>
 						<artifactId>target-platform-configuration</artifactId>
 						<configuration>
@@ -197,7 +208,7 @@
 									<groupId>org.eclipse.glsp</groupId>
 									<artifactId>org.eclipse.glsp.parent</artifactId>
 									<classifier>targetplatforms/r2020-06</classifier>
-									<version>${target.version}</version>
+									<version>${project.version}</version>
 								</artifact>
 							</target>
 						</configuration>
@@ -206,21 +217,6 @@
 			</build>
 		</profile>
 
-		<profile>
-			<id>p2-release</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-
-			<modules>
-				<module>plugins/org.eclipse.glsp.server</module>
-				<module>plugins/org.eclipse.glsp.server.websocket</module>
-				<module>plugins/org.eclipse.glsp.layout</module>
-				<module>plugins/org.eclipse.glsp.graph</module>
-				<module>examples/org.eclipse.glsp.example.workflow</module>
-				<module>releng</module>
-			</modules>
-		</profile>
 
 		<profile>
 			<id>m2</id>

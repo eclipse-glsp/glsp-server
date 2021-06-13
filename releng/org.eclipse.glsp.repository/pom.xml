@@ -35,7 +35,7 @@
 
 	<profiles>
 		<profile>
-			<id>p2-release</id>
+			<id>p2-nightly</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
@@ -51,6 +51,7 @@
 				<rsync.remote.dir>${remote.p2.root}/${repository.path}</rsync.remote.dir>
 				<!-- pass "-n" to perform a trial run with no changes made -->
 				<dryrun></dryrun>
+				<p2.site.label>Eclipse GLSP Nightly Updatesite</p2.site.label>
 			</properties>
 
 			<build>
@@ -96,7 +97,7 @@
 						<configuration>
 							<executionEnvironment>JavaSE-11</executionEnvironment>
 							<!-- IMPORTANT: DO NOT split the arg line -->
-							<appArgLine>-application org.eclipse.ant.core.antRunner -buildfile packaging-p2composite.ant p2.composite.add -Dsite.label="Eclipse GLSP Nightly Updatesite" -Dproject.build.directory=${project.build.directory} -DunqualifiedVersion=${unqualifiedVersion} -DbuildQualifier=${buildQualifier} -Dsoftware.download.area=${rsync.local.dir}</appArgLine>
+							<appArgLine>-application org.eclipse.ant.core.antRunner -buildfile packaging-p2composite.ant p2.composite.add -Dsite.label=${p2.site.label} -Dproject.build.directory=${project.build.directory} -DunqualifiedVersion=${unqualifiedVersion} -DbuildQualifier=${buildQualifier} -Dsoftware.download.area=${rsync.local.dir}</appArgLine>
 							<repositories>
 								<repository>
 									<id>2019-09</id>

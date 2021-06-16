@@ -9,7 +9,7 @@ The GLSP server bundles are built with Java 11 or higher and maven. Execute `mvn
 ### Maven Repositories [![build-status-server](https://img.shields.io/jenkins/build?jobUrl=https://ci.eclipse.org/glsp/job/deploy-m2-glsp-server/&label=publish)](https://ci.eclipse.org/glsp/job/deploy-m2-glsp-server/)
 
 - <i>Snapshots: </i> https://oss.sonatype.org/content/repositories/snapshots/org/eclipse/glsp/
-- <i>Releases/Release Candiates: </i> https://oss.sonatype.org/content/groups/public/org/eclipse/glsp/ (also mirrored to the [maven central repostiory](https://search.maven.org/search?q=org.eclipse.glsp))
+- <i>Releases/Release Candiates: </i> https://oss.sonatype.org/content/groups/public/org/eclipse/glsp/ (also mirrored to the [maven central repository](https://search.maven.org/search?q=org.eclipse.glsp))
 
 ### P2 Update Sites   [![build-status-server](https://img.shields.io/jenkins/build?jobUrl=https://ci.eclipse.org/glsp/job/deploy-p2-glsp-server/&label=publish)](https://ci.eclipse.org/glsp/job/deploy-p2-glsp-server/)
 - <i>Snapshots: </i> https://download.eclipse.org/glsp/server/p2/nightly/

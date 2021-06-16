@@ -9,10 +9,12 @@ The GLSP server bundles are built with Java 11 or higher and maven. Execute `mvn
 ### Maven Repositories [![build-status-server](https://img.shields.io/jenkins/build?jobUrl=https://ci.eclipse.org/glsp/job/deploy-m2-glsp-server/&label=publish)](https://ci.eclipse.org/glsp/job/deploy-m2-glsp-server/)
 
 - <i>Snapshots: </i> https://oss.sonatype.org/content/repositories/snapshots/org/eclipse/glsp/
-- <i>Releases/Release Candiates: </i> https://oss.sonatype.org/content/groups/public/org/eclipse/glsp/
+- <i>Releases/Release Candiates: </i> https://oss.sonatype.org/content/groups/public/org/eclipse/glsp/ (also mirrored to the [maven central repostiory](https://search.maven.org/search?q=org.eclipse.glsp))
 
 ### P2 Update Sites   [![build-status-server](https://img.shields.io/jenkins/build?jobUrl=https://ci.eclipse.org/glsp/job/deploy-p2-glsp-server/&label=publish)](https://ci.eclipse.org/glsp/job/deploy-p2-glsp-server/)
 - <i>Snapshots: </i> https://download.eclipse.org/glsp/server/p2/nightly/
+- <i>Release Candidates: </i> https://download.eclipse.org/glsp/server/p2/staging/
+- <i>Releases: </i> https://download.eclipse.org/glsp/server/p2/releases/
 
 All changes on the master branch are deployed automatically to the corresponding snapshot repositories.
 
@@ -58,7 +60,7 @@ In addition to this repository, the related source code can be found here:
   * https://github.com/eclipse-glsp/glsp-client
   * https://github.com/eclipse-glsp/glsp-theia-integration
   * https://github.com/eclipse-glsp/glsp-eclipse-integration
-  * https://github.com/eclipsesource/glsp-vscode-integration
+  * https://github.com/eclipse-glsp/glsp-vscode-integration
 
 ## See also
 For more information, please visit the [Eclipse GLSP Umbrella repository](https://github.com/eclipse-glsp/glsp) and the [Eclipse GLSP Website](https://www.eclipse.org/glsp/). If you have questions, contact us on our [spectrum chat](https://spectrum.chat/glsp/) and have a look at our [communication and support options](https://www.eclipse.org/glsp/contact/).

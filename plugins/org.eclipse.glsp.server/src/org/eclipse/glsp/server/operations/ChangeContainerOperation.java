@@ -15,6 +15,8 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operations;
 
+import java.util.Optional;
+
 import org.eclipse.glsp.graph.GPoint;
 
 public class ChangeContainerOperation extends Operation {
@@ -42,7 +44,7 @@ public class ChangeContainerOperation extends Operation {
    }
 
    public ChangeContainerOperation(final String elementId, final String targetContainerId) {
-      this(elementId, (GPoint) null, targetContainerId);
+      this(elementId, null, targetContainerId);
    }
 
    public String getElementId() { return elementId; }
@@ -53,7 +55,7 @@ public class ChangeContainerOperation extends Operation {
 
    public void setTargetContainerId(final String targetContainerId) { this.targetContainerId = targetContainerId; }
 
-   public GPoint getLocation() { return location; }
+   public Optional<GPoint> getLocation() { return Optional.ofNullable(location); }
 
    public void setLocation(final GPoint location) { this.location = location; }
 

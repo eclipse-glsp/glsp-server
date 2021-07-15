@@ -4,7 +4,7 @@ Contains the code for the Java-based framework to create [GLSP](https://github.c
 
 ## Building
 
-The GLSP server bundles are built with Java 11 or higher and maven. Execute `mvn clean install -Pm2` (for maven) or `mvn clean install -Pp2` (for p2). The nightly builds are available as maven repository or p2 update site.
+The GLSP server bundles are built with Java 11 or higher and maven. Execute `mvn clean verify -Pm2` (for maven) or `mvn clean verify -Pp2` (for p2). The nightly builds are available as maven repository or p2 update site.
 
 ### Maven Repositories [![build-status-server](https://img.shields.io/jenkins/build?jobUrl=https://ci.eclipse.org/glsp/job/deploy-m2-glsp-server/&label=publish)](https://ci.eclipse.org/glsp/job/deploy-m2-glsp-server/)
 

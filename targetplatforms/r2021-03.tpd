@@ -1,29 +1,28 @@
-target "2020-06 - Release" with source requirements
+target "2021-03 - Release" with source requirements
 
-location "http://download.eclipse.org/releases/2020-06" {
+location "http://download.eclipse.org/releases/2021-03" {
 	org.eclipse.equinox.p2.discovery.feature.feature.group
 	org.eclipse.equinox.executable.feature.group
 	org.eclipse.emf.sdk.feature.group
 }
 
-location "https://download.eclipse.org/tools/orbit/downloads/drops/R20200529191137/repository/" {
+location "https://download.eclipse.org/tools/orbit/downloads/drops/R20210602031627/repository/" {
 	org.apache.log4j
 	org.apache.commons.cli
 	org.apache.commons.io
 	javax.servlet
 	com.google.gson [2.8.2,3.0.0)
-	com.google.inject [3.0.0,3.0.1)
-	com.google.inject.multibindings [3.0.0,3.0.1)
+	com.google.inject [5.0.1,5.0.2)
 	com.google.guava [27.1.0,27.1.1)
 	org.junit [4.12.0,4.13.0)
-	org.junit.jupiter.api [5.6.0,5.6.1)
+	org.junit.jupiter.api [5.7.1,5.7.2)
 }
 
 location "https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.14.v20181113/" {
 	org.eclipse.jetty.bundles.f.feature.group
 }
 
-location "https://download.eclipse.org/elk/updates/releases/0.6.0/" {
+location "https://download.eclipse.org/elk/updates/releases/0.7.1/" {
 	org.eclipse.elk.core
 	org.eclipse.elk.graph
 	org.eclipse.elk.graph.text

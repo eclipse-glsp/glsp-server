@@ -67,7 +67,7 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>21.0</version>
+			<version>27.1-jre</version>
 		</dependency>
 	</dependencies>
 
@@ -166,7 +166,6 @@
 						<!-- enable automated version updates -->
 						<groupId>org.eclipse.tycho</groupId>
 						<artifactId>tycho-versions-plugin</artifactId>
-						<version>${tycho-version}</version>
 					</plugin>
 					<plugin>
 						<groupId>org.eclipse.tycho</groupId>
@@ -195,7 +194,7 @@
 								<artifact>
 									<groupId>org.eclipse.glsp</groupId>
 									<artifactId>org.eclipse.glsp.parent</artifactId>
-									<classifier>targetplatforms/r2020-06</classifier>
+									<classifier>targetplatforms/r2021-03</classifier>
 									<version>${project.version}</version>
 								</artifact>
 							</target>

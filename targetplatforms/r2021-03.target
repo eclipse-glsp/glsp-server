@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="2020-06 - Release" sequenceNumber="1597185458">
+<target name="2021-03 - Release" sequenceNumber="1627995717">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="org.eclipse.equinox.p2.discovery.feature.feature.group" version="1.2.600.v20200521-1852"/>
-      <unit id="org.eclipse.equinox.executable.feature.group" version="3.8.800.v20200514-1529"/>
-      <unit id="org.eclipse.emf.sdk.feature.group" version="2.22.0.v20200519-1135"/>
-      <repository location="http://download.eclipse.org/releases/2020-06"/>
+      <unit id="org.eclipse.equinox.p2.discovery.feature.feature.group" version="1.2.800.v20200916-1234"/>
+      <unit id="org.eclipse.equinox.executable.feature.group" version="3.8.1100.v20210209-1541"/>
+      <unit id="org.eclipse.emf.sdk.feature.group" version="2.25.0.v20210114-1734"/>
+      <repository location="http://download.eclipse.org/releases/2021-03"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.apache.log4j" version="1.2.15.v201012070815"/>
       <unit id="org.apache.commons.cli" version="1.4.0.v20200417-1444"/>
-      <unit id="org.apache.commons.io" version="2.6.0.v20190123-2029"/>
+      <unit id="org.apache.commons.io" version="2.8.0.v20210415-0900"/>
       <unit id="javax.servlet" version="3.1.0.v201410161800"/>
-      <unit id="com.google.gson" version="2.8.2.v20180104-1110"/>
-      <unit id="com.google.inject" version="3.0.0.v201605172100"/>
-      <unit id="com.google.inject.multibindings" version="3.0.0.v201605172100"/>
+      <unit id="com.google.gson" version="2.8.6.v20201231-1626"/>
+      <unit id="com.google.inject" version="5.0.1.v20210324-2015"/>
       <unit id="com.google.guava" version="27.1.0.v20190517-1946"/>
       <unit id="org.junit" version="4.12.0.v201504281640"/>
-      <unit id="org.junit.jupiter.api" version="5.6.0.v20200203-2009"/>
-      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20200529191137/repository/"/>
+      <unit id="org.junit.jupiter.api" version="5.7.1.v20210222-1948"/>
+      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20210602031627/repository/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.jetty.bundles.f.feature.group" version="9.4.14.v20181113"/>
       <repository location="https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.14.v20181113/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="org.eclipse.elk.core" version="0.6.0"/>
-      <unit id="org.eclipse.elk.graph" version="0.6.0"/>
-      <unit id="org.eclipse.elk.graph.text" version="0.6.0"/>
-      <unit id="org.eclipse.elk.alg.layered" version="0.6.0"/>
-      <repository location="https://download.eclipse.org/elk/updates/releases/0.6.0/"/>
+      <unit id="org.eclipse.elk.core" version="0.7.1"/>
+      <unit id="org.eclipse.elk.graph" version="0.7.1"/>
+      <unit id="org.eclipse.elk.graph.text" version="0.7.1"/>
+      <unit id="org.eclipse.elk.alg.layered" version="0.7.1"/>
+      <repository location="https://download.eclipse.org/elk/updates/releases/0.7.1/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.lsp4j" version="0.0.0"/>

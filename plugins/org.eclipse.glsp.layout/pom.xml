@@ -50,12 +50,21 @@
 		<dependency>
 			<groupId>org.eclipse.elk</groupId>
 			<artifactId>org.eclipse.elk.core</artifactId>
-			<version>0.5.0</version>
+			<version>0.7.1</version>
+			<!-- Can be removed once https://github.com/eclipse-glsp/glsp/issues/265 
+				is resolved -->
+			<exclusions>
+				<exclusion>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
+
 		<dependency>
 			<groupId>org.eclipse.elk</groupId>
 			<artifactId>org.eclipse.elk.graph.text</artifactId>
-			<version>0.5.0</version>
+			<version>0.7.1</version>
 		</dependency>
 	</dependencies>
 

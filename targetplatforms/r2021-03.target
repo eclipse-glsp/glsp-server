@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="2021-03 - Release" sequenceNumber="1627995717">
+<target name="2021-03 - Release" sequenceNumber="1628018980">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.equinox.p2.discovery.feature.feature.group" version="1.2.800.v20200916-1234"/>
@@ -16,7 +16,7 @@
       <unit id="javax.servlet" version="3.1.0.v201410161800"/>
       <unit id="com.google.gson" version="2.8.6.v20201231-1626"/>
       <unit id="com.google.inject" version="5.0.1.v20210324-2015"/>
-      <unit id="com.google.guava" version="27.1.0.v20190517-1946"/>
+      <unit id="com.google.guava" version="30.1.0.v20210127-2300"/>
       <unit id="org.junit" version="4.12.0.v201504281640"/>
       <unit id="org.junit.jupiter.api" version="5.7.1.v20210222-1948"/>
       <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20210602031627/repository/"/>

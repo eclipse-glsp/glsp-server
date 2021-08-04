@@ -13,7 +13,7 @@ location "https://download.eclipse.org/tools/orbit/downloads/drops/R202106020316
 	javax.servlet
 	com.google.gson [2.8.2,3.0.0)
 	com.google.inject [5.0.1,5.0.2)
-	com.google.guava [27.1.0,27.1.1)
+	com.google.guava [30.1.0,31.0.0)
 	org.junit [4.12.0,4.13.0)
 	org.junit.jupiter.api [5.7.1,5.7.2)
 }

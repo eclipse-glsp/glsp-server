@@ -21,18 +21,16 @@ import javax.websocket.CloseReason;
 import javax.websocket.EndpointConfig;
 import javax.websocket.Session;
 
-import org.eclipse.glsp.server.jsonrpc.GLSPJsonrpcClient;
-import org.eclipse.glsp.server.jsonrpc.GLSPJsonrpcServer;
 import org.eclipse.glsp.server.jsonrpc.GsonConfigurator;
+import org.eclipse.glsp.server.protocol.GLSPClient;
 import org.eclipse.glsp.server.protocol.GLSPServer;
 import org.eclipse.lsp4j.jsonrpc.Launcher.Builder;
 import org.eclipse.lsp4j.websocket.WebSocketEndpoint;
 
 import com.google.inject.Inject;
 
-public class GLSPServerEndpoint extends WebSocketEndpoint<GLSPJsonrpcClient> {
+public class GLSPServerEndpoint extends WebSocketEndpoint<GLSPClient> {
    public static final int MAX_TEXT_MESSAGE_BUFFER_SIZE = 8388608;
-   @SuppressWarnings("rawtypes")
    @Inject
    private GLSPServer glspServer;
 
@@ -40,15 +38,15 @@ public class GLSPServerEndpoint extends WebSocketEndpoint<GLSPJsonrpcClient> {
    private GsonConfigurator gsonConfigurator;
 
    @Override
-   protected void configure(final Builder<GLSPJsonrpcClient> builder) {
+   protected void configure(final Builder<GLSPClient> builder) {
       builder.setLocalService(glspServer);
-      builder.setRemoteInterface(GLSPJsonrpcClient.class);
+      builder.setRemoteInterface(GLSPClient.class);
       builder.configureGson(gsonConfigurator::configureGsonBuilder);
    }
 
    @Override
-   protected void connect(final Collection<Object> localServices, final GLSPJsonrpcClient remoteProxy) {
-      localServices.stream().filter(GLSPJsonrpcServer.class::isInstance).map(GLSPJsonrpcServer.class::cast)
+   protected void connect(final Collection<Object> localServices, final GLSPClient remoteProxy) {
+      localServices.stream().filter(GLSPServer.class::isInstance).map(GLSPServer.class::cast)
          .forEach(ca -> ca.connect(remoteProxy));
    }
 

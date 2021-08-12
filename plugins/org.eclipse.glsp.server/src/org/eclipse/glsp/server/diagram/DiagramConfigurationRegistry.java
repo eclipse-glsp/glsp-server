@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.protocol.GLSPServerException;
 import org.eclipse.glsp.server.utils.ClientOptions;
+import org.eclipse.glsp.server.utils.MapUtil;
 import org.eclipse.glsp.server.utils.Registry;
 
 public interface DiagramConfigurationRegistry extends Registry<String, DiagramConfiguration> {
@@ -48,7 +49,7 @@ public interface DiagramConfigurationRegistry extends Registry<String, DiagramCo
     *                                doesn't exist in this registry
     */
    default DiagramConfiguration get(final GModelState modelState) {
-      return getOrThrow(ClientOptions.getValue(modelState.getClientOptions(), ClientOptions.DIAGRAM_TYPE)
+      return getOrThrow(MapUtil.getValue(modelState.getClientOptions(), ClientOptions.DIAGRAM_TYPE)
          .flatMap(this::get), "Unsupported diagram kind");
    }
 }

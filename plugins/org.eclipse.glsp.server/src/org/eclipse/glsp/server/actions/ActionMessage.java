@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,9 +15,21 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actions;
 
+/**
+ * Java-implementation of the `ActionMessage` interface.
+ * An action message serves as an envelope carrying an action to be transmitted between the client and the server and a
+ * `clientId` to identify the intended client session
+ * for this message.
+ */
 public class ActionMessage {
-
+   /**
+    * The action to execute.
+    */
    private final Action action;
+
+   /**
+    * Used to identify a specific client session.
+    */
    private final String clientId;
 
    public ActionMessage(final String clientId, final Action action) {

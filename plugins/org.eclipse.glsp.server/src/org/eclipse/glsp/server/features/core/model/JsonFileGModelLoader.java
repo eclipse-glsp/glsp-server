@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -59,7 +59,7 @@ public class JsonFileGModelLoader implements ModelSourceLoader {
 
    protected File convertToFile(final GModelState modelState) {
       return getOrThrow(ClientOptions.getSourceUriAsFile(modelState.getClientOptions()),
-         "Invalid file URI:" + ClientOptions.getValue(modelState.getClientOptions(), ClientOptions.SOURCE_URI));
+         "Invalid file URI:" + ClientOptions.getSourceUri(modelState.getClientOptions()));
    }
 
    protected Optional<GModelRoot> loadSourceModel(final File file, final GModelState modelState) {

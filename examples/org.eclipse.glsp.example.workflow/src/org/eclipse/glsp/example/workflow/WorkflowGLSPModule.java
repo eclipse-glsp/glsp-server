@@ -65,7 +65,6 @@ import org.eclipse.glsp.server.utils.MultiBinding;
 public class WorkflowGLSPModule extends DefaultGLSPModule {
 
    @Override
-   @SuppressWarnings("rawtypes")
    protected Class<? extends GLSPServer> bindGLSPServer() {
       return WorkflowGLSPServer.class;
    }

@@ -26,32 +26,17 @@ public final class ClientOptions {
 
    private ClientOptions() {}
 
-   public static Optional<String> getValue(final Map<String, String> options, final String key) {
-      return Optional.ofNullable(options).map(opt -> opt.get(key));
+   public static Optional<String> getSourceUri(final Map<String, String> options) {
+      return MapUtil.getValue(options, SOURCE_URI);
    }
 
-   public static Optional<Integer> getIntValue(final Map<String, String> options, final String key) {
-      try {
-         return Optional.ofNullable(options).map(opt -> Integer.parseInt(opt.get(key)));
-      } catch (NumberFormatException ex) {
-         return Optional.empty();
-      }
-   }
+   public static Optional<String> getDiagramType(final Map<String, String> options) {
+      return MapUtil.getValue(options, DIAGRAM_TYPE);
 
-   public static Optional<Float> getFloatValue(final Map<String, String> options, final String key) {
-      try {
-         return Optional.ofNullable(options).map(opt -> Float.parseFloat(opt.get(key)));
-      } catch (NumberFormatException ex) {
-         return Optional.empty();
-      }
-   }
-
-   public static boolean getBoolValue(final Map<String, String> options, final String key) {
-      return Optional.ofNullable(options).map(opt -> Boolean.parseBoolean(opt.get(key))).orElse(false);
    }
 
    public static Optional<File> getSourceUriAsFile(final Map<String, String> options) {
-      return getValue(options, SOURCE_URI).map(ClientOptions::getAsFile);
+      return MapUtil.getValue(options, SOURCE_URI).map(ClientOptions::getAsFile);
    }
 
    public static String adaptUri(final String uri) {

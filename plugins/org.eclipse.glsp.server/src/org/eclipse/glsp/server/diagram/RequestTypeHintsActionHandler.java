@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -54,6 +54,6 @@ public class RequestTypeHintsActionHandler extends BasicActionHandler<RequestTyp
       if (action.getDiagramType() == null && !action.getDiagramType().isEmpty()) {
          return Optional.of(action.getDiagramType());
       }
-      return ClientOptions.getValue(modelState.getClientOptions(), ClientOptions.DIAGRAM_TYPE);
+      return ClientOptions.getDiagramType(modelState.getClientOptions());
    }
 }

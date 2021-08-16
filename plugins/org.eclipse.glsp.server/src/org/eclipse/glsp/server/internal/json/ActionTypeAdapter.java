@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -16,9 +16,7 @@
 package org.eclipse.glsp.server.internal.json;
 
 import java.lang.reflect.Constructor;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.glsp.graph.gson.PropertyBasedTypeAdapter;
 import org.eclipse.glsp.server.actions.Action;
@@ -57,9 +55,8 @@ public class ActionTypeAdapter extends PropertyBasedTypeAdapter<Action> {
    public static class Factory implements TypeAdapterFactory {
       private final Map<String, Class<? extends Action>> actions;
 
-      public Factory(final Set<Action> registeredActions) {
-         actions = new HashMap<>();
-         registeredActions.forEach(action -> actions.put(action.getKind(), action.getClass()));
+      public Factory(final Map<String, Class<? extends Action>> actions) {
+         this.actions = actions;
       }
 
       @Override

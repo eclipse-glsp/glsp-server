@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019-2020 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -85,7 +85,6 @@ public abstract class GLSPModule extends AbstractModule {
 
    protected abstract Class<? extends ModelStateProvider> bindModelStateProvider();
 
-   @SuppressWarnings("rawtypes")
    protected abstract Class<? extends GLSPServer> bindGLSPServer();
 
    protected abstract Class<? extends GraphGsonConfiguratorFactory> bindGraphGsonConfiguratorFactory();
@@ -153,7 +152,6 @@ public abstract class GLSPModule extends AbstractModule {
    }
 
    @Provides
-   @SuppressWarnings("rawtypes")
    private GLSPClient getGLSPClient(final GLSPServer glspServer) {
       return glspServer.getClient();
    }

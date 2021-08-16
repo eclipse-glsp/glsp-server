@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019-2020 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,25 +15,52 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.protocol;
 
-import org.eclipse.lsp4j.jsonrpc.json.adapters.JsonElementTypeAdapter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-import com.google.gson.annotations.JsonAdapter;
-
+/**
+ * POJO providing all arguments required for a {@link GLSPServer#initialize(InitializeParameters)}
+ * request.
+ */
 public class InitializeParameters {
+   /**
+    * Unique identifier for the current client application.
+    */
    private String applicationId;
-   @JsonAdapter(JsonElementTypeAdapter.Factory.class)
-   private Object options;
 
-   public Object getOptions() { return options; }
+   /**
+    * GLSP protocol version that this client is implementing.
+    */
+   private String protocolVersion;
 
-   public void setOptions(final Object options) { this.options = options; }
+   /**
+    * Additional custom arguments e.g. application specific parameters.
+    */
+   private Map<String, String> args;
+
+   public InitializeParameters() {
+      args = new HashMap<>();
+   }
+
+   public Map<String, String> getArgs() { return args; }
+
+   public void setArgs(final Map<String, String> args) { this.args = args; }
 
    public String getApplicationId() { return applicationId; }
 
    public void setApplicationId(final String applicationId) { this.applicationId = applicationId; }
 
+   public String getProtocolVersion() { return protocolVersion; }
+
+   public void setProtocolVersion(final String protocolVersion) { this.protocolVersion = protocolVersion; }
+
    @Override
    public String toString() {
-      return "InitializeParameters[options = " + options + "]";
+      String argsString = args.entrySet().stream().map(entry -> entry.getKey() + "=" + entry.getValue())
+         .collect(Collectors.joining(","));
+      return "InitializeParameters [applicationId=" + applicationId + ", protocolVersion=" + protocolVersion + ", args="
+         + "{ " + argsString + " } ]";
    }
+
 }

@@ -33,9 +33,8 @@ import java.util.function.Function;
 
 import org.apache.log4j.Logger;
 import org.eclipse.glsp.server.di.GLSPModule;
-import org.eclipse.glsp.server.jsonrpc.GLSPJsonrpcClient;
-import org.eclipse.glsp.server.jsonrpc.GLSPJsonrpcServer;
 import org.eclipse.glsp.server.jsonrpc.GsonConfigurator;
+import org.eclipse.glsp.server.protocol.GLSPClient;
 import org.eclipse.glsp.server.protocol.GLSPServer;
 import org.eclipse.lsp4j.jsonrpc.Launcher;
 import org.eclipse.lsp4j.jsonrpc.MessageConsumer;
@@ -105,8 +104,8 @@ public class DefaultGLSPServerLauncher extends GLSPServerLauncher {
 
          Consumer<GsonBuilder> configureGson = (final GsonBuilder builder) -> gsonConf.configureGsonBuilder(builder);
          Function<MessageConsumer, MessageConsumer> wrapper = Function.identity();
-         GLSPJsonrpcServer glspServer = (GLSPJsonrpcServer) injector.getInstance(GLSPServer.class);
-         Launcher<GLSPJsonrpcClient> launcher = Launcher.createIoLauncher(glspServer, GLSPJsonrpcClient.class, in, out,
+         GLSPServer glspServer = injector.getInstance(GLSPServer.class);
+         Launcher<GLSPClient> launcher = Launcher.createIoLauncher(glspServer, GLSPClient.class, in, out,
             threadPool, wrapper, configureGson);
          glspServer.connect(launcher.getRemoteProxy());
          log.info("Starting GLSP server connection for client " + socketChannel.getRemoteAddress());

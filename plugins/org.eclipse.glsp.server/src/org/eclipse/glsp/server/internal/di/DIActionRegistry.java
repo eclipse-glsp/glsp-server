@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -16,6 +16,7 @@
 package org.eclipse.glsp.server.internal.di;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -28,7 +29,7 @@ import org.eclipse.glsp.server.operations.OperationHandler;
 
 import com.google.inject.Inject;
 
-public class DIActionRegistry extends MapRegistry<String, Action> implements ActionRegistry {
+public class DIActionRegistry extends MapRegistry<String, Class<? extends Action>> implements ActionRegistry {
 
    @Inject
    public DIActionRegistry(final Set<ActionHandler> actionHandlers, final Set<OperationHandler> operationHandlers) {
@@ -41,8 +42,13 @@ public class DIActionRegistry extends MapRegistry<String, Action> implements Act
          .map(OperationHandler::getHandledOperationType)
          .collect(Collectors.toList()));
 
-      derivedActions.forEach(action -> register(action.getKind(), action));
-      derivedOpertions.forEach(operation -> register(operation.getKind(), operation));
+      derivedActions.forEach(action -> register(action.getKind(), action.getClass()));
+      derivedOpertions.forEach(operation -> register(operation.getKind(), operation.getClass()));
+   }
+
+   @Override
+   public Map<String, Class<? extends Action>> toMap() {
+      return elements;
    }
 
 }

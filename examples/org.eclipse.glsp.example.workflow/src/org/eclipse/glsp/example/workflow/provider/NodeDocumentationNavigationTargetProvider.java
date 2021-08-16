@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -28,6 +28,7 @@ import org.eclipse.glsp.server.features.navigation.NavigationTargetProvider;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.types.EditorContext;
 import org.eclipse.glsp.server.utils.ClientOptions;
+import org.eclipse.glsp.server.utils.MapUtil;
 
 /**
  * An example {@link NavigationTargetProvider} that opens an md file and selects a specified range.
@@ -49,7 +50,7 @@ public class NodeDocumentationNavigationTargetProvider implements NavigationTarg
             return Arrays.asList();
          }
 
-         Optional<String> sourceUri = ClientOptions.getValue(modelState.getClientOptions(), ClientOptions.SOURCE_URI);
+         Optional<String> sourceUri = MapUtil.getValue(modelState.getClientOptions(), ClientOptions.SOURCE_URI);
          if (sourceUri.isEmpty()) {
             return Arrays.asList();
          }

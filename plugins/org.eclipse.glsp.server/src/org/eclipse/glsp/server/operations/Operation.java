@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -19,7 +19,7 @@ import org.eclipse.glsp.server.actions.Action;
 
 /**
  *
- * An Operation is an action that directly manipulates the model representation on server side.
+ * An Operation is an {@link Action} that directly manipulates the model representation on server side.
  *
  */
 public abstract class Operation extends Action {

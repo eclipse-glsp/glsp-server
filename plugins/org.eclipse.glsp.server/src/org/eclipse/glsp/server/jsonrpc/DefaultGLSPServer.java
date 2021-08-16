@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2020 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,25 +15,39 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.jsonrpc;
 
+import static org.eclipse.glsp.server.di.DefaultGLSPModule.CLIENT_ACTIONS;
 import static org.eclipse.glsp.server.utils.ServerMessageUtil.error;
 
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
+import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.ActionMessage;
+import org.eclipse.glsp.server.actions.ActionRegistry;
+import org.eclipse.glsp.server.diagram.DiagramConfigurationRegistry;
+import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.model.ModelStateProvider;
 import org.eclipse.glsp.server.protocol.ClientSessionManager;
+import org.eclipse.glsp.server.protocol.DisposeClientSessionParameters;
+import org.eclipse.glsp.server.protocol.GLSPClient;
+import org.eclipse.glsp.server.protocol.GLSPServer;
 import org.eclipse.glsp.server.protocol.GLSPServerException;
+import org.eclipse.glsp.server.protocol.InitializeClientSessionParameters;
 import org.eclipse.glsp.server.protocol.InitializeParameters;
+import org.eclipse.glsp.server.protocol.InitializeResult;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 
-public class DefaultGLSPServer<T> implements GLSPJsonrpcServer {
-   private static Logger log = Logger.getLogger(DefaultGLSPServer.class);
+public class DefaultGLSPServer implements GLSPServer {
+   private static Logger LOG = Logger.getLogger(DefaultGLSPServer.class);
+   public static final String PROTOCOL_VERSION = "0.9.0";
 
    @Inject
    protected ModelStateProvider modelStateProvider;
@@ -44,46 +58,101 @@ public class DefaultGLSPServer<T> implements GLSPJsonrpcServer {
    @Inject
    protected ActionDispatcher actionDispatcher;
 
-   protected GLSPJsonrpcClient clientProxy;
-   protected final Class<T> optionsClazz;
-   protected CompletableFuture<Boolean> initialized;
+   @Inject
+   protected ActionRegistry actionRegistry;
+
+   @Inject
+   protected DiagramConfigurationRegistry diagramConfigurationRegistry;
+
+   @Inject
+   @Named(CLIENT_ACTIONS)
+   protected Set<Action> clientActions;
+
+   protected GLSPClient clientProxy;
+   protected CompletableFuture<InitializeResult> initialized;
 
    protected String applicationId;
 
-   public DefaultGLSPServer() {
-      this(null);
-   }
+   // TODO: Temporary needed before DI rework, remove in actual PR
+   private final Set<String> clientSessions = new HashSet<>();
 
-   public DefaultGLSPServer(final Class<T> optionsClazz) {
-      this.optionsClazz = optionsClazz;
+   public DefaultGLSPServer() {
       this.initialized = new CompletableFuture<>();
    }
 
    @Override
    @SuppressWarnings("checkstyle:IllegalCatch")
-   public CompletableFuture<Boolean> initialize(final InitializeParameters params) {
-      try {
-         this.applicationId = params.getApplicationId();
-         if (optionsClazz != null && params.getOptions() instanceof JsonElement) {
-            T options = new Gson().fromJson((JsonElement) params.getOptions(), optionsClazz);
-            initialized = handleOptions(options);
-         } else {
-            initialized = handleOptions(null);
-         }
-         return initialized;
-      } catch (Throwable ex) {
-         log.error("Could not initialize server due to corrupted options: " + params.getOptions(), ex);
-         initialized.complete(false);
-         return initialized;
+   public CompletableFuture<InitializeResult> initialize(final InitializeParameters params) {
+      LOG.debug("Initializing server with the following params:\n" + params);
+      if (isInitialized()) {
+         throw new GLSPServerException("This GLSP server has already been initialized.");
       }
+
+      if (!params.getProtocolVersion().equals(PROTOCOL_VERSION)) {
+         throw new GLSPServerException(String.format(
+            "Protocol version mismatch! The client protocol version '%s' is not compatible with the server protocol version '%s'!",
+            params.getProtocolVersion(), PROTOCOL_VERSION));
+      }
+      this.applicationId = params.getApplicationId();
+
+      InitializeResult result = new InitializeResult(PROTOCOL_VERSION);
+      Set<String> serverActions = actionRegistry.keys();
+      serverActions.removeAll(clientActions.stream().map(Action::getKind).collect(Collectors.toList()));
+      diagramConfigurationRegistry.getAll().forEach(configuration -> {
+         result.addServerActions(configuration.getDiagramType(), serverActions);
+      });
+
+      initialized = handleIntializeArgs(result, params.getArgs());
+      return initialized;
    }
 
-   protected CompletableFuture<Boolean> handleOptions(final T options) {
-      return CompletableFuture.completedFuture(true);
+   protected CompletableFuture<InitializeResult> handleIntializeArgs(final InitializeResult result,
+      final Map<String, String> args) {
+      return CompletableFuture.completedFuture(result);
    }
 
    @Override
-   public void connect(final GLSPJsonrpcClient clientProxy) {
+   public CompletableFuture<Void> initializeClientSession(final InitializeClientSessionParameters params) {
+      LOG.debug("Initializing client session with the following params:\n" + params);
+
+      if (!isInitialized()) {
+         throw new GLSPServerException("This GLSP server has not been initialized.");
+      }
+
+      GModelState modelState = modelStateProvider.create(params.getClientSessionId());
+      if (sessionManager.createClientSession(clientProxy, params.getClientSessionId())) {
+         modelState.setClientId(params.getClientSessionId());
+         clientSessions.add(params.getClientSessionId());
+         return handleInitializeClientSessionArgs(params.getArgs());
+      }
+      throw new GLSPServerException(String.format("Could not initialize new session for client id '%s'. "
+         + "Another session with the same id already exists", params.getClientSessionId()));
+   }
+
+   protected CompletableFuture<Void> handleInitializeClientSessionArgs(final Map<String, String> args) {
+      return CompletableFuture.completedFuture(null);
+   }
+
+   @Override
+   public CompletableFuture<Void> disposeClientSession(final DisposeClientSessionParameters params) {
+      LOG.debug("Dispose client session with the following params:\n" + params);
+      if (!isInitialized()) {
+         throw new GLSPServerException("This GLSP server has not been initialized.");
+      }
+      if (clientSessions.contains(params.getClientSessionId())) {
+         sessionManager.disposeClientSession(clientProxy, params.getClientSessionId());
+         clientSessions.remove(params.getClientSessionId());
+         return handleDisposeClientSessionArgs(params.getArgs());
+      }
+      return CompletableFuture.completedFuture(null);
+   }
+
+   protected CompletableFuture<Void> handleDisposeClientSessionArgs(final Map<String, String> args) {
+      return CompletableFuture.completedFuture(null);
+   }
+
+   @Override
+   public void connect(final GLSPClient clientProxy) {
       this.clientProxy = clientProxy;
       if (clientProxy != null) {
          this.sessionManager.connectClient(clientProxy);
@@ -93,40 +162,41 @@ public class DefaultGLSPServer<T> implements GLSPJsonrpcServer {
    @Override
    @SuppressWarnings("checkstyle:IllegalCatch")
    public void process(final ActionMessage message) {
-      log.debug("process " + message);
+      if (!isInitialized()) {
+         throw new GLSPServerException("This GLSP server has not been initialized.");
+      }
+      LOG.debug("process " + message);
       String clientId = message.getClientId();
+      if (!clientSessions.contains(clientId)) {
+         throw new GLSPServerException("No client session has beend initialized for client id: " + clientId);
+      }
 
       Function<Throwable, Void> errorHandler = ex -> {
          String errorMsg = "Could not process message:" + message;
-         log.error("[ERROR] " + errorMsg, ex);
+         LOG.error("[ERROR] " + errorMsg, ex);
          getClient().process(new ActionMessage(clientId, error("[GLSP-Server] " + errorMsg, ex)));
          return null;
       };
+
       try {
-         if (!isInitialized()) {
-            throw new GLSPServerException(
-               String.format("Could not process action message '%s'. The server has not been initalized yet", message));
-         }
          actionDispatcher.dispatch(message).exceptionally(errorHandler);
       } catch (RuntimeException e) {
          errorHandler.apply(e);
       }
    }
 
-   public boolean isInitialized() { return initialized.getNow(false); }
+   public boolean isInitialized() { return initialized.isDone(); }
 
    @Override
-   public CompletableFuture<Boolean> shutdown() {
-      boolean completed = false;
+   public void shutdown() {
       if (this.clientProxy != null) {
-         completed = sessionManager.disconnectClient(this.clientProxy);
+         sessionManager.disconnectClient(this.clientProxy);
          this.clientProxy = null;
       }
-      return CompletableFuture.completedFuture(completed);
    }
 
    public String getApplicationId() { return applicationId; }
 
    @Override
-   public GLSPJsonrpcClient getClient() { return this.clientProxy; }
+   public GLSPClient getClient() { return this.clientProxy; }
 }

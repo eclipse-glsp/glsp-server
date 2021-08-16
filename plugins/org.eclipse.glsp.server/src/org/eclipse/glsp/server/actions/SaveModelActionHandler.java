@@ -80,6 +80,6 @@ public class SaveModelActionHandler extends BasicActionHandler<SaveModelAction> 
          return ClientOptions.getAsFile(action.getFileUri().get());
       }
       return getOrThrow(ClientOptions.getSourceUriAsFile(modelState.getClientOptions()),
-         "Invalid file URI:" + ClientOptions.getValue(modelState.getClientOptions(), ClientOptions.SOURCE_URI));
+         "Invalid file URI:" + ClientOptions.getSourceUri(modelState.getClientOptions()));
    }
 }

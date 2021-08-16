@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2020 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -34,7 +34,6 @@ import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.actions.ActionHandlerRegistry;
 import org.eclipse.glsp.server.actions.ActionMessage;
-import org.eclipse.glsp.server.actions.InitializeClientSessionAction;
 import org.eclipse.glsp.server.actions.ResponseAction;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.model.ModelStateProvider;
@@ -200,14 +199,10 @@ public class DefaultActionDispatcher implements ActionDispatcher, ClientSessionL
       Optional<GModelState> modelState = modelStateProvider.getModelState(clientId);
 
       if (!modelState.isPresent()) {
-         if (action instanceof InitializeClientSessionAction) {
-            modelState = Optional.of(modelStateProvider.create(clientId));
-         } else {
-            String errorMsg = String.format(
-               "The session for client '%s' has not been initialized yet. Could not process action: %s", clientId,
-               action);
-            throw new GLSPServerException(errorMsg);
-         }
+         String errorMsg = String.format(
+            "The session for client '%s' has not been initialized yet. Could not process action: %s", clientId,
+            action);
+         throw new GLSPServerException(errorMsg);
       }
 
       List<CompletableFuture<Void>> results = new ArrayList<>();

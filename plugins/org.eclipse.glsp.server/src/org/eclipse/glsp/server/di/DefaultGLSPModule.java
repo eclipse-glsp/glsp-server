@@ -15,8 +15,6 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.di;
 
-import static org.eclipse.glsp.server.actions.ClientActionHandler.CLIENT_ACTIONS;
-
 import java.util.function.Consumer;
 
 import org.eclipse.glsp.server.actions.Action;
@@ -57,6 +55,7 @@ import org.eclipse.glsp.server.protocol.GLSPServer;
 import org.eclipse.glsp.server.utils.MultiBinding;
 
 public abstract class DefaultGLSPModule extends GLSPModule {
+   public static final String CLIENT_ACTIONS = "ClientActionHandler";
 
    @Override
    public void configure() {
@@ -115,7 +114,6 @@ public abstract class DefaultGLSPModule extends GLSPModule {
    protected void configureNavigationTargetProviders(final MultiBinding<NavigationTargetProvider> binding) {}
 
    @Override
-   @SuppressWarnings("rawtypes")
    protected Class<? extends GLSPServer> bindGLSPServer() {
       return DefaultGLSPServer.class;
    }

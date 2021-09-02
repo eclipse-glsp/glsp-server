@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,9 +15,9 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operations.gmodel;
 
-import org.eclipse.glsp.server.diagram.DiagramConfigurationRegistry;
+import org.eclipse.glsp.server.diagram.DiagramConfiguration;
 import org.eclipse.glsp.server.features.core.model.ModelSubmissionHandler;
-import org.eclipse.glsp.server.layout.ILayoutEngine;
+import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.layout.ServerLayoutKind;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.BasicOperationHandler;
@@ -27,15 +27,15 @@ import com.google.inject.Inject;
 
 public class LayoutOperationHandler extends BasicOperationHandler<LayoutOperation> {
    @Inject
-   protected ILayoutEngine layoutEngine;
+   protected LayoutEngine layoutEngine;
    @Inject
    protected ModelSubmissionHandler modelSubmissionHandler;
    @Inject
-   protected DiagramConfigurationRegistry diagramConfigurationRegistry;
+   protected DiagramConfiguration diagramConfiguration;
 
    @Override
    protected void executeOperation(final LayoutOperation action, final GModelState modelState) {
-      if (diagramConfigurationRegistry.get(modelState).getLayoutKind() == ServerLayoutKind.MANUAL) {
+      if (diagramConfiguration.getLayoutKind() == ServerLayoutKind.MANUAL) {
          if (layoutEngine != null) {
             layoutEngine.layout(modelState);
          }

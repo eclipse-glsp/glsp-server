@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -18,6 +18,11 @@ package org.eclipse.glsp.server.disposable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Helper class to collect multiple {@link IDisposable}s and dispose them
+ * all at once.
+ *
+ */
 public class DisposableCollection extends Disposable {
    private final List<IDisposable> disposables = new ArrayList<>();
 

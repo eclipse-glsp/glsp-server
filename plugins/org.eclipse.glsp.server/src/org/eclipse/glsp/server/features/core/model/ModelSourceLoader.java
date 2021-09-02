@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -16,7 +16,7 @@
 package org.eclipse.glsp.server.features.core.model;
 
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.utils.ClientOptions;
+import org.eclipse.glsp.server.utils.ClientOptionsUtil;
 
 /**
  * A source model loader loads models into the model state.
@@ -29,7 +29,7 @@ import org.eclipse.glsp.server.utils.ClientOptions;
  * into a graph model (see {@link GModelFactory}).
  * </p>
  *
- * @see ClientOptions
+ * @see ClientOptionsUtil
  * @see GModelFactory
  */
 public interface ModelSourceLoader {

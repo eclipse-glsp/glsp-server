@@ -23,13 +23,4 @@ public interface LabelEditValidator {
    String CONTEXT_ID = "label-edit";
 
    ValidationStatus validate(GModelState modelState, String label, GModelElement element);
-
-   final class NullImpl implements LabelEditValidator {
-      @Override
-      public ValidationStatus validate(final GModelState modelState, final String label,
-         final GModelElement element) {
-         return ValidationStatus.ok();
-      }
-   }
-
 }

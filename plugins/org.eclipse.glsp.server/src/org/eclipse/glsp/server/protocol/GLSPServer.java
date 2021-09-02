@@ -102,4 +102,8 @@ public interface GLSPServer {
     */
    GLSPClient getClient();
 
+   boolean addListener(ServerConnectionListener listener);
+
+   boolean remove(ServerConnectionListener listener);
+
 }

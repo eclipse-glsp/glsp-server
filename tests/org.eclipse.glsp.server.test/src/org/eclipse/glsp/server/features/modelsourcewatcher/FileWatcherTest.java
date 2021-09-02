@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -24,21 +24,24 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
+import org.eclipse.glsp.server.disposable.Disposable;
+import org.eclipse.glsp.server.model.DefaultGModelState;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.model.GModelStateImpl;
-import org.eclipse.glsp.server.protocol.ClientSessionListener;
-import org.eclipse.glsp.server.protocol.ClientSessionManager;
-import org.eclipse.glsp.server.protocol.GLSPClient;
-import org.eclipse.glsp.server.utils.ClientOptions;
+import org.eclipse.glsp.server.session.ClientSession;
+import org.eclipse.glsp.server.session.ClientSessionListener;
+import org.eclipse.glsp.server.session.ClientSessionManager;
+import org.eclipse.glsp.server.utils.ClientOptionsUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -251,10 +254,10 @@ class FileWatcherTest {
    }
 
    private GModelState modelState(final String clientId, final String sourceUri) {
-      final GModelStateImpl modelState = new GModelStateImpl();
+      final DefaultGModelState modelState = new DefaultGModelState();
       modelState.setClientId(clientId);
       Map<String, String> options = new HashMap<>();
-      options.put(ClientOptions.SOURCE_URI, sourceUri);
+      options.put(ClientOptionsUtil.SOURCE_URI, sourceUri);
       modelState.setClientOptions(options);
       return modelState;
    }
@@ -265,7 +268,7 @@ class FileWatcherTest {
    }
 
    @SuppressWarnings("checkstyle:VisibilityModifier")
-   class RecordingActionDispatcher implements ActionDispatcher {
+   class RecordingActionDispatcher extends Disposable implements ActionDispatcher {
       Map<String, List<Action>> dispatchedActions = new HashMap<>();
 
       @Override
@@ -281,27 +284,33 @@ class FileWatcherTest {
    class MockClientSessionManager implements ClientSessionManager {
 
       @Override
-      public boolean connectClient(final GLSPClient client) {
+      public void dispose() {}
+
+      @Override
+      public boolean isDisposed() { return false; }
+
+      @Override
+      public Optional<ClientSession> createClientSession(final String clientSessionId, final String diagramType) {
+         return Optional.empty();
+      }
+
+      @Override
+      public Optional<ClientSession> getSession(final String clientSessionId) {
+         return Optional.empty();
+      }
+
+      @Override
+      public List<ClientSession> getSessionsByType(final String diagramType) {
+         return Collections.emptyList();
+      }
+
+      @Override
+      public boolean disposeClientSession(final String clientSessionId) {
          return false;
       }
 
       @Override
-      public boolean createClientSession(final GLSPClient glspClient, final String clientId) {
-         return false;
-      }
-
-      @Override
-      public boolean disposeClientSession(final GLSPClient client, final String clientId) {
-         return false;
-      }
-
-      @Override
-      public boolean disconnectClient(final GLSPClient client) {
-         return false;
-      }
-
-      @Override
-      public boolean addListener(final ClientSessionListener listener) {
+      public boolean addListener(final ClientSessionListener listener, final String... clientSessionIds) {
          return false;
       }
 
@@ -309,6 +318,9 @@ class FileWatcherTest {
       public boolean removeListener(final ClientSessionListener listener) {
          return false;
       }
+
+      @Override
+      public void removeListeners(final String... clientSessionIds) {}
 
    }
 

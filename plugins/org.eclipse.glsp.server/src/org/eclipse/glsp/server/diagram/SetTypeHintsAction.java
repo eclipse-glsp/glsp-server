@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -18,6 +18,8 @@ package org.eclipse.glsp.server.diagram;
 import java.util.List;
 
 import org.eclipse.glsp.server.actions.Action;
+import org.eclipse.glsp.server.types.EdgeTypeHint;
+import org.eclipse.glsp.server.types.ShapeTypeHint;
 
 public class SetTypeHintsAction extends Action {
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,7 +15,7 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.utils;
 
-import static org.eclipse.glsp.server.protocol.GLSPServerException.getOrThrow;
+import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 import java.util.Optional;
 
@@ -40,8 +40,12 @@ public final class LayoutUtil {
 
    private LayoutUtil() {}
 
-   /*
-    * Apply the computed bounds from the given action to the model.
+   /**
+    * Apply the computed bounds from the given {@link ComputedBoundsAction} to the model.
+    *
+    * @param root       The model root.
+    * @param action     The computed bounds action.
+    * @param modelState The model state
     */
    public static void applyBounds(final GModelRoot root, final ComputedBoundsAction action,
       final GModelState modelState) {
@@ -69,6 +73,12 @@ public final class LayoutUtil {
       }
    }
 
+   /**
+    * Convert the given {@link GBounds} to a {@link GPoint}.
+    *
+    * @param bounds The bounds
+    * @return Converted point
+    */
    public static GPoint asPoint(final GBounds bounds) {
       GPoint point = GraphFactory.eINSTANCE.createGPoint();
       point.setX(bounds.getX());
@@ -76,6 +86,12 @@ public final class LayoutUtil {
       return point;
    }
 
+   /**
+    * Convert the given {@link GBounds} to {@link GDimension}.
+    *
+    * @param bounds The bounds
+    * @return Converted dimension
+    */
    public static GDimension asDimension(final GBounds bounds) {
       GDimension dimension = GraphFactory.eINSTANCE.createGDimension();
       dimension.setHeight(bounds.getHeight());
@@ -83,9 +99,11 @@ public final class LayoutUtil {
       return dimension;
    }
 
-   /*
-    * Copy the layout of one model instance to another. Model elements are matched
-    * by their id.
+   /**
+    * Copy the layout of one model instance to another. Model elements are matched by their id.
+    *
+    * @param fromRoot Source model from which the layout should be copied
+    * @param toRoot   Target model to which the layout should be copied
     */
    public static void copyLayoutData(final GModelRoot fromRoot, final GModelRoot toRoot) {
       GModelIndex oldIndex = GModelIndex.get(fromRoot);

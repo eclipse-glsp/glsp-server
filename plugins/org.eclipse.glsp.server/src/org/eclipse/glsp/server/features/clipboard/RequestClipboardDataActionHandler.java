@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -23,7 +23,7 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.BasicActionHandler;
-import org.eclipse.glsp.server.jsonrpc.GraphGsonConfiguratorFactory;
+import org.eclipse.glsp.server.gson.GraphGsonConfigurationFactory;
 import org.eclipse.glsp.server.model.GModelState;
 
 import com.google.gson.Gson;
@@ -36,8 +36,8 @@ public class RequestClipboardDataActionHandler extends BasicActionHandler<Reques
    protected final Gson gson;
 
    @Inject
-   public RequestClipboardDataActionHandler(final GraphGsonConfiguratorFactory gsonFactory) {
-      GsonBuilder builder = gsonFactory.configureGson();
+   public RequestClipboardDataActionHandler(final GraphGsonConfigurationFactory gsonConfigurator) {
+      GsonBuilder builder = gsonConfigurator.configureGson();
       gson = builder.create();
    }
 

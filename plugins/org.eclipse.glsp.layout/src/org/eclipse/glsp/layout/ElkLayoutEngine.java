@@ -1,6 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2018 TypeFox and others.
- * (c) 2019 EclipseSource (adaptation for GModel)
+ * (c) 2019-2021 EclipseSource (adaptation for GModel)
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -59,7 +59,7 @@ import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.GPort;
 import org.eclipse.glsp.graph.GraphFactory;
-import org.eclipse.glsp.server.layout.ILayoutEngine;
+import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.model.GModelState;
 
 import com.google.common.collect.Maps;
@@ -75,7 +75,7 @@ import com.google.common.collect.Maps;
  * algorithms that should be used by this layout engine.
  * </p>
  */
-public class ElkLayoutEngine implements ILayoutEngine {
+public class ElkLayoutEngine implements LayoutEngine {
 
    public static final IProperty<String> P_TYPE = new Property<>("org.eclipse.sprotty.layout.type");
 

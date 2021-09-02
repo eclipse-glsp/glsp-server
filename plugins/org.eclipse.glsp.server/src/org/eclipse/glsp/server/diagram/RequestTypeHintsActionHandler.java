@@ -16,44 +16,20 @@
 package org.eclipse.glsp.server.diagram;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.apache.log4j.Logger;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.BasicActionHandler;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.utils.ClientOptions;
 
 import com.google.inject.Inject;
 
 public class RequestTypeHintsActionHandler extends BasicActionHandler<RequestTypeHintsAction> {
-   private final Logger log = Logger.getLogger(RequestTypeHintsActionHandler.class);
    @Inject
-   protected DiagramConfigurationRegistry diagramConfigurationRegistry;
+   protected DiagramConfiguration diagramConfiguration;
 
    @Override
    public List<Action> executeAction(final RequestTypeHintsAction action, final GModelState modelState) {
-
-      Optional<String> diagramType = getDiagramType(action, modelState);
-      if (!diagramType.isPresent()) {
-         log.info("RequestTypeHintsAction failed: No diagram type is present");
-         return none();
-      }
-      Optional<DiagramConfiguration> configuration = diagramConfigurationRegistry.get(diagramType.get());
-      if (!configuration.isPresent()) {
-         log.info("RequestTypeHintsAction failed: No diagram confiuration found for : " + diagramType.get());
-         return none();
-      }
-
-      return listOf(new SetTypeHintsAction(configuration.get().getShapeTypeHints(),
-         configuration.get().getEdgeTypeHints()));
-
-   }
-
-   private Optional<String> getDiagramType(final RequestTypeHintsAction action, final GModelState modelState) {
-      if (action.getDiagramType() == null && !action.getDiagramType().isEmpty()) {
-         return Optional.of(action.getDiagramType());
-      }
-      return ClientOptions.getDiagramType(modelState.getClientOptions());
+      return listOf(new SetTypeHintsAction(diagramConfiguration.getShapeTypeHints(),
+         diagramConfiguration.getEdgeTypeHints()));
    }
 }

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019-2020 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -23,13 +23,4 @@ public interface LabelEditValidator {
    String CONTEXT_ID = "label-edit";
 
    ValidationStatus validate(GModelState modelState, String label, GModelElement element);
-
-   final class NullImpl implements LabelEditValidator {
-      @Override
-      public ValidationStatus validate(final GModelState modelState, final String label,
-         final GModelElement element) {
-         return ValidationStatus.ok();
-      }
-   }
-
 }

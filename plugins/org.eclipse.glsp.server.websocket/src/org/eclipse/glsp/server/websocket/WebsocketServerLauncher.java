@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -22,12 +22,14 @@ import javax.websocket.server.ServerContainer;
 import javax.websocket.server.ServerEndpointConfig;
 
 import org.apache.log4j.Logger;
-import org.eclipse.glsp.server.di.GLSPModule;
+import org.eclipse.glsp.server.di.ServerModule;
 import org.eclipse.glsp.server.launch.GLSPServerLauncher;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.eclipse.jetty.websocket.jsr356.server.deploy.WebSocketServerContainerInitializer;
+
+import com.google.inject.Module;
 
 public class WebsocketServerLauncher extends GLSPServerLauncher {
    private static Logger LOG = Logger.getLogger(WebsocketServerLauncher.class);
@@ -35,15 +37,11 @@ public class WebsocketServerLauncher extends GLSPServerLauncher {
    private String clientAppPath;
    private final String endpointPath;
 
-   public WebsocketServerLauncher(final GLSPModule module, final String endpointPath) {
-      super(module);
+   public WebsocketServerLauncher(final ServerModule serverModule, final String endpointPath,
+      final Module... additionalModules) {
+      super(serverModule, additionalModules);
       this.endpointPath = endpointPath.startsWith("/") ? endpointPath.substring(1) : endpointPath;
-      addAdditionalModules(new WebsocketModule());
-   }
 
-   public WebsocketServerLauncher(final GLSPModule module, final String endpointPath, final String clientAppPath) {
-      this(module, endpointPath);
-      this.clientAppPath = clientAppPath;
    }
 
    @Override

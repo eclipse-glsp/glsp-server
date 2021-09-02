@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.log4j.Logger;
 
@@ -37,12 +38,21 @@ public final class ReflectionUtil {
       }
    }
 
-   public static <T> List<? extends T> construct(final Collection<Class<? extends T>> classes) {
-      return classes.stream()
+   public static <T> Stream<? extends T> construct(final Stream<Class<? extends T>> classes) {
+      return classes
          .filter(clazz -> !Modifier.isAbstract(clazz.getModifiers()))
-         .map(ReflectionUtil::construct)
-         .filter(Optional::isPresent)
-         .map(Optional::get)
-         .collect(Collectors.toList());
+         .flatMap(clazz -> construct(clazz).stream());
+   }
+
+   public static <T> Stream<? extends T> construct(final Collection<Class<? extends T>> classes) {
+      return construct(classes.stream());
+   }
+
+   public static <T> List<? extends T> constructToList(final Stream<Class<? extends T>> classes) {
+      return construct(classes).collect(Collectors.toList());
+   }
+
+   public static <T> List<? extends T> constructToList(final Collection<Class<? extends T>> classes) {
+      return constructToList(classes.stream());
    }
 }

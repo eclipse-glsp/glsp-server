@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -24,21 +24,24 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
+import org.eclipse.glsp.server.disposable.Disposable;
+import org.eclipse.glsp.server.model.DefaultGModelState;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.model.GModelStateImpl;
-import org.eclipse.glsp.server.protocol.ClientSessionListener;
-import org.eclipse.glsp.server.protocol.ClientSessionManager;
-import org.eclipse.glsp.server.protocol.GLSPClient;
-import org.eclipse.glsp.server.utils.ClientOptions;
+import org.eclipse.glsp.server.session.ClientSession;
+import org.eclipse.glsp.server.session.ClientSessionListener;
+import org.eclipse.glsp.server.session.ClientSessionManager;
+import org.eclipse.glsp.server.utils.ClientOptionsUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -145,74 +148,6 @@ class FileWatcherTest {
       assertNotifications(clientId, 1);
    }
 
-   @Test
-   void changingWatchedFileNotifiesCorrectClient()
-      throws IOException, InterruptedException {
-      final String clientId1 = "1";
-      final String clientId2 = "2";
-      final File file1 = createFile("test1.txt");
-      final File file2 = createFile("test2.txt");
-      final GModelState modelState1 = modelState(clientId1, fileUri(file1));
-      final GModelState modelState2 = modelState(clientId2, fileUri(file2));
-
-      final FileWatcher fileWatcher = new FileWatcher(sessionManager, actionDispatcher);
-      fileWatcher.setDebounceDelay(0);
-      fileWatcher.startWatching(modelState1);
-      fileWatcher.startWatching(modelState2);
-      sleep();
-      // only watched by clientId1
-      changeFile(file1);
-      sleep();
-
-      // we only have a notification for clientId1
-      assertNotifications(clientId1, 1);
-      // and no notification for clientId2
-      assertNoNotification(clientId2);
-
-      sleep();
-      // only watched by clientId2
-      changeFile(file2);
-      sleep();
-
-      // now we have a notification for clientId2 too
-      assertNotifications(clientId2, 1);
-      // and still only one for clientId1
-      assertNotifications(clientId1, 1);
-
-      fileWatcher.stopWatching(modelState1);
-      fileWatcher.stopWatching(modelState2);
-   }
-
-   @Test
-   void changingWatchedFileNotifiesCorrectClientAlsoIfOtherClientIsPaused()
-      throws IOException, InterruptedException {
-      final String clientId1 = "1";
-      final String clientId2 = "2";
-      final File file1 = createFile("test1.txt");
-      final File file2 = createFile("test2.txt");
-      final GModelState modelState1 = modelState(clientId1, fileUri(file1));
-      final GModelState modelState2 = modelState(clientId2, fileUri(file2));
-
-      final FileWatcher fileWatcher = new FileWatcher(sessionManager, actionDispatcher);
-      fileWatcher.setDebounceDelay(0);
-      fileWatcher.startWatching(modelState1);
-      fileWatcher.startWatching(modelState2);
-      sleep();
-      fileWatcher.pauseWatching(modelState2);
-      sleep();
-      changeFile(file1);
-      changeFile(file2);
-      sleep();
-
-      // we only have a notification for clientId1
-      assertNotifications(clientId1, 1);
-      // and no notification for clientId2
-      assertNoNotification(clientId2);
-
-      fileWatcher.stopWatching(modelState1);
-      fileWatcher.stopWatching(modelState2);
-   }
-
    private void assertNoNotification(final String clientId) {
       if (actionDispatcher.dispatchedActions.get(clientId) != null) {
          assertEquals(actionDispatcher.dispatchedActions.get(clientId).size(), 0);
@@ -251,10 +186,10 @@ class FileWatcherTest {
    }
 
    private GModelState modelState(final String clientId, final String sourceUri) {
-      final GModelStateImpl modelState = new GModelStateImpl();
+      final DefaultGModelState modelState = new DefaultGModelState();
       modelState.setClientId(clientId);
       Map<String, String> options = new HashMap<>();
-      options.put(ClientOptions.SOURCE_URI, sourceUri);
+      options.put(ClientOptionsUtil.SOURCE_URI, sourceUri);
       modelState.setClientOptions(options);
       return modelState;
    }
@@ -265,7 +200,7 @@ class FileWatcherTest {
    }
 
    @SuppressWarnings("checkstyle:VisibilityModifier")
-   class RecordingActionDispatcher implements ActionDispatcher {
+   class RecordingActionDispatcher extends Disposable implements ActionDispatcher {
       Map<String, List<Action>> dispatchedActions = new HashMap<>();
 
       @Override
@@ -281,27 +216,33 @@ class FileWatcherTest {
    class MockClientSessionManager implements ClientSessionManager {
 
       @Override
-      public boolean connectClient(final GLSPClient client) {
+      public void dispose() {}
+
+      @Override
+      public boolean isDisposed() { return false; }
+
+      @Override
+      public Optional<ClientSession> createClientSession(final String clientSessionId, final String diagramType) {
+         return Optional.empty();
+      }
+
+      @Override
+      public Optional<ClientSession> getSession(final String clientSessionId) {
+         return Optional.empty();
+      }
+
+      @Override
+      public List<ClientSession> getSessionsByType(final String diagramType) {
+         return Collections.emptyList();
+      }
+
+      @Override
+      public boolean disposeClientSession(final String clientSessionId) {
          return false;
       }
 
       @Override
-      public boolean createClientSession(final GLSPClient glspClient, final String clientId) {
-         return false;
-      }
-
-      @Override
-      public boolean disposeClientSession(final GLSPClient client, final String clientId) {
-         return false;
-      }
-
-      @Override
-      public boolean disconnectClient(final GLSPClient client) {
-         return false;
-      }
-
-      @Override
-      public boolean addListener(final ClientSessionListener listener) {
+      public boolean addListener(final ClientSessionListener listener, final String... clientSessionIds) {
          return false;
       }
 
@@ -309,6 +250,9 @@ class FileWatcherTest {
       public boolean removeListener(final ClientSessionListener listener) {
          return false;
       }
+
+      @Override
+      public void removeListeners(final String... clientSessionIds) {}
 
    }
 

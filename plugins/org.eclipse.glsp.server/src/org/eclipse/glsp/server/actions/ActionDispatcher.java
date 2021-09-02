@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -19,7 +19,9 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
-public interface ActionDispatcher {
+import org.eclipse.glsp.server.disposable.IDisposable;
+
+public interface ActionDispatcher extends IDisposable {
 
    /**
     * @see ActionDispatcher#dispatch(String, Action)
@@ -55,13 +57,5 @@ public interface ActionDispatcher {
     */
    default List<CompletableFuture<Void>> dispatchAll(final String clientId, final List<Action> actions) {
       return actions.stream().map(action -> dispatch(clientId, action)).collect(Collectors.toList());
-   }
-
-   class NullImpl implements ActionDispatcher {
-
-      @Override
-      public CompletableFuture<Void> dispatch(final String clientId, final Action action) {
-         return CompletableFuture.completedFuture(null);
-      }
    }
 }

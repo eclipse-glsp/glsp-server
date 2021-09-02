@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -21,6 +21,7 @@ import org.eclipse.glsp.server.types.Severity;
 public class ServerStatusAction extends Action {
 
    public static final String ID = "serverStatus";
+   private int timeout;
 
    private String severity;
    private String message;
@@ -37,10 +38,21 @@ public class ServerStatusAction extends Action {
       this();
       this.severity = Severity.toString(severity);
       this.message = message;
+      this.timeout = NO_TIMEOUT;
+   }
+
+   public ServerStatusAction(final Severity severity, final String message, final int timeout) {
+      this(severity, message);
+      this.timeout = timeout;
    }
 
    public String getSeverity() { return severity; }
 
    public String getMessage() { return message; }
 
+   private static final int NO_TIMEOUT = -1;
+
+   public int getTimeout() { return timeout; }
+
+   public void setTimeout(final int timeout) { this.timeout = timeout; }
 }

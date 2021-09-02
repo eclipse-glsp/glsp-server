@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019-2020 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -21,7 +21,7 @@ import javax.websocket.CloseReason;
 import javax.websocket.EndpointConfig;
 import javax.websocket.Session;
 
-import org.eclipse.glsp.server.jsonrpc.GsonConfigurator;
+import org.eclipse.glsp.server.gson.ServerGsonConfigurator;
 import org.eclipse.glsp.server.protocol.GLSPClient;
 import org.eclipse.glsp.server.protocol.GLSPServer;
 import org.eclipse.lsp4j.jsonrpc.Launcher.Builder;
@@ -35,7 +35,7 @@ public class GLSPServerEndpoint extends WebSocketEndpoint<GLSPClient> {
    private GLSPServer glspServer;
 
    @Inject
-   private GsonConfigurator gsonConfigurator;
+   private ServerGsonConfigurator gsonConfigurator;
 
    @Override
    protected void configure(final Builder<GLSPClient> builder) {

@@ -16,7 +16,9 @@
 package org.eclipse.glsp.server.features.navigation;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.apache.log4j.Logger;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.BasicActionHandler;
 import org.eclipse.glsp.server.model.GModelState;
@@ -25,13 +27,20 @@ import com.google.inject.Inject;
 
 public class ResolveNavigationTargetActionHandler extends BasicActionHandler<ResolveNavigationTargetAction> {
 
+   private static final Logger LOG = Logger.getLogger(ResolveNavigationTargetActionHandler.class);
+
    @Inject
-   protected NavigationTargetResolver navigationTargetResolver;
+   protected Optional<NavigationTargetResolver> navigationTargetResolver;
 
    @Override
    public List<Action> executeAction(final ResolveNavigationTargetAction action, final GModelState modelState) {
+      if (navigationTargetResolver.isEmpty()) {
+         LOG.warn("Could not resolve navigation target. No implementation for: "
+            + NavigationTargetResolver.class.getName() + " has been bound.");
+         return none();
+      }
       NavigationTarget target = action.getNavigationTarget();
-      NavigationTargetResolution resolution = this.navigationTargetResolver.resolve(target, modelState);
+      NavigationTargetResolution resolution = this.navigationTargetResolver.get().resolve(target, modelState);
       return listOf(new SetResolvedNavigationTargetAction(resolution.getElementIds(), resolution.getArgs()));
    }
 }

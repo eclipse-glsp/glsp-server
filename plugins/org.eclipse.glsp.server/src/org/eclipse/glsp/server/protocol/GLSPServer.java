@@ -102,4 +102,22 @@ public interface GLSPServer {
     */
    GLSPClient getClient();
 
+   /**
+    * Register a new {@link ServerConnectionListener}.
+    *
+    * @param listener The listener that should be registered.
+    * @return 'true' if the listener was registered successfully, `false` otherwise (e.g. listener is already
+    *         registered).
+    */
+   boolean addListener(ServerConnectionListener listener);
+
+   /**
+    * Unregister a {@link ServerConnectionListener}.
+    *
+    * @param listener The listener that should be removed
+    * @return 'true' if the listener was unregistered successfully, `false` otherwise (e.g. listener is was not
+    *         registered in the first place).
+    */
+   boolean remove(ServerConnectionListener listener);
+
 }

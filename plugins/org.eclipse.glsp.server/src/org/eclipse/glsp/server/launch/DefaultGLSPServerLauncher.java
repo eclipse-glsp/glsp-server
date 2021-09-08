@@ -95,18 +95,15 @@ public class DefaultGLSPServerLauncher extends GLSPServerLauncher {
       return onShutdown;
    }
 
-   private void createClientConnection(final AsynchronousSocketChannel socketChannel) {
+   protected void createClientConnection(final AsynchronousSocketChannel socketChannel) {
       Injector injector = createInjector();
-      GsonConfigurator gsonConf = injector.getInstance(GsonConfigurator.class);
       try {
          InputStream in = Channels.newInputStream(socketChannel);
          OutputStream out = Channels.newOutputStream(socketChannel);
 
-         Consumer<GsonBuilder> configureGson = (final GsonBuilder builder) -> gsonConf.configureGsonBuilder(builder);
-         Function<MessageConsumer, MessageConsumer> wrapper = Function.identity();
          GLSPServer glspServer = injector.getInstance(GLSPServer.class);
          Launcher<GLSPClient> launcher = Launcher.createIoLauncher(glspServer, GLSPClient.class, in, out,
-            threadPool, wrapper, configureGson);
+            threadPool, messageWrapper(injector), configureGson(injector));
          glspServer.connect(launcher.getRemoteProxy());
          log.info("Starting GLSP server connection for client " + socketChannel.getRemoteAddress());
          launcher.startListening().get();
@@ -121,6 +118,15 @@ public class DefaultGLSPServerLauncher extends GLSPServerLauncher {
             log.error("Excpetion occured when trying to close socketChannel", e);
          }
       }
+   }
+
+   protected Consumer<GsonBuilder> configureGson(final Injector injector) {
+      GsonConfigurator gsonConf = injector.getInstance(GsonConfigurator.class);
+      return (final GsonBuilder builder) -> gsonConf.configureGsonBuilder(builder);
+   }
+
+   protected Function<MessageConsumer, MessageConsumer> messageWrapper(final Injector injector) {
+      return Function.identity();
    }
 
    @Override

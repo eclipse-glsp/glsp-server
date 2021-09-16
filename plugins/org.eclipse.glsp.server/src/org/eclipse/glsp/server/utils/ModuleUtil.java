@@ -23,7 +23,7 @@ public final class ModuleUtil {
    private ModuleUtil() {}
 
    /**
-    * Mixin additional modules into a base modules. Bindings that are already present in the base module will be
+    * Mix in additional modules into a base modules. Bindings that are already present in the base module will be
     * overwritten with the binding of the additional module.
     *
     * @param baseModule        the base module.
@@ -31,11 +31,9 @@ public final class ModuleUtil {
     * @return A merged (mixedin) module
     */
    public static Module mixin(Module baseModule, final Module... additionalModules) {
-
       for (Module additionalModule : additionalModules) {
          baseModule = Modules.override(baseModule).with(additionalModule);
       }
       return baseModule;
    }
-
 }

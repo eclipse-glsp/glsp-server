@@ -24,7 +24,7 @@ import com.google.inject.Scope;
 /**
  * A {@link Scope} implementation that is used in GLSP for sharing instances across multiple diagram injectors of the
  * same diagram type. A diagram injector is an injector with an installed {@link DiagramModule}. The
- * {@link DiagramGlobal} annotation is used to annotated bindings that should be made available to all injectors with
+ * {@link DiagramGlobalSingleton} annotation is used to annotated bindings that should be made available to all injectors with
  * the same diagram type as Singleton.
  *
  * Use this scope with care. If its used on classes that inject session specific values (e.g. the clientId) it can cause

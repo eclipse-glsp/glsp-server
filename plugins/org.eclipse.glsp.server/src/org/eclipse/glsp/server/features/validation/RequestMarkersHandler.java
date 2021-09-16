@@ -41,7 +41,7 @@ public class RequestMarkersHandler extends BasicActionHandler<RequestMarkersActi
    public List<Action> executeAction(final RequestMarkersAction action, final GModelState modelState) {
       List<String> elementsIDs = action.getElementsIDs();
       if (validator.isEmpty()) {
-         LOG.warn("Cannot compute markers no implementation for: " + ModelValidator.class + " has been bound");
+         LOG.warn("Cannot compute markers! No implementation for " + ModelValidator.class + " has been bound");
          return none();
       }
 

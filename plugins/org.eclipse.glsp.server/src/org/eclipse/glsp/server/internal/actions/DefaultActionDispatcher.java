@@ -59,6 +59,7 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
    @Inject
    protected ActionHandlerRegistry actionHandlerRegistry;
 
+   @Inject
    @ClientId
    protected String clientId;
 

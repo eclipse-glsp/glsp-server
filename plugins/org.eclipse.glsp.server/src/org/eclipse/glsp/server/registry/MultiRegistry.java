@@ -21,7 +21,7 @@ import java.util.Map;
 import org.eclipse.glsp.server.internal.registry.MapMultiRegistry;
 
 /**
- * Similar to {@link Registry} a multi registry is used to manage a set of key-value pairs. The main difference is that
+ * Multi registry used to manage a set of key-value pairs. The main difference to {@link Registry} is that
  * a multi registry doesn't enforce a 1-1 relation between key and value(s).
  * One key can be associated with multiple values. The default implementation uses a {@link Map} to manage the key value
  * pairs.

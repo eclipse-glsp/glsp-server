@@ -55,8 +55,6 @@ public class DefaultClientSession extends Disposable implements ClientSession {
    }
 
    @Override
-   public Injector getInjector() { // TODO Auto-generated method stub
-      return null;
-   }
+   public Injector getInjector() { return injector; }
 
 }

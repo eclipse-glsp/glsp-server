@@ -18,7 +18,6 @@ package org.eclipse.glsp.server.protocol;
 /**
  * A listener to track the connection status of {@link GLSPClient}s (i.e. client applications).
  * Gets notified when a new GLSP client connects or disconnects.
- *
  */
 public interface ServerConnectionListener {
 

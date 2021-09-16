@@ -28,7 +28,6 @@ import org.eclipse.glsp.server.types.ShapeTypeHint;
 /**
  * Provides configuration constants for a specific diagram implementation (i.e. diagram language),
  * The corresponding configuration for a diagram implementation is identified via its diagram type.
- *
  */
 public interface DiagramConfiguration {
 

@@ -86,7 +86,6 @@ public class DefaultDiagramGlobalScope implements DiagramGlobalScope {
          getInjector.setAccessible(true);
          Injector injector = (Injector) getInjector.invoke(unscoped);
          return Optional.of(injector);
-
       } catch (ReflectiveOperationException e) {
          return Optional.empty();
       }

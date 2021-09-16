@@ -45,7 +45,6 @@ public interface ClientSession extends IDisposable {
    String getDiagramType();
 
    /*
-    * +
     * Return the action dispatcher of this diagram type. The action dispatcher is typically created by the session
     * specific injector and is basically the entrypoint to the session specific injection context.
     * @return
@@ -54,8 +53,7 @@ public interface ClientSession extends IDisposable {
 
    /**
     * Retrieve the session specific {@link Injector}. Use this method with care. Normally it should not be necessary to
-    * construct
-    * additional instances using the session specific injector and this can cause unintended side effects.
+    * construct additional instances using the session specific injector and this can cause unintended side effects.
     *
     * @return The session specific injector.
     */

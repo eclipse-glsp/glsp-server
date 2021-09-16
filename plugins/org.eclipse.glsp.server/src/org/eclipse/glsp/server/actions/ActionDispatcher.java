@@ -39,7 +39,7 @@ public interface ActionDispatcher extends IDisposable {
     * Processes the given action, received from the specified clientId, by dispatching it to all registered handlers.
     * </p>
     *
-    * @param clientId The client from which the action was received
+    * @param action The action that should be dispatched.
     * @return
     *         A {@link CompletableFuture} indicating when the action processing is complete
     */

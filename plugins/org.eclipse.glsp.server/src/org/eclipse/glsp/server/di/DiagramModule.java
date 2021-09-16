@@ -36,8 +36,8 @@ import org.eclipse.glsp.server.actions.SetEditModeActionHandler;
 import org.eclipse.glsp.server.actions.SetViewportAction;
 import org.eclipse.glsp.server.actions.TriggerEdgeCreationAction;
 import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;
-import org.eclipse.glsp.server.di.scope.DiagramGlobal;
 import org.eclipse.glsp.server.di.scope.DiagramGlobalScope;
+import org.eclipse.glsp.server.di.scope.DiagramGlobalSingleton;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
 import org.eclipse.glsp.server.diagram.RequestTypeHintsActionHandler;
 import org.eclipse.glsp.server.diagram.ServerConfigurationContribution;
@@ -117,7 +117,7 @@ import com.google.inject.multibindings.Multibinder;
  * <ul>
  * <li>{@link String} annotated with @{@link DiagramType}
  * <li>{@link String} annotated with @{@link ClientId}
- * <li>{@link DiagramGlobal} bound as Scope
+ * <li>{@link DiagramGlobalSingleton} bound as Scope
  * <li>{@link DiagramConfiguration}
  * <li>{@link ServerConfigurationContribution}
  * <li>{@link GModelState}
@@ -163,7 +163,7 @@ public abstract class DiagramModule extends GLSPModule {
       bindClientId();
       bindDiagramGobalScope();
       // Configurations
-      bind(DiagramConfiguration.class).to(bindDiagramConfiguration()).in(DiagramGlobal.class);
+      bind(DiagramConfiguration.class).to(bindDiagramConfiguration()).in(DiagramGlobalSingleton.class);
       bind(ServerConfigurationContribution.class).to(bindServerConfigurationContribution()).in(Singleton.class);
       // Model-related bindings
       bind(GModelState.class).to(bindGModelState()).in(Singleton.class);
@@ -205,7 +205,6 @@ public abstract class DiagramModule extends GLSPModule {
       bindOptionally(PopupModelFactory.class, bindPopupModelFactory());
       bindOptionally(LayoutEngine.class, bindLayoutEngine());
       bindOptionally(GraphExtension.class, bindGraphExtension());
-
    }
 
    protected void bindDiagramType() {
@@ -217,7 +216,7 @@ public abstract class DiagramModule extends GLSPModule {
    }
 
    protected void bindDiagramGobalScope() {
-      bindScope(DiagramGlobal.class, new DiagramGlobalScope.NullImpl());
+      bindScope(DiagramGlobalSingleton.class, new DiagramGlobalScope.NullImpl());
    }
 
    protected abstract Class<? extends DiagramConfiguration> bindDiagramConfiguration();

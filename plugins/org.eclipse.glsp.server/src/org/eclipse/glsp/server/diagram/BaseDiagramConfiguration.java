@@ -26,7 +26,7 @@ import org.eclipse.glsp.server.di.DiagramType;
 import com.google.inject.Inject;
 
 /**
- * A base reusable implementation of {@link DiagramConfiguration} that used DI to provide
+ * A reusable base implementation of {@link DiagramConfiguration} that used DI to provide
  * the diagram type and the graph extension. In addition, default type mappings are configured.
  */
 public abstract class BaseDiagramConfiguration implements DiagramConfiguration {

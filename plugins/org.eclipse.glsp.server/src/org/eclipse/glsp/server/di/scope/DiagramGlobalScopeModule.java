@@ -38,6 +38,6 @@ public class DiagramGlobalScopeModule extends AbstractModule {
 
    @Override
    protected void configure() {
-      bindScope(DiagramGlobal.class, scope);
+      bindScope(DiagramGlobalSingleton.class, scope);
    }
 }

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2020 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -32,8 +32,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import org.apache.log4j.Logger;
-import org.eclipse.glsp.server.di.GLSPModule;
-import org.eclipse.glsp.server.jsonrpc.GsonConfigurator;
+import org.eclipse.glsp.server.di.ServerModule;
+import org.eclipse.glsp.server.gson.ServerGsonConfigurator;
 import org.eclipse.glsp.server.protocol.GLSPClient;
 import org.eclipse.glsp.server.protocol.GLSPServer;
 import org.eclipse.lsp4j.jsonrpc.Launcher;
@@ -41,17 +41,18 @@ import org.eclipse.lsp4j.jsonrpc.MessageConsumer;
 
 import com.google.gson.GsonBuilder;
 import com.google.inject.Injector;
+import com.google.inject.Module;
 
-public class DefaultGLSPServerLauncher extends GLSPServerLauncher {
+public class SocketGLSPServerLauncher extends GLSPServerLauncher {
    public static final String START_UP_COMPLETE_MSG = "[GLSP-Server]:Startup completed";
-   private static Logger log = Logger.getLogger(DefaultGLSPServerLauncher.class);
+   private static Logger log = Logger.getLogger(SocketGLSPServerLauncher.class);
 
    private ExecutorService threadPool;
    private AsynchronousServerSocketChannel serverSocket;
    private CompletableFuture<Void> onShutdown;
 
-   public DefaultGLSPServerLauncher(final GLSPModule glspModule) {
-      super(glspModule);
+   public SocketGLSPServerLauncher(final ServerModule serverModule, final Module... additionalModules) {
+      super(serverModule, additionalModules);
    }
 
    @Override
@@ -77,7 +78,7 @@ public class DefaultGLSPServerLauncher extends GLSPServerLauncher {
          @Override
          public void completed(final AsynchronousSocketChannel result, final Void attachment) {
             serverSocket.accept(null, this); // Prepare for the next connection
-            DefaultGLSPServerLauncher.this.createClientConnection(result);
+            SocketGLSPServerLauncher.this.createClientConnection(result);
          }
 
          @Override
@@ -121,7 +122,7 @@ public class DefaultGLSPServerLauncher extends GLSPServerLauncher {
    }
 
    protected Consumer<GsonBuilder> configureGson(final Injector injector) {
-      GsonConfigurator gsonConf = injector.getInstance(GsonConfigurator.class);
+      ServerGsonConfigurator gsonConf = injector.getInstance(ServerGsonConfigurator.class);
       return (final GsonBuilder builder) -> gsonConf.configureGsonBuilder(builder);
    }
 

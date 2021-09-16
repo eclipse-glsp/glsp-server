@@ -19,9 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Helper class to collect multiple {@link IDisposable}s and dispose them
- * all at once.
- *
+ * A collection of {@link IDisposable}s that can be disposed.
  */
 public class DisposableCollection extends Disposable {
    private final List<IDisposable> disposables = new ArrayList<>();

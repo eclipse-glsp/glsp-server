@@ -23,8 +23,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
 
 /**
- * Is used to configure the {@link Gson} object used by lsp4J for (de)serialization of json-rpc messages. The server
- * gson configurator configures a given {@link GsonBuilder} to be able do properly handle {@link Action}
+ * Configurator of the {@link Gson} object used by LSP4J for (de)serialization of json-rpc messages. The server
+ * gson configurator configures a given {@link GsonBuilder} to be able to properly handle {@link Action}
  * objects and {@link GModelElement}s.
  */
 public interface ServerGsonConfigurator {

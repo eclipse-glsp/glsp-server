@@ -44,12 +44,12 @@ import com.google.inject.name.Names;
  * The server module is the central configuration artifact for configuring the server injector (i.e. main injector). For
  * each application connecting to the server process a new server injector is created. The server module provides the
  * base bindings necessary for setting up the base {@link GLSPServer} infrastructure. In addition, it is used to
- * configure the set of {@link DiagramModule}s. Diagram modules are used to create the diagram session specific child
+ * configure the set of {@link DiagramModule}s. Diagram modules are used to create the diagram-session-specific child
  * injector when the
  * {@link GLSPServer#initializeClientSession(org.eclipse.glsp.server.protocol.InitializeClientSessionParameters)}
  * method is called.
  *
- * All bindings inside of the {@link ServerModule#configure()} method are encapsulated into submethods which makes it
+ * All bindings inside of the {@link ServerModule#configure()} method are delegated to separate methods which makes it
  * easy to override a specific binding in subclasses.
  *
  * p>The following bindings are provided:
@@ -71,7 +71,7 @@ public class ServerModule extends GLSPModule {
 
    /**
     * Configure a new {@link DiagramModule} for this server. A diagram module represents the base configuration artifact
-    * for configuring a diagram-language specific client session injector. The diagram type provided
+    * for configuring a diagram-language-specific client session injector. The diagram type provided
     * {@link DiagramModule#getDiagramType()} is used to retrieve the correct diagram module when the {@link GLSPServer}
     * initialises a new client session.
     * The given diagram module and all (optional) additional modules will be combined to one merged module. If bindings

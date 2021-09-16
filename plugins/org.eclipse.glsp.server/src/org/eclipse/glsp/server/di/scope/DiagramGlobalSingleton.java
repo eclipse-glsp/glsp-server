@@ -26,7 +26,7 @@ import com.google.inject.ScopeAnnotation;
 
 /**
  *
- * Custom scope annotation that is used to declare bindings as diagram global. Diagram global means that one instance of
+ * Scope annotation to declare bindings as diagram global singleton. Diagram global singleton means that one instance of
  * this class is shared across all related injectors of the same diagram type. This is used to declare diagram type
  * specific singletons across all diagram session injectors (i.e. child injectors) of one GLSP server (injector).
  *
@@ -34,4 +34,4 @@ import com.google.inject.ScopeAnnotation;
 @Target({ TYPE, METHOD })
 @Retention(RUNTIME)
 @ScopeAnnotation
-public @interface DiagramGlobal {}
+public @interface DiagramGlobalSingleton {}

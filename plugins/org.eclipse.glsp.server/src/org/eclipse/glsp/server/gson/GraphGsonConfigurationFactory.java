@@ -22,10 +22,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
 
 /**
- * This factory is used in client session specific injectors to create
+ * A factory used in the client-session-specific injectors to create
  * {@link GsonBuilder}s that can properly (de)serialize all graph elements (i.e. {@link GModelElement}s
  * that are used in the diagram model.
- *
  */
 public interface GraphGsonConfigurationFactory {
 

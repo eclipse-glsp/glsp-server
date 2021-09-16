@@ -33,6 +33,7 @@ import com.google.inject.Inject;
 
 public final class DefaultClientSessionManager extends Disposable implements ClientSessionManager {
    private static final String ALL_CLIENT_IDS_KEY = "*";
+
    @Inject()
    protected ClientSessionFactory sessionFactory;
 

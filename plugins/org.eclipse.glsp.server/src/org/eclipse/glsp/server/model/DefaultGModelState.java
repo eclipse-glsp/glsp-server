@@ -29,7 +29,7 @@ import com.google.inject.Inject;
 
 public class DefaultGModelState implements GModelState {
 
-   @Inject()
+   @Inject
    @ClientId
    protected String clientId;
 

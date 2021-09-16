@@ -22,7 +22,6 @@ import org.eclipse.glsp.server.disposable.IDisposable;
 
 /**
  * The central component that manages the lifecycle of client sessions.
- *
  */
 public interface ClientSessionManager extends IDisposable {
 

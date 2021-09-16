@@ -35,6 +35,7 @@ public final class ModelTypes {
    public static final String CATEGORY = "category";
    public static final String STRUCTURE = "struct";
 
+   @SuppressWarnings("checkstyle:CyclomaticComplexity")
    public static String toNodeType(final String type) {
       switch (type) {
          case DECISION_NODE:
@@ -52,8 +53,7 @@ public final class ModelTypes {
          case CATEGORY:
             return "category";
          default:
-            break;
+            return "unknown";
       }
-      return "unknown";
    }
 }

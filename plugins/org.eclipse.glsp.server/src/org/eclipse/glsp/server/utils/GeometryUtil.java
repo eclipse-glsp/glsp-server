@@ -22,15 +22,19 @@ import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;
 
 /**
- * Utility class for geometry-related operations
+ * Utility class for geometry-related operations.
  */
-public class GeometryUtil {
+public final class GeometryUtil {
+
+   private GeometryUtil() {
+      // No instances
+   }
 
    /**
     * Convert a point in absolute coordinates to a point relative to the specified GBoundsAware.
     * Note: this method only works if the specified {@link GBoundsAware} is part of a
     * hierarchy of {@link GBoundsAware}. If any of its parents (recursively) does not implement
-    * {@link GBoundsAware}, this method will throw an exception
+    * {@link GBoundsAware}, this method will throw an exception.
     *
     * @param absolutePoint
     * @param modelElement

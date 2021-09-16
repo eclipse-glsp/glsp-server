@@ -60,6 +60,7 @@ public abstract class CreateNodeOperationHandler extends BasicCreateOperationHan
     * @param operation
     * @param modelState
     * @return
+    *         the GModelElement that will contain the newly created node.
     */
    protected Optional<GModelElement> getContainer(final CreateNodeOperation operation, final GModelState modelState) {
       GModelIndex index = modelState.getIndex();
@@ -67,10 +68,11 @@ public abstract class CreateNodeOperationHandler extends BasicCreateOperationHan
    }
 
    /**
-    * Return the absolute location where the element should be created
+    * Return the absolute location where the element should be created.
     *
     * @param operation
     * @return
+    *         the absolute location where the element should be created.
     */
    protected Optional<GPoint> getLocation(final CreateNodeOperation operation) {
       return operation.getLocation();
@@ -113,10 +115,11 @@ public abstract class CreateNodeOperationHandler extends BasicCreateOperationHan
     * Create and return the new Node at the specified (optional) location. The location
     * is given in coordinates relative to the {@link #getContainer(CreateNodeOperation, GModelState) container}.
     *
-    * @param absoluteLocation
+    * @param relativeLocation
     * @param args
     * @param modelState
     * @return
+    *         The created {@link GNode Node}.
     */
    protected abstract GNode createNode(Optional<GPoint> relativeLocation, Map<String, String> args,
       GModelState modelState);

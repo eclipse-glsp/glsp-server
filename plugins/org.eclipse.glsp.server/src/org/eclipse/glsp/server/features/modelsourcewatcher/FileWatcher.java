@@ -131,8 +131,7 @@ public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
    }
 
    protected void notifyClient(final ClientNotification clientNotification) {
-      actionDispatcher.dispatch(clientNotification.clientId,
-         new ModelSourceChangedAction(clientNotification.modelSourceName));
+      actionDispatcher.dispatch(new ModelSourceChangedAction(clientNotification.modelSourceName));
    }
 
    class FileWatchWorker extends Thread {

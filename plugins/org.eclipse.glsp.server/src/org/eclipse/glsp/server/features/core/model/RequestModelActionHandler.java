@@ -56,13 +56,13 @@ public class RequestModelActionHandler extends BasicActionHandler<RequestModelAc
    }
 
    protected void notifyStartLoading(final GModelState modelState) {
-      actionDispatcher.dispatch(modelState.getClientId(), ServerStatusUtil.info("Model loading in progress!"));
-      actionDispatcher.dispatch(modelState.getClientId(), ServerMessageUtil.info("Model loading in progress!"));
+      actionDispatcher.dispatch(ServerStatusUtil.info("Model loading in progress!"));
+      actionDispatcher.dispatch(ServerMessageUtil.info("Model loading in progress!"));
    }
 
    protected void notifyFinishedLoading(final GModelState modelState) {
-      actionDispatcher.dispatch(modelState.getClientId(), ServerStatusUtil.clear());
-      actionDispatcher.dispatch(modelState.getClientId(), ServerMessageUtil.clear());
+      actionDispatcher.dispatch(ServerStatusUtil.clear());
+      actionDispatcher.dispatch(ServerMessageUtil.clear());
    }
 
 }

@@ -24,14 +24,14 @@ import org.eclipse.glsp.server.disposable.IDisposable;
 public interface ActionDispatcher extends IDisposable {
 
    /**
-    * @see ActionDispatcher#dispatch(String, Action)
+    * @see ActionDispatcher#dispatch(Action)
     *
     * @param message ActionMessage received from the client
     * @return
     *         A {@link CompletableFuture} indicating when the action processing is complete
     */
    default CompletableFuture<Void> dispatch(final ActionMessage message) {
-      return dispatch(message.getClientId(), message.getAction());
+      return dispatch(message.getAction());
    }
 
    /**
@@ -40,22 +40,20 @@ public interface ActionDispatcher extends IDisposable {
     * </p>
     *
     * @param clientId The client from which the action was received
-    * @param action   The action to dispatch
     * @return
     *         A {@link CompletableFuture} indicating when the action processing is complete
     */
-   CompletableFuture<Void> dispatch(String clientId, Action action);
+   CompletableFuture<Void> dispatch(Action action);
 
    /**
     * <p>
     * Processes all given actions, received from the specified clientId, by dispatching to the corresponding handlers.
     * </p>
     *
-    * @param clientId
-    * @param actions
+    * @param actions Actions to dispatch
     * @return A list of {@link CompletableFuture CompletableFutures}; one for each dispatched action
     */
-   default List<CompletableFuture<Void>> dispatchAll(final String clientId, final List<Action> actions) {
-      return actions.stream().map(action -> dispatch(clientId, action)).collect(Collectors.toList());
+   default List<CompletableFuture<Void>> dispatchAll(final List<Action> actions) {
+      return actions.stream().map(action -> dispatch(action)).collect(Collectors.toList());
    }
 }

@@ -59,7 +59,6 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
    @Inject
    protected ActionHandlerRegistry actionHandlerRegistry;
 
-   @Inject
    @ClientId
    protected String clientId;
 
@@ -90,7 +89,7 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
    }
 
    @Override
-   public CompletableFuture<Void> dispatch(final String clientId, final Action action) {
+   public CompletableFuture<Void> dispatch(final Action action) {
       return dispatch(new ActionMessage(clientId, action));
    }
 
@@ -166,14 +165,13 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
    protected void handleMessage(final ActionMessage message) {
       checkThread();
       final Action action = message.getAction();
-      final String clientId = message.getClientId();
       if (action == null) {
          LOG.warn(String.format("Received an action message without an action for client %s", clientId));
          return;
       }
 
       try {
-         List<CompletableFuture<Void>> results = runAction(action, clientId);
+         List<CompletableFuture<Void>> results = runAction(action);
          CompletableFuture<Void> result = FutureUtil.aggregateResults(results);
          result.thenAccept(any -> {
             this.results.remove(message).complete(null);
@@ -186,7 +184,7 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
       }
    }
 
-   protected List<CompletableFuture<Void>> runAction(final Action action, final String clientId) {
+   protected List<CompletableFuture<Void>> runAction(final Action action) {
       final List<ActionHandler> actionHandlers = actionHandlerRegistry.get(action);
       if (actionHandlers.isEmpty()) {
          throw new IllegalArgumentException("No handler registered for action: " + action);
@@ -197,7 +195,7 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
          final List<Action> responses = actionHandler.execute(action, modelState).stream()
             .map(response -> ResponseAction.respond(action, response))
             .collect(Collectors.toList());
-         results.addAll(dispatchAll(clientId, responses));
+         results.addAll(dispatchAll(responses));
       }
       return results;
    }

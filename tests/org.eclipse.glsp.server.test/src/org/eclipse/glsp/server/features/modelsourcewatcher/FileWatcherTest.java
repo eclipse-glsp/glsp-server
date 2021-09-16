@@ -73,9 +73,8 @@ class FileWatcherTest {
    @Test
    void changingWatchedFileNotifiesClient()
       throws IOException, InterruptedException {
-      final String clientId = "1";
       final File file = createFile("test.txt");
-      final GModelState modelState = modelState(clientId, fileUri(file));
+      final GModelState modelState = modelState("1", fileUri(file));
 
       final FileWatcher fileWatcher = new FileWatcher(sessionManager, actionDispatcher);
       fileWatcher.setDebounceDelay(0);
@@ -85,15 +84,14 @@ class FileWatcherTest {
       sleep();
       fileWatcher.stopWatching(modelState);
 
-      assertNotifications(clientId, 1);
+      assertNotifications(1);
    }
 
    @Test
    void deletingWatchedFileNotifiesClient()
       throws IOException, InterruptedException {
-      final String clientId = "1";
       final File file = createFile("test.txt");
-      final GModelState modelState = modelState(clientId, fileUri(file));
+      final GModelState modelState = modelState("1", fileUri(file));
 
       final FileWatcher fileWatcher = new FileWatcher(sessionManager, actionDispatcher);
       fileWatcher.setDebounceDelay(0);
@@ -103,15 +101,14 @@ class FileWatcherTest {
       sleep();
       fileWatcher.stopWatching(modelState);
 
-      assertNotifications(clientId, 1);
+      assertNotifications(1);
    }
 
    @Test
    void changingWatchedFileWhilePausedDoesntNotifyClient()
       throws IOException, InterruptedException {
-      final String clientId = "1";
       final File file = createFile("test.txt");
-      final GModelState modelState = modelState(clientId, fileUri(file));
+      final GModelState modelState = modelState("1", fileUri(file));
 
       final FileWatcher fileWatcher = new FileWatcher(sessionManager, actionDispatcher);
       fileWatcher.setDebounceDelay(0);
@@ -123,15 +120,14 @@ class FileWatcherTest {
       sleep();
       fileWatcher.stopWatching(modelState);
 
-      assertNoNotification(clientId);
+      assertNoNotification();
    }
 
    @Test
    void changingWatchedFileAfterPauseAndContinueNotifiesClient()
       throws IOException, InterruptedException {
-      final String clientId = "1";
       final File file = createFile("test.txt");
-      final GModelState modelState = modelState(clientId, fileUri(file));
+      final GModelState modelState = modelState("1", fileUri(file));
 
       final FileWatcher fileWatcher = new FileWatcher(sessionManager, actionDispatcher);
       fileWatcher.setDebounceDelay(0);
@@ -145,20 +141,17 @@ class FileWatcherTest {
       sleep();
       fileWatcher.stopWatching(modelState);
 
-      assertNotifications(clientId, 1);
+      assertNotifications(1);
    }
 
-   private void assertNoNotification(final String clientId) {
-      if (actionDispatcher.dispatchedActions.get(clientId) != null) {
-         assertEquals(actionDispatcher.dispatchedActions.get(clientId).size(), 0);
-      }
+   private void assertNoNotification() {
+      assertEquals(actionDispatcher.dispatchedActions.size(), 0);
    }
 
-   private void assertNotifications(final String clientId, final int size) throws InterruptedException {
-      final List<Action> actionsDispatchedToClient1 = actionDispatcher.dispatchedActions.get(clientId);
-      assertEquals(actionsDispatchedToClient1.size(), size);
+   private void assertNotifications(final int size) throws InterruptedException {
+      assertEquals(actionDispatcher.dispatchedActions.size(), size);
       for (int i = 0; i < size; i++) {
-         assertTrue(actionsDispatchedToClient1.get(i) instanceof ModelSourceChangedAction);
+         assertTrue(actionDispatcher.dispatchedActions.get(i) instanceof ModelSourceChangedAction);
       }
    }
 
@@ -201,14 +194,11 @@ class FileWatcherTest {
 
    @SuppressWarnings("checkstyle:VisibilityModifier")
    class RecordingActionDispatcher extends Disposable implements ActionDispatcher {
-      Map<String, List<Action>> dispatchedActions = new HashMap<>();
+      List<Action> dispatchedActions = new ArrayList<>();
 
       @Override
-      public CompletableFuture<Void> dispatch(final String clientId, final Action action) {
-         if (!dispatchedActions.containsKey(clientId)) {
-            dispatchedActions.put(clientId, new ArrayList<Action>());
-         }
-         dispatchedActions.get(clientId).add(action);
+      public CompletableFuture<Void> dispatch(final Action action) {
+         dispatchedActions.add(action);
          return CompletableFuture.completedFuture(null);
       }
    }

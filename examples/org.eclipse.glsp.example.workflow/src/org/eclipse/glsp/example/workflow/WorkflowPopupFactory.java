@@ -41,7 +41,7 @@ public class WorkflowPopupFactory implements PopupModelFactory {
          task.getDuration(), task.getReference());
    }
 
-   private static final String NL = "<br>";
+   private static final String NL = "<br/>";
 
    @Override
    public Optional<GHtmlRoot> createPopupModel(final GModelElement element, final RequestPopupModelAction action,

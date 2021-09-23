@@ -24,6 +24,8 @@ import org.eclipse.glsp.example.workflow.handler.CreateJoinNodeHandler;
 import org.eclipse.glsp.example.workflow.handler.CreateManualTaskHandler;
 import org.eclipse.glsp.example.workflow.handler.CreateMergeNodeHandler;
 import org.eclipse.glsp.example.workflow.handler.CreateWeightedEdgeHandler;
+import org.eclipse.glsp.example.workflow.handler.FilterActionHandler;
+import org.eclipse.glsp.example.workflow.handler.HighlightPathActionHandler;
 import org.eclipse.glsp.example.workflow.handler.LogActionHandler;
 import org.eclipse.glsp.example.workflow.handler.WorkflowRequestContextActionsHandler;
 import org.eclipse.glsp.example.workflow.labeledit.WorkflowLabelEditValidator;
@@ -47,6 +49,7 @@ import org.eclipse.glsp.server.features.commandpalette.CommandPaletteActionProvi
 import org.eclipse.glsp.server.features.contextactions.ContextActionsProvider;
 import org.eclipse.glsp.server.features.contextactions.RequestContextActionsHandler;
 import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
+import org.eclipse.glsp.server.features.core.model.GModelFactory;
 import org.eclipse.glsp.server.features.core.model.SourceModelStorage;
 import org.eclipse.glsp.server.features.directediting.ContextEditValidator;
 import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
@@ -64,6 +67,9 @@ import org.eclipse.glsp.server.operations.OperationHandler;
 public class WorkflowDiagramModule extends GModelDiagramModule {
 
    @Override
+   public String getDiagramType() { return "workflow-diagram"; }
+
+   @Override
    protected Class<? extends DiagramConfiguration> bindDiagramConfiguration() {
       return WorkflowDiagramConfiguration.class;
    }
@@ -74,33 +80,8 @@ public class WorkflowDiagramModule extends GModelDiagramModule {
    }
 
    @Override
-   protected Class<? extends SourceModelWatcher> bindSourceModelWatcher() {
-      return FileWatcher.class;
-   }
-
-   @Override
-   protected Class<? extends GraphExtension> bindGraphExtension() {
-      return WFGraphExtension.class;
-   }
-
-   @Override
-   protected void configureContextActionsProviders(final MultiBinding<ContextActionsProvider> binding) {
-      super.configureContextActionsProviders(binding);
-      binding.add(TaskEditContextActionProvider.class);
-   }
-
-   @Override
-   protected void configureContextEditValidators(final MultiBinding<ContextEditValidator> binding) {
-      super.configureContextEditValidators(binding);
-      binding.add(TaskEditValidator.class);
-   }
-
-   @Override
-   protected void configureNavigationTargetProviders(final MultiBinding<NavigationTargetProvider> binding) {
-      super.configureNavigationTargetProviders(binding);
-      binding.add(NextNodeNavigationTargetProvider.class);
-      binding.add(PreviousNodeNavigationTargetProvider.class);
-      binding.add(NodeDocumentationNavigationTargetProvider.class);
+   protected Class<? extends GModelFactory> bindGModelFactory() {
+      return GModelFactory.NullImpl.class;
    }
 
    @Override
@@ -124,6 +105,8 @@ public class WorkflowDiagramModule extends GModelDiagramModule {
       super.configureActionHandlers(binding);
       binding.rebind(RequestContextActionsHandler.class, WorkflowRequestContextActionsHandler.class);
       binding.add(LogActionHandler.class);
+      binding.add(HighlightPathActionHandler.class);
+      binding.add(FilterActionHandler.class);
    }
 
    @Override
@@ -162,6 +145,33 @@ public class WorkflowDiagramModule extends GModelDiagramModule {
    }
 
    @Override
-   public String getDiagramType() { return "workflow-diagram"; }
+   protected Class<? extends SourceModelWatcher> bindSourceModelWatcher() {
+      return FileWatcher.class;
+   }
+
+   @Override
+   protected Class<? extends GraphExtension> bindGraphExtension() {
+      return WFGraphExtension.class;
+   }
+
+   @Override
+   protected void configureContextActionsProviders(final MultiBinding<ContextActionsProvider> binding) {
+      super.configureContextActionsProviders(binding);
+      binding.add(TaskEditContextActionProvider.class);
+   }
+
+   @Override
+   protected void configureContextEditValidators(final MultiBinding<ContextEditValidator> binding) {
+      super.configureContextEditValidators(binding);
+      binding.add(TaskEditValidator.class);
+   }
+
+   @Override
+   protected void configureNavigationTargetProviders(final MultiBinding<NavigationTargetProvider> binding) {
+      super.configureNavigationTargetProviders(binding);
+      binding.add(NextNodeNavigationTargetProvider.class);
+      binding.add(PreviousNodeNavigationTargetProvider.class);
+      binding.add(NodeDocumentationNavigationTargetProvider.class);
+   }
 
 }

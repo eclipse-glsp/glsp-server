@@ -23,8 +23,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.glsp.example.workflow.action.HighlightPathAction;
 import org.eclipse.glsp.example.workflow.handler.GridSnapper;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.server.actions.SetUIExtensionVisibilityAction;
 import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
 import org.eclipse.glsp.server.features.contextmenu.MenuItem;
 import org.eclipse.glsp.server.model.GModelState;
@@ -50,7 +52,18 @@ public class WorkflowContextMenuItemProvider implements ContextMenuItemProvider 
       MenuItem newManTask = new MenuItem("newManualTask", "Manual Task",
          Arrays.asList(new CreateNodeOperation(MANUAL_TASK, snappedPosition)), true);
       MenuItem newChildMenu = new MenuItem("new", "New", Arrays.asList(newAutTask, newManTask), "add", "0_new");
-      return Lists.newArrayList(newChildMenu);
+
+      MenuItem showFilterItem = new MenuItem("show-filter", "Show Filter",
+         Arrays.asList(new SetUIExtensionVisibilityAction("filter-ui", true)), true);
+
+      if (selectedElementIds.size() == 1) {
+         HighlightPathAction action = new HighlightPathAction(selectedElementIds.get(0));
+         MenuItem highlightItem = new MenuItem("highlight-path", "Highlight Path", Arrays.asList(action),
+            action.isEnabled(modelState));
+         return Lists.newArrayList(newChildMenu, highlightItem);
+      }
+
+      return Lists.newArrayList(newChildMenu, showFilterItem);
    }
 
 }

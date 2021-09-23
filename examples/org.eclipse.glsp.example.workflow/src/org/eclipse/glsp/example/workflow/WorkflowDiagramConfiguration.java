@@ -68,8 +68,8 @@ public class WorkflowDiagramConfiguration extends BaseDiagramConfiguration {
    @Override
    public List<ShapeTypeHint> getShapeTypeHints() {
       List<ShapeTypeHint> nodeHints = new ArrayList<>();
-      nodeHints.add(new ShapeTypeHint(MANUAL_TASK, true, true, true, true));
-      nodeHints.add(new ShapeTypeHint(AUTOMATED_TASK, true, true, true, true));
+      nodeHints.add(new ShapeTypeHint(MANUAL_TASK, true, true, false, true));
+      nodeHints.add(new ShapeTypeHint(AUTOMATED_TASK, true, true, false, true));
       ShapeTypeHint catHint = new ShapeTypeHint(CATEGORY, true, true, true, true);
       catHint.setContainableElementTypeIds(
          Arrays.asList(DECISION_NODE, MERGE_NODE, FORK_NODE, JOIN_NODE, AUTOMATED_TASK, MANUAL_TASK, CATEGORY));

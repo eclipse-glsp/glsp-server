@@ -15,7 +15,9 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.model;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
@@ -34,6 +36,7 @@ public class DefaultGModelState implements GModelState {
    protected String clientId;
 
    protected Map<String, String> options;
+   protected final Map<String, Object> memento = new HashMap<>();
    protected GModelRoot currentModel;
    protected BasicCommandStack commandStack;
    protected String editMode;
@@ -132,4 +135,19 @@ public class DefaultGModelState implements GModelState {
 
    @Override
    public void setEditMode(final String editMode) { this.editMode = editMode; }
+
+   @Override
+   public void setMemento(final String key, final Object value) {
+      memento.put(key, value);
+   }
+
+   @Override
+   public Optional<Object> getMemento(final String key) {
+      return Optional.ofNullable(memento.get(key));
+   }
+
+   @Override
+   public Optional<Object> clearMemento(final String key) {
+      return Optional.ofNullable(memento.remove(key));
+   }
 }

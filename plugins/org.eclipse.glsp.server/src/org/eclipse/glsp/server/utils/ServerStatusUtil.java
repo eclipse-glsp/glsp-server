@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,10 +15,12 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.utils;
 
-import org.eclipse.glsp.server.actions.GLSPServerStatusAction;
 import org.eclipse.glsp.server.actions.ServerStatusAction;
 import org.eclipse.glsp.server.types.Severity;
 
+/**
+ * Utility methods to simplify the creation of {@link ServerStatusAction}s.
+ */
 public final class ServerStatusUtil {
    private ServerStatusUtil() {}
 
@@ -40,19 +42,19 @@ public final class ServerStatusUtil {
 
    public static ServerStatusAction status(final Severity severity, final String message,
       final int timeout) {
-      return new GLSPServerStatusAction(severity, message, timeout);
+      return new ServerStatusAction(severity, message, timeout);
    }
 
    public static ServerStatusAction info(final String message, final int timeout) {
-      return new GLSPServerStatusAction(Severity.INFO, message, timeout);
+      return new ServerStatusAction(Severity.INFO, message, timeout);
    }
 
    public static ServerStatusAction warn(final String message, final int timeout) {
-      return new GLSPServerStatusAction(Severity.WARNING, message, timeout);
+      return new ServerStatusAction(Severity.WARNING, message, timeout);
    }
 
    public static ServerStatusAction error(final String message, final int timeout) {
-      return new GLSPServerStatusAction(Severity.ERROR, message, timeout);
+      return new ServerStatusAction(Severity.ERROR, message, timeout);
    }
 
    public static ServerStatusAction clear() {

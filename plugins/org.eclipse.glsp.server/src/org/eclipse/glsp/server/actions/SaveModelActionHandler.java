@@ -15,7 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actions;
 
-import static org.eclipse.glsp.server.protocol.GLSPServerException.getOrThrow;
+import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -24,14 +24,15 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.log4j.Logger;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
-import org.eclipse.glsp.server.jsonrpc.GraphGsonConfiguratorFactory;
+import org.eclipse.glsp.server.gson.GraphGsonConfigurationFactory;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.protocol.GLSPServerException;
-import org.eclipse.glsp.server.utils.ClientOptions;
+import org.eclipse.glsp.server.types.GLSPServerException;
+import org.eclipse.glsp.server.utils.ClientOptionsUtil;
 
 import com.google.gson.Gson;
 import com.google.inject.Inject;
@@ -40,18 +41,18 @@ public class SaveModelActionHandler extends BasicActionHandler<SaveModelAction> 
    private static final Logger LOG = Logger.getLogger(SaveModelActionHandler.class);
 
    @Inject
-   protected GraphGsonConfiguratorFactory gsonConfigurationFactory;
+   protected GraphGsonConfigurationFactory gsonConfigurator;
 
    @Inject
-   private ModelSourceWatcher modelSourceWatcher;
+   private Optional<ModelSourceWatcher> modelSourceWatcher;
 
    @Override
    public List<Action> executeAction(final SaveModelAction action, final GModelState modelState) {
-      modelSourceWatcher.pauseWatching(modelState);
+      modelSourceWatcher.ifPresent(watcher -> watcher.pauseWatching(modelState));
       try {
          saveModelState(action, modelState);
       } finally {
-         modelSourceWatcher.continueWatching(modelState);
+         modelSourceWatcher.ifPresent(watcher -> watcher.continueWatching(modelState));
       }
       return listOf(new SetDirtyStateAction(modelState.isDirty(), SetDirtyStateAction.Reason.SAVE));
    }
@@ -59,7 +60,7 @@ public class SaveModelActionHandler extends BasicActionHandler<SaveModelAction> 
    protected void saveModelState(final SaveModelAction action, final GModelState modelState) {
       File file = convertToFile(action, modelState);
       try (Writer writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)) {
-         Gson gson = gsonConfigurationFactory.configureGson().setPrettyPrinting().create();
+         Gson gson = gsonConfigurator.configureGson().setPrettyPrinting().create();
          gson.toJson(modelState.getRoot(), GGraph.class, writer);
          if (saveIsDone(action, modelState)) {
             modelState.saveIsDone();
@@ -71,15 +72,15 @@ public class SaveModelActionHandler extends BasicActionHandler<SaveModelAction> 
    }
 
    protected boolean saveIsDone(final SaveModelAction action, final GModelState modelState) {
-      String sourceUri = ClientOptions.adaptUri(modelState.getClientOptions().get(ClientOptions.SOURCE_URI));
-      return action.getFileUri().map(uri -> ClientOptions.adaptUri(uri).equals(sourceUri)).orElse(true);
+      String sourceUri = ClientOptionsUtil.adaptUri(modelState.getClientOptions().get(ClientOptionsUtil.SOURCE_URI));
+      return action.getFileUri().map(uri -> ClientOptionsUtil.adaptUri(uri).equals(sourceUri)).orElse(true);
    }
 
    protected File convertToFile(final SaveModelAction action, final GModelState modelState) {
       if (action.getFileUri().isPresent()) {
-         return ClientOptions.getAsFile(action.getFileUri().get());
+         return ClientOptionsUtil.getAsFile(action.getFileUri().get());
       }
-      return getOrThrow(ClientOptions.getSourceUriAsFile(modelState.getClientOptions()),
-         "Invalid file URI:" + ClientOptions.getSourceUri(modelState.getClientOptions()));
+      return getOrThrow(ClientOptionsUtil.getSourceUriAsFile(modelState.getClientOptions()),
+         "Invalid file URI:" + ClientOptionsUtil.getSourceUri(modelState.getClientOptions()));
    }
 }

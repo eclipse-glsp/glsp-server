@@ -61,12 +61,4 @@ public interface NavigationTargetResolver {
    default void addError(final String message, final Map<String, String> args) {
       args.put(ERROR, message);
    }
-
-   class NullImpl implements NavigationTargetResolver {
-      @Override
-      public NavigationTargetResolution resolve(final NavigationTarget navigationTarget,
-         final GModelState modelState) {
-         return NavigationTargetResolution.EMPTY;
-      }
-   }
 }

@@ -27,15 +27,18 @@ import com.google.inject.Inject;
 
 public class RequestPopupModelActionHandler extends BasicActionHandler<RequestPopupModelAction> {
    @Inject
-   protected PopupModelFactory popupModelFactory;
+   protected Optional<PopupModelFactory> popupModelFactory;
 
    @Override
    public List<Action> executeAction(final RequestPopupModelAction action, final GModelState modelState) {
-      Optional<GModelElement> element = modelState.getIndex().get(action.getElementId());
-      if (popupModelFactory != null && element.isPresent()) {
-         return listOf(popupModelFactory.createPopupModel(element.get(), action, modelState)
-            .map(popupModel -> new SetPopupModelAction(popupModel, action.getBounds())));
+      if (popupModelFactory.isPresent()) {
+         Optional<GModelElement> element = modelState.getIndex().get(action.getElementId());
+         if (popupModelFactory != null && element.isPresent()) {
+            return listOf(popupModelFactory.get().createPopupModel(element.get(), action, modelState)
+               .map(popupModel -> new SetPopupModelAction(popupModel, action.getBounds())));
+         }
       }
+
       return none();
    }
 

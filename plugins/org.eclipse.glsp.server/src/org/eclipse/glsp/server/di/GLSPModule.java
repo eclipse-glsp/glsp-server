@@ -1,5 +1,5 @@
-/*******************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+/********************************************************************************
+ * Copyright (c) 2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -12,147 +12,72 @@
  * https://www.gnu.org/software/classpath/license.html.
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
- ******************************************************************************/
+ ********************************************************************************/
 package org.eclipse.glsp.server.di;
 
 import java.util.Optional;
-
-import org.eclipse.glsp.graph.GraphExtension;
-import org.eclipse.glsp.server.actions.ActionDispatcher;
-import org.eclipse.glsp.server.actions.ActionHandlerRegistry;
-import org.eclipse.glsp.server.actions.ActionRegistry;
-import org.eclipse.glsp.server.diagram.DiagramConfigurationRegistry;
-import org.eclipse.glsp.server.features.commandpalette.CommandPaletteActionProvider;
-import org.eclipse.glsp.server.features.contextactions.ContextActionsProviderRegistry;
-import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
-import org.eclipse.glsp.server.features.core.model.GModelFactory;
-import org.eclipse.glsp.server.features.core.model.ModelSourceLoader;
-import org.eclipse.glsp.server.features.directediting.ContextEditValidatorRegistry;
-import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
-import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
-import org.eclipse.glsp.server.features.navigation.NavigationTargetProviderRegistry;
-import org.eclipse.glsp.server.features.navigation.NavigationTargetResolver;
-import org.eclipse.glsp.server.features.popup.PopupModelFactory;
-import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
-import org.eclipse.glsp.server.features.validation.ModelValidator;
-import org.eclipse.glsp.server.jsonrpc.GraphGsonConfiguratorFactory;
-import org.eclipse.glsp.server.layout.ILayoutEngine;
-import org.eclipse.glsp.server.model.ModelStateProvider;
-import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
-import org.eclipse.glsp.server.protocol.ClientSessionManager;
-import org.eclipse.glsp.server.protocol.GLSPClient;
-import org.eclipse.glsp.server.protocol.GLSPServer;
+import java.util.function.Consumer;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
-import com.google.inject.Singleton;
+import com.google.inject.Module;
+import com.google.inject.binder.ScopedBindingBuilder;
+import com.google.inject.multibindings.Multibinder;
+import com.google.inject.multibindings.OptionalBinder;
 
+/**
+ *
+ * Common super class for GLSP guice {@link Module}s.
+ */
 public abstract class GLSPModule extends AbstractModule {
+   public static final String CLIENT_ACTIONS = "ClientActions";
 
+   /**
+    * Splits the configure method in two phases. The "configureBase" sub method
+    * provides configures the default bindings of this module. The "configureAdditionals" sub method is a no-op
+    * method that can be overwritten by subclasses to configure additional bindings without having to overwrite the
+    * configure() method.
+    */
    @Override
    protected void configure() {
-      // Configure default bindings
-      bind(GLSPServer.class).to(bindGLSPServer()).in(Singleton.class);
-      bind(ModelSourceLoader.class).to(bindSourceModelLoader());
-      bind(GModelFactory.class).to(bindGModelFactory());
-      bind(ModelSourceWatcher.class).to(bindModelSourceWatcher()).in(Singleton.class);
-      bind(PopupModelFactory.class).to(bindPopupModelFactory());
-      bind(ILayoutEngine.class).to(bindLayoutEngine());
-      bind(ModelValidator.class).to(bindModelValidator());
-      bind(ActionDispatcher.class).to(bindActionDispatcher()).in(Singleton.class);
-      bind(LabelEditValidator.class).to(bindLabelEditValidator());
-      bind(ModelStateProvider.class).to(bindModelStateProvider());
-      bind(GraphGsonConfiguratorFactory.class).to(bindGraphGsonConfiguratorFactory());
-      bind(ToolPaletteItemProvider.class).to(bindToolPaletteItemProvider());
-      bind(CommandPaletteActionProvider.class).to(bindCommandPaletteActionProvider());
-      bind(ContextMenuItemProvider.class).to(bindContextMenuItemProvider());
-      bind(NavigationTargetResolver.class).to(bindNavigationTargetResolver());
-      bind(ClientSessionManager.class).toInstance(getClientSessionManager());
-      // Configure set suppliers
-      bind(ActionRegistry.class).to(bindActionRegistry()).in(Singleton.class);
-      bind(ActionHandlerRegistry.class).to(bindActionHandlerRegistry()).in(Singleton.class);
-      bind(OperationHandlerRegistry.class).to(bindOperationHandlerRegistry()).in(Singleton.class);
-      bind(DiagramConfigurationRegistry.class).to(bindDiagramConfigurationRegistry()).in(Singleton.class);
-      bind(ContextActionsProviderRegistry.class).to(bindContextActionsProviderRegistry()).in(Singleton.class);
-      bind(NavigationTargetProviderRegistry.class).to(bindNavigationTargetProviderRegistry()).in(Singleton.class);
-      bind(ContextEditValidatorRegistry.class).to(bindContextEditValidatorRegistry()).in(Singleton.class);
-
-      // Configure Optional Bindings (Bindings that cannot be bound to a NullImpl)
-      Optional.ofNullable(bindGraphExtension()).ifPresent(ext -> bind(GraphExtension.class).to(ext));
+      configureBase();
+      configureAdditionals();
    }
 
-   protected abstract ClientSessionManager getClientSessionManager();
+   protected abstract void configureBase();
 
-   protected abstract Class<? extends ModelStateProvider> bindModelStateProvider();
-
-   protected abstract Class<? extends GLSPServer> bindGLSPServer();
-
-   protected abstract Class<? extends GraphGsonConfiguratorFactory> bindGraphGsonConfiguratorFactory();
-
-   protected abstract Class<? extends ModelSourceLoader> bindSourceModelLoader();
-
-   protected abstract Class<? extends GModelFactory> bindGModelFactory();
-
-   protected Class<? extends PopupModelFactory> bindPopupModelFactory() {
-      return PopupModelFactory.NullImpl.class;
+   protected void configureAdditionals() {
+      // empty as default. Can be extended in subclasses.
    }
 
-   protected Class<? extends ILayoutEngine> bindLayoutEngine() {
-      return ILayoutEngine.NullImpl.class;
+   /**
+    * Configuration method for multibinded values. The passed configurator is typically a submethod of this module. This
+    * means
+    * that subclasses can customize the {@link MultiBinding} object before the actual {@link Multibinder} is created.
+    *
+    * @param <T>          Type of the {@link MultiBinding}
+    * @param binding      The multi binding configuration object
+    * @param configurator The consumer that should be used to configure the given {@link Multibinder}
+    */
+   protected <T> void configure(final MultiBinding<T> binding, final Consumer<MultiBinding<T>> configurator) {
+      configurator.accept(binding);
+      binding.applyBinding(binder());
    }
 
-   protected Class<? extends ModelValidator> bindModelValidator() {
-      return ModelValidator.NullImpl.class;
+   /**
+    * Utility method to bind a key to an Optional of a given class. If the given class is null the Optional will be
+    * empty.
+    *
+    * @param <T> Type of key
+    * @param <S> (Sub)type to which the key should be bound.
+    * @param key The key that should be used for binding
+    * @param to  Subtype to which this key should be bound. Can be null
+    * @return An optional of the {@link ScopedBindingBuilder}. Is empty if the 'to' type was null
+    */
+   protected <T, S extends T> Optional<ScopedBindingBuilder> bindOptionally(final Class<T> key, final Class<S> to) {
+      OptionalBinder.newOptionalBinder(binder(), key);
+      return Optional.ofNullable(to).map(toClass -> {
+         return bind(key).to(toClass);
+      });
    }
 
-   protected Class<? extends ActionDispatcher> bindActionDispatcher() {
-      return ActionDispatcher.NullImpl.class;
-   }
-
-   protected Class<? extends LabelEditValidator> bindLabelEditValidator() {
-      return LabelEditValidator.NullImpl.class;
-   }
-
-   protected Class<? extends CommandPaletteActionProvider> bindCommandPaletteActionProvider() {
-      return CommandPaletteActionProvider.NullImpl.class;
-   }
-
-   protected Class<? extends ContextMenuItemProvider> bindContextMenuItemProvider() {
-      return ContextMenuItemProvider.NullImpl.class;
-   }
-
-   protected Class<? extends ToolPaletteItemProvider> bindToolPaletteItemProvider() {
-      return ToolPaletteItemProvider.NullImpl.class;
-   }
-
-   protected Class<? extends NavigationTargetResolver> bindNavigationTargetResolver() {
-      return NavigationTargetResolver.NullImpl.class;
-   }
-
-   protected Class<? extends ModelSourceWatcher> bindModelSourceWatcher() {
-      return ModelSourceWatcher.NullImpl.class;
-   }
-
-   protected abstract Class<? extends ActionRegistry> bindActionRegistry();
-
-   protected abstract Class<? extends ActionHandlerRegistry> bindActionHandlerRegistry();
-
-   protected abstract Class<? extends OperationHandlerRegistry> bindOperationHandlerRegistry();
-
-   protected abstract Class<? extends DiagramConfigurationRegistry> bindDiagramConfigurationRegistry();
-
-   protected abstract Class<? extends ContextActionsProviderRegistry> bindContextActionsProviderRegistry();
-
-   protected abstract Class<? extends NavigationTargetProviderRegistry> bindNavigationTargetProviderRegistry();
-
-   protected abstract Class<? extends ContextEditValidatorRegistry> bindContextEditValidatorRegistry();
-
-   protected Class<? extends GraphExtension> bindGraphExtension() {
-      return null;
-   }
-
-   @Provides
-   private GLSPClient getGLSPClient(final GLSPServer glspServer) {
-      return glspServer.getClient();
-   }
 }

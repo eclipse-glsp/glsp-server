@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -21,19 +21,7 @@ public class RequestTypeHintsAction extends Action {
 
    public static final String ID = "requestTypeHints";
 
-   private String diagramType;
-
    public RequestTypeHintsAction() {
       super(ID);
    }
-
-   public RequestTypeHintsAction(final String diagramType) {
-      this();
-      this.diagramType = diagramType;
-   }
-
-   public String getDiagramType() { return diagramType; }
-
-   public void setDiagramType(final String diagramType) { this.diagramType = diagramType; }
-
 }

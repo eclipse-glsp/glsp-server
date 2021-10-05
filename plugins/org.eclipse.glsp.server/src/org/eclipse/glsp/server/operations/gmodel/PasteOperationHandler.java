@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -32,7 +32,7 @@ import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.impl.GPointImpl;
-import org.eclipse.glsp.server.jsonrpc.GraphGsonConfiguratorFactory;
+import org.eclipse.glsp.server.gson.GraphGsonConfigurationFactory;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.BasicOperationHandler;
 import org.eclipse.glsp.server.operations.PasteOperation;
@@ -48,8 +48,8 @@ public class PasteOperationHandler extends BasicOperationHandler<PasteOperation>
    protected final Gson gson;
 
    @Inject
-   public PasteOperationHandler(final GraphGsonConfiguratorFactory gsonFactory) {
-      GsonBuilder builder = gsonFactory.configureGson();
+   public PasteOperationHandler(final GraphGsonConfigurationFactory gsonConfigurator) {
+      GsonBuilder builder = gsonConfigurator.configureGson();
       gson = builder.create();
    }
 

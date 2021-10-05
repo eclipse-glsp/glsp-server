@@ -28,7 +28,7 @@ import org.eclipse.glsp.server.features.navigation.NavigationTarget;
 import org.eclipse.glsp.server.features.navigation.NavigationTargetProvider;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.types.EditorContext;
-import org.eclipse.glsp.server.utils.ClientOptions;
+import org.eclipse.glsp.server.utils.ClientOptionsUtil;
 import org.eclipse.glsp.server.utils.MapUtil;
 
 public abstract class AbstractNextOrPreviousNavigationTargetProvider implements NavigationTargetProvider {
@@ -36,7 +36,7 @@ public abstract class AbstractNextOrPreviousNavigationTargetProvider implements 
    @Override
    public List<? extends NavigationTarget> getTargets(final EditorContext editorContext,
       final GModelState modelState) {
-      Optional<String> sourceUri = MapUtil.getValue(modelState.getClientOptions(), ClientOptions.SOURCE_URI);
+      Optional<String> sourceUri = MapUtil.getValue(modelState.getClientOptions(), ClientOptionsUtil.SOURCE_URI);
       return editorContext.getSelectedElementIds().stream()
          .flatMap(id -> modelState.getIndex().get(id).stream())
          .filter(TaskNode.class::isInstance).map(TaskNode.class::cast)

@@ -25,14 +25,4 @@ public interface PopupModelFactory {
 
    Optional<GHtmlRoot> createPopupModel(GModelElement element, RequestPopupModelAction action,
       GModelState modelState);
-
-   final class NullImpl implements PopupModelFactory {
-
-      @Override
-      public Optional<GHtmlRoot> createPopupModel(final GModelElement element, final RequestPopupModelAction action,
-         final GModelState modelState) {
-         return Optional.empty();
-      }
-
-   }
 }

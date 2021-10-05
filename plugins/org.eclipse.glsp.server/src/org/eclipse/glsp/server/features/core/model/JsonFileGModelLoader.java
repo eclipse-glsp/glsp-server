@@ -15,7 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.features.core.model;
 
-import static org.eclipse.glsp.server.protocol.GLSPServerException.getOrThrow;
+import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,10 +30,10 @@ import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.graph.GraphFactory;
-import org.eclipse.glsp.server.jsonrpc.GraphGsonConfiguratorFactory;
+import org.eclipse.glsp.server.gson.GraphGsonConfigurationFactory;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.protocol.GLSPServerException;
-import org.eclipse.glsp.server.utils.ClientOptions;
+import org.eclipse.glsp.server.types.GLSPServerException;
+import org.eclipse.glsp.server.utils.ClientOptionsUtil;
 
 import com.google.gson.Gson;
 import com.google.inject.Inject;
@@ -46,7 +46,7 @@ public class JsonFileGModelLoader implements ModelSourceLoader {
    private static Logger LOG = Logger.getLogger(JsonFileGModelLoader.class);
    private static String EMPTY_ROOT_ID = "glsp-graph";
    @Inject
-   private GraphGsonConfiguratorFactory gsonConfigurationFactory;
+   private GraphGsonConfigurationFactory gsonConfiguratior;
 
    @Override
    public void loadSourceModel(final RequestModelAction action, final GModelState modelState) {
@@ -58,13 +58,13 @@ public class JsonFileGModelLoader implements ModelSourceLoader {
    }
 
    protected File convertToFile(final GModelState modelState) {
-      return getOrThrow(ClientOptions.getSourceUriAsFile(modelState.getClientOptions()),
-         "Invalid file URI:" + ClientOptions.getSourceUri(modelState.getClientOptions()));
+      return getOrThrow(ClientOptionsUtil.getSourceUriAsFile(modelState.getClientOptions()),
+         "Invalid file URI:" + ClientOptionsUtil.getSourceUri(modelState.getClientOptions()));
    }
 
    protected Optional<GModelRoot> loadSourceModel(final File file, final GModelState modelState) {
       try (Reader reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)) {
-         Gson gson = gsonConfigurationFactory.configureGson().create();
+         Gson gson = gsonConfiguratior.configureGson().create();
          GGraph root = gson.fromJson(reader, GGraph.class);
          if (root == null) {
             boolean isEmpty = file.length() == 0;

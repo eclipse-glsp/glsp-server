@@ -15,7 +15,6 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.features.toolpalette;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -28,9 +27,7 @@ public interface ToolPaletteItemProvider extends ContextActionsProvider {
    String CONTEXT_ID = "tool-palette";
 
    @Override
-   default String getContextId() {
-      return ToolPaletteItemProvider.CONTEXT_ID;
-   }
+   default String getContextId() { return ToolPaletteItemProvider.CONTEXT_ID; }
 
    @Override
    default List<? extends LabeledAction> getActions(final EditorContext editorContext,
@@ -39,13 +36,4 @@ public interface ToolPaletteItemProvider extends ContextActionsProvider {
    }
 
    List<PaletteItem> getItems(Map<String, String> args, GModelState modelState);
-
-   final class NullImpl implements ToolPaletteItemProvider {
-
-      @Override
-      public List<PaletteItem> getItems(final Map<String, String> args, final GModelState modelState) {
-         return Collections.emptyList();
-      }
-
-   }
 }

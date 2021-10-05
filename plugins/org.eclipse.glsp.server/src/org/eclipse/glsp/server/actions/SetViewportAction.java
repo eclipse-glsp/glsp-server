@@ -15,7 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actions;
 
-import org.eclipse.glsp.server.utils.Viewport;
+import org.eclipse.glsp.server.types.Viewport;
 
 public class SetViewportAction extends Action {
 

@@ -27,7 +27,7 @@ import org.eclipse.glsp.server.features.navigation.NavigationTarget;
 import org.eclipse.glsp.server.features.navigation.NavigationTargetProvider;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.types.EditorContext;
-import org.eclipse.glsp.server.utils.ClientOptions;
+import org.eclipse.glsp.server.utils.ClientOptionsUtil;
 import org.eclipse.glsp.server.utils.MapUtil;
 
 /**
@@ -50,7 +50,7 @@ public class NodeDocumentationNavigationTargetProvider implements NavigationTarg
             return Arrays.asList();
          }
 
-         Optional<String> sourceUri = MapUtil.getValue(modelState.getClientOptions(), ClientOptions.SOURCE_URI);
+         Optional<String> sourceUri = MapUtil.getValue(modelState.getClientOptions(), ClientOptionsUtil.SOURCE_URI);
          if (sourceUri.isEmpty()) {
             return Arrays.asList();
          }

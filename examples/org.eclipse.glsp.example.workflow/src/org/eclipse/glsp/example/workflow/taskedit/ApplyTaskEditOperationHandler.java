@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -18,7 +18,7 @@ package org.eclipse.glsp.example.workflow.taskedit;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.BasicOperationHandler;
-import org.eclipse.glsp.server.protocol.GLSPServerException;
+import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.google.inject.Inject;
 
@@ -32,12 +32,10 @@ public class ApplyTaskEditOperationHandler extends BasicOperationHandler<ApplyTa
       String text = operation.getExpression();
       if (text.startsWith(TaskEditContextActionProvider.DURATION_PREFIX)) {
          String durationString = text.substring(TaskEditContextActionProvider.DURATION_PREFIX.length());
-         actionProcessor.dispatch(modelState.getClientId(),
-            new EditTaskOperation(operation.getTaskId(), "duration", durationString));
+         actionProcessor.dispatch(new EditTaskOperation(operation.getTaskId(), "duration", durationString));
       } else if (text.startsWith(TaskEditContextActionProvider.TYPE_PREFIX)) {
          String typeString = text.substring(TaskEditContextActionProvider.TYPE_PREFIX.length());
-         actionProcessor.dispatch(modelState.getClientId(),
-            new EditTaskOperation(operation.getTaskId(), "taskType", typeString));
+         actionProcessor.dispatch(new EditTaskOperation(operation.getTaskId(), "taskType", typeString));
       } else {
          throw new GLSPServerException(
             "Cannot process 'ApplyTaskEditOperation' expression: " + operation.getExpression());

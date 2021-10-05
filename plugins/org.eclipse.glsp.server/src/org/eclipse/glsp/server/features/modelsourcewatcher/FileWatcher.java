@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -26,23 +26,20 @@ import java.nio.file.Path;
 import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.eclipse.glsp.server.actions.ActionDispatcher;
+import org.eclipse.glsp.server.di.ClientId;
 import org.eclipse.glsp.server.disposable.IDisposable;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.protocol.ClientSessionListener;
-import org.eclipse.glsp.server.protocol.ClientSessionManager;
-import org.eclipse.glsp.server.protocol.GLSPClient;
-import org.eclipse.glsp.server.utils.ClientOptions;
+import org.eclipse.glsp.server.session.ClientSession;
+import org.eclipse.glsp.server.session.ClientSessionListener;
+import org.eclipse.glsp.server.session.ClientSessionManager;
+import org.eclipse.glsp.server.utils.ClientOptionsUtil;
 import org.eclipse.glsp.server.utils.Debouncer;
 
 import com.google.inject.Inject;
@@ -54,20 +51,17 @@ public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
    @Inject
    protected ActionDispatcher actionDispatcher;
 
-   protected final ClientSessionManager sessionManager;
-
    protected int debounceDelay = 500;
 
-   protected final Map<String, List<FileWatchWorker>> workers = new HashMap<>();
+   protected final List<FileWatchWorker> workers = new ArrayList<>();
 
    @Inject
-   public FileWatcher(final ClientSessionManager sessionManager) {
-      this.sessionManager = sessionManager;
-      this.sessionManager.addListener(this);
+   public FileWatcher(final ClientSessionManager sessionManager, @ClientId final String clientId) {
+      sessionManager.addListener(this, clientId);
    }
 
    public FileWatcher(final ClientSessionManager sessionManager, final ActionDispatcher actionDispatcher) {
-      this(sessionManager);
+      this(sessionManager, "");
       this.actionDispatcher = actionDispatcher;
    }
 
@@ -76,13 +70,8 @@ public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
    public void setDebounceDelay(final int debounceDelay) { this.debounceDelay = debounceDelay; }
 
    @Override
-   public void clientDisconnected(final GLSPClient client) {
-      sessionManager.removeListener(this);
-   }
-
-   @Override
-   public void sessionClosed(final String clientId, final GLSPClient client) {
-      stop(clientId);
+   public void sessionDisposed(final ClientSession session) {
+      disposeAllWorkers();
    }
 
    @Override
@@ -92,17 +81,17 @@ public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
 
    @Override
    public void stopWatching(final GModelState modelState) {
-      stop(modelState.getClientId());
+      disposeAllWorkers();
    }
 
    @Override
    public void pauseWatching(final GModelState modelState) {
-      getAllWorkers(modelState.getClientId()).forEach(FileWatchWorker::pauseNotifications);
+      workers.forEach(FileWatchWorker::pauseNotifications);
    }
 
    @Override
    public void continueWatching(final GModelState modelState) {
-      getAllWorkers(modelState.getClientId()).forEach(FileWatchWorker::continueNotifications);
+      workers.forEach(FileWatchWorker::continueNotifications);
    }
 
    protected void start(final GModelState modelState) {
@@ -111,34 +100,25 @@ public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
       createWorkers(modelState).forEach(FileWatchWorker::start);
    }
 
-   protected void stop(final String clientId) {
-      disposeAllWorkers(clientId);
+   protected void stop() {
+      disposeAllWorkers();
       IDisposable.disposeIfExists(clientNotificationDebouncer);
    }
 
    protected List<Path> getPaths(final GModelState modelState) {
-      return ClientOptions.getSourceUriAsFile(modelState.getClientOptions()).stream()
+      return ClientOptionsUtil.getSourceUriAsFile(modelState.getClientOptions()).stream()
          .map(file -> file.toPath()).collect(Collectors.toList());
    }
 
-   private List<FileWatchWorker> createWorkers(final GModelState modelState) {
-      stopAllWorkers(modelState.getClientId());
-      final List<FileWatchWorker> fileWorkers = createFileWatchWorkers(modelState);
-      workers.put(modelState.getClientId(), fileWorkers);
-      return fileWorkers;
+   protected List<FileWatchWorker> createWorkers(final GModelState modelState) {
+      disposeAllWorkers();
+      workers.addAll(createFileWatchWorkers(modelState));
+      return workers;
    }
 
-   private void disposeAllWorkers(final String clientId) {
-      stopAllWorkers(clientId);
-      workers.remove(clientId);
-   }
-
-   private void stopAllWorkers(final String clientId) {
-      getAllWorkers(clientId).forEach(FileWatchWorker::stopWorking);
-   }
-
-   protected Stream<FileWatchWorker> getAllWorkers(final String clientId) {
-      return Optional.ofNullable(workers.get(clientId)).stream().flatMap(Collection::stream);
+   protected void disposeAllWorkers() {
+      workers.forEach(FileWatchWorker::stopWorking);
+      workers.clear();
    }
 
    private List<FileWatchWorker> createFileWatchWorkers(final GModelState modelState) {
@@ -151,8 +131,7 @@ public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
    }
 
    protected void notifyClient(final ClientNotification clientNotification) {
-      actionDispatcher.dispatch(clientNotification.clientId,
-         new ModelSourceChangedAction(clientNotification.modelSourceName));
+      actionDispatcher.dispatch(new ModelSourceChangedAction(clientNotification.modelSourceName));
    }
 
    class FileWatchWorker extends Thread {

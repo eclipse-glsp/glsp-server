@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -22,7 +22,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collection;
 
-import org.eclipse.glsp.graph.gson.GGraphGsonConfigurator;
+import org.eclipse.glsp.graph.gson.GraphGsonConfigurator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -34,11 +34,11 @@ public class GModelIndexWhenDeserializedFromJsonTest {
 
    private static final String RESOURCE_PATH = "resources/";
 
-   private GGraphGsonConfigurator gsonConfigurator;
+   private GraphGsonConfigurator gsonConfigurator;
 
    @BeforeEach
    void initializeGsonConfigurator() {
-      gsonConfigurator = new GGraphGsonConfigurator().withDefaultTypes();
+      gsonConfigurator = new GraphGsonConfigurator().withDefaultTypes();
    }
 
    @Test

@@ -17,7 +17,6 @@ package org.eclipse.glsp.server.features.contextmenu;
 
 import static org.eclipse.glsp.graph.util.GraphUtil.point;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -33,9 +32,7 @@ public interface ContextMenuItemProvider extends ContextActionsProvider {
    String KEY = "context-menu";
 
    @Override
-   default String getContextId() {
-      return ContextMenuItemProvider.KEY;
-   }
+   default String getContextId() { return ContextMenuItemProvider.KEY; }
 
    List<MenuItem> getItems(List<String> selectedElementIds, GPoint position, Map<String, String> args,
       GModelState modelState);
@@ -47,16 +44,4 @@ public interface ContextMenuItemProvider extends ContextActionsProvider {
          editorContext.getArgs(),
          modelState);
    }
-
-   final class NullImpl implements ContextMenuItemProvider {
-
-      @Override
-      public List<MenuItem> getItems(final List<String> selectedElementIds, final GPoint position,
-         final Map<String, String> args,
-         final GModelState modelState) {
-         return Collections.emptyList();
-      }
-
-   }
-
 }

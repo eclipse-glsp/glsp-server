@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.server.actions.Action;
@@ -30,12 +31,19 @@ import com.google.inject.Inject;
 
 public class RequestMarkersHandler extends BasicActionHandler<RequestMarkersAction> {
 
+   private static final Logger LOG = Logger.getLogger(RequestMarkersHandler.class);
+
    @Inject
-   protected ModelValidator validator;
+   protected Optional<ModelValidator> validator;
 
    @Override
+   @SuppressWarnings("checkstyle:cyclomaticComplexity")
    public List<Action> executeAction(final RequestMarkersAction action, final GModelState modelState) {
       List<String> elementsIDs = action.getElementsIDs();
+      if (validator.isEmpty()) {
+         LOG.warn("Cannot compute markers! No implementation for " + ModelValidator.class + " has been bound");
+         return none();
+      }
 
       // if no element ID is provided, compute the markers for the complete model
       if (elementsIDs == null || elementsIDs.size() == 0
@@ -47,7 +55,7 @@ public class RequestMarkersHandler extends BasicActionHandler<RequestMarkersActi
       for (String elementID : elementsIDs) {
          Optional<GModelElement> modelElement = currentModelIndex.get(elementID);
          if (modelElement.isPresent()) {
-            markers.addAll(validator.validate(modelState, modelElement.get()));
+            markers.addAll(validator.get().validate(modelState, modelElement.get()));
          }
 
       }

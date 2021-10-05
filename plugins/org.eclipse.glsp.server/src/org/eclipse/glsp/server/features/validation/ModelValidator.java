@@ -15,7 +15,6 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.features.validation;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.glsp.graph.GModelElement;
@@ -24,12 +23,4 @@ import org.eclipse.glsp.server.model.GModelState;
 public interface ModelValidator {
 
    List<Marker> validate(GModelState modelState, GModelElement... elements);
-
-   final class NullImpl implements ModelValidator {
-
-      @Override
-      public List<Marker> validate(final GModelState modelState, final GModelElement... elements) {
-         return Collections.emptyList();
-      }
-   }
 }

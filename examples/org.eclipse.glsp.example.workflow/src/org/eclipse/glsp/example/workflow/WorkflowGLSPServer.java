@@ -15,13 +15,13 @@
  ********************************************************************************/
 package org.eclipse.glsp.example.workflow;
 
-import static org.eclipse.glsp.server.protocol.GLSPServerException.getOrThrow;
+import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 import org.apache.log4j.Logger;
-import org.eclipse.glsp.server.jsonrpc.DefaultGLSPServer;
+import org.eclipse.glsp.server.protocol.DefaultGLSPServer;
 import org.eclipse.glsp.server.protocol.InitializeResult;
 import org.eclipse.glsp.server.utils.MapUtil;
 

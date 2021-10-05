@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -59,8 +59,4 @@ public interface ModelSourceWatcher {
     * @param modelState The model state indicating the model source.
     */
    default void continueWatching(final GModelState modelState) {}
-
-   /** A no-op watcher that can be bound if no watching is intended or supported. */
-   final class NullImpl implements ModelSourceWatcher {}
-
 }

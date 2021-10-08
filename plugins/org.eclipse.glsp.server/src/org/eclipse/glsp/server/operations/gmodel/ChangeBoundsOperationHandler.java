@@ -19,13 +19,12 @@ import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 import org.apache.log4j.Logger;
 import org.eclipse.glsp.graph.GDimension;
-import org.eclipse.glsp.graph.GLayoutData;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.GraphFactory;
+import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.BasicOperationHandler;
@@ -65,14 +64,9 @@ public class ChangeBoundsOperationHandler extends BasicOperationHandler<ChangeBo
          // to positive coordinates, to avoid weird layout behavior
          : GraphUtil.point(Math.max(0, newPosition.getX()), Math.max(0, newPosition.getY()));
 
-      GLayoutData data = nodeToUpdate.getLayoutData();
-      if (data == null) {
-         data = GraphFactory.eINSTANCE.createGLayoutData();
-         data.setPrefSize(newSize);
-         nodeToUpdate.setLayoutData(data);
-      }
+      nodeToUpdate.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, newSize.getWidth());
+      nodeToUpdate.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, newSize.getHeight());
 
       nodeToUpdate.setPosition(positionToSet);
-      data.setPrefSize(newSize);
    }
 }

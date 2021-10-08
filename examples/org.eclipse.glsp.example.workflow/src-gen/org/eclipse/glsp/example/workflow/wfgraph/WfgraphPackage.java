@@ -189,15 +189,6 @@ public interface WfgraphPackage extends EPackage {
    int ACTIVITY_NODE__LAYOUT_OPTIONS = GraphPackage.GNODE__LAYOUT_OPTIONS;
 
    /**
-    * The feature id for the '<em><b>Layout Data</b></em>' reference.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int ACTIVITY_NODE__LAYOUT_DATA = GraphPackage.GNODE__LAYOUT_DATA;
-
-   /**
     * The feature id for the '<em><b>Node Type</b></em>' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -341,15 +332,6 @@ public interface WfgraphPackage extends EPackage {
     * @ordered
     */
    int TASK_NODE__LAYOUT_OPTIONS = ACTIVITY_NODE__LAYOUT_OPTIONS;
-
-   /**
-    * The feature id for the '<em><b>Layout Data</b></em>' reference.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int TASK_NODE__LAYOUT_DATA = ACTIVITY_NODE__LAYOUT_DATA;
 
    /**
     * The feature id for the '<em><b>Node Type</b></em>' attribute.
@@ -531,15 +513,6 @@ public interface WfgraphPackage extends EPackage {
     * @ordered
     */
    int ICON__LAYOUT_OPTIONS = GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS;
-
-   /**
-    * The feature id for the '<em><b>Layout Data</b></em>' reference.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int ICON__LAYOUT_DATA = GraphPackage.GCOMPARTMENT__LAYOUT_DATA;
 
    /**
     * The number of structural features of the '<em>Icon</em>' class.
@@ -831,15 +804,6 @@ public interface WfgraphPackage extends EPackage {
     * @ordered
     */
    int CATEGORY__LAYOUT_OPTIONS = ACTIVITY_NODE__LAYOUT_OPTIONS;
-
-   /**
-    * The feature id for the '<em><b>Layout Data</b></em>' reference.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int CATEGORY__LAYOUT_DATA = ACTIVITY_NODE__LAYOUT_DATA;
 
    /**
     * The feature id for the '<em><b>Node Type</b></em>' attribute.

@@ -203,11 +203,6 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
       }
 
       @Override
-      public Adapter caseGLayoutData(GLayoutData object) {
-         return createGLayoutDataAdapter();
-      }
-
-      @Override
       public Adapter defaultCase(EObject object) {
          return createEObjectAdapter();
       }
@@ -563,27 +558,13 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
    }
 
    /**
-    * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GLayoutData <em>GLayout Data</em>}'.
+    * Creates a new adapter for the default case.
     * <!-- begin-user-doc -->
-    * This default implementation returns null so that we can easily ignore cases;
-    * it's useful to ignore a case when inheritance will catch all the cases anyway.
-    * <!-- end-user-doc -->
-    * @return the new adapter.
-    * @see org.eclipse.glsp.graph.GLayoutData
-    * @generated
-    */
-   public Adapter createGLayoutDataAdapter() {
-      return null;
-   }
-
-   /**
-   	 * Creates a new adapter for the default case.
-   	 * <!-- begin-user-doc -->
     * This default implementation returns null.
     * <!-- end-user-doc -->
-   	 * @return the new adapter.
-   	 * @generated
-   	 */
+    * @return the new adapter.
+    * @generated
+    */
    public Adapter createEObjectAdapter() {
       return null;
    }

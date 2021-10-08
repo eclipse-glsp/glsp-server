@@ -41,7 +41,6 @@ import org.eclipse.glsp.graph.GHtmlRoot;
 import org.eclipse.glsp.graph.GIssue;
 import org.eclipse.glsp.graph.GIssueMarker;
 import org.eclipse.glsp.graph.GLabel;
-import org.eclipse.glsp.graph.GLayoutData;
 import org.eclipse.glsp.graph.GLayouting;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelRoot;
@@ -234,13 +233,6 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
     * <!-- end-user-doc -->
     * @generated
     */
-   private EClass gLayoutDataEClass = null;
-
-   /**
-   	 * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-   	 * @generated
-   	 */
    private EEnum gSeverityEEnum = null;
 
    /**
@@ -725,16 +717,6 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
     * @generated
     */
    @Override
-   public EReference getGLayouting_LayoutData() {
-      return (EReference) gLayoutingEClass.getEStructuralFeatures().get(2);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
    public EClass getGBounds() { return gBoundsEClass; }
 
    /**
@@ -895,24 +877,6 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
     * @generated
     */
    @Override
-   public EClass getGLayoutData() { return gLayoutDataEClass; }
-
-   /**
-   	 * <!-- begin-user-doc -->
-   	 * <!-- end-user-doc -->
-   	 * @generated
-   	 */
-   @Override
-   public EReference getGLayoutData_PrefSize() {
-      return (EReference) gLayoutDataEClass.getEStructuralFeatures().get(0);
-   }
-
-   /**
-   	 * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-   	 * @generated
-   	 */
-   @Override
    public EEnum getGSeverity() { return gSeverityEEnum; }
 
    /**
@@ -1007,7 +971,6 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
       gLayoutingEClass = createEClass(GLAYOUTING);
       createEAttribute(gLayoutingEClass, GLAYOUTING__LAYOUT);
       createEReference(gLayoutingEClass, GLAYOUTING__LAYOUT_OPTIONS);
-      createEReference(gLayoutingEClass, GLAYOUTING__LAYOUT_DATA);
 
       gBoundsEClass = createEClass(GBOUNDS);
       createEAttribute(gBoundsEClass, GBOUNDS__X);
@@ -1034,9 +997,6 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
       stringToObjectMapEntryEClass = createEClass(STRING_TO_OBJECT_MAP_ENTRY);
       createEAttribute(stringToObjectMapEntryEClass, STRING_TO_OBJECT_MAP_ENTRY__KEY);
       createEAttribute(stringToObjectMapEntryEClass, STRING_TO_OBJECT_MAP_ENTRY__VALUE);
-
-      gLayoutDataEClass = createEClass(GLAYOUT_DATA);
-      createEReference(gLayoutDataEClass, GLAYOUT_DATA__PREF_SIZE);
 
       // Create enums
       gSeverityEEnum = createEEnum(GSEVERITY);
@@ -1213,9 +1173,6 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
       initEReference(getGLayouting_LayoutOptions(), this.getStringToObjectMapEntry(), null, "layoutOptions", null, 0,
          -1, GLayouting.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
          !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-      initEReference(getGLayouting_LayoutData(), this.getGLayoutData(), null, "layoutData", null, 0, 1,
-         GLayouting.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
       initEClass(gBoundsEClass, GBounds.class, "GBounds", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
       initEAttribute(getGBounds_X(), ecorePackage.getEDouble(), "x", "0", 1, 1, GBounds.class, !IS_TRANSIENT,
@@ -1263,12 +1220,6 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
       initEAttribute(getStringToObjectMapEntry_Value(), ecorePackage.getEJavaObject(), "value", null, 0, 1,
          Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
          IS_ORDERED);
-
-      initEClass(gLayoutDataEClass, GLayoutData.class, "GLayoutData", !IS_ABSTRACT, !IS_INTERFACE,
-         IS_GENERATED_INSTANCE_CLASS);
-      initEReference(getGLayoutData_PrefSize(), this.getGDimension(), null, "prefSize", null, 0, 1, GLayoutData.class,
-         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-         !IS_DERIVED, IS_ORDERED);
 
       // Initialize enums and add enum literals
       initEEnum(gSeverityEEnum, GSeverity.class, "GSeverity");

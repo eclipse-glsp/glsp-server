@@ -198,21 +198,12 @@ public interface GraphFactory extends EFactory {
    GPreRenderedElement createGPreRenderedElement();
 
    /**
-    * Returns a new object of class '<em>GLayout Data</em>'.
+    * Returns the package supported by this factory.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @return a new object of class '<em>GLayout Data</em>'.
+    * @return the package supported by this factory.
     * @generated
     */
-   GLayoutData createGLayoutData();
-
-   /**
-   	 * Returns the package supported by this factory.
-   	 * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-   	 * @return the package supported by this factory.
-   	 * @generated
-   	 */
    GraphPackage getGraphPackage();
 
 } //GraphFactory

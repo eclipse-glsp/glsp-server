@@ -343,13 +343,6 @@ public class GraphSwitch<T> extends Switch<T> {
                result = defaultCase(theEObject);
             return result;
          }
-         case GraphPackage.GLAYOUT_DATA: {
-            GLayoutData gLayoutData = (GLayoutData) theEObject;
-            T result = caseGLayoutData(gLayoutData);
-            if (result == null)
-               result = defaultCase(theEObject);
-            return result;
-         }
          default:
             return defaultCase(theEObject);
       }
@@ -716,31 +709,16 @@ public class GraphSwitch<T> extends Switch<T> {
    }
 
    /**
-    * Returns the result of interpreting the object as an instance of '<em>GLayout Data</em>'.
+    * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
     * <!-- begin-user-doc -->
-    * This implementation returns null;
-    * returning a non-null result will terminate the switch.
-    * <!-- end-user-doc -->
-    * @param object the target of the switch.
-    * @return the result of interpreting the object as an instance of '<em>GLayout Data</em>'.
-    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-    * @generated
-    */
-   public T caseGLayoutData(GLayoutData object) {
-      return null;
-   }
-
-   /**
-   	 * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
-   	 * <!-- begin-user-doc -->
     * This implementation returns null;
     * returning a non-null result will terminate the switch, but this is the last case anyway.
     * <!-- end-user-doc -->
-   	 * @param object the target of the switch.
-   	 * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
-   	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)
-   	 * @generated
-   	 */
+    * @param object the target of the switch.
+    * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
+    * @see #doSwitch(org.eclipse.emf.ecore.EObject)
+    * @generated
+    */
    @Override
    public T defaultCase(EObject object) {
       return null;

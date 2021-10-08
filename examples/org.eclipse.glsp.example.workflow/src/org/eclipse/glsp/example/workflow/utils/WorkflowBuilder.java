@@ -243,8 +243,8 @@ public final class WorkflowBuilder {
          layoutOptions.put(H_GRAB, true);
          layoutOptions.put(V_GRAB, true);
          GCompartmentBuilder structCompartmentBuilder = new GCompartmentBuilder(ModelTypes.STRUCTURE) //
-            .id(node.getId() + "_struct")
-            .layout("freeform")
+            .id(node.getId() + "_struct") //
+            .layout(GConstants.Layout.FREEFORM) //
             .layoutOptions(layoutOptions);
          return structCompartmentBuilder //
             .build();

@@ -15,6 +15,8 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.utils;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GBoundsAware;
 import org.eclipse.glsp.graph.GModelElement;
@@ -67,9 +69,14 @@ public final class GeometryUtil {
       double x = modelElement.getPosition() == null ? 0 : modelElement.getPosition().getX();
       double y = modelElement.getPosition() == null ? 0 : modelElement.getPosition().getY();
 
-      return GraphUtil.point(
-         relativeToParent.getX() - x,
-         relativeToParent.getY() - y);
+      return GraphUtil.point(relativeToParent.getX() - x, relativeToParent.getY() - y);
+   }
+
+   public static void shift(final List<GModelElement> elements, final GPoint offset) {
+      GModelUtil.filterByType(elements, GBoundsAware.class).forEach(boundsAware -> {
+         boundsAware.getPosition().setX(boundsAware.getPosition().getX() + offset.getX());
+         boundsAware.getPosition().setY(boundsAware.getPosition().getY() + offset.getY());
+      });
    }
 
 }

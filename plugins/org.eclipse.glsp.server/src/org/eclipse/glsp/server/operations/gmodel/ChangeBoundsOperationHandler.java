@@ -58,15 +58,12 @@ public class ChangeBoundsOperationHandler extends BasicOperationHandler<ChangeBo
          "GNode with id " + elementId + " not found");
 
       GModelElement parent = nodeToUpdate.getParent();
-      GPoint positionToSet;
-      if (parent instanceof GModelRoot) {
+      GPoint positionToSet = parent instanceof GModelRoot
          // For root nodes (Owned by the model root), allow negative coordinates
-         positionToSet = newPosition;
-      } else {
-         // For child nodes (Owned by another node or compartement), restrict the movement
+         ? newPosition
+         // For child nodes (Owned by another node or compartment), restrict the movement
          // to positive coordinates, to avoid weird layout behavior
-         positionToSet = GraphUtil.point(Math.max(0, newPosition.getX()), Math.max(0, newPosition.getY()));
-      }
+         : GraphUtil.point(Math.max(0, newPosition.getX()), Math.max(0, newPosition.getY()));
 
       GLayoutData data = nodeToUpdate.getLayoutData();
       if (data == null) {

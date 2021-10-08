@@ -99,10 +99,10 @@ public abstract class CreateNodeOperationHandler extends BasicCreateOperationHan
             try {
                GPoint relativePosition = GeometryUtil.absoluteToRelative(absoluteLocation.get(),
                   (GBoundsAware) modelElement);
-               return Optional
-                  .of(allowNegativeCoordinates
-                     ? relativePosition
-                     : GraphUtil.point(Math.max(0, relativePosition.getX()), Math.max(0, relativePosition.getY())));
+               GPoint relativeLocation = allowNegativeCoordinates
+                  ? relativePosition
+                  : GraphUtil.point(Math.max(0, relativePosition.getX()), Math.max(0, relativePosition.getY()));
+               return Optional.of(relativeLocation);
             } catch (IllegalArgumentException ex) {
                return absoluteLocation;
             }

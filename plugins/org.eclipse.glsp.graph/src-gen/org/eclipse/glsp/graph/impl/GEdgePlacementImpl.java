@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  * 
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -302,7 +302,6 @@ public class GEdgePlacementImpl extends MinimalEObjectImpl.Container implements 
     * <!-- end-user-doc -->
     * @generated
     */
-   @SuppressWarnings("null")
    @Override
    public boolean eIsSet(int featureID) {
       switch (featureID) {

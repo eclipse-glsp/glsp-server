@@ -1,38 +1,41 @@
 /**
- * Copyright (c) 2019 EclipseSource and others.
- *
+ * Copyright (c) 2019-2021 EclipseSource and others.
+ * 
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
  * https://www.eclipse.org/legal/epl-2.0.
- *
+ * 
  * This Source Code may also be made available under the following Secondary
  * Licenses when the conditions for such availability set forth in the Eclipse
  * Public License v. 2.0 are satisfied: GNU General Public License, version 2
  * with the GNU Classpath Exception which is available at
  * https://www.gnu.org/software/classpath/license.html.
- *
+ * 
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  * ********************************************************************************
  */
 package org.eclipse.glsp.graph.impl;
 
 import java.util.Collection;
-import java.util.Optional;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
+
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.GraphPackage;
 
@@ -435,30 +438,25 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    *
-    * @generated NOT
+    * @generated
     */
    public GModelElement basicGetSource() {
-      return findElement(this.getSourceId()).orElse(null);
+      // TODO: implement this method to return the 'Source' reference
+      // -> do not perform proxy resolution
+      // Ensure that you remove @generated or mark it @generated NOT
+      throw new UnsupportedOperationException();
    }
 
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    *
-    * @generated NOT
+    * @generated
     */
    @Override
-   public void setSource(final GModelElement newSource) {
-      if (newSource == null) {
-         this.sourceId = null;
-         return;
-      }
-      this.sourceId = newSource.getId();
-   }
-
-   private Optional<GModelElement> findElement(final String elementId) {
-      return GModelIndex.get(this).get(elementId);
+   public void setSource(GModelElement newSource) {
+      // TODO: implement this method to set the 'Source' reference
+      // Ensure that you remove @generated or mark it @generated NOT
+      throw new UnsupportedOperationException();
    }
 
    /**
@@ -475,26 +473,25 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    *
-    * @generated NOT
+    * @generated
     */
    public GModelElement basicGetTarget() {
-      return findElement(this.getTargetId()).orElse(null);
+      // TODO: implement this method to return the 'Target' reference
+      // -> do not perform proxy resolution
+      // Ensure that you remove @generated or mark it @generated NOT
+      throw new UnsupportedOperationException();
    }
 
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    *
-    * @generated NOT
+    * @generated
     */
    @Override
-   public void setTarget(final GModelElement newTarget) {
-      if (newTarget == null) {
-         this.targetId = null;
-         return;
-      }
-      this.targetId = newTarget.getId();
+   public void setTarget(GModelElement newTarget) {
+      // TODO: implement this method to set the 'Target' reference
+      // Ensure that you remove @generated or mark it @generated NOT
+      throw new UnsupportedOperationException();
    }
 
    /**
@@ -776,4 +773,4 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
       return result.toString();
    }
 
-} // GEdgeImpl
+} //GEdgeImpl

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  * 
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -22,8 +22,8 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.common.util.EMap;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -286,6 +286,20 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
     * @generated
     */
    @Override
+   public EMap<String, Object> getArgs() {
+      if (args == null) {
+         args = new EcoreEMap<String, Object>(GraphPackage.Literals.STRING_TO_OBJECT_MAP_ENTRY,
+            StringToObjectMapEntryImpl.class, this, GraphPackage.GLABEL__ARGS);
+      }
+      return args;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
    public String getId() { return id; }
 
    /**
@@ -414,20 +428,6 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
       type = newType;
       if (eNotificationRequired())
          eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.GLABEL__TYPE, oldType, type));
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EMap<String, Object> getArgs() {
-      if (args == null) {
-         args = new EcoreEMap<String, Object>(GraphPackage.Literals.STRING_TO_OBJECT_MAP_ENTRY,
-            StringToObjectMapEntryImpl.class, this, GraphPackage.GLABEL__ARGS);
-      }
-      return args;
    }
 
    /**

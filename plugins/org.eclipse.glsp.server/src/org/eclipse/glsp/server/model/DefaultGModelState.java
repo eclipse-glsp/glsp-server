@@ -36,7 +36,7 @@ public class DefaultGModelState implements GModelState {
    protected String clientId;
 
    protected Map<String, String> options;
-   protected final Map<String, Object> memento = new HashMap<>();
+   protected final Map<String, Object> properties = new HashMap<>();
    protected GModelRoot currentModel;
    protected BasicCommandStack commandStack;
    protected String editMode;
@@ -137,17 +137,18 @@ public class DefaultGModelState implements GModelState {
    public void setEditMode(final String editMode) { this.editMode = editMode; }
 
    @Override
-   public void setMemento(final String key, final Object value) {
-      memento.put(key, value);
+   @SuppressWarnings("unchecked")
+   public <P> P setProperty(final String key, final P property) {
+      return (P) properties.put(key, property);
    }
 
    @Override
-   public Optional<Object> getMemento(final String key) {
-      return Optional.ofNullable(memento.get(key));
+   public <P> Optional<P> getProperty(final String key, final Class<P> type) {
+      return Optional.ofNullable(type.cast(properties.get(key)));
    }
 
    @Override
-   public Optional<Object> clearMemento(final String key) {
-      return Optional.ofNullable(memento.remove(key));
+   public void clearProperty(final String key) {
+      properties.remove(key);
    }
 }

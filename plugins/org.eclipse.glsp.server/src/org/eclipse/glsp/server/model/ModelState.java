@@ -48,11 +48,11 @@ interface ModelState<T> {
 
    void setEditMode(String editMode);
 
-   void setMemento(String key, Object value);
+   <P> P setProperty(final String key, final P property);
 
-   Optional<Object> getMemento(String key);
+   <P> Optional<P> getProperty(String key, Class<P> type);
 
-   Optional<Object> clearMemento(String key);
+   void clearProperty(final String key);
 
    default boolean isReadonly() { return SetEditModeAction.EDIT_MODE_READONLY.equals(getEditMode()); }
 }

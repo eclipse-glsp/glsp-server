@@ -48,7 +48,7 @@ interface ModelState<T> {
 
    void setEditMode(String editMode);
 
-   <P> P setProperty(final String key, final P property);
+   <P> P setProperty(String key, P property);
 
    <P> Optional<P> getProperty(String key, Class<P> type);
 

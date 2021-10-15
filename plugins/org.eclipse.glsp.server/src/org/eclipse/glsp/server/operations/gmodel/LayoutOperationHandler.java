@@ -16,7 +16,6 @@
 package org.eclipse.glsp.server.operations.gmodel;
 
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
-import org.eclipse.glsp.server.features.core.model.ModelSubmissionHandler;
 import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.layout.ServerLayoutKind;
 import org.eclipse.glsp.server.model.GModelState;
@@ -28,8 +27,6 @@ import com.google.inject.Inject;
 public class LayoutOperationHandler extends BasicOperationHandler<LayoutOperation> {
    @Inject
    protected LayoutEngine layoutEngine;
-   @Inject
-   protected ModelSubmissionHandler modelSubmissionHandler;
    @Inject
    protected DiagramConfiguration diagramConfiguration;
 

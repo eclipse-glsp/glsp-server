@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -16,6 +16,7 @@
 package org.eclipse.glsp.server.model;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.eclipse.glsp.server.actions.SetEditModeAction;
 
@@ -46,6 +47,12 @@ interface ModelState<T> {
    String getEditMode();
 
    void setEditMode(String editMode);
+
+   <P> P setProperty(String key, P property);
+
+   <P> Optional<P> getProperty(String key, Class<P> type);
+
+   void clearProperty(String key);
 
    default boolean isReadonly() { return SetEditModeAction.EDIT_MODE_READONLY.equals(getEditMode()); }
 }

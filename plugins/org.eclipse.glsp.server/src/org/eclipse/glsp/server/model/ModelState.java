@@ -52,7 +52,7 @@ interface ModelState<T> {
 
    <P> Optional<P> getProperty(String key, Class<P> type);
 
-   void clearProperty(final String key);
+   void clearProperty(String key);
 
    default boolean isReadonly() { return SetEditModeAction.EDIT_MODE_READONLY.equals(getEditMode()); }
 }

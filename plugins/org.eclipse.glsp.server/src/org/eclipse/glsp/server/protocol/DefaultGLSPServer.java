@@ -20,7 +20,6 @@ import static org.eclipse.glsp.server.utils.ServerMessageUtil.error;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
@@ -31,6 +30,9 @@ import org.eclipse.glsp.server.actions.ActionRegistry;
 import org.eclipse.glsp.server.session.ClientSession;
 import org.eclipse.glsp.server.session.ClientSessionManager;
 import org.eclipse.glsp.server.types.GLSPServerException;
+import org.eclipse.lsp4j.jsonrpc.ResponseErrorException;
+import org.eclipse.lsp4j.jsonrpc.messages.ResponseError;
+import org.eclipse.lsp4j.jsonrpc.messages.ResponseErrorCode;
 
 import com.google.inject.Inject;
 
@@ -50,7 +52,7 @@ public class DefaultGLSPServer implements GLSPServer {
    protected String applicationId;
 
    protected Map<String, ClientSession> clientSessions;
-   protected Set<ServerConnectionListener> serverConnectionListeners;
+   protected Set<GLSPServerListener> serverConnectionListeners;
 
    public DefaultGLSPServer() {
       initialized = new CompletableFuture<>();
@@ -62,15 +64,19 @@ public class DefaultGLSPServer implements GLSPServer {
    @SuppressWarnings("checkstyle:IllegalCatch")
    public CompletableFuture<InitializeResult> initialize(final InitializeParameters params) {
       LOG.debug("Initializing server with the following params:\n" + params);
+
+      validateProtocolVersion(params);
+
       if (isInitialized()) {
-         throw new GLSPServerException("This GLSP server has already been initialized.");
+         if (!params.getApplicationId().equals(applicationId)) {
+            String errorMsg = String
+               .format("Could not initialize GLSP server for application '%s'. Server has already been initialized"
+                  + "for a different appliction with id '%s'", params.getApplicationId(), applicationId);
+            throw new ResponseErrorException(new ResponseError(ResponseErrorCode.InvalidParams, errorMsg, params));
+         }
+         return initialized;
       }
 
-      if (!params.getProtocolVersion().equals(PROTOCOL_VERSION)) {
-         throw new GLSPServerException(String.format(
-            "Protocol version mismatch! The client protocol version '%s' is not compatible with the server protocol version '%s'!",
-            params.getProtocolVersion(), PROTOCOL_VERSION));
-      }
       this.applicationId = params.getApplicationId();
 
       InitializeResult result = new InitializeResult(PROTOCOL_VERSION);
@@ -78,7 +84,17 @@ public class DefaultGLSPServer implements GLSPServer {
          .forEach((diagramType, serverHandledActions) -> result.addServerActions(diagramType, serverHandledActions));
 
       initialized = handleIntializeArgs(result, params.getArgs());
+      serverConnectionListeners.forEach(listener -> listener.serverInitialized(this));
       return initialized;
+   }
+
+   protected void validateProtocolVersion(final InitializeParameters params) {
+      if (!params.getProtocolVersion().equals(PROTOCOL_VERSION)) {
+         String errorMsg = String.format(
+            "Protocol version mismatch! The client protocol version '%s' is not compatible with the server protocol version '%s'!",
+            params.getProtocolVersion(), PROTOCOL_VERSION);
+         throw new ResponseErrorException(new ResponseError(ResponseErrorCode.InvalidParams, errorMsg, params));
+      }
    }
 
    protected CompletableFuture<InitializeResult> handleIntializeArgs(final InitializeResult result,
@@ -86,24 +102,30 @@ public class DefaultGLSPServer implements GLSPServer {
       return CompletableFuture.completedFuture(result);
    }
 
+   protected void validateServerInitialized() {
+      if (!isInitialized()) {
+         throw new ResponseErrorException(new ResponseError(ResponseErrorCode.serverNotInitialized,
+            "The GLSP server has not been initialized.", null));
+      }
+   }
+
    @Override
    public CompletableFuture<Void> initializeClientSession(final InitializeClientSessionParameters params) {
       LOG.debug("Initializing client session with the following params:\n" + params);
 
-      if (!isInitialized()) {
-         throw new GLSPServerException("This GLSP server has not been initialized.");
-      }
+      validateServerInitialized();
 
-      Optional<ClientSession> session = sessionManager.createClientSession(params.getClientSessionId(),
-         params.getDiagramType());
-      if (session.isPresent()) {
+      try {
+         ClientSession session = sessionManager.getOrCreateClientSession(params.getClientSessionId(),
+            params.getDiagramType());
          clientSessions.put(params.getClientSessionId(),
-            session.get());
+            session);
          return handleInitializeClientSessionArgs(params.getArgs());
+      } catch (GLSPServerException exception) {
+         throw new ResponseErrorException(
+            new ResponseError(ResponseErrorCode.InternalError, exception.getMessage(), exception));
       }
 
-      throw new GLSPServerException(String.format("Could not initialize new session for client id '%s'. "
-         + "Another session with the same id already exists", params.getClientSessionId()));
    }
 
    protected CompletableFuture<Void> handleInitializeClientSessionArgs(final Map<String, String> args) {
@@ -113,9 +135,7 @@ public class DefaultGLSPServer implements GLSPServer {
    @Override
    public CompletableFuture<Void> disposeClientSession(final DisposeClientSessionParameters params) {
       LOG.debug("Dispose client session with the following params:\n" + params);
-      if (!isInitialized()) {
-         throw new GLSPServerException("This GLSP server has not been initialized.");
-      }
+      validateServerInitialized();
       if (sessionManager.disposeClientSession(params.getClientSessionId())) {
          clientSessions.remove(params.getClientSessionId());
          return handleDisposeClientSessionArgs(params.getArgs());
@@ -138,13 +158,12 @@ public class DefaultGLSPServer implements GLSPServer {
    @Override
    @SuppressWarnings("checkstyle:IllegalCatch")
    public void process(final ActionMessage message) {
-      if (!isInitialized()) {
-         throw new GLSPServerException("This GLSP server has not been initialized.");
-      }
+      validateServerInitialized();
       LOG.debug("process " + message);
       String clientSessionId = message.getClientId();
       if (!clientSessions.containsKey(clientSessionId)) {
-         throw new GLSPServerException("No client session has beend initialized for client id: " + clientSessionId);
+         throw new ResponseErrorException(new ResponseError(ResponseErrorCode.InvalidParams,
+            "No client session has beend initialized for client id: " + clientSessionId, message));
       }
 
       Function<Throwable, Void> errorHandler = ex -> {
@@ -165,11 +184,11 @@ public class DefaultGLSPServer implements GLSPServer {
 
    @Override
    public void shutdown() {
-      if (this.clientProxy != null) {
-         sessionManager.dispose();
-         serverConnectionListeners.forEach(listener -> listener.clientDisconnected(clientProxy));
-         this.clientProxy = null;
-      }
+      LOG.info("Shutdown GLSP Server " + this);
+      serverConnectionListeners.forEach(listener -> listener.serverShutdowned(this));
+      clientSessions.clear();
+      initialized = new CompletableFuture<>();
+      this.clientProxy = null;
    }
 
    public String getApplicationId() { return applicationId; }
@@ -178,12 +197,12 @@ public class DefaultGLSPServer implements GLSPServer {
    public GLSPClient getClient() { return this.clientProxy; }
 
    @Override
-   public boolean addListener(final ServerConnectionListener listener) {
+   public boolean addListener(final GLSPServerListener listener) {
       return serverConnectionListeners.add(listener);
    }
 
    @Override
-   public boolean remove(final ServerConnectionListener listener) {
+   public boolean remove(final GLSPServerListener listener) {
       return serverConnectionListeners.remove(listener);
    }
 }

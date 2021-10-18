@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -30,8 +30,8 @@ import org.eclipse.jetty.websocket.jsr356.server.ContainerDefaultConfigurator;
 import com.google.inject.Injector;
 
 public class GLSPConfigurator extends Configurator {
-   private Configurator containerConfigurator;
-   private final Supplier<Injector> injector;
+   protected Configurator containerConfigurator;
+   protected final Supplier<Injector> injector;
 
    public GLSPConfigurator(final Supplier<Injector> injector) {
       this.injector = injector;

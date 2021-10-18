@@ -24,14 +24,17 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.eclipse.glsp.server.disposable.Disposable;
+import org.eclipse.glsp.server.protocol.GLSPServer;
+import org.eclipse.glsp.server.protocol.GLSPServerListener;
 import org.eclipse.glsp.server.session.ClientSession;
 import org.eclipse.glsp.server.session.ClientSessionFactory;
 import org.eclipse.glsp.server.session.ClientSessionListener;
 import org.eclipse.glsp.server.session.ClientSessionManager;
+import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.google.inject.Inject;
 
-public final class DefaultClientSessionManager extends Disposable implements ClientSessionManager {
+public final class DefaultClientSessionManager extends Disposable implements ClientSessionManager, GLSPServerListener {
    private static final String ALL_CLIENT_IDS_KEY = "*";
 
    @Inject()
@@ -40,17 +43,29 @@ public final class DefaultClientSessionManager extends Disposable implements Cli
    protected final Map<String, ClientSession> clientSessions = new HashMap<>();
    protected final Map<String, List<ClientSessionListener>> listeners = new HashMap<>();
 
+   @Inject
+   public DefaultClientSessionManager(final GLSPServer server) {
+      server.addListener(this);
+   }
+
    @Override
-   public synchronized Optional<ClientSession> createClientSession(final String clientSessionId,
+   public synchronized ClientSession getOrCreateClientSession(final String clientSessionId,
       final String diagramType) {
-      if (clientSessions.containsKey(clientSessionId)) {
-         return Optional.empty();
+      ClientSession session = clientSessions.get(clientSessionId);
+      if (session != null) {
+         if (!session.getDiagramType().equals(diagramType)) {
+            String errorMsg = String.format("Could not initialize new session for diagram type '%s'"
+               + "Another session with the same id for the diagram type '%s' already exists",
+               diagramType, session.getDiagramType());
+            throw new GLSPServerException(errorMsg);
+         }
+         return session;
       }
 
-      ClientSession session = sessionFactory.create(clientSessionId, diagramType);
-      clientSessions.put(clientSessionId, session);
-      getListenersToNotifiy(session).forEach(listener -> listener.sessionCreated(session));
-      return Optional.of(session);
+      ClientSession newSession = sessionFactory.create(clientSessionId, diagramType);
+      clientSessions.put(clientSessionId, newSession);
+      getListenersToNotifiy(newSession).forEach(listener -> listener.sessionCreated(newSession));
+      return newSession;
    }
 
    protected List<ClientSessionListener> getListenersToNotifiy(final ClientSession clientSession) {
@@ -128,6 +143,11 @@ public final class DefaultClientSessionManager extends Disposable implements Cli
       new ArrayList<>(clientSessions.keySet())
          .forEach(clientSessionId -> disposeClientSession(clientSessionId));
       listeners.clear();
+   }
+
+   @Override
+   public void serverShutDown(final GLSPServer glspServer) {
+      this.dispose();
    }
 
 }

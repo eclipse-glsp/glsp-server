@@ -19,7 +19,7 @@ package org.eclipse.glsp.server.protocol;
  * A listener to track the connection status of {@link GLSPClient}s (i.e. client applications).
  * Gets notified when a new GLSP client connects or disconnects.
  */
-public interface ServerConnectionListener {
+public interface GLSPServerListener {
 
    /**
     * Triggered when a new client application ({@link GLSPClient}) connects to the {@link GLSPServer}.
@@ -31,11 +31,21 @@ public interface ServerConnectionListener {
    }
 
    /**
-    * Triggered when a client application ({@link GLSPClient}) disconnects for the {@link GLSPServer}.
+    * Triggered after a GLSPServer has been initialized via the {@link GLSPServer#initialize(InitializeParameters)}
+    * method.
     *
-    * @param client The disconnected client
+    * @param server The GLSPServer which has been initialized.
     */
-   default void clientDisconnected(final GLSPClient client) {
+   default void serverInitialized(final GLSPServer server) {
+      // No-op as default. This enables partial interface implementation.
+   }
+
+   /**
+    * Triggered after the {@link GLSPServer#shutdown()} method has been invoked.
+    *
+    * @param glspServer The glspServer which has been shut down.
+    */
+   default void serverShutDown(final GLSPServer glspServer) {
       // No-op as default. This enables partial interface implementation.
    }
 }

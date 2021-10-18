@@ -48,8 +48,9 @@ public class DefaultToolPaletteItemProvider implements ToolPaletteItemProvider {
       counter = 0;
       List<PaletteItem> nodes = createPaletteItems(handlers, CreateNodeOperation.class);
       List<PaletteItem> edges = createPaletteItems(handlers, CreateEdgeOperation.class);
-      return Lists.newArrayList(PaletteItem.createPaletteGroup("node-group", "Nodes", nodes, "fa-hammer", "A"),
-         PaletteItem.createPaletteGroup("edge-group", "Edges", edges, "fa-hammer", "B"));
+      return Lists.newArrayList(
+         PaletteItem.createPaletteGroup("node-group", "Nodes", nodes, "symbol-property", "A"),
+         PaletteItem.createPaletteGroup("edge-group", "Edges", edges, "symbol-property", "B"));
 
    }
 

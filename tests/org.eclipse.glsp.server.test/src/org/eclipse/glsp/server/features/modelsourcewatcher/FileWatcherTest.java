@@ -212,8 +212,8 @@ class FileWatcherTest {
       public boolean isDisposed() { return false; }
 
       @Override
-      public Optional<ClientSession> createClientSession(final String clientSessionId, final String diagramType) {
-         return Optional.empty();
+      public ClientSession getOrCreateClientSession(final String clientSessionId, final String diagramType) {
+         return null;
       }
 
       @Override

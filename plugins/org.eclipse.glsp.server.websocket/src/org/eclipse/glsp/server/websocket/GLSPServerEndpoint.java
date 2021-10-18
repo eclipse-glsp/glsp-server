@@ -16,6 +16,8 @@
 package org.eclipse.glsp.server.websocket;
 
 import java.util.Collection;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import javax.websocket.CloseReason;
 import javax.websocket.EndpointConfig;
@@ -25,29 +27,40 @@ import org.eclipse.glsp.server.gson.ServerGsonConfigurator;
 import org.eclipse.glsp.server.protocol.GLSPClient;
 import org.eclipse.glsp.server.protocol.GLSPServer;
 import org.eclipse.lsp4j.jsonrpc.Launcher.Builder;
+import org.eclipse.lsp4j.jsonrpc.MessageConsumer;
 import org.eclipse.lsp4j.websocket.WebSocketEndpoint;
 
+import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 
 public class GLSPServerEndpoint extends WebSocketEndpoint<GLSPClient> {
    public static final int MAX_TEXT_MESSAGE_BUFFER_SIZE = 8388608;
-   @Inject
-   private GLSPServer glspServer;
 
    @Inject
-   private ServerGsonConfigurator gsonConfigurator;
+   protected ServerGsonConfigurator gsonConfigurator;
+
+   @Inject
+   protected GLSPServer glspServer;
 
    @Override
    protected void configure(final Builder<GLSPClient> builder) {
-      builder.setLocalService(glspServer);
-      builder.setRemoteInterface(GLSPClient.class);
-      builder.configureGson(gsonConfigurator::configureGsonBuilder);
+      builder.setLocalService(glspServer)
+         .setRemoteInterface(GLSPClient.class)
+         .wrapMessages(messageWrapper())
+         .configureGson(gsonConfigurator::configureGsonBuilder);
+   }
+
+   protected Consumer<GsonBuilder> configureGson() {
+      return (builder) -> gsonConfigurator.configureGsonBuilder(builder);
+   }
+
+   protected Function<MessageConsumer, MessageConsumer> messageWrapper() {
+      return Function.identity();
    }
 
    @Override
    protected void connect(final Collection<Object> localServices, final GLSPClient remoteProxy) {
-      localServices.stream().filter(GLSPServer.class::isInstance).map(GLSPServer.class::cast)
-         .forEach(ca -> ca.connect(remoteProxy));
+      glspServer.connect(remoteProxy);
    }
 
    @Override

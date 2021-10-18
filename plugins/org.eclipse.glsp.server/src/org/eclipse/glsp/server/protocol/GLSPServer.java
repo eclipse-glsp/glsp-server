@@ -33,7 +33,11 @@ public interface GLSPServer {
     * with an {@link InitializeResult} no other request or notification can be handled and is expected to throw an
     * error. A client is uniquely identified by an `applicationId` and has to specify on which `protocolVersion` it is
     * based on. In addition, custom arguments can be provided in the `args` map to allow for custom initialization
-    * behavior on the server.
+    * behavior on the server. Subsequent initialize requests return the {@link InitializeResult} of the initial request
+    * if the given application id and protocol version are matching, otherwise an exception is thrown.
+    *
+    * After successfully initialization all {@link GLSPServerListener}s are notified via the
+    * {@link GLSPServerListener#serverInitialized(GLSPServer)} method.
     *
     * @param params the {@link InitializeParameters}.
     * @return A @{@link CompletableFuture} of the {@link InitializeResult} .
@@ -42,10 +46,13 @@ public interface GLSPServer {
    CompletableFuture<InitializeResult> initialize(InitializeParameters params);
 
    /**
-    * The InitializeClientSession` request is sent to the server whenever a new graphical representation (diagram) is
+    * The `initializeClientSession` request is sent to the server whenever a new graphical representation (diagram) is
     * created. Each individual diagram on the client side counts as one session and has to provide a unique
     * `clientSessionId` and its `diagramType`. In addition, custom arguments can be provided in the `args` map to allow
-    * for custom initialization behavior on the server.
+    * for custom initialization behavior on the server. Subsequent `initializeClientSession` requests for the same
+    * client id and diagram type are expected to complete successfully but don't have an actual effect because the
+    * corresponding client session is
+    * already initialized.
     *
     * @param params the {@link InitializeClientSessionParameters}.
     * @return A `void` {@link CompletableFuture} that completes if the initialization was successful.
@@ -81,6 +88,8 @@ public interface GLSPServer {
     * The 'shutdown' notification is sent from the client to the server if the client disconnects from the server (e.g.
     * the client application has been closed).
     * This gives the server a chance to clean up and dispose any resources dedicated to the client and its sessions.
+    * All {@link GLSPServerListener}s are notfied via the {@link GLSPServerListener#serverShutDown(GLSPServer)} method.
+    * Afterwards the server instance is considered to be disposed and can no longer be used for handling requests.
     *
     */
    @JsonNotification
@@ -90,6 +99,9 @@ public interface GLSPServer {
     * Connects a {@link GLSPClient} json-rpc proxy interface to this server. The server can use this proxy to sent
     * {@link ActionMessage}s to
     * the client using the {@link GLSPClient#process(ActionMessage)} notification.
+    *
+    * After successful connection all {@link GLSPServerListener}s are notified via the
+    * {@link GLSPServerListener#clientConnected(GLSPClient)} method.
     *
     * @param client The {@link GLSPClient} proxy
     */
@@ -103,21 +115,21 @@ public interface GLSPServer {
    GLSPClient getClient();
 
    /**
-    * Register a new {@link ServerConnectionListener}.
+    * Register a new {@link GLSPServerListener}.
     *
     * @param listener The listener that should be registered.
     * @return 'true' if the listener was registered successfully, `false` otherwise (e.g. listener is already
     *         registered).
     */
-   boolean addListener(ServerConnectionListener listener);
+   boolean addListener(GLSPServerListener listener);
 
    /**
-    * Unregister a {@link ServerConnectionListener}.
+    * Unregister a {@link GLSPServerListener}.
     *
     * @param listener The listener that should be removed
     * @return 'true' if the listener was unregistered successfully, `false` otherwise (e.g. listener is was not
     *         registered in the first place).
     */
-   boolean remove(ServerConnectionListener listener);
+   boolean remove(GLSPServerListener listener);
 
 }

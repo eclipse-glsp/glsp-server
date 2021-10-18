@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.glsp.server.disposable.IDisposable;
+import org.eclipse.glsp.server.types.GLSPServerException;
 
 /**
  * The central component that manages the lifecycle of client sessions.
@@ -26,13 +27,17 @@ import org.eclipse.glsp.server.disposable.IDisposable;
 public interface ClientSessionManager extends IDisposable {
 
    /**
-    * Creates a new {@link ClientSession} for the given id and diagram type.
+    * Retries an existing (or created a new) {@link ClientSession} for the given id and diagram type.
+    * If a new session has been created all {@link ClientSessionListener}s are notified via the
+    * {@link ClientSessionListener#sessionCreated(ClientSession)} method.
     *
     * @param clientSessionId The client session id (i.e. clientId).
     * @param diagramType     The diagram type.
-    * @return An optional of the newly constructed {@link ClientSession}. Is empty if an error occurred during creation.
+    * @return The existing or newly constructed {@link ClientSession}.
+    *
+    * @throws GLSPServerException if another session with matching client id but different diagram type already exists.
     */
-   Optional<ClientSession> createClientSession(String clientSessionId, String diagramType);
+   ClientSession getOrCreateClientSession(String clientSessionId, String diagramType);
 
    /**
     * Retrieve an existing (i.e. currently active) {@link ClientSession} for the given client session id.
@@ -52,6 +57,8 @@ public interface ClientSessionManager extends IDisposable {
 
    /**
     * Dispose the active client session with the given id. This marks the end of the lifecylce of a client session.
+    * After successfully disposal all {@link ClientSessionListener}s are notified via the
+    * {@link ClientSessionListener#sessionDisposed(ClientSession)} method.
     *
     * @param clientSessionId The id of the client session which should be disposed
     * @return `true` if a session with the given id was active and successfully disposed, `false` otherwise

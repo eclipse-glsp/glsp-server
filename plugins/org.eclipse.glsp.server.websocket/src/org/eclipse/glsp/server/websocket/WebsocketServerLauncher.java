@@ -33,9 +33,9 @@ import com.google.inject.Module;
 
 public class WebsocketServerLauncher extends GLSPServerLauncher {
    private static Logger LOG = Logger.getLogger(WebsocketServerLauncher.class);
-   private Server server;
-   private String clientAppPath;
-   private final String endpointPath;
+   protected Server server;
+   protected String clientAppPath;
+   protected final String endpointPath;
 
    public WebsocketServerLauncher(final ServerModule serverModule, final String endpointPath,
       final Module... additionalModules) {

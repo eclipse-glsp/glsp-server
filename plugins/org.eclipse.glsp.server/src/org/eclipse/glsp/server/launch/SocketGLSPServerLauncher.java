@@ -63,7 +63,7 @@ public class SocketGLSPServerLauncher extends GLSPServerLauncher {
          onClose.get();
          log.info("Stopped GLSP server");
       } catch (IOException | InterruptedException | ExecutionException e) {
-         log.error("Error during server close!", e);
+         log.error("Error during server shutdown!", e);
       }
    }
 
@@ -111,7 +111,7 @@ public class SocketGLSPServerLauncher extends GLSPServerLauncher {
          glspServer.connect(launcher.getRemoteProxy());
          log.info("Starting GLSP server connection for client " + socketChannel.getRemoteAddress());
          launcher.startListening().get();
-         log.info("Stopping GLSP server connection for client" + socketChannel.getRemoteAddress());
+         log.info("Stopping GLSP server connection for client " + socketChannel.getRemoteAddress());
       } catch (IOException | InterruptedException | ExecutionException ex) {
          log.error("Failed to create client connection " + ex.getMessage(), ex);
       } finally {
@@ -137,17 +137,17 @@ public class SocketGLSPServerLauncher extends GLSPServerLauncher {
 
    @Override
    public void shutdown() {
-      log.info("Stopping all connections to the GLSP server...");
+      log.info("Closing all connections to the GLSP server...");
       if (serverSocket.isOpen()) {
          try {
             serverSocket.close();
          } catch (IOException e) {
-            log.error("Failed to close serverSocket: " + e.getMessage(), e);
+            log.error("Failed to close server socket: " + e.getMessage(), e);
          }
       }
 
       threadPool.shutdown();
       onShutdown.complete(null);
-      log.info("Stopped GLSP server");
+      log.info("Shutdown GLSP server");
    }
 }

@@ -118,8 +118,7 @@ public class DefaultGLSPServer implements GLSPServer {
       try {
          ClientSession session = sessionManager.getOrCreateClientSession(params.getClientSessionId(),
             params.getDiagramType());
-         clientSessions.put(params.getClientSessionId(),
-            session);
+         clientSessions.put(params.getClientSessionId(), session);
          return handleInitializeClientSessionArgs(params.getArgs());
       } catch (GLSPServerException exception) {
          throw new ResponseErrorException(
@@ -185,7 +184,7 @@ public class DefaultGLSPServer implements GLSPServer {
    @Override
    public void shutdown() {
       LOG.info("Shutdown GLSP Server " + this);
-      serverConnectionListeners.forEach(listener -> listener.serverShutdowned(this));
+      serverConnectionListeners.forEach(listener -> listener.serverShutDown(this));
       clientSessions.clear();
       initialized = new CompletableFuture<>();
       this.clientProxy = null;

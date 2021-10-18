@@ -146,7 +146,7 @@ public final class DefaultClientSessionManager extends Disposable implements Cli
    }
 
    @Override
-   public void serverShutdowned(final GLSPServer glspServer) {
+   public void serverShutDown(final GLSPServer glspServer) {
       this.dispose();
    }
 

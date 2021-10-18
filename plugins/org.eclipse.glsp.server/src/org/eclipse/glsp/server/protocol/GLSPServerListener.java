@@ -43,9 +43,9 @@ public interface GLSPServerListener {
    /**
     * Triggered after the {@link GLSPServer#shutdown()} method has been invoked.
     *
-    * @param glspServer The glspServer which has been shutdowned.
+    * @param glspServer The glspServer which has been shut down.
     */
-   default void serverShutdowned(final GLSPServer glspServer) {
+   default void serverShutDown(final GLSPServer glspServer) {
       // No-op as default. This enables partial interface implementation.
    }
 }

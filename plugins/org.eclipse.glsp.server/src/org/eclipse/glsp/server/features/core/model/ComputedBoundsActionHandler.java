@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -19,19 +19,22 @@ import java.util.List;
 
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.BasicActionHandler;
+import org.eclipse.glsp.server.actions.DefaultActionHandler;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.LayoutUtil;
 
 import com.google.inject.Inject;
 
-public class ComputedBoundsActionHandler extends BasicActionHandler<ComputedBoundsAction> {
+public class ComputedBoundsActionHandler extends DefaultActionHandler<ComputedBoundsAction> {
 
    @Inject
    protected ModelSubmissionHandler submissionHandler;
 
+   @Inject
+   protected GModelState modelState;
+
    @Override
-   public List<Action> executeAction(final ComputedBoundsAction action, final GModelState modelState) {
+   public List<Action> executeAction(final ComputedBoundsAction action) {
       synchronized (submissionHandler.getModelLock()) {
          GModelRoot model = modelState.getRoot();
          if (model != null && model.getRevision() == action.getRevision()) {

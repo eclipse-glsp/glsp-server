@@ -21,30 +21,83 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.types.Handler;
-
-public interface ActionHandler extends Handler<Action> {
+/**
+ * An action handler can execute certain {@link Action} types (subclasses) that are dispatched by the
+ * {@link ActionDispatcher}. The action handler processes the action in the {@link ActionHandler#execute(Action)}
+ * method and returns a list of response actions that to be dispatched.
+ * One action handler can handle multiple different action types.
+ */
+public interface ActionHandler {
+   /**
+    * Returns the list of action type (subclasses) that can be handled by this action handler.
+    *
+    * @return A list of {@link Action} classes that can be handled.
+    */
    List<Class<? extends Action>> getHandledActionTypes();
 
-   @Override
+   /**
+    * Validates whether the given {@link Action} can be handled by this action handler.
+    * The default implementation uses the list of handled action types ({@link ActionHandler#getHandledActionTypes()}
+    * to determine whether this handler can handle an action. Only actions that are instances of one of these types can
+    * be handled.
+    *
+    * @param action The action that should be validated.
+    * @return `true` if the given action can be handled, `false` otherwise.
+    */
    default boolean handles(final Action action) {
       return getHandledActionTypes().stream().anyMatch(clazz -> clazz.isInstance(action));
    }
 
+   /**
+    * Executes the action handler for the given {@link Action} and returns a list of response actions that should be
+    * dispatched by the {@link ActionDispatcher}. If the given action cannot be handled by this action handler an empty
+    * list is returned.
+    *
+    * @param action The action that should be processed.
+    * @return A list of response actions that should be dispatched.
+    */
+   List<Action> execute(Action action);
+
+   /**
+    * Helper method to convert the given {@link Action} to a {@link List}.
+    *
+    * @param action One ore more action objects that should be converted.
+    * @return The given action objects as list.
+    */
    default List<Action> listOf(final Action... action) {
       return Arrays.asList(action);
    }
 
+   /**
+    * Helper method to convert the given {@link Optional} action to a {@link List}.
+    *
+    * @param optionalAction The optional action that should be converted.
+    * @return A list of the given action or an empty list if no value was present.
+    */
    default List<Action> listOf(final Optional<Action> optionalAction) {
       List<Action> actions = new ArrayList<>();
       optionalAction.ifPresent(action -> actions.add(action));
       return actions;
    }
 
-   List<Action> execute(Action action, GModelState modelState);
-
+   /**
+    * Helper method that can be used to return an empty {@link List} of {@link Action}s.
+    *
+    * @return An empty action list.
+    */
    default List<Action> none() {
       return Collections.emptyList();
    }
+
+   /**
+    * Returns the priority of this action handler. The priority is used to derive the execution order if multiple
+    * action handlers should execute the same {@link Action}. The default priority is `0` and the priority is sorted
+    * descending. This means handlers with a priority >0 are executed before handlers with a default priority and
+    * handlers with a
+    * priority <0 are executed afterwards.
+    *
+    * @return the priority as integer.
+    */
+   default int getPriority() { return 0; }
+
 }

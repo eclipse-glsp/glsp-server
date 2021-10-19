@@ -37,17 +37,20 @@ import org.eclipse.glsp.server.utils.ClientOptionsUtil;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 
-public class SaveModelActionHandler extends BasicActionHandler<SaveModelAction> {
+public class SaveModelActionHandler extends DefaultActionHandler<SaveModelAction> {
    private static final Logger LOG = Logger.getLogger(SaveModelActionHandler.class);
 
    @Inject
    protected GraphGsonConfigurationFactory gsonConfigurator;
 
    @Inject
-   private Optional<ModelSourceWatcher> modelSourceWatcher;
+   protected Optional<ModelSourceWatcher> modelSourceWatcher;
+
+   @Inject
+   protected GModelState modelState;
 
    @Override
-   public List<Action> executeAction(final SaveModelAction action, final GModelState modelState) {
+   public List<Action> executeAction(final SaveModelAction action) {
       modelSourceWatcher.ifPresent(watcher -> watcher.pauseWatching(modelState));
       try {
          saveModelState(action, modelState);

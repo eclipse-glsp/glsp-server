@@ -27,26 +27,30 @@ import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.BasicOperationHandler;
 import org.eclipse.glsp.server.operations.ChangeBoundsOperation;
+import org.eclipse.glsp.server.operations.DefaultOperationHandler;
 import org.eclipse.glsp.server.types.ElementAndBounds;
+
+import com.google.inject.Inject;
 
 /**
  * Generic handler implementation for {@link ChangeBoundsOperation}.
  */
-public class ChangeBoundsOperationHandler extends BasicOperationHandler<ChangeBoundsOperation> {
+public class ChangeBoundsOperationHandler extends DefaultOperationHandler<ChangeBoundsOperation> {
 
    private static Logger log = Logger.getLogger(ChangeBoundsOperationHandler.class);
 
+   @Inject
+   protected GModelState modelState;
+
    @Override
-   public void executeOperation(final ChangeBoundsOperation operation, final GModelState modelState) {
+   public void executeOperation(final ChangeBoundsOperation operation) {
       for (ElementAndBounds element : operation.getNewBounds()) {
-         changeElementBounds(element.getElementId(), element.getNewPosition(), element.getNewSize(), modelState);
+         changeElementBounds(element.getElementId(), element.getNewPosition(), element.getNewSize());
       }
    }
 
-   private void changeElementBounds(final String elementId, final GPoint newPosition, final GDimension newSize,
-      final GModelState modelState) {
+   protected void changeElementBounds(final String elementId, final GPoint newPosition, final GDimension newSize) {
       if (elementId == null) {
          log.warn("Invalid ChangeBounds Action; missing mandatory arguments");
          return;

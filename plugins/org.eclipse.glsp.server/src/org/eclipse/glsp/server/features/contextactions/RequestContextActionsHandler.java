@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -19,20 +19,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.BasicActionHandler;
+import org.eclipse.glsp.server.actions.DefaultActionHandler;
 import org.eclipse.glsp.server.features.directediting.LabeledAction;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.types.EditorContext;
 
 import com.google.inject.Inject;
 
-public class RequestContextActionsHandler extends BasicActionHandler<RequestContextActions> {
+public class RequestContextActionsHandler extends DefaultActionHandler<RequestContextActions> {
 
    @Inject
    protected ContextActionsProviderRegistry contextActionsProviderRegistry;
 
+   @Inject
+   protected GModelState modelState;
+
    @Override
-   public List<Action> executeAction(final RequestContextActions action, final GModelState modelState) {
+   public List<Action> executeAction(final RequestContextActions action) {
       EditorContext editorContext = action.getEditorContext();
       List<LabeledAction> actions = new ArrayList<>();
       contextActionsProviderRegistry.get(action.getContextId())

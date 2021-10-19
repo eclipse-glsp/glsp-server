@@ -52,7 +52,7 @@ public class ModelSubmissionHandler {
     * <p>
     * These actions are not processed by this {@link ModelSubmissionHandler}, but should be either manually dispatched
     * to the {@link ActionDispatcher}, or simply returned as the result of an
-    * {@link ActionHandler#execute(Action, GModelState)} method.
+    * {@link ActionHandler#execute(Action)} method.
     * </p>
     *
     * @param modelState The model state to submit.
@@ -87,7 +87,7 @@ public class ModelSubmissionHandler {
     * <p>
     * These actions are not processed by this {@link ModelSubmissionHandler}, but should be either manually dispatched
     * to the {@link ActionDispatcher}, or simply returned as the result of an
-    * {@link ActionHandler#execute(Action, GModelState)} method.
+    * {@link ActionHandler#execute(Action)} method.
     * </p>
     *
     * @param modelState The model state to submit.

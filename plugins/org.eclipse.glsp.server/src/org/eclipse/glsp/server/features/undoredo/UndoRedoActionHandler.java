@@ -33,8 +33,11 @@ public class UndoRedoActionHandler implements ActionHandler {
    @Inject
    protected ModelSubmissionHandler modelSubmissionHandler;
 
+   @Inject
+   protected GModelState modelState;
+
    @Override
-   public List<Action> execute(final Action action, final GModelState modelState) {
+   public List<Action> execute(final Action action) {
       if (action instanceof UndoAction && modelState.canUndo()) {
          modelState.undo();
          return modelSubmissionHandler.submitModel(modelState, SetDirtyStateAction.Reason.UNDO);

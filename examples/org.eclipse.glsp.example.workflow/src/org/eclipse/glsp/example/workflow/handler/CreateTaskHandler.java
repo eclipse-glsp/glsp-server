@@ -52,8 +52,7 @@ public abstract class CreateTaskHandler extends CreateWorkflowNodeOperationHandl
    }
 
    @Override
-   protected GNode createNode(final Optional<GPoint> point, final Map<String, String> args,
-      final GModelState modelState) {
+   protected GNode createNode(final Optional<GPoint> point, final Map<String, String> args) {
       return builder(point, modelState).build();
    }
 

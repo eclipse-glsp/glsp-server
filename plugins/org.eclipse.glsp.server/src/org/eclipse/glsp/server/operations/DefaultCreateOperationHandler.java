@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2021 EclipseSource and others.
+ * Copyright (c) 2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -18,41 +18,42 @@ package org.eclipse.glsp.server.operations;
 import java.util.List;
 
 import org.eclipse.glsp.server.internal.util.GenericsUtil;
-import org.eclipse.glsp.server.model.GModelState;
 
 import com.google.common.collect.Lists;
-import com.google.inject.Inject;
 
-/**
- * Deprecated, will be removed after a grace period with the 1.0.0 release.
- * Please use {@link DefaultCreateOperationHandler} instead and directly inject the {@link GModelState}.
- */
-@Deprecated
-public abstract class BasicCreateOperationHandler<T extends CreateOperation> extends DefaultCreateOperationHandler<T> {
+public abstract class DefaultCreateOperationHandler<T extends CreateOperation> extends DefaultOperationHandler<T>
+   implements CreateOperationHandler {
+   protected List<String> handledElementTypeIds;
 
-   @Inject
-   protected GModelState modelState;
-
-   public BasicCreateOperationHandler(final String... elementTypeIds) {
+   public DefaultCreateOperationHandler(final String... elementTypeIds) {
       this(Lists.newArrayList(elementTypeIds));
    }
 
-   public BasicCreateOperationHandler(final List<String> handledElementTypeIds) {
+   public DefaultCreateOperationHandler(final List<String> handledElementTypeIds) {
       this.handledElementTypeIds = handledElementTypeIds;
    }
 
    @SuppressWarnings("unchecked")
    @Override
    protected Class<T> deriveOperationType() {
-      return (Class<T>) (GenericsUtil.getParametrizedType(getClass(), BasicCreateOperationHandler.class))
+      return (Class<T>) (GenericsUtil.getParametrizedType(getClass(), DefaultCreateOperationHandler.class))
          .getActualTypeArguments()[0];
    }
 
    @Override
-   protected void executeOperation(final T operation) {
-      executeOperation(operation, modelState);
+   public boolean handles(final Operation operation) {
+      return super.handles(operation) && handledElementTypeIds.contains(getHandledOperationType()
+         .cast(operation).getElementTypeId());
    }
 
-   protected abstract void executeOperation(T operation, GModelState modelState);
+   @Override
+   public abstract String getLabel();
+
+   @Override
+   public List<String> getHandledElementTypeIds() { return handledElementTypeIds; }
+
+   public void setHandledElementTypeIds(final List<String> handledElementTypeIds) {
+      this.handledElementTypeIds = handledElementTypeIds;
+   }
 
 }

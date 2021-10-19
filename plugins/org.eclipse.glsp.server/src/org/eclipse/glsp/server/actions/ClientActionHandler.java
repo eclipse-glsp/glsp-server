@@ -34,6 +34,9 @@ public class ClientActionHandler implements ActionHandler {
    @Inject
    protected Provider<GLSPClient> client;
 
+   @Inject
+   protected GModelState modelState;
+
    private final List<Class<? extends Action>> handledActionTypes;
 
    @Inject
@@ -45,7 +48,7 @@ public class ClientActionHandler implements ActionHandler {
    public List<Class<? extends Action>> getHandledActionTypes() { return handledActionTypes; }
 
    @Override
-   public List<Action> execute(final Action action, final GModelState modelState) {
+   public List<Action> execute(final Action action) {
       send(modelState.getClientId(), action);
       return Collections.emptyList();
    }

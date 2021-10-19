@@ -24,7 +24,7 @@ import java.util.Optional;
 /**
  * An action handler can execute certain {@link Action} types (subclasses) that are dispatched by the
  * {@link ActionDispatcher}. The action handler processes the action in the {@link ActionHandler#execute(Action)}
- * method and returns a list of response actions that to be dispatched.
+ * method and returns a list of response actions to be dispatched as a result of processing the original action.
  * One action handler can handle multiple different action types.
  */
 public interface ActionHandler {

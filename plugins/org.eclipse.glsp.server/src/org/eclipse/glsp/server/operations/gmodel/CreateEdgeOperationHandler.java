@@ -25,11 +25,11 @@ import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
-import org.eclipse.glsp.server.operations.DefaultCreateOperationHandler;
+import org.eclipse.glsp.server.operations.AbstractCreateOperationHandler;
 
 import com.google.inject.Inject;
 
-public abstract class CreateEdgeOperationHandler extends DefaultCreateOperationHandler<CreateEdgeOperation> {
+public abstract class CreateEdgeOperationHandler extends AbstractCreateOperationHandler<CreateEdgeOperation> {
 
    protected final String label;
 

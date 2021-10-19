@@ -21,22 +21,22 @@ import org.eclipse.glsp.server.internal.util.GenericsUtil;
  * Basic {@link OperationHandler} implementation that can handle exactly one {@link Operation} type.
  * It handles the overhead of casting the operation object received via the {@link OperationHandler#execute(Operation)}
  * method to the correct handled subtype. Subclasses only have to implement the
- * {@link DefaultOperationHandler#executeOperation(Operation)} method
+ * {@link AbstractOperationHandler#executeOperation(Operation)} method
  * and can work directly with the correct subtype instead of having to manually cast it.
  *
  * @param <O> class of the handled action type
  */
-public abstract class DefaultOperationHandler<O extends Operation> implements OperationHandler {
+public abstract class AbstractOperationHandler<O extends Operation> implements OperationHandler {
 
    protected final Class<O> operationType;
 
-   public DefaultOperationHandler() {
+   public AbstractOperationHandler() {
       this.operationType = deriveOperationType();
    }
 
    @SuppressWarnings("unchecked")
    protected Class<O> deriveOperationType() {
-      return (Class<O>) (GenericsUtil.getParametrizedType(getClass(), DefaultOperationHandler.class))
+      return (Class<O>) (GenericsUtil.getParametrizedType(getClass(), AbstractOperationHandler.class))
          .getActualTypeArguments()[0];
    }
 

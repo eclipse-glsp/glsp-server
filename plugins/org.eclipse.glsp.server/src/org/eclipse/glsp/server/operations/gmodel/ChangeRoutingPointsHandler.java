@@ -23,12 +23,12 @@ import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.ChangeRoutingPointsOperation;
-import org.eclipse.glsp.server.operations.DefaultOperationHandler;
+import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
 
 import com.google.inject.Inject;
 
-public class ChangeRoutingPointsHandler extends DefaultOperationHandler<ChangeRoutingPointsOperation> {
+public class ChangeRoutingPointsHandler extends AbstractOperationHandler<ChangeRoutingPointsOperation> {
 
    @Inject
    protected GModelState modelState;

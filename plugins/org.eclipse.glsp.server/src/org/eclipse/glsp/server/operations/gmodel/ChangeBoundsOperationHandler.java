@@ -28,7 +28,7 @@ import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.ChangeBoundsOperation;
-import org.eclipse.glsp.server.operations.DefaultOperationHandler;
+import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.types.ElementAndBounds;
 
 import com.google.inject.Inject;
@@ -36,7 +36,7 @@ import com.google.inject.Inject;
 /**
  * Generic handler implementation for {@link ChangeBoundsOperation}.
  */
-public class ChangeBoundsOperationHandler extends DefaultOperationHandler<ChangeBoundsOperation> {
+public class ChangeBoundsOperationHandler extends AbstractOperationHandler<ChangeBoundsOperation> {
 
    private static Logger log = Logger.getLogger(ChangeBoundsOperationHandler.class);
 

@@ -20,7 +20,7 @@ import java.util.Optional;
 
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
-import org.eclipse.glsp.server.actions.DefaultActionHandler;
+import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.ServerMessageUtil;
@@ -28,7 +28,7 @@ import org.eclipse.glsp.server.utils.ServerStatusUtil;
 
 import com.google.inject.Inject;
 
-public class RequestModelActionHandler extends DefaultActionHandler<RequestModelAction> {
+public class RequestModelActionHandler extends AbstractActionHandler<RequestModelAction> {
 
    @Inject
    protected ModelSourceLoader sourceModelLoader;

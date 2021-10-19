@@ -20,12 +20,12 @@ import java.util.Optional;
 
 import org.apache.log4j.Logger;
 import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.DefaultActionHandler;
+import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.model.GModelState;
 
 import com.google.inject.Inject;
 
-public class ResolveNavigationTargetActionHandler extends DefaultActionHandler<ResolveNavigationTargetAction> {
+public class ResolveNavigationTargetActionHandler extends AbstractActionHandler<ResolveNavigationTargetAction> {
 
    private static final Logger LOG = Logger.getLogger(ResolveNavigationTargetActionHandler.class);
 

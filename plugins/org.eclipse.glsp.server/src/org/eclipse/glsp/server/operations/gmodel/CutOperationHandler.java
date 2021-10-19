@@ -19,12 +19,12 @@ import java.util.List;
 
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.operations.CutOperation;
-import org.eclipse.glsp.server.operations.DefaultOperationHandler;
+import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.DeleteOperation;
 
 import com.google.inject.Inject;
 
-public class CutOperationHandler extends DefaultOperationHandler<CutOperation> {
+public class CutOperationHandler extends AbstractOperationHandler<CutOperation> {
 
    @Inject
    protected ActionDispatcher actionDispatcher;

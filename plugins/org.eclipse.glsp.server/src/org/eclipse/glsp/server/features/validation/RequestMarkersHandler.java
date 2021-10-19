@@ -24,12 +24,12 @@ import org.apache.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.DefaultActionHandler;
+import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.model.GModelState;
 
 import com.google.inject.Inject;
 
-public class RequestMarkersHandler extends DefaultActionHandler<RequestMarkersAction> {
+public class RequestMarkersHandler extends AbstractActionHandler<RequestMarkersAction> {
 
    private static final Logger LOG = Logger.getLogger(RequestMarkersHandler.class);
 

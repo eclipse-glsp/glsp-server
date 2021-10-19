@@ -34,14 +34,14 @@ import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.impl.GPointImpl;
 import org.eclipse.glsp.server.gson.GraphGsonConfigurationFactory;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.DefaultOperationHandler;
+import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.PasteOperation;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 
-public class PasteOperationHandler extends DefaultOperationHandler<PasteOperation> {
+public class PasteOperationHandler extends AbstractOperationHandler<PasteOperation> {
 
    private static final int DEFAULT_OFFSET = 20;
 

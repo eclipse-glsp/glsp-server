@@ -20,11 +20,11 @@ import java.util.Optional;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.DefaultOperationHandler;
+import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 
 import com.google.inject.Inject;
 
-public class ApplyLabelEditOperationHandler extends DefaultOperationHandler<ApplyLabelEditOperation> {
+public class ApplyLabelEditOperationHandler extends AbstractOperationHandler<ApplyLabelEditOperation> {
 
    @Inject
    protected GModelState modelState;

@@ -24,10 +24,10 @@ import com.google.inject.Inject;
 
 /**
  * Deprecated, will be removed with version 1.0.
- * Please use {@link DefaultActionHandler} instead and directly inject the {@link GModelState}.
+ * Please use {@link AbstractActionHandler} instead and directly inject the {@link GModelState}.
  */
 @Deprecated
-public abstract class BasicActionHandler<T extends Action> extends DefaultActionHandler<T> {
+public abstract class BasicActionHandler<T extends Action> extends AbstractActionHandler<T> {
 
    @Inject
    protected GModelState modelState;

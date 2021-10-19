@@ -19,13 +19,13 @@ import java.util.List;
 
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.DefaultActionHandler;
+import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.LayoutUtil;
 
 import com.google.inject.Inject;
 
-public class ComputedBoundsActionHandler extends DefaultActionHandler<ComputedBoundsAction> {
+public class ComputedBoundsActionHandler extends AbstractActionHandler<ComputedBoundsAction> {
 
    @Inject
    protected ModelSubmissionHandler submissionHandler;

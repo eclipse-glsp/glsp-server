@@ -22,12 +22,12 @@ import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.DefaultOperationHandler;
+import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.ReconnectEdgeOperation;
 
 import com.google.inject.Inject;
 
-public class ReconnectEdgeOperationHandler extends DefaultOperationHandler<ReconnectEdgeOperation> {
+public class ReconnectEdgeOperationHandler extends AbstractOperationHandler<ReconnectEdgeOperation> {
 
    @Inject
    protected GModelState modelState;

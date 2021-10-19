@@ -19,12 +19,12 @@ import java.util.Optional;
 
 import org.eclipse.glsp.example.workflow.wfgraph.TaskNode;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.DefaultOperationHandler;
+import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.google.inject.Inject;
 
-public class EditTaskOperationHandler extends DefaultOperationHandler<EditTaskOperation> {
+public class EditTaskOperationHandler extends AbstractOperationHandler<EditTaskOperation> {
 
    @Inject
    protected GModelState modelState;

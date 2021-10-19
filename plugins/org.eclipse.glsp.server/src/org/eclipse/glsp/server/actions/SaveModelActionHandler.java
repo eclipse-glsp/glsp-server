@@ -37,7 +37,7 @@ import org.eclipse.glsp.server.utils.ClientOptionsUtil;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 
-public class SaveModelActionHandler extends DefaultActionHandler<SaveModelAction> {
+public class SaveModelActionHandler extends AbstractActionHandler<SaveModelAction> {
    private static final Logger LOG = Logger.getLogger(SaveModelActionHandler.class);
 
    @Inject

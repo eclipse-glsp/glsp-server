@@ -22,10 +22,10 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.eclipse.glsp.example.workflow.action.LogAction;
 import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.DefaultActionHandler;
+import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.types.Severity;
 
-public class LogActionHandler extends DefaultActionHandler<LogAction> {
+public class LogActionHandler extends AbstractActionHandler<LogAction> {
    private static Logger LOG = Logger.getLogger(LogActionHandler.class);
 
    @Override

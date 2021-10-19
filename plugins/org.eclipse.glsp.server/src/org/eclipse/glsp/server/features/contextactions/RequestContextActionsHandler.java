@@ -19,14 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.DefaultActionHandler;
+import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.features.directediting.LabeledAction;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.types.EditorContext;
 
 import com.google.inject.Inject;
 
-public class RequestContextActionsHandler extends DefaultActionHandler<RequestContextActions> {
+public class RequestContextActionsHandler extends AbstractActionHandler<RequestContextActions> {
 
    @Inject
    protected ContextActionsProviderRegistry contextActionsProviderRegistry;

@@ -21,7 +21,7 @@ import org.eclipse.glsp.server.model.GModelState;
 
 import com.google.inject.Inject;
 
-public class SetEditModeActionHandler extends DefaultActionHandler<SetEditModeAction> {
+public class SetEditModeActionHandler extends AbstractActionHandler<SetEditModeAction> {
 
    @Inject
    protected GModelState modelState;

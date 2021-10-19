@@ -20,12 +20,12 @@ import java.util.Optional;
 
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.DefaultActionHandler;
+import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.model.GModelState;
 
 import com.google.inject.Inject;
 
-public class RequestPopupModelActionHandler extends DefaultActionHandler<RequestPopupModelAction> {
+public class RequestPopupModelActionHandler extends AbstractActionHandler<RequestPopupModelAction> {
    @Inject
    protected Optional<PopupModelFactory> popupModelFactory;
 

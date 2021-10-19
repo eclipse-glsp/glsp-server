@@ -21,24 +21,24 @@ import java.util.List;
 import org.eclipse.glsp.server.internal.util.GenericsUtil;
 
 /**
- * Default {@link ActionHandler} implementation that can handle exactly one {@link Action} type/class.
+ * Basic {@link ActionHandler} implementation that can handle exactly one {@link Action} type/class.
  * It handles the overhead of casting the action object received via the {@link ActionHandler#execute(Action)} method
  * to the correct handled subtype. Subclasses only have to implement the
- * {@link DefaultActionHandler#executeAction(Action)} method
+ * {@link AbstractActionHandler#executeAction(Action)} method
  * and can work directly with the correct subtype instead of having to manually cast it.
  *
  * @param <A> class of the handled action type
  */
-public abstract class DefaultActionHandler<A extends Action> implements ActionHandler {
+public abstract class AbstractActionHandler<A extends Action> implements ActionHandler {
    protected final Class<A> actionType;
 
-   public DefaultActionHandler() {
+   public AbstractActionHandler() {
       this.actionType = deriveActionType();
    }
 
    @SuppressWarnings("unchecked")
    protected Class<A> deriveActionType() {
-      return (Class<A>) GenericsUtil.getGenericTypeParameterClass(getClass(), DefaultActionHandler.class);
+      return (Class<A>) GenericsUtil.getGenericTypeParameterClass(getClass(), AbstractActionHandler.class);
    }
 
    @Override

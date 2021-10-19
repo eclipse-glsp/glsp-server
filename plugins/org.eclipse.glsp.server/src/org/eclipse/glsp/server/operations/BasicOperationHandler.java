@@ -22,10 +22,10 @@ import com.google.inject.Inject;
 
 /**
  * Deprecated, will be removed with version 1.0.
- * Please use {@link DefaultOperationHandler} instead and directly inject the {@link GModelState}.
+ * Please use {@link AbstractOperationHandler} instead and directly inject the {@link GModelState}.
  */
 @Deprecated
-public abstract class BasicOperationHandler<T extends Operation> extends DefaultOperationHandler<T> {
+public abstract class BasicOperationHandler<T extends Operation> extends AbstractOperationHandler<T> {
 
    @Inject
    protected GModelState modelState;

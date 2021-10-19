@@ -19,13 +19,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.DefaultActionHandler;
+import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.types.EditorContext;
 
 import com.google.inject.Inject;
 
-public class RequestNavigationTargetsActionHandler extends DefaultActionHandler<RequestNavigationTargetsAction> {
+public class RequestNavigationTargetsActionHandler extends AbstractActionHandler<RequestNavigationTargetsAction> {
 
    @Inject
    protected NavigationTargetProviderRegistry navigationTargetProviderRegistry;

@@ -19,12 +19,12 @@ import org.eclipse.glsp.server.diagram.DiagramConfiguration;
 import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.layout.ServerLayoutKind;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.DefaultOperationHandler;
+import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.LayoutOperation;
 
 import com.google.inject.Inject;
 
-public class LayoutOperationHandler extends DefaultOperationHandler<LayoutOperation> {
+public class LayoutOperationHandler extends AbstractOperationHandler<LayoutOperation> {
    @Inject
    protected LayoutEngine layoutEngine;
 

@@ -25,10 +25,10 @@ import com.google.inject.Inject;
 
 /**
  * Deprecated, will be removed with version 1.0.
- * Please use {@link DefaultCreateOperationHandler} instead and directly inject the {@link GModelState}.
+ * Please use {@link AbstractCreateOperationHandler} instead and directly inject the {@link GModelState}.
  */
 @Deprecated
-public abstract class BasicCreateOperationHandler<T extends CreateOperation> extends DefaultCreateOperationHandler<T> {
+public abstract class BasicCreateOperationHandler<T extends CreateOperation> extends AbstractCreateOperationHandler<T> {
 
    @Inject
    protected GModelState modelState;

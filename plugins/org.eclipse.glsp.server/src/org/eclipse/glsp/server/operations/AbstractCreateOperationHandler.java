@@ -21,22 +21,22 @@ import org.eclipse.glsp.server.internal.util.GenericsUtil;
 
 import com.google.common.collect.Lists;
 
-public abstract class DefaultCreateOperationHandler<T extends CreateOperation> extends DefaultOperationHandler<T>
+public abstract class AbstractCreateOperationHandler<T extends CreateOperation> extends AbstractOperationHandler<T>
    implements CreateOperationHandler {
    protected List<String> handledElementTypeIds;
 
-   public DefaultCreateOperationHandler(final String... elementTypeIds) {
+   public AbstractCreateOperationHandler(final String... elementTypeIds) {
       this(Lists.newArrayList(elementTypeIds));
    }
 
-   public DefaultCreateOperationHandler(final List<String> handledElementTypeIds) {
+   public AbstractCreateOperationHandler(final List<String> handledElementTypeIds) {
       this.handledElementTypeIds = handledElementTypeIds;
    }
 
    @SuppressWarnings("unchecked")
    @Override
    protected Class<T> deriveOperationType() {
-      return (Class<T>) (GenericsUtil.getParametrizedType(getClass(), DefaultCreateOperationHandler.class))
+      return (Class<T>) (GenericsUtil.getParametrizedType(getClass(), AbstractCreateOperationHandler.class))
          .getActualTypeArguments()[0];
    }
 

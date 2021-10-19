@@ -18,11 +18,11 @@ package org.eclipse.glsp.server.diagram;
 import java.util.List;
 
 import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.DefaultActionHandler;
+import org.eclipse.glsp.server.actions.AbstractActionHandler;
 
 import com.google.inject.Inject;
 
-public class RequestTypeHintsActionHandler extends DefaultActionHandler<RequestTypeHintsAction> {
+public class RequestTypeHintsActionHandler extends AbstractActionHandler<RequestTypeHintsAction> {
    @Inject
    protected DiagramConfiguration diagramConfiguration;
 

@@ -29,7 +29,7 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.DefaultOperationHandler;
+import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.DeleteOperation;
 
 import com.google.inject.Inject;
@@ -37,7 +37,7 @@ import com.google.inject.Inject;
 /**
  * Generic handler implementation for {@link DeleteOperation}.
  */
-public class DeleteOperationHandler extends DefaultOperationHandler<DeleteOperation> {
+public class DeleteOperationHandler extends AbstractOperationHandler<DeleteOperation> {
    private static Logger log = Logger.getLogger(DeleteOperationHandler.class);
    protected Set<String> allDependantsIds;
 

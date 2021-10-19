@@ -18,7 +18,7 @@ package org.eclipse.glsp.server.operations.gmodel;
 import java.util.Optional;
 
 import org.eclipse.glsp.server.operations.CompoundOperation;
-import org.eclipse.glsp.server.operations.DefaultOperationHandler;
+import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.operations.OperationActionHandler;
 import org.eclipse.glsp.server.operations.OperationHandler;
@@ -26,7 +26,7 @@ import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
 
 import com.google.inject.Inject;
 
-public class CompoundOperationHandler extends DefaultOperationHandler<CompoundOperation> {
+public class CompoundOperationHandler extends AbstractOperationHandler<CompoundOperation> {
    @Inject
    protected OperationHandlerRegistry operationHandlerRegistry;
 

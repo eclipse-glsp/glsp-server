@@ -17,12 +17,12 @@ package org.eclipse.glsp.example.workflow.taskedit;
 
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.DefaultOperationHandler;
+import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.google.inject.Inject;
 
-public class ApplyTaskEditOperationHandler extends DefaultOperationHandler<ApplyTaskEditOperation> {
+public class ApplyTaskEditOperationHandler extends AbstractOperationHandler<ApplyTaskEditOperation> {
 
    @Inject
    protected ActionDispatcher actionDispatcher;

@@ -20,12 +20,12 @@ import java.util.Optional;
 
 import org.apache.log4j.Logger;
 import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.DefaultActionHandler;
+import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.model.GModelState;
 
 import com.google.inject.Inject;
 
-public class RequestEditValidationHandler extends DefaultActionHandler<RequestEditValidationAction> {
+public class RequestEditValidationHandler extends AbstractActionHandler<RequestEditValidationAction> {
 
    private static Logger log = Logger.getLogger(RequestEditValidationHandler.class);
 

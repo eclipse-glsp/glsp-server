@@ -27,12 +27,12 @@ import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.eclipse.glsp.server.operations.DefaultCreateOperationHandler;
+import org.eclipse.glsp.server.operations.AbstractCreateOperationHandler;
 import org.eclipse.glsp.server.utils.GeometryUtil;
 
 import com.google.inject.Inject;
 
-public abstract class CreateNodeOperationHandler extends DefaultCreateOperationHandler<CreateNodeOperation> {
+public abstract class CreateNodeOperationHandler extends AbstractCreateOperationHandler<CreateNodeOperation> {
 
    @Inject
    protected GModelState modelState;

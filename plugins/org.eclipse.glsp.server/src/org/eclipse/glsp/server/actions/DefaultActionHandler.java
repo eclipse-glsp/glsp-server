@@ -21,7 +21,7 @@ import java.util.List;
 import org.eclipse.glsp.server.internal.util.GenericsUtil;
 
 /**
- * Basic {@link ActionHandler} implementation that can handle exactly one {@link Action} type/class.
+ * Default {@link ActionHandler} implementation that can handle exactly one {@link Action} type/class.
  * It handles the overhead of casting the action object received via the {@link ActionHandler#execute(Action)} method
  * to the correct handled subtype. Subclasses only have to implement the
  * {@link DefaultActionHandler#executeAction(Action)} method

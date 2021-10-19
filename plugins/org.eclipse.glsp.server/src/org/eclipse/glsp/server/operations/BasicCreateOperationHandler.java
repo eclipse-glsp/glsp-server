@@ -24,7 +24,7 @@ import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 /**
- * Deprecated, will be removed after a grace period with the 1.0.0 release.
+ * Deprecated, will be removed with version 1.0.
  * Please use {@link DefaultCreateOperationHandler} instead and directly inject the {@link GModelState}.
  */
 @Deprecated

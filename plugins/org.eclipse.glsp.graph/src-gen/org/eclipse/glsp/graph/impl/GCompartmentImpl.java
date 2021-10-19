@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  * 
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
@@ -571,7 +572,8 @@ public class GCompartmentImpl extends GArgumentableImpl implements GCompartment 
          case GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS:
             if (coreType)
                return getLayoutOptions();
-            return getLayoutOptions().map();
+            else
+               return getLayoutOptions().map();
       }
       return super.eGet(featureID, resolve, coreType);
    }

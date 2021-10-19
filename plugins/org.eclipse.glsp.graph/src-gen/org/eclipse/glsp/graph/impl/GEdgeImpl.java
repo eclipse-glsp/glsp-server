@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -44,18 +44,18 @@ import org.eclipse.glsp.graph.GraphPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.glsp.graph.impl.GEdgeImpl#getId <em>Id</em>}</li>
- *   <li>{@link org.eclipse.glsp.graph.impl.GEdgeImpl#getCssClasses <em>Css Classes</em>}</li>
- *   <li>{@link org.eclipse.glsp.graph.impl.GEdgeImpl#getChildren <em>Children</em>}</li>
- *   <li>{@link org.eclipse.glsp.graph.impl.GEdgeImpl#getParent <em>Parent</em>}</li>
- *   <li>{@link org.eclipse.glsp.graph.impl.GEdgeImpl#getTrace <em>Trace</em>}</li>
- *   <li>{@link org.eclipse.glsp.graph.impl.GEdgeImpl#getType <em>Type</em>}</li>
- *   <li>{@link org.eclipse.glsp.graph.impl.GEdgeImpl#getRoutingPoints <em>Routing Points</em>}</li>
- *   <li>{@link org.eclipse.glsp.graph.impl.GEdgeImpl#getSourceId <em>Source Id</em>}</li>
- *   <li>{@link org.eclipse.glsp.graph.impl.GEdgeImpl#getTargetId <em>Target Id</em>}</li>
- *   <li>{@link org.eclipse.glsp.graph.impl.GEdgeImpl#getSource <em>Source</em>}</li>
- *   <li>{@link org.eclipse.glsp.graph.impl.GEdgeImpl#getTarget <em>Target</em>}</li>
- *   <li>{@link org.eclipse.glsp.graph.impl.GEdgeImpl#getRouterKind <em>Router Kind</em>}</li>
+ * <li>{@link org.eclipse.glsp.graph.impl.GEdgeImpl#getId <em>Id</em>}</li>
+ * <li>{@link org.eclipse.glsp.graph.impl.GEdgeImpl#getCssClasses <em>Css Classes</em>}</li>
+ * <li>{@link org.eclipse.glsp.graph.impl.GEdgeImpl#getChildren <em>Children</em>}</li>
+ * <li>{@link org.eclipse.glsp.graph.impl.GEdgeImpl#getParent <em>Parent</em>}</li>
+ * <li>{@link org.eclipse.glsp.graph.impl.GEdgeImpl#getTrace <em>Trace</em>}</li>
+ * <li>{@link org.eclipse.glsp.graph.impl.GEdgeImpl#getType <em>Type</em>}</li>
+ * <li>{@link org.eclipse.glsp.graph.impl.GEdgeImpl#getRoutingPoints <em>Routing Points</em>}</li>
+ * <li>{@link org.eclipse.glsp.graph.impl.GEdgeImpl#getSourceId <em>Source Id</em>}</li>
+ * <li>{@link org.eclipse.glsp.graph.impl.GEdgeImpl#getTargetId <em>Target Id</em>}</li>
+ * <li>{@link org.eclipse.glsp.graph.impl.GEdgeImpl#getSource <em>Source</em>}</li>
+ * <li>{@link org.eclipse.glsp.graph.impl.GEdgeImpl#getTarget <em>Target</em>}</li>
+ * <li>{@link org.eclipse.glsp.graph.impl.GEdgeImpl#getRouterKind <em>Router Kind</em>}</li>
  * </ul>
  *
  * @generated
@@ -65,6 +65,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
     * The default value of the '{@link #getId() <em>Id</em>}' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @see #getId()
     * @generated
     * @ordered
@@ -75,6 +76,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
     * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @see #getId()
     * @generated
     * @ordered
@@ -85,6 +87,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
     * The cached value of the '{@link #getCssClasses() <em>Css Classes</em>}' attribute list.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @see #getCssClasses()
     * @generated
     * @ordered
@@ -95,6 +98,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
     * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @see #getChildren()
     * @generated
     * @ordered
@@ -105,6 +109,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
     * The default value of the '{@link #getTrace() <em>Trace</em>}' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @see #getTrace()
     * @generated
     * @ordered
@@ -115,6 +120,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
     * The cached value of the '{@link #getTrace() <em>Trace</em>}' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @see #getTrace()
     * @generated
     * @ordered
@@ -125,6 +131,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
     * The default value of the '{@link #getType() <em>Type</em>}' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @see #getType()
     * @generated
     * @ordered
@@ -135,6 +142,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
     * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @see #getType()
     * @generated
     * @ordered
@@ -145,6 +153,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
     * The cached value of the '{@link #getRoutingPoints() <em>Routing Points</em>}' containment reference list.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @see #getRoutingPoints()
     * @generated
     * @ordered
@@ -155,6 +164,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
     * The default value of the '{@link #getSourceId() <em>Source Id</em>}' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @see #getSourceId()
     * @generated
     * @ordered
@@ -165,6 +175,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
     * The cached value of the '{@link #getSourceId() <em>Source Id</em>}' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @see #getSourceId()
     * @generated
     * @ordered
@@ -175,6 +186,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
     * The default value of the '{@link #getTargetId() <em>Target Id</em>}' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @see #getTargetId()
     * @generated
     * @ordered
@@ -185,6 +197,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
     * The cached value of the '{@link #getTargetId() <em>Target Id</em>}' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @see #getTargetId()
     * @generated
     * @ordered
@@ -195,6 +208,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
     * The default value of the '{@link #getRouterKind() <em>Router Kind</em>}' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @see #getRouterKind()
     * @generated
     * @ordered
@@ -205,6 +219,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
     * The cached value of the '{@link #getRouterKind() <em>Router Kind</em>}' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @see #getRouterKind()
     * @generated
     * @ordered
@@ -214,6 +229,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    public GEdgeImpl() {
@@ -223,6 +239,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
@@ -233,6 +250,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
@@ -241,25 +259,28 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
-   public void setId(String newId) {
+   public void setId(final String newId) {
       String oldId = id;
       id = newId;
-      if (eNotificationRequired())
+      if (eNotificationRequired()) {
          eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.GEDGE__ID, oldId, id));
+      }
    }
 
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
    public EList<String> getCssClasses() {
       if (cssClasses == null) {
-         cssClasses = new EDataTypeUniqueEList<String>(String.class, this, GraphPackage.GEDGE__CSS_CLASSES);
+         cssClasses = new EDataTypeUniqueEList<>(String.class, this, GraphPackage.GEDGE__CSS_CLASSES);
       }
       return cssClasses;
    }
@@ -267,12 +288,13 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
    public EList<GModelElement> getChildren() {
       if (children == null) {
-         children = new EObjectContainmentWithInverseEList<GModelElement>(GModelElement.class, this,
+         children = new EObjectContainmentWithInverseEList<>(GModelElement.class, this,
             GraphPackage.GEDGE__CHILDREN, GraphPackage.GMODEL_ELEMENT__PARENT);
       }
       return children;
@@ -281,21 +303,24 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
    public GModelElement getParent() {
-      if (eContainerFeatureID() != GraphPackage.GEDGE__PARENT)
+      if (eContainerFeatureID() != GraphPackage.GEDGE__PARENT) {
          return null;
+      }
       return (GModelElement) eInternalContainer();
    }
 
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
-   public NotificationChain basicSetParent(GModelElement newParent, NotificationChain msgs) {
+   public NotificationChain basicSetParent(final GModelElement newParent, NotificationChain msgs) {
       msgs = eBasicSetContainer((InternalEObject) newParent, GraphPackage.GEDGE__PARENT, msgs);
       return msgs;
    }
@@ -303,30 +328,37 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
-   public void setParent(GModelElement newParent) {
+   public void setParent(final GModelElement newParent) {
       if (newParent != eInternalContainer()
          || (eContainerFeatureID() != GraphPackage.GEDGE__PARENT && newParent != null)) {
-         if (EcoreUtil.isAncestor(this, newParent))
+         if (EcoreUtil.isAncestor(this, newParent)) {
             throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+         }
          NotificationChain msgs = null;
-         if (eInternalContainer() != null)
+         if (eInternalContainer() != null) {
             msgs = eBasicRemoveFromContainer(msgs);
-         if (newParent != null)
+         }
+         if (newParent != null) {
             msgs = ((InternalEObject) newParent).eInverseAdd(this, GraphPackage.GMODEL_ELEMENT__CHILDREN,
                GModelElement.class, msgs);
+         }
          msgs = basicSetParent(newParent, msgs);
-         if (msgs != null)
+         if (msgs != null) {
             msgs.dispatch();
-      } else if (eNotificationRequired())
+         }
+      } else if (eNotificationRequired()) {
          eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.GEDGE__PARENT, newParent, newParent));
+      }
    }
 
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
@@ -335,19 +367,22 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
-   public void setTrace(String newTrace) {
+   public void setTrace(final String newTrace) {
       String oldTrace = trace;
       trace = newTrace;
-      if (eNotificationRequired())
+      if (eNotificationRequired()) {
          eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.GEDGE__TRACE, oldTrace, trace));
+      }
    }
 
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
@@ -356,25 +391,28 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
-   public void setType(String newType) {
+   public void setType(final String newType) {
       String oldType = type;
       type = newType;
-      if (eNotificationRequired())
+      if (eNotificationRequired()) {
          eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.GEDGE__TYPE, oldType, type));
+      }
    }
 
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
    public EList<GPoint> getRoutingPoints() {
       if (routingPoints == null) {
-         routingPoints = new EObjectContainmentEList<GPoint>(GPoint.class, this, GraphPackage.GEDGE__ROUTING_POINTS);
+         routingPoints = new EObjectContainmentEList<>(GPoint.class, this, GraphPackage.GEDGE__ROUTING_POINTS);
       }
       return routingPoints;
    }
@@ -382,6 +420,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
@@ -390,19 +429,22 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
-   public void setSourceId(String newSourceId) {
+   public void setSourceId(final String newSourceId) {
       String oldSourceId = sourceId;
       sourceId = newSourceId;
-      if (eNotificationRequired())
+      if (eNotificationRequired()) {
          eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.GEDGE__SOURCE_ID, oldSourceId, sourceId));
+      }
    }
 
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
@@ -411,19 +453,22 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
-   public void setTargetId(String newTargetId) {
+   public void setTargetId(final String newTargetId) {
       String oldTargetId = targetId;
       targetId = newTargetId;
-      if (eNotificationRequired())
+      if (eNotificationRequired()) {
          eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.GEDGE__TARGET_ID, oldTargetId, targetId));
+      }
    }
 
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
@@ -464,6 +509,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
@@ -500,6 +546,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
@@ -508,31 +555,35 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
-   public void setRouterKind(String newRouterKind) {
+   public void setRouterKind(final String newRouterKind) {
       String oldRouterKind = routerKind;
       routerKind = newRouterKind;
-      if (eNotificationRequired())
+      if (eNotificationRequired()) {
          eNotify(
             new ENotificationImpl(this, Notification.SET, GraphPackage.GEDGE__ROUTER_KIND, oldRouterKind, routerKind));
+      }
    }
 
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @SuppressWarnings("unchecked")
    @Override
-   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+   public NotificationChain eInverseAdd(final InternalEObject otherEnd, final int featureID, NotificationChain msgs) {
       switch (featureID) {
          case GraphPackage.GEDGE__CHILDREN:
             return ((InternalEList<InternalEObject>) (InternalEList<?>) getChildren()).basicAdd(otherEnd, msgs);
          case GraphPackage.GEDGE__PARENT:
-            if (eInternalContainer() != null)
+            if (eInternalContainer() != null) {
                msgs = eBasicRemoveFromContainer(msgs);
+            }
             return basicSetParent((GModelElement) otherEnd, msgs);
       }
       return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -541,10 +592,12 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
-   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+   public NotificationChain eInverseRemove(final InternalEObject otherEnd, final int featureID,
+      final NotificationChain msgs) {
       switch (featureID) {
          case GraphPackage.GEDGE__CHILDREN:
             return ((InternalEList<?>) getChildren()).basicRemove(otherEnd, msgs);
@@ -559,10 +612,11 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
-   public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+   public NotificationChain eBasicRemoveFromContainerFeature(final NotificationChain msgs) {
       switch (eContainerFeatureID()) {
          case GraphPackage.GEDGE__PARENT:
             return eInternalContainer().eInverseRemove(this, GraphPackage.GMODEL_ELEMENT__CHILDREN, GModelElement.class,
@@ -574,10 +628,11 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
-   public Object eGet(int featureID, boolean resolve, boolean coreType) {
+   public Object eGet(final int featureID, final boolean resolve, final boolean coreType) {
       switch (featureID) {
          case GraphPackage.GEDGE__ID:
             return getId();
@@ -598,12 +653,14 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
          case GraphPackage.GEDGE__TARGET_ID:
             return getTargetId();
          case GraphPackage.GEDGE__SOURCE:
-            if (resolve)
+            if (resolve) {
                return getSource();
+            }
             return basicGetSource();
          case GraphPackage.GEDGE__TARGET:
-            if (resolve)
+            if (resolve) {
                return getTarget();
+            }
             return basicGetTarget();
          case GraphPackage.GEDGE__ROUTER_KIND:
             return getRouterKind();
@@ -614,11 +671,12 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @SuppressWarnings("unchecked")
    @Override
-   public void eSet(int featureID, Object newValue) {
+   public void eSet(final int featureID, final Object newValue) {
       switch (featureID) {
          case GraphPackage.GEDGE__ID:
             setId((String) newValue);
@@ -666,10 +724,11 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
-   public void eUnset(int featureID) {
+   public void eUnset(final int featureID) {
       switch (featureID) {
          case GraphPackage.GEDGE__ID:
             setId(ID_EDEFAULT);
@@ -714,10 +773,11 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
-   public boolean eIsSet(int featureID) {
+   public boolean eIsSet(final int featureID) {
       switch (featureID) {
          case GraphPackage.GEDGE__ID:
             return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
@@ -750,12 +810,14 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    *
     * @generated
     */
    @Override
    public String toString() {
-      if (eIsProxy())
+      if (eIsProxy()) {
          return super.toString();
+      }
 
       StringBuilder result = new StringBuilder(super.toString());
       result.append(" (id: ");

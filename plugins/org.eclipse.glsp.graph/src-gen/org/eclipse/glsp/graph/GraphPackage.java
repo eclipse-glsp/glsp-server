@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  * 
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -84,7 +84,7 @@ public interface GraphPackage extends EPackage {
    /**
     * The feature id for the '<em><b>Args</b></em>' map.
     * <!-- begin-user-doc -->
-   	 * <!-- end-user-doc -->
+    * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
@@ -93,7 +93,7 @@ public interface GraphPackage extends EPackage {
    /**
     * The number of structural features of the '<em>GArgumentable</em>' class.
     * <!-- begin-user-doc -->
-   	 * <!-- end-user-doc -->
+    * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
@@ -102,7 +102,7 @@ public interface GraphPackage extends EPackage {
    /**
     * The number of operations of the '<em>GArgumentable</em>' class.
     * <!-- begin-user-doc -->
-   	 * <!-- end-user-doc -->
+    * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
@@ -2747,7 +2747,7 @@ public interface GraphPackage extends EPackage {
    /**
     * Returns the meta object for the map '{@link org.eclipse.glsp.graph.GArgumentable#getArgs <em>Args</em>}'.
     * <!-- begin-user-doc -->
-   	 * <!-- end-user-doc -->
+    * <!-- end-user-doc -->
     * @return the meta object for the map '<em>Args</em>'.
     * @see org.eclipse.glsp.graph.GArgumentable#getArgs()
     * @see #getGArgumentable()
@@ -3387,7 +3387,7 @@ public interface GraphPackage extends EPackage {
       /**
        * The meta object literal for the '<em><b>Args</b></em>' map feature.
        * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+       * <!-- end-user-doc -->
        * @generated
        */
       EReference GARGUMENTABLE__ARGS = eINSTANCE.getGArgumentable_Args();

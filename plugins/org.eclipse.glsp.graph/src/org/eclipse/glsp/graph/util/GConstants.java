@@ -34,6 +34,7 @@ public final class GConstants {
       public static final String VBOX = "vbox";
       public static final String HBOX = "hbox";
       public static final String STACK = "stack";
+      public static final String FREEFORM = "freeform";
    }
 
    public static final class VAlign {

@@ -16,6 +16,7 @@
 package org.eclipse.glsp.example.workflow;
 
 import org.eclipse.glsp.example.workflow.handler.CreateAutomatedTaskHandler;
+import org.eclipse.glsp.example.workflow.handler.CreateCategoryHandler;
 import org.eclipse.glsp.example.workflow.handler.CreateDecisionNodeHandler;
 import org.eclipse.glsp.example.workflow.handler.CreateEdgeHandler;
 import org.eclipse.glsp.example.workflow.handler.CreateForkNodeHandler;
@@ -113,6 +114,7 @@ public class WorkflowDiagramModule extends GModelJsonDiagramModule {
       binding.add(CreateJoinNodeHandler.class);
       binding.add(CreateEdgeHandler.class);
       binding.add(CreateWeightedEdgeHandler.class);
+      binding.add(CreateCategoryHandler.class);
       binding.add(EditTaskOperationHandler.class);
       binding.add(ApplyTaskEditOperationHandler.class);
    }

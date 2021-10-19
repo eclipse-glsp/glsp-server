@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  * 
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -247,7 +247,8 @@ public class GGraphImpl extends GModelRootImpl implements GGraph {
          case GraphPackage.GGRAPH__LAYOUT_OPTIONS:
             if (coreType)
                return getLayoutOptions();
-            return getLayoutOptions().map();
+            else
+               return getLayoutOptions().map();
       }
       return super.eGet(featureID, resolve, coreType);
    }

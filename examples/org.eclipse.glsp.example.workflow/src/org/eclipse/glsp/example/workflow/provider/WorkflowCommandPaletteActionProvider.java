@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -67,7 +67,9 @@ public class WorkflowCommandPaletteActionProvider implements CommandPaletteActio
             Lists.newArrayList(new CreateNodeOperation(ModelTypes.MERGE_NODE, lastMousePosition.orElse(point(0, 0)),
                "fa-plus-square"))),
          new LabeledAction("Create Decision Node", Lists.newArrayList(new CreateNodeOperation(
-            ModelTypes.DECISION_NODE, lastMousePosition.orElse(point(0, 0)), "fa-plus-square")))));
+            ModelTypes.DECISION_NODE, lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
+         new LabeledAction("Create Category", Lists.newArrayList(new CreateNodeOperation(
+            ModelTypes.CATEGORY, lastMousePosition.orElse(point(0, 0)), "fa-plus-square")))));
 
       // Create edge actions between two nodes
       if (selectedElements.size() == 1) {

@@ -19,9 +19,13 @@ import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 import org.apache.log4j.Logger;
 import org.eclipse.glsp.graph.GDimension;
+import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
+import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
+import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.BasicOperationHandler;
 import org.eclipse.glsp.server.operations.ChangeBoundsOperation;
@@ -52,7 +56,17 @@ public class ChangeBoundsOperationHandler extends BasicOperationHandler<ChangeBo
       GNode nodeToUpdate = getOrThrow(index.findElementByClass(elementId, GNode.class),
          "GNode with id " + elementId + " not found");
 
-      nodeToUpdate.setPosition(newPosition);
-      nodeToUpdate.setSize(newSize);
+      GModelElement parent = nodeToUpdate.getParent();
+      GPoint positionToSet = parent instanceof GModelRoot
+         // For root nodes (Owned by the model root), allow negative coordinates
+         ? newPosition
+         // For child nodes (Owned by another node or compartment), restrict the movement
+         // to positive coordinates, to avoid weird layout behavior
+         : GraphUtil.point(Math.max(0, newPosition.getX()), Math.max(0, newPosition.getY()));
+
+      nodeToUpdate.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, newSize.getWidth());
+      nodeToUpdate.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, newSize.getHeight());
+
+      nodeToUpdate.setPosition(positionToSet);
    }
 }

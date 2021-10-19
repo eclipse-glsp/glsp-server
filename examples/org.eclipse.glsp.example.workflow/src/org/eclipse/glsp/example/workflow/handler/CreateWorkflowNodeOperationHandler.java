@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -17,7 +17,12 @@ package org.eclipse.glsp.example.workflow.handler;
 
 import java.util.Optional;
 
+import org.eclipse.glsp.example.workflow.utils.ModelTypes;
+import org.eclipse.glsp.example.workflow.wfgraph.Category;
+import org.eclipse.glsp.graph.GCompartment;
+import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.gmodel.CreateNodeOperationHandler;
 
@@ -30,6 +35,20 @@ public abstract class CreateWorkflowNodeOperationHandler extends CreateNodeOpera
    @Override
    protected Optional<GPoint> getLocation(final CreateNodeOperation operation) {
       return GridSnapper.snap(operation.getLocation());
+   }
+
+   @Override
+   protected Optional<GModelElement> getContainer(final CreateNodeOperation operation, final GModelState modelState) {
+      Optional<GModelElement> container = super.getContainer(operation, modelState);
+      // If the container is a Category node, find its structure compartment
+      Optional<GModelElement> structCompt = container.filter(Category.class::isInstance).map(Category.class::cast)
+         .flatMap(this::getCategoryCompartment);
+      return structCompt.isPresent() ? structCompt : container;
+   }
+
+   protected Optional<GCompartment> getCategoryCompartment(final Category category) {
+      return category.getChildren().stream().filter(GCompartment.class::isInstance).map(GCompartment.class::cast)
+         .filter(comp -> ModelTypes.STRUCTURE.equals(comp.getType())).findFirst();
    }
 
 }

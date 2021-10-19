@@ -21,10 +21,8 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.glsp.graph.GBoundsAware;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.GPort;
 import org.eclipse.glsp.server.model.GModelState;
 
@@ -43,13 +41,6 @@ public final class GModelUtil {
       int index = generateId(element.eClass(), id, modelState);
       element.setId(idAndIndex(id).apply(index));
       return index;
-   }
-
-   public static void shift(final List<GModelElement> elements, final GPoint offset) {
-      filterByType(elements, GBoundsAware.class).forEach(boundsAware -> {
-         boundsAware.getPosition().setX(boundsAware.getPosition().getX() + offset.getX());
-         boundsAware.getPosition().setY(boundsAware.getPosition().getY() + offset.getY());
-      });
    }
 
    public static <T> Stream<T> filterByType(final List<GModelElement> elements, final Class<T> clazz) {

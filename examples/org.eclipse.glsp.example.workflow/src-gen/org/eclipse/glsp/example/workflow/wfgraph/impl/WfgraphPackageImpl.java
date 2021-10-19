@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2019-2020 EclipseSource and others.
+ *  Copyright (c) 2019-2021 EclipseSource and others.
  * 
  *  This program and the accompanying materials are made available under the
  *  terms of the Eclipse Public License v. 2.0 which is available at
@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import org.eclipse.glsp.example.workflow.wfgraph.ActivityNode;
+import org.eclipse.glsp.example.workflow.wfgraph.Category;
 import org.eclipse.glsp.example.workflow.wfgraph.Icon;
 import org.eclipse.glsp.example.workflow.wfgraph.TaskNode;
 import org.eclipse.glsp.example.workflow.wfgraph.WeightedEdge;
@@ -64,6 +65,13 @@ public class WfgraphPackageImpl extends EPackageImpl implements WfgraphPackage {
     * @generated
     */
    private EClass weightedEdgeEClass = null;
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   private EClass categoryEClass = null;
 
    /**
     * Creates an instance of the model <b>Package</b>, registered with
@@ -245,6 +253,26 @@ public class WfgraphPackageImpl extends EPackageImpl implements WfgraphPackage {
     * @generated
     */
    @Override
+   public EClass getCategory() {
+      return categoryEClass;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
+   public EAttribute getCategory_Name() {
+      return (EAttribute)categoryEClass.getEStructuralFeatures().get(0);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
    public WfgraphFactory getWfgraphFactory() {
       return (WfgraphFactory)getEFactoryInstance();
    }
@@ -282,6 +310,9 @@ public class WfgraphPackageImpl extends EPackageImpl implements WfgraphPackage {
 
       weightedEdgeEClass = createEClass(WEIGHTED_EDGE);
       createEAttribute(weightedEdgeEClass, WEIGHTED_EDGE__PROBABILITY);
+
+      categoryEClass = createEClass(CATEGORY);
+      createEAttribute(categoryEClass, CATEGORY__NAME);
    }
 
    /**
@@ -319,6 +350,7 @@ public class WfgraphPackageImpl extends EPackageImpl implements WfgraphPackage {
       taskNodeEClass.getESuperTypes().add(this.getActivityNode());
       iconEClass.getESuperTypes().add(theGraphPackage.getGCompartment());
       weightedEdgeEClass.getESuperTypes().add(theGraphPackage.getGEdge());
+      categoryEClass.getESuperTypes().add(this.getActivityNode());
 
       // Initialize classes, features, and operations; add parameters
       initEClass(activityNodeEClass, ActivityNode.class, "ActivityNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -335,6 +367,9 @@ public class WfgraphPackageImpl extends EPackageImpl implements WfgraphPackage {
 
       initEClass(weightedEdgeEClass, WeightedEdge.class, "WeightedEdge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
       initEAttribute(getWeightedEdge_Probability(), ecorePackage.getEString(), "probability", null, 0, 1, WeightedEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+      initEClass(categoryEClass, Category.class, "Category", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+      initEAttribute(getCategory_Name(), ecorePackage.getEString(), "name", null, 0, 1, Category.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
       // Create resource
       createResource(eNS_URI);

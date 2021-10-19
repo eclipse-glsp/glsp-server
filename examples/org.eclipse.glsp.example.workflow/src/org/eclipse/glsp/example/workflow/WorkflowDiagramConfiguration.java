@@ -17,6 +17,7 @@ package org.eclipse.glsp.example.workflow;
 
 import static org.eclipse.glsp.example.workflow.utils.ModelTypes.ACTIVITY_NODE;
 import static org.eclipse.glsp.example.workflow.utils.ModelTypes.AUTOMATED_TASK;
+import static org.eclipse.glsp.example.workflow.utils.ModelTypes.CATEGORY;
 import static org.eclipse.glsp.example.workflow.utils.ModelTypes.COMP_HEADER;
 import static org.eclipse.glsp.example.workflow.utils.ModelTypes.DECISION_NODE;
 import static org.eclipse.glsp.example.workflow.utils.ModelTypes.FORK_NODE;
@@ -27,6 +28,7 @@ import static org.eclipse.glsp.example.workflow.utils.ModelTypes.LABEL_ICON;
 import static org.eclipse.glsp.example.workflow.utils.ModelTypes.LABEL_TEXT;
 import static org.eclipse.glsp.example.workflow.utils.ModelTypes.MANUAL_TASK;
 import static org.eclipse.glsp.example.workflow.utils.ModelTypes.MERGE_NODE;
+import static org.eclipse.glsp.example.workflow.utils.ModelTypes.STRUCTURE;
 import static org.eclipse.glsp.example.workflow.utils.ModelTypes.TASK;
 import static org.eclipse.glsp.example.workflow.utils.ModelTypes.WEIGHTED_EDGE;
 import static org.eclipse.glsp.graph.DefaultTypes.EDGE;
@@ -58,19 +60,32 @@ public class WorkflowDiagramConfiguration extends BaseDiagramConfiguration {
       mappings.put(ICON, WfgraphPackage.Literals.ICON);
       mappings.put(ACTIVITY_NODE, WfgraphPackage.Literals.ACTIVITY_NODE);
       mappings.put(TASK, WfgraphPackage.Literals.TASK_NODE);
+      mappings.put(CATEGORY, WfgraphPackage.Literals.CATEGORY);
+      mappings.put(STRUCTURE, GraphPackage.Literals.GCOMPARTMENT);
       return mappings;
    }
 
    @Override
    public List<ShapeTypeHint> getShapeTypeHints() {
       List<ShapeTypeHint> nodeHints = new ArrayList<>();
-      nodeHints.add(new ShapeTypeHint(MANUAL_TASK, true, true, false, false));
-      nodeHints.add(new ShapeTypeHint(AUTOMATED_TASK, true, true, false, false));
+      nodeHints.add(new ShapeTypeHint(MANUAL_TASK, true, true, false, true));
+      nodeHints.add(new ShapeTypeHint(AUTOMATED_TASK, true, true, false, true));
+      ShapeTypeHint catHint = new ShapeTypeHint(CATEGORY, true, true, true, true);
+      catHint.setContainableElementTypeIds(
+         Arrays.asList(DECISION_NODE, MERGE_NODE, FORK_NODE, JOIN_NODE, AUTOMATED_TASK, MANUAL_TASK, CATEGORY));
+      nodeHints.add(catHint);
       nodeHints.add(createDefaultShapeTypeHint(FORK_NODE));
       nodeHints.add(createDefaultShapeTypeHint(JOIN_NODE));
       nodeHints.add(createDefaultShapeTypeHint(DECISION_NODE));
       nodeHints.add(createDefaultShapeTypeHint(MERGE_NODE));
       return nodeHints;
+   }
+
+   @Override
+   public ShapeTypeHint createDefaultShapeTypeHint(final String elementId) {
+      // Override the default-default: for the Workflow example, we want all nodes
+      // to be reparentable
+      return new ShapeTypeHint(elementId, true, true, true, true);
    }
 
    @Override
@@ -88,9 +103,9 @@ public class WorkflowDiagramConfiguration extends BaseDiagramConfiguration {
    public EdgeTypeHint createDefaultEdgeTypeHint(final String elementId) {
       EdgeTypeHint hint = super.createDefaultEdgeTypeHint(elementId);
       hint.setSourceElementTypeIds(
-         Arrays.asList(MANUAL_TASK, AUTOMATED_TASK, DECISION_NODE, MERGE_NODE, FORK_NODE, JOIN_NODE));
+         Arrays.asList(MANUAL_TASK, AUTOMATED_TASK, DECISION_NODE, MERGE_NODE, FORK_NODE, JOIN_NODE, CATEGORY));
       hint.setTargetElementTypeIds(
-         Arrays.asList(MANUAL_TASK, AUTOMATED_TASK, DECISION_NODE, MERGE_NODE, FORK_NODE, JOIN_NODE));
+         Arrays.asList(MANUAL_TASK, AUTOMATED_TASK, DECISION_NODE, MERGE_NODE, FORK_NODE, JOIN_NODE, CATEGORY));
       return hint;
    }
 

@@ -16,7 +16,7 @@
 package org.eclipse.glsp.server.operations.gmodel;
 
 import static org.eclipse.glsp.server.utils.GModelUtil.filterByType;
-import static org.eclipse.glsp.server.utils.GModelUtil.shift;
+import static org.eclipse.glsp.server.utils.GeometryUtil.shift;
 
 import java.util.ArrayList;
 import java.util.Arrays;

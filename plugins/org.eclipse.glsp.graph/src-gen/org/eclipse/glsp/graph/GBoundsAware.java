@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  * 
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -62,6 +62,9 @@ public interface GBoundsAware extends EObject {
     * Returns the value of the '<em><b>Size</b></em>' containment reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
+    * <!-- begin-model-doc -->
+    * Visual bounds of the node
+    * <!-- end-model-doc -->
     * @return the value of the '<em>Size</em>' containment reference.
     * @see #setSize(GDimension)
     * @see org.eclipse.glsp.graph.GraphPackage#getGBoundsAware_Size()

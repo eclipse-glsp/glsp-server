@@ -9,7 +9,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: org.eclipse.emf.common;bundle-version="2.15.0",
  com.google.gson,
  org.eclipse.emf.ecore;bundle-version="2.15.0";visibility:=reexport,
- org.apache.log4j;bundle-version="1.2.15";visibility:=reexport,
  com.google.guava;bundle-version="30.1.0";visibility:=reexport
 Export-Package: org.eclipse.glsp.graph,
  org.eclipse.glsp.graph,
@@ -20,3 +19,4 @@ Export-Package: org.eclipse.glsp.graph,
  org.eclipse.glsp.graph.impl,
  org.eclipse.glsp.graph.util,
  org.eclipse.glsp.graph.util
+Import-Package: org.apache.log4j;version="1.2.15"

@@ -166,7 +166,7 @@ public abstract class DiagramModule extends GLSPModule {
       bind(DiagramConfiguration.class).to(bindDiagramConfiguration()).in(DiagramGlobalSingleton.class);
       bind(ServerConfigurationContribution.class).to(bindServerConfigurationContribution()).in(Singleton.class);
       // Model-related bindings
-      bind(GModelState.class).to(bindGModelState()).in(Singleton.class);
+      configureGModelState(bindGModelState());
       bind(ModelSourceLoader.class).to(bindSourceModelLoader());
       bind(GModelFactory.class).to(bindGModelFactory());
       bindOptionally(ModelSourceWatcher.class, bindModelSourceWatcher())
@@ -223,6 +223,11 @@ public abstract class DiagramModule extends GLSPModule {
 
    protected Class<? extends ServerConfigurationContribution> bindServerConfigurationContribution() {
       return DefaultServerConfigurationContribution.class;
+   }
+
+   protected void configureGModelState(final Class<? extends GModelState> gmodelStateClass) {
+      bind(gmodelStateClass).in(Singleton.class);
+      bind(GModelState.class).to(gmodelStateClass);
    }
 
    protected Class<? extends GModelState> bindGModelState() {

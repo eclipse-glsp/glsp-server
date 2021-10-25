@@ -86,7 +86,7 @@ public class ServerModule extends GLSPModule {
    public ServerModule configureDiagramModule(final DiagramModule diagramModule, final Module... mixinModules) {
       String diagramType = diagramModule.getDiagramType();
       Preconditions.checkState(!diagramModules.containsKey(diagramType),
-         "A module configuration is alreay present for diagram type: " + diagramType);
+         "A module configuration is already present for diagram type: " + diagramType);
 
       Module combinedModule = ModuleUtil.mixin(diagramModule, mixinModules);
       diagramModules.put(diagramType, combinedModule);

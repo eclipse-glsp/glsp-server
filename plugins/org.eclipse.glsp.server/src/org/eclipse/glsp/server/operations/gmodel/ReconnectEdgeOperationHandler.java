@@ -22,13 +22,19 @@ import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.BasicOperationHandler;
+import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.ReconnectEdgeOperation;
 
-public class ReconnectEdgeOperationHandler extends BasicOperationHandler<ReconnectEdgeOperation> {
+import com.google.inject.Inject;
+
+public class ReconnectEdgeOperationHandler extends AbstractOperationHandler<ReconnectEdgeOperation> {
+
+   @Inject
+   protected GModelState modelState;
+
    @Override
    @SuppressWarnings("checkstyle:CyclomaticComplexity")
-   public void executeOperation(final ReconnectEdgeOperation operation, final GModelState modelState) {
+   public void executeOperation(final ReconnectEdgeOperation operation) {
 
       if (operation.getEdgeElementId() == null || operation.getSourceElementId() == null
          || operation.getTargetElementId() == null) {

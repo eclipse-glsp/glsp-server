@@ -45,11 +45,15 @@ public class JsonFileGModelLoader implements ModelSourceLoader {
 
    private static Logger LOG = Logger.getLogger(JsonFileGModelLoader.class);
    private static String EMPTY_ROOT_ID = "glsp-graph";
+
    @Inject
    private GraphGsonConfigurationFactory gsonConfiguratior;
 
+   @Inject
+   protected GModelState modelState;
+
    @Override
-   public void loadSourceModel(final RequestModelAction action, final GModelState modelState) {
+   public void loadSourceModel(final RequestModelAction action) {
       final File file = convertToFile(modelState);
       loadSourceModel(file, modelState).ifPresent(root -> {
          modelState.setRoot(root);

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -19,22 +19,25 @@ import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.BasicActionHandler;
 import org.eclipse.glsp.server.model.GModelState;
 
 import com.google.inject.Inject;
 
-public class RequestPopupModelActionHandler extends BasicActionHandler<RequestPopupModelAction> {
+public class RequestPopupModelActionHandler extends AbstractActionHandler<RequestPopupModelAction> {
    @Inject
    protected Optional<PopupModelFactory> popupModelFactory;
 
+   @Inject
+   protected GModelState modelState;
+
    @Override
-   public List<Action> executeAction(final RequestPopupModelAction action, final GModelState modelState) {
+   public List<Action> executeAction(final RequestPopupModelAction action) {
       if (popupModelFactory.isPresent()) {
          Optional<GModelElement> element = modelState.getIndex().get(action.getElementId());
          if (popupModelFactory != null && element.isPresent()) {
-            return listOf(popupModelFactory.get().createPopupModel(element.get(), action, modelState)
+            return listOf(popupModelFactory.get().createPopupModel(element.get(), action)
                .map(popupModel -> new SetPopupModelAction(popupModel, action.getBounds())));
          }
       }

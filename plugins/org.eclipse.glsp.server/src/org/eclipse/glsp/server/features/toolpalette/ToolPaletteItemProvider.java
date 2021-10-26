@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -20,7 +20,6 @@ import java.util.Map;
 
 import org.eclipse.glsp.server.features.contextactions.ContextActionsProvider;
 import org.eclipse.glsp.server.features.directediting.LabeledAction;
-import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.types.EditorContext;
 
 public interface ToolPaletteItemProvider extends ContextActionsProvider {
@@ -30,10 +29,9 @@ public interface ToolPaletteItemProvider extends ContextActionsProvider {
    default String getContextId() { return ToolPaletteItemProvider.CONTEXT_ID; }
 
    @Override
-   default List<? extends LabeledAction> getActions(final EditorContext editorContext,
-      final GModelState modelState) {
-      return getItems(editorContext.getArgs(), modelState);
+   default List<? extends LabeledAction> getActions(final EditorContext editorContext) {
+      return getItems(editorContext.getArgs());
    }
 
-   List<PaletteItem> getItems(Map<String, String> args, GModelState modelState);
+   List<PaletteItem> getItems(Map<String, String> args);
 }

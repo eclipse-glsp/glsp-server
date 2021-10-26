@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -17,9 +17,8 @@ package org.eclipse.glsp.server.operations.gmodel;
 
 import java.util.Optional;
 
-import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.BasicOperationHandler;
 import org.eclipse.glsp.server.operations.CompoundOperation;
+import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.operations.OperationActionHandler;
 import org.eclipse.glsp.server.operations.OperationHandler;
@@ -27,20 +26,20 @@ import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
 
 import com.google.inject.Inject;
 
-public class CompoundOperationHandler extends BasicOperationHandler<CompoundOperation> {
+public class CompoundOperationHandler extends AbstractOperationHandler<CompoundOperation> {
    @Inject
    protected OperationHandlerRegistry operationHandlerRegistry;
 
    @Override
-   protected void executeOperation(final CompoundOperation operation, final GModelState modelState) {
-      operation.getOperationList().forEach(nestedOperation -> executeNestedOperation(nestedOperation, modelState));
+   protected void executeOperation(final CompoundOperation operation) {
+      operation.getOperationList().forEach(nestedOperation -> executeNestedOperation(nestedOperation));
    }
 
-   protected void executeNestedOperation(final Operation operation, final GModelState modelState) {
+   protected void executeNestedOperation(final Operation operation) {
       Optional<? extends OperationHandler> operationHandler = OperationActionHandler.getOperationHandler(operation,
          operationHandlerRegistry);
       if (operationHandler.isPresent()) {
-         operationHandler.get().execute(operation, modelState);
+         operationHandler.get().execute(operation);
       }
    }
 

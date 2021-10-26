@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -18,32 +18,30 @@ package org.eclipse.glsp.server.operations;
 import org.eclipse.glsp.server.internal.util.GenericsUtil;
 import org.eclipse.glsp.server.model.GModelState;
 
-public abstract class BasicOperationHandler<T extends Operation> implements OperationHandler {
+import com.google.inject.Inject;
 
-   protected final Class<T> operationType;
+/**
+ * Deprecated, will be removed with version 1.0.
+ * Please use {@link AbstractOperationHandler} instead and directly inject the {@link GModelState}.
+ */
+@Deprecated
+public abstract class BasicOperationHandler<T extends Operation> extends AbstractOperationHandler<T> {
 
-   public BasicOperationHandler() {
-      this.operationType = deriveOperationType();
+   @Inject
+   protected GModelState modelState;
+
+   @Override
+   protected void executeOperation(final T operation) {
+      executeOperation(operation, modelState);
    }
 
+   @Override
    @SuppressWarnings("unchecked")
    protected Class<T> deriveOperationType() {
       return (Class<T>) (GenericsUtil.getParametrizedType(getClass(), BasicOperationHandler.class))
          .getActualTypeArguments()[0];
    }
 
-   @Override
-   public Class<T> getHandledOperationType() { return operationType; }
-
-   @Override
-   public void execute(final Operation operation, final GModelState modelState) {
-      if (handles(operation)) {
-         executeOperation(operationType.cast(operation), modelState);
-      }
-   }
-
    protected abstract void executeOperation(T operation, GModelState modelState);
 
-   @Override
-   public String getLabel() { return operationType.getSimpleName(); }
 }

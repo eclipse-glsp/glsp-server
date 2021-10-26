@@ -76,13 +76,13 @@ class FileWatcherTest {
       final File file = createFile("test.txt");
       final GModelState modelState = modelState("1", fileUri(file));
 
-      final FileWatcher fileWatcher = new FileWatcher(sessionManager, actionDispatcher);
+      final FileWatcher fileWatcher = new FileWatcher(sessionManager, actionDispatcher, modelState);
       fileWatcher.setDebounceDelay(0);
-      fileWatcher.startWatching(modelState);
+      fileWatcher.startWatching();
       sleep();
       changeFile(file);
       sleep();
-      fileWatcher.stopWatching(modelState);
+      fileWatcher.stopWatching();
 
       assertNotifications(1);
    }
@@ -93,13 +93,13 @@ class FileWatcherTest {
       final File file = createFile("test.txt");
       final GModelState modelState = modelState("1", fileUri(file));
 
-      final FileWatcher fileWatcher = new FileWatcher(sessionManager, actionDispatcher);
+      final FileWatcher fileWatcher = new FileWatcher(sessionManager, actionDispatcher, modelState);
       fileWatcher.setDebounceDelay(0);
-      fileWatcher.startWatching(modelState);
+      fileWatcher.startWatching();
       sleep();
       deleteFile(file);
       sleep();
-      fileWatcher.stopWatching(modelState);
+      fileWatcher.stopWatching();
 
       assertNotifications(1);
    }
@@ -110,15 +110,15 @@ class FileWatcherTest {
       final File file = createFile("test.txt");
       final GModelState modelState = modelState("1", fileUri(file));
 
-      final FileWatcher fileWatcher = new FileWatcher(sessionManager, actionDispatcher);
+      final FileWatcher fileWatcher = new FileWatcher(sessionManager, actionDispatcher, modelState);
       fileWatcher.setDebounceDelay(0);
-      fileWatcher.startWatching(modelState);
+      fileWatcher.startWatching();
       sleep();
-      fileWatcher.pauseWatching(modelState);
+      fileWatcher.pauseWatching();
       sleep();
       changeFile(file);
       sleep();
-      fileWatcher.stopWatching(modelState);
+      fileWatcher.stopWatching();
 
       assertNoNotification();
    }
@@ -129,17 +129,17 @@ class FileWatcherTest {
       final File file = createFile("test.txt");
       final GModelState modelState = modelState("1", fileUri(file));
 
-      final FileWatcher fileWatcher = new FileWatcher(sessionManager, actionDispatcher);
+      final FileWatcher fileWatcher = new FileWatcher(sessionManager, actionDispatcher, modelState);
       fileWatcher.setDebounceDelay(0);
-      fileWatcher.startWatching(modelState);
+      fileWatcher.startWatching();
       sleep();
-      fileWatcher.pauseWatching(modelState);
+      fileWatcher.pauseWatching();
       sleep();
-      fileWatcher.continueWatching(modelState);
+      fileWatcher.continueWatching();
       sleep();
       changeFile(file);
       sleep();
-      fileWatcher.stopWatching(modelState);
+      fileWatcher.stopWatching();
 
       assertNotifications(1);
    }

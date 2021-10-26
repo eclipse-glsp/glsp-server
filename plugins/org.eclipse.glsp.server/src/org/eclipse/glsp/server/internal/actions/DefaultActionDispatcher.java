@@ -36,7 +36,6 @@ import org.eclipse.glsp.server.actions.ActionMessage;
 import org.eclipse.glsp.server.actions.ResponseAction;
 import org.eclipse.glsp.server.di.ClientId;
 import org.eclipse.glsp.server.disposable.Disposable;
-import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.protocol.GLSPClient;
 import org.eclipse.glsp.server.utils.FutureUtil;
 
@@ -62,9 +61,6 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
    @Inject
    @ClientId
    protected String clientId;
-
-   @Inject
-   protected GModelState modelState;
 
    protected final String name;
 
@@ -193,7 +189,7 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
 
       List<CompletableFuture<Void>> results = new ArrayList<>();
       for (final ActionHandler actionHandler : actionHandlers) {
-         final List<Action> responses = actionHandler.execute(action, modelState).stream()
+         final List<Action> responses = actionHandler.execute(action).stream()
             .map(response -> ResponseAction.respond(action, response))
             .collect(Collectors.toList());
          results.addAll(dispatchAll(responses));

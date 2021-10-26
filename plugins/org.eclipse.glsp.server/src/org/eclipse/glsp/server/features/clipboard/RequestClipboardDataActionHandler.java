@@ -22,7 +22,7 @@ import java.util.Set;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.BasicActionHandler;
+import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.gson.GraphGsonConfigurationFactory;
 import org.eclipse.glsp.server.model.GModelState;
 
@@ -31,9 +31,12 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.inject.Inject;
 
-public class RequestClipboardDataActionHandler extends BasicActionHandler<RequestClipboardDataAction> {
+public class RequestClipboardDataActionHandler extends AbstractActionHandler<RequestClipboardDataAction> {
 
    protected final Gson gson;
+
+   @Inject
+   protected GModelState modelState;
 
    @Inject
    public RequestClipboardDataActionHandler(final GraphGsonConfigurationFactory gsonConfigurator) {
@@ -42,7 +45,7 @@ public class RequestClipboardDataActionHandler extends BasicActionHandler<Reques
    }
 
    @Override
-   public List<Action> executeAction(final RequestClipboardDataAction action, final GModelState modelState) {
+   public List<Action> executeAction(final RequestClipboardDataAction action) {
       JsonArray jsonArray = new JsonArray();
       GModelIndex index = modelState.getIndex();
       Set<GModelElement> selectedElements = index.getAll(action.getEditorContext().getSelectedElementIds());

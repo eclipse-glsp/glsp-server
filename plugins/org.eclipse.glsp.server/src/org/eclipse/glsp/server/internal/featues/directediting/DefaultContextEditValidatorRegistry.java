@@ -23,18 +23,18 @@ import org.eclipse.glsp.server.features.directediting.ContextEditValidatorRegist
 import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
 import org.eclipse.glsp.server.internal.labeledit.ValidateLabelEditAdapter;
 import org.eclipse.glsp.server.internal.registry.MapRegistry;
+import org.eclipse.glsp.server.model.GModelState;
 
 import com.google.inject.Inject;
 
 public class DefaultContextEditValidatorRegistry extends MapRegistry<String, ContextEditValidator>
    implements ContextEditValidatorRegistry {
-
    @Inject
    public DefaultContextEditValidatorRegistry(final Set<ContextEditValidator> contextEditValidators,
-      final Optional<LabelEditValidator> labelEditValidator) {
+      final Optional<LabelEditValidator> labelEditValidator, final GModelState modelState) {
       contextEditValidators.forEach(provider -> register(provider.getContextId(), provider));
       if (labelEditValidator.isPresent()) {
-         register(LabelEditValidator.CONTEXT_ID, new ValidateLabelEditAdapter(labelEditValidator.get()));
+         register(LabelEditValidator.CONTEXT_ID, new ValidateLabelEditAdapter(modelState, labelEditValidator.get()));
       }
    }
 }

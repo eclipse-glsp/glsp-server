@@ -18,8 +18,8 @@ package org.eclipse.glsp.server.operations;
 import java.util.List;
 import java.util.Optional;
 
+import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.BasicActionHandler;
 import org.eclipse.glsp.server.actions.SetDirtyStateAction;
 import org.eclipse.glsp.server.features.core.model.ModelSubmissionHandler;
 import org.eclipse.glsp.server.internal.gmodel.commandstack.GModelRecordingCommand;
@@ -28,12 +28,16 @@ import org.eclipse.glsp.server.utils.ServerMessageUtil;
 
 import com.google.inject.Inject;
 
-public class OperationActionHandler extends BasicActionHandler<Operation> {
+public class OperationActionHandler extends AbstractActionHandler<Operation> {
+
    @Inject
    protected OperationHandlerRegistry operationHandlerRegistry;
 
    @Inject
    protected ModelSubmissionHandler modelSubmissionHandler;
+
+   @Inject
+   protected GModelState modelState;
 
    @Override
    public boolean handles(final Action action) {
@@ -41,24 +45,23 @@ public class OperationActionHandler extends BasicActionHandler<Operation> {
    }
 
    @Override
-   public List<Action> executeAction(final Operation operation, final GModelState modelState) {
+   public List<Action> executeAction(final Operation operation) {
       if (modelState.isReadonly()) {
          return listOf(ServerMessageUtil
             .warn("Server is in readonly-mode! Could not execute operation: " + operation.getKind()));
       }
       Optional<? extends OperationHandler> operationHandler = getOperationHandler(operation, operationHandlerRegistry);
       if (operationHandler.isPresent()) {
-         return executeHandler(operation, operationHandler.get(), modelState);
+         return executeHandler(operation, operationHandler.get());
       }
       return none();
    }
 
-   protected List<Action> executeHandler(final Operation operation, final OperationHandler handler,
-      final GModelState modelState) {
+   protected List<Action> executeHandler(final Operation operation, final OperationHandler handler) {
       GModelRecordingCommand command = new GModelRecordingCommand(modelState.getRoot(), handler.getLabel(),
-         () -> handler.execute(operation, modelState));
+         () -> handler.execute(operation));
       modelState.execute(command);
-      return modelSubmissionHandler.submitModel(modelState, SetDirtyStateAction.Reason.OPERATION);
+      return modelSubmissionHandler.submitModel(SetDirtyStateAction.Reason.OPERATION);
    }
 
    public static Optional<? extends OperationHandler> getOperationHandler(final Operation operation,

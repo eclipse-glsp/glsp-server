@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -24,12 +24,17 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.BasicCreateOperationHandler;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
+import org.eclipse.glsp.server.operations.AbstractCreateOperationHandler;
 
-public abstract class CreateEdgeOperationHandler extends BasicCreateOperationHandler<CreateEdgeOperation> {
+import com.google.inject.Inject;
 
-   private final String label;
+public abstract class CreateEdgeOperationHandler extends AbstractCreateOperationHandler<CreateEdgeOperation> {
+
+   protected final String label;
+
+   @Inject
+   protected GModelState modelState;
 
    public CreateEdgeOperationHandler(final String elementTypeId, final String label) {
       super(elementTypeId);
@@ -37,18 +42,18 @@ public abstract class CreateEdgeOperationHandler extends BasicCreateOperationHan
    }
 
    @Override
-   public void executeOperation(final CreateEdgeOperation action, final GModelState modelState) {
-      if (action.getSourceElementId() == null || action.getTargetElementId() == null) {
+   public void executeOperation(final CreateEdgeOperation operation) {
+      if (operation.getSourceElementId() == null || operation.getTargetElementId() == null) {
          throw new IllegalArgumentException("Incomplete create connection action");
       }
 
       GModelIndex index = modelState.getIndex();
 
-      Optional<GModelElement> source = index.findElement(action.getSourceElementId(), IS_CONNECTABLE);
-      Optional<GModelElement> target = index.findElement(action.getTargetElementId(), IS_CONNECTABLE);
+      Optional<GModelElement> source = index.findElement(operation.getSourceElementId(), IS_CONNECTABLE);
+      Optional<GModelElement> target = index.findElement(operation.getTargetElementId(), IS_CONNECTABLE);
       if (!source.isPresent() || !target.isPresent()) {
-         throw new IllegalArgumentException("Invalid source or target for source ID " + action.getSourceElementId()
-            + " and target ID " + action.getTargetElementId());
+         throw new IllegalArgumentException("Invalid source or target for source ID " + operation.getSourceElementId()
+            + " and target ID " + operation.getTargetElementId());
       }
 
       Optional<GEdge> connection = createEdge(source.get(), target.get(), modelState);

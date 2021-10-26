@@ -15,7 +15,6 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.features.core.model;
 
-import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.ClientOptionsUtil;
 
 /**
@@ -36,8 +35,7 @@ public interface ModelSourceLoader {
    /**
     * Loads a source model into the <code>modelState</code>.
     *
-    * @param action     Action sent by the client to specifying the information needed to load the source model.
-    * @param modelState The model state into which the source model shall be put.
+    * @param action Action sent by the client to specifying the information needed to load the source model.
     */
-   void loadSourceModel(RequestModelAction action, GModelState modelState);
+   void loadSourceModel(RequestModelAction action);
 }

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -19,10 +19,15 @@ import java.util.List;
 
 import org.eclipse.glsp.server.model.GModelState;
 
-public class SetEditModeActionHandler extends BasicActionHandler<SetEditModeAction> {
+import com.google.inject.Inject;
+
+public class SetEditModeActionHandler extends AbstractActionHandler<SetEditModeAction> {
+
+   @Inject
+   protected GModelState modelState;
 
    @Override
-   protected List<Action> executeAction(final SetEditModeAction action, final GModelState modelState) {
+   protected List<Action> executeAction(final SetEditModeAction action) {
       modelState.setEditMode(action.getEditMode());
       return none();
    }

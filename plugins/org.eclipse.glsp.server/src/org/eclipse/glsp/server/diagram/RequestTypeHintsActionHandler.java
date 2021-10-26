@@ -18,17 +18,16 @@ package org.eclipse.glsp.server.diagram;
 import java.util.List;
 
 import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.BasicActionHandler;
-import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.actions.AbstractActionHandler;
 
 import com.google.inject.Inject;
 
-public class RequestTypeHintsActionHandler extends BasicActionHandler<RequestTypeHintsAction> {
+public class RequestTypeHintsActionHandler extends AbstractActionHandler<RequestTypeHintsAction> {
    @Inject
    protected DiagramConfiguration diagramConfiguration;
 
    @Override
-   public List<Action> executeAction(final RequestTypeHintsAction action, final GModelState modelState) {
+   public List<Action> executeAction(final RequestTypeHintsAction action) {
       return listOf(new SetTypeHintsAction(diagramConfiguration.getShapeTypeHints(),
          diagramConfiguration.getEdgeTypeHints()));
    }

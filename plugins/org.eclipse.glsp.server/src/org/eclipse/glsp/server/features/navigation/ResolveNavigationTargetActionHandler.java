@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -20,20 +20,23 @@ import java.util.Optional;
 
 import org.apache.log4j.Logger;
 import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.BasicActionHandler;
+import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.model.GModelState;
 
 import com.google.inject.Inject;
 
-public class ResolveNavigationTargetActionHandler extends BasicActionHandler<ResolveNavigationTargetAction> {
+public class ResolveNavigationTargetActionHandler extends AbstractActionHandler<ResolveNavigationTargetAction> {
 
    private static final Logger LOG = Logger.getLogger(ResolveNavigationTargetActionHandler.class);
 
    @Inject
    protected Optional<NavigationTargetResolver> navigationTargetResolver;
 
+   @Inject
+   protected GModelState modelState;
+
    @Override
-   public List<Action> executeAction(final ResolveNavigationTargetAction action, final GModelState modelState) {
+   public List<Action> executeAction(final ResolveNavigationTargetAction action) {
       if (navigationTargetResolver.isEmpty()) {
          LOG.warn("Could not resolve navigation target. No implementation for: "
             + NavigationTargetResolver.class.getName() + " has been bound.");

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -18,28 +18,26 @@ package org.eclipse.glsp.server.operations.gmodel;
 import java.util.List;
 
 import org.eclipse.glsp.server.actions.ActionDispatcher;
-import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.BasicOperationHandler;
 import org.eclipse.glsp.server.operations.CutOperation;
+import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.DeleteOperation;
 
 import com.google.inject.Inject;
 
-public class CutOperationHandler extends BasicOperationHandler<CutOperation> {
+public class CutOperationHandler extends AbstractOperationHandler<CutOperation> {
 
    @Inject
    protected ActionDispatcher actionDispatcher;
 
    @Override
-   public void executeOperation(final CutOperation operation, final GModelState modelState) {
-      List<String> cutableElementIds = getElementToCut(operation, modelState);
+   public void executeOperation(final CutOperation operation) {
+      List<String> cutableElementIds = getElementToCut(operation);
       if (!cutableElementIds.isEmpty()) {
          actionDispatcher.dispatch(new DeleteOperation(cutableElementIds));
       }
    }
 
-   protected List<String> getElementToCut(final CutOperation cutAction,
-      final GModelState modelState) {
+   protected List<String> getElementToCut(final CutOperation cutAction) {
       return cutAction.getEditorContext().getSelectedElementIds();
    }
 }

@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 import org.eclipse.glsp.server.actions.TriggerElementCreationAction;
 import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
-import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.CreateOperation;
@@ -40,7 +39,7 @@ public class DefaultToolPaletteItemProvider implements ToolPaletteItemProvider {
    private int counter;
 
    @Override
-   public List<PaletteItem> getItems(final Map<String, String> args, final GModelState modelState) {
+   public List<PaletteItem> getItems(final Map<String, String> args) {
       List<CreateOperationHandler> handlers = operationHandlerRegistry.getAll().stream()
          .filter(CreateOperationHandler.class::isInstance)
          .map(CreateOperationHandler.class::cast)

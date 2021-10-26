@@ -23,7 +23,6 @@ import org.eclipse.glsp.example.workflow.utils.WorkflowBuilder.ActivityNodeBuild
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
-import org.eclipse.glsp.server.model.GModelState;
 
 public class CreateDecisionNodeHandler extends CreateActivityNodeHandler {
 
@@ -32,8 +31,7 @@ public class CreateDecisionNodeHandler extends CreateActivityNodeHandler {
    }
 
    @Override
-   protected GNode createNode(final Optional<GPoint> point, final Map<String, String> args,
-      final GModelState modelState) {
+   protected GNode createNode(final Optional<GPoint> point, final Map<String, String> args) {
       String nodeType = ModelTypes.toNodeType(getElementTypeId());
       return new ActivityNodeBuilder(getElementTypeId(), nodeType) //
          .layoutOptions(new GLayoutOptions().minHeight(32d).minWidth(32d)) //

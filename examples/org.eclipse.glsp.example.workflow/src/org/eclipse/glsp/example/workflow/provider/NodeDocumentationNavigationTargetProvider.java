@@ -30,6 +30,8 @@ import org.eclipse.glsp.server.types.EditorContext;
 import org.eclipse.glsp.server.utils.ClientOptionsUtil;
 import org.eclipse.glsp.server.utils.MapUtil;
 
+import com.google.inject.Inject;
+
 /**
  * An example {@link NavigationTargetProvider} that opens an md file and selects a specified range.
  * <p>
@@ -41,8 +43,11 @@ public class NodeDocumentationNavigationTargetProvider implements NavigationTarg
    @Override
    public String getTargetTypeId() { return "documentation"; }
 
+   @Inject
+   protected GModelState modelState;
+
    @Override
-   public List<? extends NavigationTarget> getTargets(final EditorContext editorContext, final GModelState modelState) {
+   public List<? extends NavigationTarget> getTargets(final EditorContext editorContext) {
       if (editorContext.getSelectedElementIds().size() == 1) {
          Optional<TaskNode> taskNode = modelState.getIndex()
             .findElementByClass(editorContext.getSelectedElementIds().get(0), TaskNode.class);

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2018 TypeFox and others.
+ * Copyright (c) 2018-2021 TypeFox and others.
  * (c) 2019-2021 EclipseSource (adaptation for GModel)
  *
  * This program and the accompanying materials are made available under the
@@ -63,6 +63,7 @@ import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.model.GModelState;
 
 import com.google.common.collect.Maps;
+import com.google.inject.Inject;
 
 /**
  * Layout engine that uses the <a href="https://www.eclipse.org/elk/">Eclipse
@@ -83,6 +84,9 @@ public class ElkLayoutEngine implements LayoutEngine {
       LayoutMetaDataService.getInstance().registerLayoutMetaDataProviders(providers);
    }
 
+   @Inject
+   protected GModelState modelState;
+
    private IGraphLayoutEngine engine = new RecursiveGraphLayoutEngine();
 
    protected final ElkGraphFactory factory = ElkGraphFactory.eINSTANCE;
@@ -95,7 +99,7 @@ public class ElkLayoutEngine implements LayoutEngine {
     * for your model using a {@link SprottyLayoutConfigurator}.
     */
    @Override
-   public void layout(final GModelState modelState) {
+   public void layout() {
       if (modelState.getRoot() instanceof GGraph) {
          layout((GGraph) modelState.getRoot(), null);
       }

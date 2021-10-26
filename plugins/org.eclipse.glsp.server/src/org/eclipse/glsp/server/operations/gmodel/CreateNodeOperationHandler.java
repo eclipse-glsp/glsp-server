@@ -26,27 +26,32 @@ import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.BasicCreateOperationHandler;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
+import org.eclipse.glsp.server.operations.AbstractCreateOperationHandler;
 import org.eclipse.glsp.server.utils.GeometryUtil;
 
-public abstract class CreateNodeOperationHandler extends BasicCreateOperationHandler<CreateNodeOperation> {
+import com.google.inject.Inject;
+
+public abstract class CreateNodeOperationHandler extends AbstractCreateOperationHandler<CreateNodeOperation> {
+
+   @Inject
+   protected GModelState modelState;
 
    public CreateNodeOperationHandler(final String elementTypeId) {
       super(elementTypeId);
    }
 
    @Override
-   public void executeOperation(final CreateNodeOperation operation, final GModelState modelState) {
+   public void executeOperation(final CreateNodeOperation operation) {
 
-      Optional<GModelElement> container = getContainer(operation, modelState);
+      Optional<GModelElement> container = getContainer(operation);
       if (!container.isPresent()) {
          container = Optional.of(modelState.getRoot());
       }
 
       Optional<GPoint> absoluteLocation = getLocation(operation);
       Optional<GPoint> relativeLocation = getRelativeLocation(operation, absoluteLocation, container);
-      GModelElement element = createNode(relativeLocation, operation.getArgs(), modelState);
+      GModelElement element = createNode(relativeLocation, operation.getArgs());
       container.get().getChildren().add(element);
    }
 
@@ -58,11 +63,10 @@ public abstract class CreateNodeOperationHandler extends BasicCreateOperationHan
     * </p>
     *
     * @param operation
-    * @param modelState
     * @return
     *         the GModelElement that will contain the newly created node.
     */
-   protected Optional<GModelElement> getContainer(final CreateNodeOperation operation, final GModelState modelState) {
+   protected Optional<GModelElement> getContainer(final CreateNodeOperation operation) {
       GModelIndex index = modelState.getIndex();
       return index.get(operation.getContainerId());
    }
@@ -117,10 +121,8 @@ public abstract class CreateNodeOperationHandler extends BasicCreateOperationHan
     *
     * @param relativeLocation
     * @param args
-    * @param modelState
     * @return
     *         The created {@link GNode Node}.
     */
-   protected abstract GNode createNode(Optional<GPoint> relativeLocation, Map<String, String> args,
-      GModelState modelState);
+   protected abstract GNode createNode(Optional<GPoint> relativeLocation, Map<String, String> args);
 }

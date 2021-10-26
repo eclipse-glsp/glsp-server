@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -18,25 +18,23 @@ package org.eclipse.glsp.server.features.navigation;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.BasicActionHandler;
-import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.types.EditorContext;
 
 import com.google.inject.Inject;
 
-public class RequestNavigationTargetsActionHandler extends BasicActionHandler<RequestNavigationTargetsAction> {
+public class RequestNavigationTargetsActionHandler extends AbstractActionHandler<RequestNavigationTargetsAction> {
 
    @Inject
    protected NavigationTargetProviderRegistry navigationTargetProviderRegistry;
 
    @Override
-   public List<Action> executeAction(final RequestNavigationTargetsAction action,
-      final GModelState modelState) {
+   public List<Action> executeAction(final RequestNavigationTargetsAction action) {
       EditorContext editorContext = action.getEditorContext();
       List<NavigationTarget> allTargets = new ArrayList<>();
       navigationTargetProviderRegistry.get(action.getTargetTypeId())
-         .map(provider -> provider.getTargets(editorContext, modelState))
+         .map(provider -> provider.getTargets(editorContext))
          .ifPresent(targets -> allTargets.addAll(targets));
       return listOf(new SetNavigationTargetsAction(allTargets, action.getEditorContext().getArgs()));
    }

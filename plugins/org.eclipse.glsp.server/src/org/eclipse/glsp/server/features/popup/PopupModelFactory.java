@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -19,10 +19,8 @@ import java.util.Optional;
 
 import org.eclipse.glsp.graph.GHtmlRoot;
 import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.server.model.GModelState;
 
 public interface PopupModelFactory {
 
-   Optional<GHtmlRoot> createPopupModel(GModelElement element, RequestPopupModelAction action,
-      GModelState modelState);
+   Optional<GHtmlRoot> createPopupModel(GModelElement element, RequestPopupModelAction action);
 }

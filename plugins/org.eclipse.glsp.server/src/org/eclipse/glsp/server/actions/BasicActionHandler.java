@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,45 +15,34 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actions;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.glsp.server.internal.util.GenericsUtil;
 import org.eclipse.glsp.server.model.GModelState;
 
-public abstract class BasicActionHandler<T extends Action> implements ActionHandler {
-   protected final Class<T> actionType;
+import com.google.inject.Inject;
 
-   public BasicActionHandler() {
-      this.actionType = deriveActionType();
-   }
+/**
+ * Deprecated, will be removed with version 1.0.
+ * Please use {@link AbstractActionHandler} instead and directly inject the {@link GModelState}.
+ */
+@Deprecated
+public abstract class BasicActionHandler<T extends Action> extends AbstractActionHandler<T> {
 
+   @Inject
+   protected GModelState modelState;
+
+   @Override
    @SuppressWarnings("unchecked")
    protected Class<T> deriveActionType() {
       return (Class<T>) GenericsUtil.getGenericTypeParameterClass(getClass(), BasicActionHandler.class);
    }
 
    @Override
-   public boolean handles(final Action action) {
-      return actionType.isInstance(action);
-   }
-
-   @Override
-   public List<Action> execute(final Action action, final GModelState modelState) {
-      if (handles(action)) {
-         T actualAction = actionType.cast(action);
-         return executeAction(actualAction, modelState);
-      }
-      return none();
+   public List<Action> executeAction(final T actualAction) {
+      return executeAction(actualAction, modelState);
    }
 
    protected abstract List<Action> executeAction(T actualAction, GModelState modelState);
-
-   public Class<T> getActionType() { return actionType; }
-
-   @Override
-   public List<Class<? extends Action>> getHandledActionTypes() {
-      return Arrays.asList(actionType);
-   }
 
 }

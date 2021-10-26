@@ -20,12 +20,17 @@ import java.util.Optional;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.BasicOperationHandler;
+import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 
-public class ApplyLabelEditOperationHandler extends BasicOperationHandler<ApplyLabelEditOperation> {
+import com.google.inject.Inject;
+
+public class ApplyLabelEditOperationHandler extends AbstractOperationHandler<ApplyLabelEditOperation> {
+
+   @Inject
+   protected GModelState modelState;
 
    @Override
-   public void executeOperation(final ApplyLabelEditOperation operation, final GModelState modelState) {
+   public void executeOperation(final ApplyLabelEditOperation operation) {
       Optional<GModelElement> element = modelState.getIndex().get(operation.getLabelId());
       if (!element.isPresent() && !(element.get() instanceof GLabel)) {
          throw new IllegalArgumentException("Element with provided ID cannot be found or is not a GLabel");

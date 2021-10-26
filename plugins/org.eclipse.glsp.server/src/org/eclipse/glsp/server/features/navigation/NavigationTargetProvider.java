@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -17,7 +17,6 @@ package org.eclipse.glsp.server.features.navigation;
 
 import java.util.List;
 
-import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.types.EditorContext;
 
 public interface NavigationTargetProvider {
@@ -40,10 +39,9 @@ public interface NavigationTargetProvider {
     * Other clients (non-Theia clients) should behave the same way.
     *
     * @param editorContext The editor context
-    * @param modelState    The model state
     * @return the list of navigation targets
     */
-   List<? extends NavigationTarget> getTargets(EditorContext editorContext, GModelState modelState);
+   List<? extends NavigationTarget> getTargets(EditorContext editorContext);
 
    String getTargetTypeId();
 

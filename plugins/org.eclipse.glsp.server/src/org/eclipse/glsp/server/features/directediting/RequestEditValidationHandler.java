@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -19,13 +19,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.log4j.Logger;
+import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.BasicActionHandler;
-import org.eclipse.glsp.server.model.GModelState;
 
 import com.google.inject.Inject;
 
-public class RequestEditValidationHandler extends BasicActionHandler<RequestEditValidationAction> {
+public class RequestEditValidationHandler extends AbstractActionHandler<RequestEditValidationAction> {
 
    private static Logger log = Logger.getLogger(RequestEditValidationHandler.class);
 
@@ -33,9 +32,9 @@ public class RequestEditValidationHandler extends BasicActionHandler<RequestEdit
    protected ContextEditValidatorRegistry contextEditValidatorRegistry;
 
    @Override
-   public List<Action> executeAction(final RequestEditValidationAction action, final GModelState modelState) {
+   public List<Action> executeAction(final RequestEditValidationAction action) {
       Optional<ValidationStatus> validationResult = contextEditValidatorRegistry.get(action.getContextId())
-         .map(provider -> provider.validate(action, modelState));
+         .map(provider -> provider.validate(action));
       if (!validationResult.isPresent()) {
          String message = "No validator registered for the context '" + action.getContextId() + "'";
          log.warn(message);

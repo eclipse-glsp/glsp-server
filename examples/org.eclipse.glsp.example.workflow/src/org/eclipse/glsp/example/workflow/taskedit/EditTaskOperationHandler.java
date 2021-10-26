@@ -19,13 +19,18 @@ import java.util.Optional;
 
 import org.eclipse.glsp.example.workflow.wfgraph.TaskNode;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.BasicOperationHandler;
+import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
-public class EditTaskOperationHandler extends BasicOperationHandler<EditTaskOperation> {
+import com.google.inject.Inject;
+
+public class EditTaskOperationHandler extends AbstractOperationHandler<EditTaskOperation> {
+
+   @Inject
+   protected GModelState modelState;
 
    @Override
-   protected void executeOperation(final EditTaskOperation operation, final GModelState modelState) {
+   protected void executeOperation(final EditTaskOperation operation) {
       Optional<TaskNode> task = modelState.getIndex().findElementByClass(operation.getTaskId(), TaskNode.class);
       if (task.isEmpty()) {
          throw new RuntimeException("Cannot find task with id '" + operation.getTaskId() + "'");

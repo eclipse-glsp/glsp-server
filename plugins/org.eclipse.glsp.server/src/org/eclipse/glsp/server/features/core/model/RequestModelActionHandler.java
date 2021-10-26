@@ -18,9 +18,9 @@ package org.eclipse.glsp.server.features.core.model;
 import java.util.List;
 import java.util.Optional;
 
+import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
-import org.eclipse.glsp.server.actions.BasicActionHandler;
 import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.ServerMessageUtil;
@@ -28,7 +28,7 @@ import org.eclipse.glsp.server.utils.ServerStatusUtil;
 
 import com.google.inject.Inject;
 
-public class RequestModelActionHandler extends BasicActionHandler<RequestModelAction> {
+public class RequestModelActionHandler extends AbstractActionHandler<RequestModelAction> {
 
    @Inject
    protected ModelSourceLoader sourceModelLoader;
@@ -42,25 +42,28 @@ public class RequestModelActionHandler extends BasicActionHandler<RequestModelAc
    @Inject
    protected ModelSubmissionHandler modelSubmissionHandler;
 
+   @Inject
+   protected GModelState modelState;
+
    @Override
-   public List<Action> executeAction(final RequestModelAction action, final GModelState modelState) {
+   public List<Action> executeAction(final RequestModelAction action) {
       modelState.setClientOptions(action.getOptions());
 
-      notifyStartLoading(modelState);
-      sourceModelLoader.loadSourceModel(action, modelState);
-      notifyFinishedLoading(modelState);
+      notifyStartLoading();
+      sourceModelLoader.loadSourceModel(action);
+      notifyFinishedLoading();
 
-      modelSourceWatcher.ifPresent(watcher -> watcher.startWatching(modelState));
+      modelSourceWatcher.ifPresent(watcher -> watcher.startWatching());
 
-      return modelSubmissionHandler.submitModel(modelState);
+      return modelSubmissionHandler.submitModel();
    }
 
-   protected void notifyStartLoading(final GModelState modelState) {
+   protected void notifyStartLoading() {
       actionDispatcher.dispatch(ServerStatusUtil.info("Model loading in progress!"));
       actionDispatcher.dispatch(ServerMessageUtil.info("Model loading in progress!"));
    }
 
-   protected void notifyFinishedLoading(final GModelState modelState) {
+   protected void notifyFinishedLoading() {
       actionDispatcher.dispatch(ServerStatusUtil.clear());
       actionDispatcher.dispatch(ServerMessageUtil.clear());
    }

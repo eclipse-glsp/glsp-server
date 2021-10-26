@@ -51,6 +51,9 @@ public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
    @Inject
    protected ActionDispatcher actionDispatcher;
 
+   @Inject
+   protected GModelState modelState;
+
    protected int debounceDelay = 500;
 
    protected final List<FileWatchWorker> workers = new ArrayList<>();
@@ -65,6 +68,12 @@ public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
       this.actionDispatcher = actionDispatcher;
    }
 
+   public FileWatcher(final ClientSessionManager sessionManager, final ActionDispatcher actionDispatcher,
+      final GModelState modelState) {
+      this(sessionManager, actionDispatcher);
+      this.modelState = modelState;
+   }
+
    public int getDebounceDelay() { return debounceDelay; }
 
    public void setDebounceDelay(final int debounceDelay) { this.debounceDelay = debounceDelay; }
@@ -75,26 +84,26 @@ public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
    }
 
    @Override
-   public void startWatching(final GModelState modelState) {
-      start(modelState);
+   public void startWatching() {
+      start();
    }
 
    @Override
-   public void stopWatching(final GModelState modelState) {
+   public void stopWatching() {
       disposeAllWorkers();
    }
 
    @Override
-   public void pauseWatching(final GModelState modelState) {
+   public void pauseWatching() {
       workers.forEach(FileWatchWorker::pauseNotifications);
    }
 
    @Override
-   public void continueWatching(final GModelState modelState) {
+   public void continueWatching() {
       workers.forEach(FileWatchWorker::continueNotifications);
    }
 
-   protected void start(final GModelState modelState) {
+   protected void start() {
       IDisposable.disposeIfExists(clientNotificationDebouncer);
       clientNotificationDebouncer = new Debouncer<>(this::notifyClient, getDebounceDelay(), TimeUnit.MILLISECONDS);
       createWorkers(modelState).forEach(FileWatchWorker::start);
@@ -105,7 +114,7 @@ public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
       IDisposable.disposeIfExists(clientNotificationDebouncer);
    }
 
-   protected List<Path> getPaths(final GModelState modelState) {
+   protected List<Path> getPaths() {
       return ClientOptionsUtil.getSourceUriAsFile(modelState.getClientOptions()).stream()
          .map(file -> file.toPath()).collect(Collectors.toList());
    }
@@ -122,7 +131,8 @@ public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
    }
 
    private List<FileWatchWorker> createFileWatchWorkers(final GModelState modelState) {
-      return getPaths(modelState).stream().map(path -> new FileWatchWorker(modelState.getClientId(), path))
+      return getPaths().stream()
+         .map(path -> new FileWatchWorker(modelState.getClientId(), path))
          .collect(Collectors.toList());
    }
 

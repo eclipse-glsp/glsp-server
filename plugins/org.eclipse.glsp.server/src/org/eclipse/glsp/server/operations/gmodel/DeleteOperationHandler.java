@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -29,18 +29,23 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.BasicOperationHandler;
+import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.DeleteOperation;
+
+import com.google.inject.Inject;
 
 /**
  * Generic handler implementation for {@link DeleteOperation}.
  */
-public class DeleteOperationHandler extends BasicOperationHandler<DeleteOperation> {
+public class DeleteOperationHandler extends AbstractOperationHandler<DeleteOperation> {
    private static Logger log = Logger.getLogger(DeleteOperationHandler.class);
-   private Set<String> allDependantsIds;
+   protected Set<String> allDependantsIds;
+
+   @Inject
+   protected GModelState modelState;
 
    @Override
-   public void executeOperation(final DeleteOperation operation, final GModelState modelState) {
+   public void executeOperation(final DeleteOperation operation) {
       List<String> elementIds = operation.getElementIds();
       if (elementIds == null || elementIds.size() == 0) {
          log.warn("Elements to delete are not specified");
@@ -48,13 +53,13 @@ public class DeleteOperationHandler extends BasicOperationHandler<DeleteOperatio
       }
       GModelIndex index = modelState.getIndex();
       allDependantsIds = new HashSet<>();
-      boolean success = elementIds.stream().allMatch(eId -> delete(eId, index, modelState));
+      boolean success = elementIds.stream().allMatch(eId -> delete(eId, index));
       if (!success) {
          log.warn("Could not delete all elements as requested (see messages above to find out why)");
       }
    }
 
-   protected boolean delete(final String elementId, final GModelIndex index, final GModelState modelState) {
+   protected boolean delete(final String elementId, final GModelIndex index) {
       if (allDependantsIds.contains(elementId)) {
          // The element as already been deleted as dependent of a previously deleted
          // element

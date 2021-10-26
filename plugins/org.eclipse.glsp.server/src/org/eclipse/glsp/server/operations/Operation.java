@@ -20,6 +20,8 @@ import org.eclipse.glsp.server.actions.Action;
 /**
  *
  * An Operation is an {@link Action} that directly manipulates the model representation on server side.
+ * Operations are handled by instances of {@link OperationHandler}. The operation handler is responsible
+ * of processing the operation and updates the model representation accordingly.
  *
  */
 public abstract class Operation extends Action {

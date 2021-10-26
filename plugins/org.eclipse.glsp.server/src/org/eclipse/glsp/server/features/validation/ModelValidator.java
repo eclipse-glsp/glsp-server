@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -18,9 +18,8 @@ package org.eclipse.glsp.server.features.validation;
 import java.util.List;
 
 import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.server.model.GModelState;
 
 public interface ModelValidator {
 
-   List<Marker> validate(GModelState modelState, GModelElement... elements);
+   List<Marker> validate(GModelElement... elements);
 }

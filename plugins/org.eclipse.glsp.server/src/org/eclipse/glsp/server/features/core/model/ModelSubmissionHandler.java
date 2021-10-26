@@ -45,6 +45,9 @@ public class ModelSubmissionHandler {
    @Inject
    protected GModelFactory modelFactory;
 
+   @Inject
+   protected GModelState modelState;
+
    private final Object modelLock = new Object();
 
    /**
@@ -52,14 +55,13 @@ public class ModelSubmissionHandler {
     * <p>
     * These actions are not processed by this {@link ModelSubmissionHandler}, but should be either manually dispatched
     * to the {@link ActionDispatcher}, or simply returned as the result of an
-    * {@link ActionHandler#execute(Action, GModelState)} method.
+    * {@link ActionHandler#execute(Action)} method.
     * </p>
     *
-    * @param modelState The model state to submit.
-    * @param reason     The optional reason that caused the model update.
+    * @param reason The optional reason that caused the model update.
     * @return A list of actions to be processed in order to submit the model.
     */
-   public List<Action> submitModel(final GModelState modelState, final String reason) {
+   public List<Action> submitModel(final String reason) {
       modelFactory.createGModel(modelState);
       modelState.getRoot().setRevision(modelState.getRoot().getRevision() + 1);
       boolean needsClientLayout = diagramConfiguration.needsClientLayout();
@@ -69,35 +71,34 @@ public class ModelSubmissionHandler {
                new SetDirtyStateAction(modelState.isDirty(), reason));
          }
       }
-      return submitModelDirectly(modelState, reason);
+      return submitModelDirectly(reason);
    }
 
-   public List<Action> submitModel(final GModelState modelState) {
-      return submitModel(modelState, null);
+   public List<Action> submitModel() {
+      return submitModel(null);
    }
 
    /**
     * Returns a list of actions to directly update the client-side model without any server- or client-side layouting.
     * <p>
     * Typically {@link ActionHandler action handlers} don't invoke this method but use
-    * {@link #submitModel(GModelState,String)}
+    * {@link #submitModel(String)}
     * instead, as this is only used to eventually submit the model on the client directly after all layouting is already
     * performed before. The only foreseen caller of this method is {@link ComputedBoundsActionHandler}.
     * </p>
     * <p>
     * These actions are not processed by this {@link ModelSubmissionHandler}, but should be either manually dispatched
     * to the {@link ActionDispatcher}, or simply returned as the result of an
-    * {@link ActionHandler#execute(Action, GModelState)} method.
+    * {@link ActionHandler#execute(Action)} method.
     * </p>
     *
-    * @param modelState The model state to submit.
-    * @param reason     The optional reason that caused the model update.
+    * @param reason The optional reason that caused the model update.
     * @return A list of actions to be processed in order to submit the model.
     */
-   public List<Action> submitModelDirectly(final GModelState modelState, final String reason) {
+   public List<Action> submitModelDirectly(final String reason) {
       GModelRoot gModel = modelState.getRoot();
       if (diagramConfiguration.getLayoutKind() == ServerLayoutKind.AUTOMATIC && layoutEngine.isPresent()) {
-         layoutEngine.get().layout(modelState);
+         layoutEngine.get().layout();
       }
       Action modelAction = gModel.getRevision() == 0 ? new SetModelAction(gModel)
          : new UpdateModelAction(gModel, diagramConfiguration.animatedUpdate());
@@ -111,8 +112,8 @@ public class ModelSubmissionHandler {
       }
    }
 
-   public List<Action> submitModelDirectly(final GModelState modelState) {
-      return submitModelDirectly(modelState, null);
+   public List<Action> submitModelDirectly() {
+      return submitModelDirectly(null);
    }
 
    public synchronized Object getModelLock() { return modelLock; }

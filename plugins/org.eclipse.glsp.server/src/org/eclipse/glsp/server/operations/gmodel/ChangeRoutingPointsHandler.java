@@ -22,14 +22,19 @@ import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.BasicOperationHandler;
 import org.eclipse.glsp.server.operations.ChangeRoutingPointsOperation;
+import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
 
-public class ChangeRoutingPointsHandler extends BasicOperationHandler<ChangeRoutingPointsOperation> {
+import com.google.inject.Inject;
+
+public class ChangeRoutingPointsHandler extends AbstractOperationHandler<ChangeRoutingPointsOperation> {
+
+   @Inject
+   protected GModelState modelState;
 
    @Override
-   protected void executeOperation(final ChangeRoutingPointsOperation operation, final GModelState modelState) {
+   protected void executeOperation(final ChangeRoutingPointsOperation operation) {
 
       // check for null-values
       if (operation.getNewRoutingPoints() == null) {

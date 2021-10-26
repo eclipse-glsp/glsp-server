@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -27,9 +27,11 @@ import org.eclipse.glsp.server.model.GModelState;
 public class ValidateLabelEditAdapter implements ContextEditValidator {
 
    private final LabelEditValidator editLabelValidator;
+   private final GModelState modelState;
 
-   public ValidateLabelEditAdapter(final LabelEditValidator editLabelValidator) {
+   public ValidateLabelEditAdapter(final GModelState modelState, final LabelEditValidator editLabelValidator) {
       super();
+      this.modelState = modelState;
       this.editLabelValidator = editLabelValidator;
    }
 
@@ -37,10 +39,10 @@ public class ValidateLabelEditAdapter implements ContextEditValidator {
    public String getContextId() { return LabelEditValidator.CONTEXT_ID; }
 
    @Override
-   public ValidationStatus validate(final RequestEditValidationAction action, final GModelState modelState) {
+   public ValidationStatus validate(final RequestEditValidationAction action) {
       Optional<GModelElement> element = modelState.getIndex().get(action.getModelElementId());
       if (element.isPresent()) {
-         return editLabelValidator.validate(modelState, action.getText(), element.get());
+         return editLabelValidator.validate(action.getText(), element.get());
       }
       return ValidationStatus.ok();
    }

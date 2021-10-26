@@ -22,7 +22,6 @@ import org.eclipse.glsp.example.workflow.wfgraph.Category;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.gmodel.CreateNodeOperationHandler;
 
@@ -38,8 +37,8 @@ public abstract class CreateWorkflowNodeOperationHandler extends CreateNodeOpera
    }
 
    @Override
-   protected Optional<GModelElement> getContainer(final CreateNodeOperation operation, final GModelState modelState) {
-      Optional<GModelElement> container = super.getContainer(operation, modelState);
+   protected Optional<GModelElement> getContainer(final CreateNodeOperation operation) {
+      Optional<GModelElement> container = super.getContainer(operation);
       // If the container is a Category node, find its structure compartment
       Optional<GModelElement> structCompt = container.filter(Category.class::isInstance).map(Category.class::cast)
          .flatMap(this::getCategoryCompartment);

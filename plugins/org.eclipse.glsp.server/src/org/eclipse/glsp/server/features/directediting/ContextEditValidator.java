@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,14 +15,11 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.features.directediting;
 
-import org.eclipse.glsp.server.model.GModelState;
-
 public interface ContextEditValidator {
 
    String getContextId();
 
-   ValidationStatus validate(RequestEditValidationAction action,
-      GModelState modelState);
+   ValidationStatus validate(RequestEditValidationAction action);
 
    default boolean handles(final String contextId) {
       return getContextId().equals(contextId);

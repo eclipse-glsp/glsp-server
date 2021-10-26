@@ -51,21 +51,21 @@ public class SaveModelActionHandler extends AbstractActionHandler<SaveModelActio
 
    @Override
    public List<Action> executeAction(final SaveModelAction action) {
-      modelSourceWatcher.ifPresent(watcher -> watcher.pauseWatching(modelState));
+      modelSourceWatcher.ifPresent(watcher -> watcher.pauseWatching());
       try {
-         saveModelState(action, modelState);
+         saveModelState(action);
       } finally {
-         modelSourceWatcher.ifPresent(watcher -> watcher.continueWatching(modelState));
+         modelSourceWatcher.ifPresent(watcher -> watcher.continueWatching());
       }
       return listOf(new SetDirtyStateAction(modelState.isDirty(), SetDirtyStateAction.Reason.SAVE));
    }
 
-   protected void saveModelState(final SaveModelAction action, final GModelState modelState) {
-      File file = convertToFile(action, modelState);
+   protected void saveModelState(final SaveModelAction action) {
+      File file = convertToFile(action);
       try (Writer writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)) {
          Gson gson = gsonConfigurator.configureGson().setPrettyPrinting().create();
          gson.toJson(modelState.getRoot(), GGraph.class, writer);
-         if (saveIsDone(action, modelState)) {
+         if (saveIsDone(action)) {
             modelState.saveIsDone();
          }
       } catch (IOException e) {
@@ -74,12 +74,12 @@ public class SaveModelActionHandler extends AbstractActionHandler<SaveModelActio
       }
    }
 
-   protected boolean saveIsDone(final SaveModelAction action, final GModelState modelState) {
+   protected boolean saveIsDone(final SaveModelAction action) {
       String sourceUri = ClientOptionsUtil.adaptUri(modelState.getClientOptions().get(ClientOptionsUtil.SOURCE_URI));
       return action.getFileUri().map(uri -> ClientOptionsUtil.adaptUri(uri).equals(sourceUri)).orElse(true);
    }
 
-   protected File convertToFile(final SaveModelAction action, final GModelState modelState) {
+   protected File convertToFile(final SaveModelAction action) {
       if (action.getFileUri().isPresent()) {
          return ClientOptionsUtil.getAsFile(action.getFileUri().get());
       }

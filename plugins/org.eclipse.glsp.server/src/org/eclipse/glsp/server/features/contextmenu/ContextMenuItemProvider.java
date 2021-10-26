@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -23,7 +23,6 @@ import java.util.Map;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.features.contextactions.ContextActionsProvider;
 import org.eclipse.glsp.server.features.directediting.LabeledAction;
-import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.types.EditorContext;
 
 @FunctionalInterface
@@ -34,14 +33,11 @@ public interface ContextMenuItemProvider extends ContextActionsProvider {
    @Override
    default String getContextId() { return ContextMenuItemProvider.KEY; }
 
-   List<MenuItem> getItems(List<String> selectedElementIds, GPoint position, Map<String, String> args,
-      GModelState modelState);
+   List<MenuItem> getItems(List<String> selectedElementIds, GPoint position, Map<String, String> args);
 
    @Override
-   default List<? extends LabeledAction> getActions(final EditorContext editorContext,
-      final GModelState modelState) {
-      return getItems(editorContext.getSelectedElementIds(), editorContext.getLastMousePosition().orElse(point(0, 0)),
-         editorContext.getArgs(),
-         modelState);
+   default List<? extends LabeledAction> getActions(final EditorContext editorContext) {
+      final GPoint position = editorContext.getLastMousePosition().orElse(point(0, 0));
+      return getItems(editorContext.getSelectedElementIds(), position, editorContext.getArgs());
    }
 }

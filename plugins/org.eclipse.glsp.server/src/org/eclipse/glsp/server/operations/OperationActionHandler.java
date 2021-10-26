@@ -18,8 +18,8 @@ package org.eclipse.glsp.server.operations;
 import java.util.List;
 import java.util.Optional;
 
-import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.AbstractActionHandler;
+import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.SetDirtyStateAction;
 import org.eclipse.glsp.server.features.core.model.ModelSubmissionHandler;
 import org.eclipse.glsp.server.internal.gmodel.commandstack.GModelRecordingCommand;
@@ -29,6 +29,7 @@ import org.eclipse.glsp.server.utils.ServerMessageUtil;
 import com.google.inject.Inject;
 
 public class OperationActionHandler extends AbstractActionHandler<Operation> {
+
    @Inject
    protected OperationHandlerRegistry operationHandlerRegistry;
 
@@ -60,7 +61,7 @@ public class OperationActionHandler extends AbstractActionHandler<Operation> {
       GModelRecordingCommand command = new GModelRecordingCommand(modelState.getRoot(), handler.getLabel(),
          () -> handler.execute(operation));
       modelState.execute(command);
-      return modelSubmissionHandler.submitModel(modelState, SetDirtyStateAction.Reason.OPERATION);
+      return modelSubmissionHandler.submitModel(SetDirtyStateAction.Reason.OPERATION);
    }
 
    public static Optional<? extends OperationHandler> getOperationHandler(final Operation operation,

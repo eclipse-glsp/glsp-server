@@ -16,11 +16,10 @@
 package org.eclipse.glsp.server.features.directediting;
 
 import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.server.model.GModelState;
 
 public interface LabelEditValidator {
 
    String CONTEXT_ID = "label-edit";
 
-   ValidationStatus validate(GModelState modelState, String label, GModelElement element);
+   ValidationStatus validate(String label, GModelElement element);
 }

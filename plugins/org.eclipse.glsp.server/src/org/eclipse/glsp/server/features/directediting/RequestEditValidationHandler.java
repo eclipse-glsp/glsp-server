@@ -19,9 +19,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.log4j.Logger;
-import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.AbstractActionHandler;
-import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.actions.Action;
 
 import com.google.inject.Inject;
 
@@ -32,13 +31,10 @@ public class RequestEditValidationHandler extends AbstractActionHandler<RequestE
    @Inject
    protected ContextEditValidatorRegistry contextEditValidatorRegistry;
 
-   @Inject
-   protected GModelState modelState;
-
    @Override
    public List<Action> executeAction(final RequestEditValidationAction action) {
       Optional<ValidationStatus> validationResult = contextEditValidatorRegistry.get(action.getContextId())
-         .map(provider -> provider.validate(action, modelState));
+         .map(provider -> provider.validate(action));
       if (!validationResult.isPresent()) {
          String message = "No validator registered for the context '" + action.getContextId() + "'";
          log.warn(message);

@@ -18,10 +18,9 @@ package org.eclipse.glsp.server.features.contextactions;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.AbstractActionHandler;
+import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.features.directediting.LabeledAction;
-import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.types.EditorContext;
 
 import com.google.inject.Inject;
@@ -31,15 +30,12 @@ public class RequestContextActionsHandler extends AbstractActionHandler<RequestC
    @Inject
    protected ContextActionsProviderRegistry contextActionsProviderRegistry;
 
-   @Inject
-   protected GModelState modelState;
-
    @Override
    public List<Action> executeAction(final RequestContextActions action) {
       EditorContext editorContext = action.getEditorContext();
       List<LabeledAction> actions = new ArrayList<>();
       contextActionsProviderRegistry.get(action.getContextId())
-         .map(provider -> provider.getActions(editorContext, modelState))
+         .map(provider -> provider.getActions(editorContext))
          .ifPresent(labeledActions -> actions.addAll(labeledActions));
 
       return listOf(new SetContextActions(actions, action.getEditorContext().getArgs()));

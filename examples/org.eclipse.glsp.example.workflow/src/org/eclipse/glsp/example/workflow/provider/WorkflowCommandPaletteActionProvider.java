@@ -40,12 +40,16 @@ import org.eclipse.glsp.server.types.EditorContext;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.google.inject.Inject;
 
 public class WorkflowCommandPaletteActionProvider implements CommandPaletteActionProvider {
 
+   @Inject
+   protected GModelState modelState;
+
    @Override
    @SuppressWarnings("checkstyle:CyclomaticComplexity")
-   public List<LabeledAction> getActions(final EditorContext editorContext, final GModelState modelState) {
+   public List<LabeledAction> getActions(final EditorContext editorContext) {
       List<LabeledAction> actions = Lists.newArrayList();
       if (modelState.isReadonly()) {
          return actions;

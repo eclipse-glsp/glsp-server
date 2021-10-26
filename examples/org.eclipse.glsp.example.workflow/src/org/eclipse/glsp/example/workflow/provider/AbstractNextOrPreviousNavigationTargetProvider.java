@@ -31,11 +31,15 @@ import org.eclipse.glsp.server.types.EditorContext;
 import org.eclipse.glsp.server.utils.ClientOptionsUtil;
 import org.eclipse.glsp.server.utils.MapUtil;
 
+import com.google.inject.Inject;
+
 public abstract class AbstractNextOrPreviousNavigationTargetProvider implements NavigationTargetProvider {
 
+   @Inject
+   protected GModelState modelState;
+
    @Override
-   public List<? extends NavigationTarget> getTargets(final EditorContext editorContext,
-      final GModelState modelState) {
+   public List<? extends NavigationTarget> getTargets(final EditorContext editorContext) {
       Optional<String> sourceUri = MapUtil.getValue(modelState.getClientOptions(), ClientOptionsUtil.SOURCE_URI);
       return editorContext.getSelectedElementIds().stream()
          .flatMap(id -> modelState.getIndex().get(id).stream())

@@ -18,9 +18,8 @@ package org.eclipse.glsp.server.features.navigation;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.AbstractActionHandler;
-import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.types.EditorContext;
 
 import com.google.inject.Inject;
@@ -30,15 +29,12 @@ public class RequestNavigationTargetsActionHandler extends AbstractActionHandler
    @Inject
    protected NavigationTargetProviderRegistry navigationTargetProviderRegistry;
 
-   @Inject
-   protected GModelState modelState;
-
    @Override
    public List<Action> executeAction(final RequestNavigationTargetsAction action) {
       EditorContext editorContext = action.getEditorContext();
       List<NavigationTarget> allTargets = new ArrayList<>();
       navigationTargetProviderRegistry.get(action.getTargetTypeId())
-         .map(provider -> provider.getTargets(editorContext, modelState))
+         .map(provider -> provider.getTargets(editorContext))
          .ifPresent(targets -> allTargets.addAll(targets));
       return listOf(new SetNavigationTargetsAction(allTargets, action.getEditorContext().getArgs()));
    }

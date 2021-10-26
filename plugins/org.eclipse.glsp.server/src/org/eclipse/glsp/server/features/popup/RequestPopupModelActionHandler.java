@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.AbstractActionHandler;
+import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.model.GModelState;
 
 import com.google.inject.Inject;
@@ -37,7 +37,7 @@ public class RequestPopupModelActionHandler extends AbstractActionHandler<Reques
       if (popupModelFactory.isPresent()) {
          Optional<GModelElement> element = modelState.getIndex().get(action.getElementId());
          if (popupModelFactory != null && element.isPresent()) {
-            return listOf(popupModelFactory.get().createPopupModel(element.get(), action, modelState)
+            return listOf(popupModelFactory.get().createPopupModel(element.get(), action)
                .map(popupModel -> new SetPopupModelAction(popupModel, action.getBounds())));
          }
       }

@@ -15,16 +15,12 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.layout;
 
-import org.eclipse.glsp.server.model.GModelState;
-
 /**
  * A layout engine is able to compute layout information for a model.
  */
 public interface LayoutEngine {
-
    /*
-    * Compute a layout for the given model and modify the model accordingly.
+    * Compute a layout for the model state and modify the model accordingly.
     */
-   void layout(GModelState modelState);
-
+   void layout();
 }

@@ -18,9 +18,9 @@ package org.eclipse.glsp.server.features.core.model;
 import java.util.List;
 import java.util.Optional;
 
+import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
-import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.ServerMessageUtil;
@@ -50,12 +50,12 @@ public class RequestModelActionHandler extends AbstractActionHandler<RequestMode
       modelState.setClientOptions(action.getOptions());
 
       notifyStartLoading();
-      sourceModelLoader.loadSourceModel(action, modelState);
+      sourceModelLoader.loadSourceModel(action);
       notifyFinishedLoading();
 
-      modelSourceWatcher.ifPresent(watcher -> watcher.startWatching(modelState));
+      modelSourceWatcher.ifPresent(watcher -> watcher.startWatching());
 
-      return modelSubmissionHandler.submitModel(modelState);
+      return modelSubmissionHandler.submitModel();
    }
 
    protected void notifyStartLoading() {

@@ -23,8 +23,8 @@ import java.util.Optional;
 import org.apache.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
-import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.AbstractActionHandler;
+import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.model.GModelState;
 
 import com.google.inject.Inject;
@@ -58,7 +58,7 @@ public class RequestMarkersHandler extends AbstractActionHandler<RequestMarkersA
       for (String elementID : elementsIDs) {
          Optional<GModelElement> modelElement = currentModelIndex.get(elementID);
          if (modelElement.isPresent()) {
-            markers.addAll(validator.get().validate(modelState, modelElement.get()));
+            markers.addAll(validator.get().validate(modelElement.get()));
          }
 
       }

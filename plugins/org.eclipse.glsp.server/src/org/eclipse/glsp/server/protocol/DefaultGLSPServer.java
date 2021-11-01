@@ -173,7 +173,8 @@ public class DefaultGLSPServer implements GLSPServer {
       };
 
       try {
-         clientSessions.get(clientSessionId).getActionDispatcher().dispatch(message).exceptionally(errorHandler);
+         clientSessions.get(clientSessionId).getActionDispatcher().dispatch(message.getAction())
+            .exceptionally(errorHandler);
       } catch (RuntimeException e) {
          errorHandler.apply(e);
       }

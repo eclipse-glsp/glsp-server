@@ -75,7 +75,7 @@ public class DefaultCLIParser extends CLIParser {
       options.addOption(null, OPTION_FILE_LOG, true,
          String.format("Enable/Disable file logging. [default='%s']", DefaultOptions.FILE_LOG_ENABLED));
       options.addOption(null, OPTION_LOG_DIR, true,
-         String.format("Set the directory for log files (File logging has to be enabled). [default='%s']",
+         String.format("Set the directory for log files (File logging has to be enabled)",
             DefaultOptions.LOG_DIR));
       options.addOption(null, OPTION_LOG_LEVEL, true,
          String.format("Set the log level. [default='%s']", DefaultOptions.LOG_LEVEL));

@@ -24,19 +24,8 @@ import org.eclipse.glsp.server.disposable.IDisposable;
 public interface ActionDispatcher extends IDisposable {
 
    /**
-    * @see ActionDispatcher#dispatch(Action)
-    *
-    * @param message ActionMessage received from the client
-    * @return
-    *         A {@link CompletableFuture} indicating when the action processing is complete
-    */
-   default CompletableFuture<Void> dispatch(final ActionMessage message) {
-      return dispatch(message.getAction());
-   }
-
-   /**
     * <p>
-    * Processes the given action, received from the specified clientId, by dispatching it to all registered handlers.
+    * Processes the given action by dispatching it to all registered handlers.
     * </p>
     *
     * @param action The action that should be dispatched.
@@ -47,7 +36,7 @@ public interface ActionDispatcher extends IDisposable {
 
    /**
     * <p>
-    * Processes all given actions, received from the specified clientId, by dispatching to the corresponding handlers.
+    * Processes all given actions by dispatching to the corresponding handlers.
     * </p>
     *
     * @param actions Actions to dispatch

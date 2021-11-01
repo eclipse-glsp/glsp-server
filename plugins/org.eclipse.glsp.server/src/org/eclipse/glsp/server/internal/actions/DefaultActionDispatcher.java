@@ -32,7 +32,6 @@ import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.actions.ActionHandlerRegistry;
-import org.eclipse.glsp.server.actions.ActionMessage;
 import org.eclipse.glsp.server.actions.ResponseAction;
 import org.eclipse.glsp.server.di.ClientId;
 import org.eclipse.glsp.server.disposable.Disposable;
@@ -66,14 +65,14 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
 
    protected final Thread thread;
 
-   protected final BlockingQueue<ActionMessage> actionsQueue = new ArrayBlockingQueue<>(100, true);
+   protected final BlockingQueue<Action> actionsQueue = new ArrayBlockingQueue<>(100, true);
 
-   // Results will be placed in the map when the action dispatcher receives a new message (From arbitrary threads),
+   // Results will be placed in the map when the action dispatcher receives a new action (From arbitrary threads),
    // and will be removed from the dispatcher's thread.
-   protected final Map<ActionMessage, CompletableFuture<Void>> results = Collections.synchronizedMap(new HashMap<>());
+   protected final Map<Action, CompletableFuture<Void>> results = Collections.synchronizedMap(new HashMap<>());
 
    // Use a provider, as the GLSPClient is probably not created yet. We won't receive
-   // any message until it's ready anyway.
+   // any action until it's ready anyway.
    @Inject
    protected Provider<GLSPClient> client;
 
@@ -87,48 +86,40 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
 
    @Override
    public CompletableFuture<Void> dispatch(final Action action) {
-      return dispatch(new ActionMessage(clientId, action));
-   }
 
-   @Override
-   public CompletableFuture<Void> dispatch(final ActionMessage message) {
-      if (message == null) {
-         String errorMsg = String.format("Received a null message in DefaultActionDispatcher: %s", name);
-         throw new IllegalArgumentException(errorMsg);
-      }
       CompletableFuture<Void> result = new CompletableFuture<>();
-      results.put(message, result);
+      results.put(action, result);
       if (thread == Thread.currentThread()) {
          // Actions dispatched from the ActionDispatcher thread don't have to go back
          // to the queue, as they are just fragments of the current action from the queue.
          // Process them immediately.
-         handleMessage(message);
+         handleAction(action);
       } else {
-         addToQueue(message);
+         addToQueue(action);
       }
       return result;
    }
 
-   protected void addToQueue(final ActionMessage message) {
+   protected void addToQueue(final Action action) {
       if (Thread.currentThread() == this.thread) {
-         LOG.error("ActionMessages shouldn't be added to the actions queue from the dispatcher thread!");
-         // Handle the message immediately, to avoid deadlocks when the queue if full
-         handleMessage(message);
+         LOG.error("Actions shouldn't be added to the actions queue from the dispatcher thread!");
+         // Handle the action immediately, to avoid deadlocks when the queue if full
+         handleAction(action);
          return;
       }
-      boolean success = actionsQueue.offer(message);
+      boolean success = actionsQueue.offer(action);
       while (!success) {
          if (!thread.isAlive() || thread.isInterrupted()) {
             // This may happen if e.g. some background tasks were still running when the client disconnected.
             // This (probably) isn't critical and can be safely ignored.
             LOG.warn(String.format(
-               "Received an action message after the ActionDispatcher was stopped. Ignoring message: %s", message));
+               "Received an action after the ActionDispatcher was stopped. Ignoring action: %s", action));
             return;
          }
          try {
-            // The queue may be temporarily full because we receive a lot of messages (e.g. during initialization),
+            // The queue may be temporarily full because we receive a lot of actions (e.g. during initialization),
             // but if this keeps failing for a long time, it might indicate a deadlock
-            success = actionsQueue.offer(message, 1, TimeUnit.SECONDS);
+            success = actionsQueue.offer(action, 1, TimeUnit.SECONDS);
             if (!success) {
                LOG.warn(String.format("Actions queue is currently full for dispatcher %s ; retrying...", name));
             }
@@ -141,7 +132,7 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
    private void runThread() {
       while (true) {
          try {
-            handleNextMessage();
+            handleNextAction();
          } catch (final InterruptedException e) {
             LOG.info(String.format("Terminating DefaultActionDispatcher thread %s", Thread.currentThread().getName()));
             break;
@@ -150,20 +141,19 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
       LOG.info("Terminating DefaultActionDispatcher");
    }
 
-   private void handleNextMessage()
+   private void handleNextAction()
       throws InterruptedException {
-      final ActionMessage message = actionsQueue.take();
-      if (message != null) {
-         handleMessage(message);
+      final Action action = actionsQueue.take();
+      if (action != null) {
+         handleAction(action);
       }
    }
 
    @SuppressWarnings("checkstyle:IllegalCatch")
-   protected void handleMessage(final ActionMessage message) {
+   protected void handleAction(final Action action) {
       checkThread();
-      final Action action = message.getAction();
       if (action == null) {
-         LOG.warn(String.format("Received an action message without an action for client %s", clientId));
+         LOG.warn(String.format("Received a null action for client %s", clientId));
          return;
       }
 
@@ -171,13 +161,13 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
          List<CompletableFuture<Void>> results = runAction(action);
          CompletableFuture<Void> result = FutureUtil.aggregateResults(results);
          result.thenAccept(any -> {
-            this.results.remove(message).complete(null);
+            this.results.remove(action).complete(null);
          }).exceptionally(t -> {
-            this.results.remove(message).completeExceptionally(t);
+            this.results.remove(action).completeExceptionally(t);
             return null;
          });
       } catch (Throwable t) {
-         results.remove(message).completeExceptionally(t);
+         results.remove(action).completeExceptionally(t);
       }
    }
 

@@ -27,8 +27,8 @@ import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.ChangeBoundsOperation;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
+import org.eclipse.glsp.server.operations.ChangeBoundsOperation;
 import org.eclipse.glsp.server.types.ElementAndBounds;
 
 import com.google.inject.Inject;
@@ -67,9 +67,12 @@ public class ChangeBoundsOperationHandler extends AbstractOperationHandler<Chang
          // For child nodes (Owned by another node or compartment), restrict the movement
          // to positive coordinates, to avoid weird layout behavior
          : GraphUtil.point(Math.max(0, newPosition.getX()), Math.max(0, newPosition.getY()));
-
-      nodeToUpdate.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, newSize.getWidth());
-      nodeToUpdate.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, newSize.getHeight());
+      if (nodeToUpdate.getLayout() != null) {
+         nodeToUpdate.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, newSize.getWidth());
+         nodeToUpdate.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, newSize.getHeight());
+      } else {
+         nodeToUpdate.setSize(newSize);
+      }
 
       nodeToUpdate.setPosition(positionToSet);
    }

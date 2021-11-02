@@ -70,10 +70,9 @@ public class ChangeBoundsOperationHandler extends AbstractOperationHandler<Chang
       if (nodeToUpdate.getLayout() != null) {
          nodeToUpdate.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, newSize.getWidth());
          nodeToUpdate.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, newSize.getHeight());
-      } else {
-         nodeToUpdate.setSize(newSize);
       }
 
+      nodeToUpdate.setSize(newSize);
       nodeToUpdate.setPosition(positionToSet);
    }
 }

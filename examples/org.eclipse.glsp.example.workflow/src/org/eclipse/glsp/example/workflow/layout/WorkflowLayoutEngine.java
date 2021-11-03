@@ -18,6 +18,8 @@ package org.eclipse.glsp.example.workflow.layout;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.layout.ElkLayoutEngine;
 import org.eclipse.glsp.layout.GLSPLayoutConfigurator;
+import org.eclipse.glsp.server.actions.ActionDispatcher;
+import org.eclipse.glsp.server.actions.CenterAction;
 import org.eclipse.glsp.server.model.GModelState;
 
 import com.google.inject.Inject;
@@ -27,12 +29,16 @@ public class WorkflowLayoutEngine extends ElkLayoutEngine {
    @Inject
    protected GModelState modelState;
 
+   @Inject
+   protected ActionDispatcher actionDispatcher;
+
    @Override
    public void layout() {
       if (modelState.getRoot() instanceof GGraph) {
          GLSPLayoutConfigurator configurator = new GLSPLayoutConfigurator();
          configurator.configureByType("graph");
          this.layout((GGraph) modelState.getRoot(), configurator);
+         actionDispatcher.dispatchAfterNextUpdate(new CenterAction());
       }
    }
 

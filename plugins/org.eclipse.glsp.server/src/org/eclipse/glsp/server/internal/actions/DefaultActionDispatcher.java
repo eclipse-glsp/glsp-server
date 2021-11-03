@@ -16,6 +16,7 @@
 package org.eclipse.glsp.server.internal.actions;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +36,7 @@ import org.eclipse.glsp.server.actions.ActionHandlerRegistry;
 import org.eclipse.glsp.server.actions.ResponseAction;
 import org.eclipse.glsp.server.di.ClientId;
 import org.eclipse.glsp.server.disposable.Disposable;
+import org.eclipse.glsp.server.features.core.model.UpdateModelAction;
 import org.eclipse.glsp.server.protocol.GLSPClient;
 import org.eclipse.glsp.server.utils.FutureUtil;
 
@@ -67,6 +69,8 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
 
    protected final BlockingQueue<Action> actionsQueue = new ArrayBlockingQueue<>(100, true);
 
+   protected List<Action> postUpdateQueue = new ArrayList<>();
+
    // Results will be placed in the map when the action dispatcher receives a new action (From arbitrary threads),
    // and will be removed from the dispatcher's thread.
    protected final Map<Action, CompletableFuture<Void>> results = Collections.synchronizedMap(new HashMap<>());
@@ -98,6 +102,11 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
          addToQueue(action);
       }
       return result;
+   }
+
+   @Override
+   public void dispatchAfterNextUpdate(final Action... actions) {
+      postUpdateQueue.addAll(Arrays.asList(actions));
    }
 
    protected void addToQueue(final Action action) {
@@ -183,8 +192,18 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
             .map(response -> ResponseAction.respond(action, response))
             .collect(Collectors.toList());
          results.addAll(dispatchAll(responses));
+         if (action instanceof UpdateModelAction) {
+            results.add(dispatchPostUpdateQueue());
+         }
       }
       return results;
+   }
+
+   protected CompletableFuture<Void> dispatchPostUpdateQueue() {
+      ArrayList<Action> toDispatch = new ArrayList<>(postUpdateQueue);
+      postUpdateQueue.clear();
+      dispatchAll(toDispatch);
+      return CompletableFuture.completedFuture(null);
    }
 
    protected final void checkThread() {

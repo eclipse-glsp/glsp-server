@@ -15,6 +15,7 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.actions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SelectAction extends Action {
@@ -25,11 +26,15 @@ public class SelectAction extends Action {
    private List<String> deselectedElementsIDs;
 
    public SelectAction() {
-      super(ID);
+      this(new ArrayList<>());
+   }
+
+   public SelectAction(final List<String> selectedElementsIDs) {
+      this(selectedElementsIDs, new ArrayList<>());
    }
 
    public SelectAction(final List<String> selectedElementsIDs, final List<String> deselectedElementsIDs) {
-      this();
+      super(ID);
       this.selectedElementsIDs = selectedElementsIDs;
       this.deselectedElementsIDs = deselectedElementsIDs;
    }

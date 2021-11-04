@@ -7,15 +7,15 @@ Bundle-Vendor: Eclipse GLSP
 Automatic-Module-Name: com.eclipsesource.glps.server.websocket
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: javax.websocket;bundle-version="1.0.0";visibility:=reexport,
- org.eclipse.jetty.server;bundle-version="9.4.14";visibility:=reexport,
- org.eclipse.jetty.servlet;bundle-version="9.4.14";visibility:=reexport,
- org.eclipse.jetty.util;bundle-version="9.4.14";visibility:=reexport,
- org.eclipse.jetty.websocket.javax.websocket;bundle-version="9.4.14";visibility:=reexport,
- org.eclipse.jetty.websocket.javax.websocket.server;bundle-version="9.4.14";visibility:=reexport,
+ org.eclipse.jetty.server;bundle-version="9.4.44";visibility:=reexport,
+ org.eclipse.jetty.servlet;bundle-version="9.4.44";visibility:=reexport,
+ org.eclipse.jetty.util;bundle-version="9.4.44";visibility:=reexport,
+ org.eclipse.jetty.websocket.javax.websocket;bundle-version="9.4.44";visibility:=reexport,
+ org.eclipse.jetty.websocket.javax.websocket.server;bundle-version="9.4.44";visibility:=reexport,
  org.eclipse.glsp.server;bundle-version="0.9.0",
  org.eclipse.lsp4j.websocket;bundle-version="0.9.0",
- org.eclipse.jetty.webapp;bundle-version="9.4.14";visibility:=reexport,
- org.eclipse.jetty.websocket.api;bundle-version="9.4.14";visibility:=reexport,
+ org.eclipse.jetty.webapp;bundle-version="9.4.44";visibility:=reexport,
+ org.eclipse.jetty.websocket.api;bundle-version="9.4.44";visibility:=reexport,
  com.google.gson,
  org.eclipse.lsp4j,
  org.eclipse.lsp4j.jsonrpc

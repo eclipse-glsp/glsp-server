@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operations.gmodel;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -25,9 +26,11 @@ import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;
+import org.eclipse.glsp.server.actions.ActionDispatcher;
+import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.AbstractCreateOperationHandler;
+import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GeometryUtil;
 
 import com.google.inject.Inject;
@@ -36,6 +39,9 @@ public abstract class CreateNodeOperationHandler extends AbstractCreateOperation
 
    @Inject
    protected GModelState modelState;
+
+   @Inject
+   protected ActionDispatcher actionDispatcher;
 
    public CreateNodeOperationHandler(final String elementTypeId) {
       super(elementTypeId);
@@ -53,6 +59,7 @@ public abstract class CreateNodeOperationHandler extends AbstractCreateOperation
       Optional<GPoint> relativeLocation = getRelativeLocation(operation, absoluteLocation, container);
       GModelElement element = createNode(relativeLocation, operation.getArgs());
       container.get().getChildren().add(element);
+      actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(element.getId())));
    }
 
    /**

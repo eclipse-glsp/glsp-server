@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="2021-03 - Release" sequenceNumber="1628018980">
+<target name="2021-03 - Release" sequenceNumber="1636038432">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.equinox.p2.discovery.feature.feature.group" version="1.2.800.v20200916-1234"/>
@@ -22,8 +22,8 @@
       <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20210602031627/repository/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="org.eclipse.jetty.bundles.f.feature.group" version="9.4.14.v20181113"/>
-      <repository location="https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.14.v20181113/"/>
+      <unit id="org.eclipse.jetty.bundles.f.feature.group" version="9.4.44.v20210927"/>
+      <repository location="https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.44.v20210927/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.elk.core" version="0.7.1"/>

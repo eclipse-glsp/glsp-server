@@ -18,8 +18,8 @@ location "https://download.eclipse.org/tools/orbit/downloads/drops/R202106020316
 	org.junit.jupiter.api [5.7.1,5.7.2)
 }
 
-location "https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.14.v20181113/" {
-	org.eclipse.jetty.bundles.f.feature.group
+location "https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.44.v20210927/" {
+	org.eclipse.jetty.bundles.f.feature.group 
 }
 
 location "https://download.eclipse.org/elk/updates/releases/0.7.1/" {

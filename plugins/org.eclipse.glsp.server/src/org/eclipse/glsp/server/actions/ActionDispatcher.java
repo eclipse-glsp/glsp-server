@@ -20,6 +20,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 import org.eclipse.glsp.server.disposable.IDisposable;
+import org.eclipse.glsp.server.features.core.model.UpdateModelAction;
 
 public interface ActionDispatcher extends IDisposable {
 
@@ -45,4 +46,13 @@ public interface ActionDispatcher extends IDisposable {
    default List<CompletableFuture<Void>> dispatchAll(final List<Action> actions) {
       return actions.stream().map(action -> dispatch(action)).collect(Collectors.toList());
    }
+
+   /**
+    * Processes all given actions, by dispatching them to the corresponding handlers, after the next model update.
+    * The given actions are queued until the next model update cycle has been completed i.e. an
+    * {@link UpdateModelAction} has been dispatched and processed by this action dispatcher.
+    *
+    * @param actions The actions that should be dispatched after the next model update
+    */
+   void dispatchAfterNextUpdate(Action... actions);
 }

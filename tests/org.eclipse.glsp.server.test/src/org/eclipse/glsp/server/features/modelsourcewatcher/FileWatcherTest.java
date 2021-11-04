@@ -201,6 +201,9 @@ class FileWatcherTest {
          dispatchedActions.add(action);
          return CompletableFuture.completedFuture(null);
       }
+
+      @Override
+      public void dispatchAfterNextUpdate(final Action... actions) {}
    }
 
    class MockClientSessionManager implements ClientSessionManager {

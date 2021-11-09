@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,7 +15,9 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.features.core.model;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.types.ElementAndAlignment;
@@ -23,19 +25,21 @@ import org.eclipse.glsp.server.types.ElementAndBounds;
 
 public class ComputedBoundsAction extends Action {
 
-   public static final String ID = "computedBounds";
+   public static final String KIND = "computedBounds";
 
    private List<ElementAndBounds> bounds;
    private List<ElementAndAlignment> alignments;
    private int revision;
 
    public ComputedBoundsAction() {
-      super(ID);
+      super(KIND);
+      this.bounds = new ArrayList<>();
+      this.alignments = new ArrayList<>();
    }
 
    public ComputedBoundsAction(final List<ElementAndBounds> bounds, final List<ElementAndAlignment> alignments,
       final int revision) {
-      this();
+      super(KIND);
       this.bounds = bounds;
       this.alignments = alignments;
       this.revision = revision;
@@ -49,7 +53,7 @@ public class ComputedBoundsAction extends Action {
 
    public void setAlignments(final List<ElementAndAlignment> alignments) { this.alignments = alignments; }
 
-   public int getRevision() { return revision; }
+   public Optional<Integer> getRevision() { return Optional.ofNullable(revision); }
 
    public void setRevision(final int revision) { this.revision = revision; }
 

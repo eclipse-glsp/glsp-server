@@ -62,7 +62,7 @@ public class ModelSubmissionHandler {
     * @return A list of actions to be processed in order to submit the model.
     */
    public List<Action> submitModel(final String reason) {
-      modelFactory.createGModel(modelState);
+      modelFactory.createGModel();
       modelState.getRoot().setRevision(modelState.getRoot().getRevision() + 1);
       boolean needsClientLayout = diagramConfiguration.needsClientLayout();
       if (needsClientLayout) {

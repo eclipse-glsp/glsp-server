@@ -69,6 +69,7 @@ public class WebsocketServerLauncher extends GLSPServerLauncher {
          server.setHandler(webAppContext);
          // Configure web socket
 
+         @SuppressWarnings("deprecation")
          ServerContainer container = WebSocketServerContainerInitializer.configureContext(webAppContext);
          ServerEndpointConfig.Builder builder = ServerEndpointConfig.Builder.create(GLSPServerEndpoint.class,
             "/" + endpointPath);

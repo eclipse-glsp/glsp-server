@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,29 +15,24 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.features.popup;
 
-import org.eclipse.glsp.graph.GBounds;
-import org.eclipse.glsp.graph.GHtmlRoot;
-import org.eclipse.glsp.server.actions.Action;
+import org.eclipse.glsp.graph.GModelRoot;
+import org.eclipse.glsp.server.actions.ResponseAction;
 
-public class SetPopupModelAction extends Action {
+public class SetPopupModelAction extends ResponseAction {
 
-   public static final String ID = "setPopupModel";
+   public static final String KIND = "setPopupModel";
 
-   private GHtmlRoot newRoot;
-   private GBounds bounds;
+   private GModelRoot newRoot;
 
    public SetPopupModelAction() {
-      super(ID);
+      super(KIND);
    }
 
-   public SetPopupModelAction(final GHtmlRoot newRoot, final GBounds bounds) {
+   public SetPopupModelAction(final GModelRoot newRoot) {
       this();
       this.newRoot = newRoot;
-      this.bounds = bounds;
    }
 
-   public GHtmlRoot getNewRoot() { return newRoot; }
-
-   public GBounds getBounds() { return bounds; }
+   public GModelRoot getNewRoot() { return newRoot; }
 
 }

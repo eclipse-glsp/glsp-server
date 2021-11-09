@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -17,12 +17,12 @@ package org.eclipse.glsp.server.actions;
 
 public class ExportSVGAction extends Action {
 
-   public static final String ID = "exportSvg";
+   public static final String KIND = "exportSvg";
 
    private String svg;
 
    public ExportSVGAction() {
-      super(ID);
+      super(KIND);
    }
 
    public ExportSVGAction(final String svg) {

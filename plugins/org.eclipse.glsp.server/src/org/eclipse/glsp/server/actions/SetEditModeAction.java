@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -16,14 +16,14 @@
 package org.eclipse.glsp.server.actions;
 
 public class SetEditModeAction extends Action {
-   public static final String ID = "setEditMode";
+   public static final String KIND = "setEditMode";
    public static final String EDIT_MODE_READONLY = "readonly";
    public static final String EDIT_MODE_EDITABLE = "editable";
 
    private String editMode;
 
    public SetEditModeAction() {
-      super(ID);
+      super(KIND);
    }
 
    public SetEditModeAction(final String editMode) {

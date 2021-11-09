@@ -15,6 +15,7 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.features.navigation;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,18 +24,17 @@ import org.eclipse.glsp.server.actions.ResponseAction;
 
 public class SetNavigationTargetsAction extends ResponseAction {
 
-   public static final String ID = "setNavigationTargets";
+   public static final String KIND = "setNavigationTargets";
 
    private List<NavigationTarget> targets;
    private Map<String, String> args;
 
    public SetNavigationTargetsAction() {
-      super(ID);
-      args = new HashMap<>();
+      this(new ArrayList<>(), new HashMap<>());
    }
 
    public SetNavigationTargetsAction(final List<NavigationTarget> targets, final Map<String, String> map) {
-      this();
+      super(KIND);
       this.targets = targets;
       this.args = map;
    }

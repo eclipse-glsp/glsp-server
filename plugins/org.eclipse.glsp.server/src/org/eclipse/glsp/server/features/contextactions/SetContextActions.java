@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,6 +15,8 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.features.contextactions;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,17 +25,17 @@ import org.eclipse.glsp.server.features.directediting.LabeledAction;
 
 public class SetContextActions extends ResponseAction {
 
-   public static final String ID = "setContextActions";
+   public static final String KIND = "setContextActions";
 
    private List<LabeledAction> actions;
    private Map<String, String> args;
 
    public SetContextActions() {
-      super(ID);
+      this(new ArrayList<>(), new HashMap<>());
    }
 
    public SetContextActions(final List<LabeledAction> actions, final Map<String, String> map) {
-      this();
+      super(KIND);
       this.actions = actions;
       this.args = map;
    }

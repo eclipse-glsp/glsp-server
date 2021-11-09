@@ -19,15 +19,16 @@ import org.eclipse.glsp.server.types.ServerStatus;
 import org.eclipse.glsp.server.types.Severity;
 
 public class ServerStatusAction extends Action {
+   public static final String KIND = "serverStatus";
+   private static final int NO_TIMEOUT = -1;
 
-   public static final String ID = "serverStatus";
    private int timeout;
 
    private String severity;
    private String message;
 
    public ServerStatusAction() {
-      super(ID);
+      super(KIND);
    }
 
    public ServerStatusAction(final ServerStatus status) {
@@ -49,8 +50,6 @@ public class ServerStatusAction extends Action {
    public String getSeverity() { return severity; }
 
    public String getMessage() { return message; }
-
-   private static final int NO_TIMEOUT = -1;
 
    public int getTimeout() { return timeout; }
 

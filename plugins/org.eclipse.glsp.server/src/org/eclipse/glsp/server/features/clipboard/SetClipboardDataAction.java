@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,22 +15,23 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.features.clipboard;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.glsp.server.actions.ResponseAction;
 
 public class SetClipboardDataAction extends ResponseAction {
 
-   public static final String ID = "setClipboardData";
+   public static final String KIND = "setClipboardData";
 
    private Map<String, String> clipboardData;
 
    public SetClipboardDataAction() {
-      super(ID);
+      this(new HashMap<>());
    }
 
    public SetClipboardDataAction(final Map<String, String> clipboardData) {
-      this();
+      super(KIND);
       this.clipboardData = clipboardData;
    }
 

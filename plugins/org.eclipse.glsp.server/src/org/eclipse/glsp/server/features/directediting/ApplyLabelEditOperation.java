@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -19,13 +19,13 @@ import org.eclipse.glsp.server.operations.Operation;
 
 public class ApplyLabelEditOperation extends Operation {
 
-   public static final String ID = "applyLabelEdit";
+   public static final String KIND = "applyLabelEdit";
 
    private String labelId;
    private String text;
 
    public ApplyLabelEditOperation() {
-      super(ID);
+      super(KIND);
    }
 
    public ApplyLabelEditOperation(final String labelId, final String text) {

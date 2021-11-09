@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -19,12 +19,12 @@ import org.eclipse.glsp.server.types.EditorContext;
 
 public class CutOperation extends Operation {
 
-   public static final String ID = "cut";
+   public static final String KIND = "cut";
 
    private EditorContext editorContext;
 
    public CutOperation() {
-      super(ID);
+      super(KIND);
    }
 
    public EditorContext getEditorContext() { return editorContext; }

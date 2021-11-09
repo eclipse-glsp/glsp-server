@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -16,16 +16,16 @@
 package org.eclipse.glsp.server.features.core.model;
 
 import org.eclipse.glsp.graph.GModelRoot;
-import org.eclipse.glsp.server.actions.Action;
+import org.eclipse.glsp.server.actions.ResponseAction;
 
-public class SetModelAction extends Action {
+public class SetModelAction extends ResponseAction {
 
-   public static final String ID = "setModel";
+   public static final String KIND = "setModel";
 
    private GModelRoot newRoot;
 
    public SetModelAction() {
-      super(ID);
+      super(KIND);
    }
 
    public SetModelAction(final GModelRoot newRoot) {

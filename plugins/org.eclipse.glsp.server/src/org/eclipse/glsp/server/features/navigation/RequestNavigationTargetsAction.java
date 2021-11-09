@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -20,13 +20,13 @@ import org.eclipse.glsp.server.types.EditorContext;
 
 public class RequestNavigationTargetsAction extends RequestAction<SetNavigationTargetsAction> {
 
-   public static final String ID = "requestNavigationTargets";
+   public static final String KIND = "requestNavigationTargets";
 
    private String targetTypeId;
    private EditorContext editorContext;
 
    public RequestNavigationTargetsAction() {
-      super(ID);
+      super(KIND);
    }
 
    public RequestNavigationTargetsAction(final String targetType, final EditorContext editorContext) {

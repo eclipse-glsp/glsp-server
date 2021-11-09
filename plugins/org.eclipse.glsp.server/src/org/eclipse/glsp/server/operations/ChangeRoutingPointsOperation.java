@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,22 +15,23 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.operations;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
 
 public class ChangeRoutingPointsOperation extends Operation {
 
-   public static final String ID = "changeRoutingPoints";
+   public static final String KIND = "changeRoutingPoints";
 
    private List<ElementAndRoutingPoints> newRoutingPoints;
 
    public ChangeRoutingPointsOperation() {
-      super(ID);
+      this(new ArrayList<>());
    }
 
    public ChangeRoutingPointsOperation(final List<ElementAndRoutingPoints> newRoutingPoints) {
-      this();
+      super(KIND);
       this.newRoutingPoints = newRoutingPoints;
    }
 

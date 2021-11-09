@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,13 +15,14 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.actions;
 
+import java.util.Optional;
+
 import org.eclipse.glsp.server.types.ServerStatus;
 import org.eclipse.glsp.server.types.Severity;
 
 public class ServerMessageAction extends Action {
 
-   public static final String ID = "serverMessage";
-
+   public static final String KIND = "serverMessage";
    private static final int NO_TIMEOUT = -1;
 
    private String severity;
@@ -30,7 +31,7 @@ public class ServerMessageAction extends Action {
    private int timeout;
 
    public ServerMessageAction() {
-      super(ID);
+      super(KIND);
    }
 
    public ServerMessageAction(final Severity severity, final String message) {
@@ -62,7 +63,7 @@ public class ServerMessageAction extends Action {
 
    public String getMessage() { return message; }
 
-   public String getDetails() { return details; }
+   public Optional<String> getDetails() { return Optional.ofNullable(details); }
 
    public void setDetails(final String details) { this.details = details; }
 

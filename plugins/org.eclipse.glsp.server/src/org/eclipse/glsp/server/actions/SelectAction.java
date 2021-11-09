@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -20,7 +20,7 @@ import java.util.List;
 
 public class SelectAction extends Action {
 
-   public static final String ID = "elementSelected";
+   public static final String KIND = "elementSelected";
 
    private List<String> selectedElementsIDs;
    private List<String> deselectedElementsIDs;
@@ -34,7 +34,7 @@ public class SelectAction extends Action {
    }
 
    public SelectAction(final List<String> selectedElementsIDs, final List<String> deselectedElementsIDs) {
-      super(ID);
+      super(KIND);
       this.selectedElementsIDs = selectedElementsIDs;
       this.deselectedElementsIDs = deselectedElementsIDs;
    }

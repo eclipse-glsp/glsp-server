@@ -15,14 +15,16 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actions;
 
+import java.util.Optional;
+
 public class SetDirtyStateAction extends Action {
-   public static final String ID = "setDirtyState";
+   public static final String KIND = "setDirtyState";
 
    private boolean isDirty;
    private String reason;
 
    public SetDirtyStateAction() {
-      super(ID);
+      super(KIND);
    }
 
    public SetDirtyStateAction(final boolean isDirty) {
@@ -39,7 +41,7 @@ public class SetDirtyStateAction extends Action {
 
    public void setDirty(final boolean isDirty) { this.isDirty = isDirty; }
 
-   public String getReason() { return reason; }
+   public Optional<String> getReason() { return Optional.ofNullable(reason); }
 
    public void setReason(final String reason) { this.reason = reason; }
 

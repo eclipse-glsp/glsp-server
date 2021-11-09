@@ -38,7 +38,7 @@ public class RequestPopupModelActionHandler extends AbstractActionHandler<Reques
          Optional<GModelElement> element = modelState.getIndex().get(action.getElementId());
          if (popupModelFactory != null && element.isPresent()) {
             return listOf(popupModelFactory.get().createPopupModel(element.get(), action)
-               .map(popupModel -> new SetPopupModelAction(popupModel, action.getBounds())));
+               .map(popupModel -> new SetPopupModelAction(popupModel)));
          }
       }
 

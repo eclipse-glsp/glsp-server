@@ -18,21 +18,21 @@ package org.eclipse.glsp.server.features.core.model;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.glsp.server.actions.Action;
+import org.eclipse.glsp.server.actions.RequestAction;
 
-public class RequestModelAction extends Action {
+public class RequestModelAction extends RequestAction<SetModelAction> {
 
-   public static final String ID = "requestModel";
+   public static final String KIND = "requestModel";
 
    private final Map<String, String> options;
 
    public RequestModelAction() {
-      super(ID);
+      super(KIND);
       options = new HashMap<>();
    }
 
    public RequestModelAction(final Map<String, String> options) {
-      super(ID);
+      super(KIND);
       this.options = options;
    }
 

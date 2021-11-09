@@ -20,14 +20,14 @@ import java.util.Map;
 
 public class CreateEdgeOperation extends CreateOperation {
 
-   public static final String ID = "createEdge";
+   public static final String KIND = "createEdge";
 
    private String sourceElementId;
 
    private String targetElementId;
 
    public CreateEdgeOperation() {
-      super(ID);
+      super(KIND);
    }
 
    public CreateEdgeOperation(final String elementTypeId, final String sourceElementId,
@@ -37,7 +37,7 @@ public class CreateEdgeOperation extends CreateOperation {
 
    public CreateEdgeOperation(final String elementTypeId, final String sourceElementId,
       final String targetElementId, final Map<String, String> args) {
-      super(ID, elementTypeId, args);
+      super(KIND, elementTypeId, args);
       this.sourceElementId = sourceElementId;
       this.targetElementId = targetElementId;
    }

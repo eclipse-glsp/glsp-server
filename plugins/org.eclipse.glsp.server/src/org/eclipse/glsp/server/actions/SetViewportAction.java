@@ -19,14 +19,14 @@ import org.eclipse.glsp.server.types.Viewport;
 
 public class SetViewportAction extends Action {
 
-   public static final String ID = "viewport";
+   public static final String KIND = "viewport";
 
    private String elementId = "EMTPY";
    private Viewport newViewport = new Viewport();
    private boolean animate;
 
    public SetViewportAction() {
-      super(ID);
+      super(KIND);
    }
 
    public SetViewportAction(final String elementId, final Viewport viewport, final boolean animate) {

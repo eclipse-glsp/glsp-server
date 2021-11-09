@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,23 +15,24 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.features.core.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.glsp.server.actions.Action;
+import org.eclipse.glsp.server.actions.ResponseAction;
 import org.eclipse.glsp.server.types.ElementAndBounds;
 
-public class SetBoundsAction extends Action {
+public class SetBoundsAction extends ResponseAction {
 
-   public static final String ID = "setBounds";
+   public static final String KIND = "setBounds";
 
    private List<ElementAndBounds> bounds;
 
    public SetBoundsAction() {
-      super(ID);
+      this(new ArrayList<>());
    }
 
-   public SetBoundsAction(final String kind, final List<ElementAndBounds> bounds) {
-      super(kind);
+   public SetBoundsAction(final List<ElementAndBounds> bounds) {
+      super(KIND);
       this.bounds = bounds;
    }
 

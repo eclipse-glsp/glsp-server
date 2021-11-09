@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -21,12 +21,12 @@ import com.google.common.collect.Lists;
 
 public class CompoundOperation extends Operation {
 
-   public static final String ID = "compound";
+   public static final String KIND = "compound";
 
    private List<Operation> operationList;
 
    public CompoundOperation() {
-      super(ID);
+      super(KIND);
       operationList = Lists.newArrayList();
    }
 

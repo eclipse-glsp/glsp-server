@@ -19,9 +19,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.log4j.Logger;
-import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.AbstractActionHandler;
-import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.actions.Action;
 
 import com.google.inject.Inject;
 
@@ -32,9 +31,6 @@ public class ResolveNavigationTargetActionHandler extends AbstractActionHandler<
    @Inject
    protected Optional<NavigationTargetResolver> navigationTargetResolver;
 
-   @Inject
-   protected GModelState modelState;
-
    @Override
    public List<Action> executeAction(final ResolveNavigationTargetAction action) {
       if (navigationTargetResolver.isEmpty()) {
@@ -43,7 +39,7 @@ public class ResolveNavigationTargetActionHandler extends AbstractActionHandler<
          return none();
       }
       NavigationTarget target = action.getNavigationTarget();
-      NavigationTargetResolution resolution = this.navigationTargetResolver.get().resolve(target, modelState);
+      NavigationTargetResolution resolution = this.navigationTargetResolver.get().resolve(target);
       return listOf(new SetResolvedNavigationTargetAction(resolution.getElementIds(), resolution.getArgs()));
    }
 }

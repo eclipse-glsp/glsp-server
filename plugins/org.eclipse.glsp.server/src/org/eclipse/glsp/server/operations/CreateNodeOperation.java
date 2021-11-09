@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -23,14 +23,14 @@ import org.eclipse.glsp.graph.GPoint;
 
 public class CreateNodeOperation extends CreateOperation {
 
-   public static final String ID = "createNode";
+   public static final String KIND = "createNode";
 
    private GPoint location;
 
    private String containerId;
 
    public CreateNodeOperation() {
-      super(ID);
+      super(KIND);
    }
 
    public CreateNodeOperation(final String elementTypeId) {
@@ -51,7 +51,7 @@ public class CreateNodeOperation extends CreateOperation {
 
    public CreateNodeOperation(final String elementTypeId, final GPoint location, final String containerId,
       final Map<String, String> args) {
-      super(ID, elementTypeId, args);
+      super(KIND, elementTypeId, args);
       this.location = location;
       this.containerId = containerId;
    }

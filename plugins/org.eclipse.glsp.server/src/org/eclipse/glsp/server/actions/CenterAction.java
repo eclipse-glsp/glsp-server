@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -20,18 +20,19 @@ import java.util.List;
 
 public class CenterAction extends Action {
 
-   public static final String ID = "center";
+   public static final String KIND = "center";
 
    private List<String> elementIds = new ArrayList<>();
    private boolean animate = true;
    private boolean retainZoom;
 
    public CenterAction() {
-      super(ID);
+      super(KIND);
+      this.elementIds = new ArrayList<>();
    }
 
    public CenterAction(final List<String> elementIDs, final boolean animate, final boolean retainZoom) {
-      this();
+      super(KIND);
       this.elementIds = elementIDs;
       this.animate = animate;
       this.retainZoom = retainZoom;

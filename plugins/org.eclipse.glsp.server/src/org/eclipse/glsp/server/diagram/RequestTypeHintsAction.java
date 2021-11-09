@@ -15,13 +15,13 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.diagram;
 
-import org.eclipse.glsp.server.actions.Action;
+import org.eclipse.glsp.server.actions.RequestAction;
 
-public class RequestTypeHintsAction extends Action {
+public class RequestTypeHintsAction extends RequestAction<SetTypeHintsAction> {
 
-   public static final String ID = "requestTypeHints";
+   public static final String KIND = "requestTypeHints";
 
    public RequestTypeHintsAction() {
-      super(ID);
+      super(KIND);
    }
 }

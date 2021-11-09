@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,20 +15,21 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operations;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DeleteOperation extends Operation {
 
-   public static final String ID = "deleteElement";
+   public static final String KIND = "deleteElement";
 
    private List<String> elementIds;
 
    public DeleteOperation() {
-      super(ID);
+      this(new ArrayList<>());
    }
 
    public DeleteOperation(final List<String> elementIds) {
-      this();
+      super(KIND);
       this.elementIds = elementIds;
    }
 

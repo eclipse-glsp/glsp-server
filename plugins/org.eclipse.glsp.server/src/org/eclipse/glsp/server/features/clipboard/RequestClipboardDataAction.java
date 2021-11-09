@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -20,12 +20,12 @@ import org.eclipse.glsp.server.types.EditorContext;
 
 public class RequestClipboardDataAction extends RequestAction<SetClipboardDataAction> {
 
-   public static final String ID = "requestClipboardData";
+   public static final String KIND = "requestClipboardData";
 
    private EditorContext editorContext;
 
    public RequestClipboardDataAction() {
-      super(ID);
+      super(KIND);
    }
 
    public RequestClipboardDataAction(final EditorContext editorContext) {

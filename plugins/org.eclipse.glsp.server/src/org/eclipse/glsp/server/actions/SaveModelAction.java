@@ -19,11 +19,11 @@ import java.util.Optional;
 
 public class SaveModelAction extends Action {
 
-   public static final String ID = "saveModel";
+   public static final String KIND = "saveModel";
    private String fileUri;
 
    public SaveModelAction() {
-      super(ID);
+      super(KIND);
    }
 
    public SaveModelAction(final String fileUri) {

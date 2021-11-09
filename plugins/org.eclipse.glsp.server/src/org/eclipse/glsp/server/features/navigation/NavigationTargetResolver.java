@@ -18,15 +18,13 @@ package org.eclipse.glsp.server.features.navigation;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.glsp.server.model.GModelState;
-
 public interface NavigationTargetResolver {
 
    String INFO = "info";
    String WARNING = "warning";
    String ERROR = "error";
 
-   NavigationTargetResolution resolve(NavigationTarget navigationTarget, GModelState modelState);
+   NavigationTargetResolution resolve(NavigationTarget navigationTarget);
 
    default Map<String, String> createArgs() {
       return new HashMap<>();

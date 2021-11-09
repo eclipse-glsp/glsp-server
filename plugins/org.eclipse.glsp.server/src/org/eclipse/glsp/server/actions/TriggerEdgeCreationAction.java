@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,23 +15,24 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actions;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class TriggerEdgeCreationAction extends TriggerElementCreationAction {
 
-   public static final String ID = "triggerEdgeCreation";
+   public static final String KIND = "triggerEdgeCreation";
 
    public TriggerEdgeCreationAction() {
-      this(null, null);
+      this(null);
    }
 
    public TriggerEdgeCreationAction(final String elementTypeId) {
-      this(elementTypeId, null);
+      this(elementTypeId, new HashMap<>());
    }
 
    public TriggerEdgeCreationAction(final String elementTypeId,
       final Map<String, String> args) {
-      super(ID, elementTypeId, args);
+      super(KIND, elementTypeId, args);
    }
 
 }

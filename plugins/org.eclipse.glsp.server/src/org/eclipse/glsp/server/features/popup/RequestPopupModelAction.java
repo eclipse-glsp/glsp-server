@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -16,17 +16,17 @@
 package org.eclipse.glsp.server.features.popup;
 
 import org.eclipse.glsp.graph.GBounds;
-import org.eclipse.glsp.server.actions.Action;
+import org.eclipse.glsp.server.actions.RequestAction;
 
-public class RequestPopupModelAction extends Action {
+public class RequestPopupModelAction extends RequestAction<SetPopupModelAction> {
 
-   public static final String ID = "requestPopupModel";
+   public static final String KIND = "requestPopupModel";
 
    private String elementId;
    private GBounds bounds;
 
    public RequestPopupModelAction() {
-      super(ID);
+      super(KIND);
    }
 
    public RequestPopupModelAction(final String elementId, final GBounds bounds) {

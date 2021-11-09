@@ -23,13 +23,13 @@ import org.eclipse.glsp.server.actions.ResponseAction;
 
 public class SetEditValidationResultAction extends ResponseAction {
 
-   public static final String ID = "setEditValidationResult";
+   public static final String KIND = "setEditValidationResult";
 
    private ValidationStatus status;
    private Map<String, String> args;
 
    public SetEditValidationResultAction() {
-      super(ID);
+      super(KIND);
       args = new HashMap<>();
    }
 

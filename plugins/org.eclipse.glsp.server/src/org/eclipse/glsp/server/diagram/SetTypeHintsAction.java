@@ -15,32 +15,33 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.diagram;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.glsp.server.actions.Action;
+import org.eclipse.glsp.server.actions.ResponseAction;
 import org.eclipse.glsp.server.types.EdgeTypeHint;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
 
-public class SetTypeHintsAction extends Action {
+public class SetTypeHintsAction extends ResponseAction {
 
-   public static final String ID = "setTypeHints";
+   public static final String KIND = "setTypeHints";
 
    private List<ShapeTypeHint> shapeHints;
    private List<EdgeTypeHint> edgeHints;
 
    public SetTypeHintsAction() {
-      super(ID);
+      this(new ArrayList<>(), new ArrayList<>());
    }
 
-   public SetTypeHintsAction(final List<ShapeTypeHint> nodeHints, final List<EdgeTypeHint> edgeHints) {
-      this();
-      this.shapeHints = nodeHints;
+   public SetTypeHintsAction(final List<ShapeTypeHint> shapeHints, final List<EdgeTypeHint> edgeHints) {
+      super(KIND);
+      this.shapeHints = shapeHints;
       this.edgeHints = edgeHints;
    }
 
    public List<ShapeTypeHint> getNodeHints() { return shapeHints; }
 
-   public void setNodeHints(final List<ShapeTypeHint> nodeHints) { this.shapeHints = nodeHints; }
+   public void setNodeHints(final List<ShapeTypeHint> shapeHints) { this.shapeHints = shapeHints; }
 
    public List<EdgeTypeHint> getEdgeHints() { return edgeHints; }
 

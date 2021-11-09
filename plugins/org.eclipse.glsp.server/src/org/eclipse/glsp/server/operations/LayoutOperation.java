@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,20 +15,21 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.operations;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LayoutOperation extends Operation {
 
-   public static final String ID = "layout";
+   public static final String KIND = "layout";
 
    private List<String> elementIds;
 
    public LayoutOperation() {
-      super(ID);
+      this(new ArrayList<>());
    }
 
    public LayoutOperation(final List<String> elementIds) {
-      this();
+      super(KIND);
       this.elementIds = elementIds;
    }
 

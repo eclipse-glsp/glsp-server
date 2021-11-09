@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -21,13 +21,13 @@ import org.eclipse.glsp.server.types.EditorContext;
 
 public class PasteOperation extends Operation {
 
-   public static final String ID = "paste";
+   public static final String KIND = "paste";
 
    private Map<String, String> clipboardData;
    private EditorContext editorContext;
 
    public PasteOperation() {
-      super(ID);
+      super(KIND);
    }
 
    public Map<String, String> getClipboardData() { return clipboardData; }

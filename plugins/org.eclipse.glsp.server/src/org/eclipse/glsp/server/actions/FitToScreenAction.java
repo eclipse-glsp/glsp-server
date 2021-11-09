@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -17,10 +17,11 @@ package org.eclipse.glsp.server.actions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class FitToScreenAction extends Action {
 
-   public static final String ID = "fit";
+   public static final String KIND = "fit";
 
    private List<String> elementIds = new ArrayList<>();
    private double padding;
@@ -28,7 +29,7 @@ public class FitToScreenAction extends Action {
    private boolean animate = true;
 
    public FitToScreenAction() {
-      super(ID);
+      super(KIND);
    }
 
    public FitToScreenAction(final String kind, final List<String> elementIds, final double padding,
@@ -44,11 +45,11 @@ public class FitToScreenAction extends Action {
 
    public void setElementIds(final List<String> elementIds) { this.elementIds = elementIds; }
 
-   public double getPadding() { return padding; }
+   public Optional<Double> getPadding() { return Optional.ofNullable(padding); }
 
    public void setPadding(final double padding) { this.padding = padding; }
 
-   public double getMaxZoom() { return maxZoom; }
+   public Optional<Double> getMaxZoom() { return Optional.ofNullable(maxZoom); }
 
    public void setMaxZoom(final double maxZoom) { this.maxZoom = maxZoom; }
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -19,10 +19,10 @@ import org.eclipse.glsp.server.actions.Action;
 
 public class RedoAction extends Action {
 
-   public static final String ID = "glspRedo";
+   public static final String KIND = "glspRedo";
 
    public RedoAction() {
-      super(ID);
+      super(KIND);
    }
 
 }

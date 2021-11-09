@@ -53,16 +53,15 @@ public interface GModelFactory {
     * <code>modelState</code>. Optionally, this step also produces and sets a {@link GModelIndex} in the model state
     * that allows mapping from graph model elements to source model elements and vice versa.
     *
-    * @param modelState The model state into which the created graph model and index shall be put.
     */
-   void createGModel(GModelState modelState);
+   void createGModel();
 
    /**
     * Graph model factory to be used if the graph model is already available from the model source.
     */
    final class NullImpl implements GModelFactory {
       @Override
-      public void createGModel(final GModelState modelState) {
+      public void createGModel() {
          // noop
       }
    }

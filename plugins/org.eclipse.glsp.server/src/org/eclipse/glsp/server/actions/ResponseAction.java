@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -14,6 +14,8 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ******************************************************************************/
 package org.eclipse.glsp.server.actions;
+
+import org.eclipse.glsp.server.internal.util.GenericsUtil;
 
 public class ResponseAction extends Action {
    private String responseId;
@@ -34,8 +36,11 @@ public class ResponseAction extends Action {
     * @return given response action with id set if applicable
     */
    public static Action respond(final Action request, final Action response) {
-      if (request instanceof RequestAction<?> && response instanceof ResponseAction) {
-         ((ResponseAction) response).setResponseId(((RequestAction<?>) request).getRequestId());
+      if (request instanceof RequestAction<?>) {
+         Class<?> responseType = GenericsUtil.getGenericTypeParameterClass(request.getClass(), RequestAction.class);
+         if (responseType.isInstance(response)) {
+            ((ResponseAction) response).setResponseId(((RequestAction<?>) request).getRequestId());
+         }
       }
       return response;
    }

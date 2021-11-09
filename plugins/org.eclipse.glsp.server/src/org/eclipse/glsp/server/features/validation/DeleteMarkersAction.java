@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,22 +15,23 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.features.validation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.glsp.server.actions.Action;
 
 public class DeleteMarkersAction extends Action {
 
-   public static final String ID = "deleteMarkers";
+   public static final String KIND = "deleteMarkers";
 
    private List<Marker> markers;
 
    public DeleteMarkersAction() {
-      super(ID);
+      this(new ArrayList<>());
    }
 
    public DeleteMarkersAction(final List<Marker> markers) {
-      this();
+      super(KIND);
       this.markers = markers;
    }
 

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -21,14 +21,14 @@ import org.eclipse.glsp.graph.GPoint;
 
 public class ChangeContainerOperation extends Operation {
 
-   public static final String ID = "changeContainer";
+   public static final String KIND = "changeContainer";
 
    private String elementId;
    private String targetContainerId;
    private GPoint location;
 
    public ChangeContainerOperation() {
-      super(ID);
+      super(KIND);
    }
 
    public ChangeContainerOperation(final String elementId, final GPoint location) {

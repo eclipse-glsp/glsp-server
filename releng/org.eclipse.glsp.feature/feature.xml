@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.glsp.feature"
       label="GLSP SDK"
-      version="0.9.0.qualifier"
+      version="0.9.0"
       provider-name="Eclipse GLSP">
 
    <description url="http://www.example.com/description">
@@ -11,7 +11,7 @@
 
    <copyright url="http://www.example.com/copyright">
       /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at

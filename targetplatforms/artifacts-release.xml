@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?artifactRepository version='1.1.0'?>
+<repository name='org.eclipse.glsp.ide.repository' type='org.eclipse.equinox.p2.artifact.repository.simpleRepository' version='1'>
+  <properties size='3'>
+    <property name='publishPackFilesAsSiblings' value='true'/>
+    <property name='p2.compressed' value='true'/>
+    <property name='p2.timestamp' value='1639139002447'/>
+  </properties>
+  <mappings size='5'>
+    <rule filter='(&amp; (classifier=osgi.bundle) (format=packed))' output='${repoUrl}/plugins/${id}_${version}.jar.pack.gz'/>
+    <rule filter='(&amp; (classifier=osgi.bundle))' output='${repoUrl}/plugins/${id}_${version}.jar'/>
+    <rule filter='(&amp; (classifier=binary))' output='${repoUrl}/binary/${id}_${version}'/>
+    <rule filter='(&amp; (classifier=org.eclipse.update.feature) (format=packed))' output='${repoUrl}/features/${id}_${version}.jar.pack.gz'/>
+    <rule filter='(&amp; (classifier=org.eclipse.update.feature))' output='${repoUrl}/features/${id}_${version}.jar'/>
+  </mappings>
+  <artifacts size='6'>
+    <artifact classifier='osgi.bundle' id='org.eclipse.glsp.ide.workflow.editor' version='0.9.0'>
+      <properties size='8'>
+        <property name='artifact.size' value='15594'/>
+        <property name='download.size' value='15594'/>
+        <property name='maven-groupId' value='org.eclipse.glsp.ide'/>
+        <property name='maven-artifactId' value='org.eclipse.glsp.ide.workflow.editor'/>
+        <property name='maven-version' value='0.9.0'/>
+        <property name='download.md5' value='a483133bc5a93ab05fa150e44b4a2a35'/>
+        <property name='download.checksum.md5' value='a483133bc5a93ab05fa150e44b4a2a35'/>
+        <property name='download.checksum.sha-256' value='d09860bc98131922f01ad3c1cb4c98403803af4825526b8815426a158cc1715d'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.glsp.ide.editor' version='0.9.0'>
+      <properties size='8'>
+        <property name='artifact.size' value='100602'/>
+        <property name='download.size' value='100602'/>
+        <property name='maven-groupId' value='org.eclipse.glsp.ide'/>
+        <property name='maven-artifactId' value='org.eclipse.glsp.ide.editor'/>
+        <property name='maven-version' value='0.9.0'/>
+        <property name='download.md5' value='8dfebf524316c0fb44cc5c2d7948bba8'/>
+        <property name='download.checksum.md5' value='8dfebf524316c0fb44cc5c2d7948bba8'/>
+        <property name='download.checksum.sha-256' value='f1e5a51348037cd2a91c027e0f4d82344606f136610d411bbd44ea4416d347c3'/>
+      </properties>
+    </artifact>
+    <artifact classifier='org.eclipse.update.feature' id='org.eclipse.glsp.ide.feature.source' version='0.9.0'>
+      <properties size='10'>
+        <property name='artifact.size' value='7452'/>
+        <property name='download.size' value='7452'/>
+        <property name='maven-groupId' value='org.eclipse.glsp.ide'/>
+        <property name='maven-artifactId' value='org.eclipse.glsp.ide.feature'/>
+        <property name='maven-version' value='0.9.0'/>
+        <property name='maven-classifier' value='sources-feature'/>
+        <property name='download.contentType' value='application/zip'/>
+        <property name='download.md5' value='fcd1304706a1a287043c05ec7d2a88cb'/>
+        <property name='download.checksum.md5' value='fcd1304706a1a287043c05ec7d2a88cb'/>
+        <property name='download.checksum.sha-256' value='6d61b614ce63e57b8aa528ea312014c4b2d24feb2f8919f99f3056317f0cf5c6'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.glsp.example.workflow' version='0.9.0'>
+      <properties size='5'>
+        <property name='download.size' value='94011'/>
+        <property name='artifact.size' value='94011'/>
+        <property name='download.md5' value='824dc7ba332e17059b8c4e3800284d6e'/>
+        <property name='download.checksum.md5' value='824dc7ba332e17059b8c4e3800284d6e'/>
+        <property name='download.checksum.sha-256' value='8adabe31975130f7759103529c6ed01c6d81ffd6fbae4e96e87b53f79ece729f'/>
+      </properties>
+    </artifact>
+    <artifact classifier='org.eclipse.update.feature' id='org.eclipse.glsp.ide.feature' version='0.9.0'>
+      <properties size='9'>
+        <property name='artifact.size' value='6390'/>
+        <property name='download.size' value='6390'/>
+        <property name='maven-groupId' value='org.eclipse.glsp.ide'/>
+        <property name='maven-artifactId' value='org.eclipse.glsp.ide.feature'/>
+        <property name='maven-version' value='0.9.0'/>
+        <property name='download.contentType' value='application/zip'/>
+        <property name='download.md5' value='a795fce5fedfd95b99d6d822879ae643'/>
+        <property name='download.checksum.md5' value='a795fce5fedfd95b99d6d822879ae643'/>
+        <property name='download.checksum.sha-256' value='a9b1ecee7654b9512419568a90485bfb8695510b87694a93ae84af1d7c2e5244'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.glsp.ide.editor.source' version='0.9.0'>
+      <properties size='9'>
+        <property name='artifact.size' value='66975'/>
+        <property name='download.size' value='66975'/>
+        <property name='maven-groupId' value='org.eclipse.glsp.ide'/>
+        <property name='maven-artifactId' value='org.eclipse.glsp.ide.editor'/>
+        <property name='maven-version' value='0.9.0'/>
+        <property name='maven-classifier' value='sources'/>
+        <property name='download.md5' value='fd55528970efb7b07ab4e586fcc76b88'/>
+        <property name='download.checksum.md5' value='fd55528970efb7b07ab4e586fcc76b88'/>
+        <property name='download.checksum.sha-256' value='4e04f31d1dd7a5135cc773b3212d3eca44ea2aecd396cc30aa252fcaaa5f873d'/>
+      </properties>
+    </artifact>
+  </artifacts>
+</repository>

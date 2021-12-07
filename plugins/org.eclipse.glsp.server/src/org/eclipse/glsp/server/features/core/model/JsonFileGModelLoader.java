@@ -85,7 +85,7 @@ public class JsonFileGModelLoader implements ModelSourceLoader {
    }
 
    protected GModelRoot createNewEmptyRoot(final GModelState modelState) {
-      GModelRoot root = GraphFactory.eINSTANCE.createGModelRoot();
+      GModelRoot root = GraphFactory.eINSTANCE.createGGraph();
       root.setId(EMPTY_ROOT_ID);
       root.setType(DefaultTypes.GRAPH);
       return root;

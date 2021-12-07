@@ -430,7 +430,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     *
-    * @generated
+    * @generated NOT
     */
    @Override
    public void setSourceId(final String newSourceId) {
@@ -438,6 +438,9 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
       sourceId = newSourceId;
       if (eNotificationRequired()) {
          eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.GEDGE__SOURCE_ID, oldSourceId, sourceId));
+         GModelElement oldSource = findElement(oldSourceId).orElse(null);
+         GModelElement newSource = findElement(newSourceId).orElse(null);
+         eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.GEDGE__SOURCE, oldSource, newSource));
       }
    }
 
@@ -454,7 +457,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     *
-    * @generated
+    * @generated NOT
     */
    @Override
    public void setTargetId(final String newTargetId) {
@@ -462,6 +465,9 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
       targetId = newTargetId;
       if (eNotificationRequired()) {
          eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.GEDGE__TARGET_ID, oldTargetId, targetId));
+         GModelElement oldTarget = findElement(oldTargetId).orElse(null);
+         GModelElement newTarget = findElement(newTargetId).orElse(null);
+         eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.GEDGE__TARGET, oldTarget, newTarget));
       }
    }
 
@@ -495,14 +501,10 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
     */
    @Override
    public void setSource(final GModelElement newSource) {
-      if (newSource == null) {
-         this.sourceId = null;
-         return;
-      }
-      this.sourceId = newSource.getId();
+      setSourceId(newSource == null ? null : newSource.getId());
    }
 
-   private Optional<GModelElement> findElement(final String elementId) {
+   protected Optional<GModelElement> findElement(final String elementId) {
       return GModelIndex.get(this).get(elementId);
    }
 
@@ -536,11 +538,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
     */
    @Override
    public void setTarget(final GModelElement newTarget) {
-      if (newTarget == null) {
-         this.targetId = null;
-         return;
-      }
-      this.targetId = newTarget.getId();
+      setTargetId(newTarget == null ? null : newTarget.getId());
    }
 
    /**

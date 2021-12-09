@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: GLSP Server
 Bundle-SymbolicName: org.eclipse.glsp.server
-Bundle-Version: 0.9.0
+Bundle-Version: 0.10.0.qualifier
 Bundle-Vendor: Eclipse GLSP
 Automatic-Module-Name: org.eclipse.glsp.server
 Bundle-RequiredExecutionEnvironment: JavaSE-11
@@ -14,7 +14,7 @@ Require-Bundle: org.apache.commons.io;bundle-version="2.2.0",
  org.apache.commons.cli;bundle-version="1.4.0";visibility:=reexport,
  com.google.inject;bundle-version="5.0.1";visibility:=reexport,
  javax.websocket;bundle-version="1.0.0";visibility:=reexport,
- org.eclipse.glsp.graph;bundle-version="[0.9.0,1.0.0)";visibility:=reexport,
+ org.eclipse.glsp.graph;bundle-version="[0.10.0,1.0.0)";visibility:=reexport,
  javax.inject;bundle-version="1.0.0"
 Export-Package: org.eclipse.glsp.server.actions,
  org.eclipse.glsp.server.di,

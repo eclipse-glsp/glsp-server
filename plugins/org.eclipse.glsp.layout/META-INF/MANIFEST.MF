@@ -2,11 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: GLSP Layout
 Bundle-SymbolicName: org.eclipse.glsp.layout
-Bundle-Version: 0.9.0
+Bundle-Version: 0.10.0.qualifier
 Bundle-Vendor: EclispeSource
 Automatic-Module-Name: org.eclipse.glsp.layout
 Bundle-RequiredExecutionEnvironment: JavaSE-11
-Require-Bundle: org.eclipse.glsp.server;bundle-version="0.9.0",
+Require-Bundle: org.eclipse.glsp.server;bundle-version="[0.10.0,1.0.0)",
  org.eclipse.elk.core;bundle-version="0.7.1",
  org.eclipse.elk.graph;bundle-version="0.7.1",
  com.google.guava;bundle-version="30.1.0"

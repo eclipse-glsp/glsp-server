@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: GLSP Graph Tests
 Bundle-SymbolicName: org.eclipse.glsp.graph.test
-Bundle-Version: 0.9.0.qualifier
-Fragment-Host: org.eclipse.glsp.graph;bundle-version="0.9.0"
+Bundle-Version: 0.10.0.qualifier
+Fragment-Host: org.eclipse.glsp.graph;bundle-version="0.10.0-SNAPSHOT"
 Automatic-Module-Name: org.eclipse.glsp.graph.test
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-Vendor: Eclipse GLSP

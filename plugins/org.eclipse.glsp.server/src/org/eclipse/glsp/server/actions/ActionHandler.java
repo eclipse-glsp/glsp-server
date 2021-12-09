@@ -50,7 +50,8 @@ public interface ActionHandler {
 
    /**
     * Executes the action handler for the given {@link Action} and returns a list of response actions that should be
-    * dispatched as a result of processing the original action. This list can be empty, if no more actions need to be executed.
+    * dispatched as a result of processing the original action. This list can be empty, if no more actions need to be
+    * executed.
     * list is returned.
     *
     * @param action The action that should be processed.
@@ -92,9 +93,8 @@ public interface ActionHandler {
    /**
     * Returns the priority of this action handler. The priority is used to derive the execution order if multiple
     * action handlers should execute the same {@link Action}. The default priority is `0` and the priority is sorted
-    * descending. This means handlers with a priority >0 are executed before handlers with a default priority and
-    * handlers with a
-    * priority <0 are executed afterwards.
+    * descending. This means handlers with a priority &gt; 0 are executed before handlers with a default priority and
+    * handlers with a priority &lt; 0 are executed afterwards.
     *
     * @return the priority as integer.
     */

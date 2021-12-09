@@ -124,7 +124,8 @@ public abstract class CreateNodeOperationHandler extends AbstractCreateOperation
 
    /**
     * Create and return the new Node at the specified (optional) location. The location
-    * is given in coordinates relative to the {@link #getContainer(CreateNodeOperation, GModelState) container}.
+    * is given in coordinates relative to the {@link CreateNodeOperationHandler#getContainer(CreateNodeOperation)}
+    * container.
     *
     * @param relativeLocation
     * @param args

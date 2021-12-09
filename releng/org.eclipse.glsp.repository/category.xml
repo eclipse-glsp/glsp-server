@@ -9,13 +9,13 @@
    <bundle id="org.eclipse.glsp.layout">
       <category name="org.eclipse.glsp"/>
    </bundle>
-   <bundle id="org.eclipse.glsp.layout.source" version="0.9.0.qualifier">
+   <bundle id="org.eclipse.glsp.layout.source">
       <category name="org.eclipse.glsp"/>
    </bundle>
    <bundle id="org.eclipse.glsp.server.websocket">
       <category name="org.eclipse.glsp"/>
    </bundle>
-   <bundle id="org.eclipse.glsp.server.websocket.source" version="0.9.0.qualifier">
+    <bundle id="org.eclipse.glsp.server.websocket.source">
       <category name="org.eclipse.glsp"/>
    </bundle>
    <bundle id="org.eclipse.glsp.example.workflow">

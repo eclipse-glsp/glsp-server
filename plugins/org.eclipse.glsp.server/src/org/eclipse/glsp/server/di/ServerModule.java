@@ -52,7 +52,9 @@ import com.google.inject.name.Names;
  * All bindings inside of the {@link ServerModule#configure()} method are delegated to separate methods which makes it
  * easy to override a specific binding in subclasses.
  *
- * p>The following bindings are provided:
+ * <p>
+ * The following bindings are provided:
+ * </p>
  *
  * <ul>
  * <li>{@link Map}&lt;String,Module&gt; annotated with <code> @named("Diagram_Modules")</code>

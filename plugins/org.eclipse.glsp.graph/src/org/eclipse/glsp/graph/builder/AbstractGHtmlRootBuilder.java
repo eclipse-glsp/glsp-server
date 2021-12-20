@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.graph.builder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.glsp.graph.GHtmlRoot;
@@ -22,24 +23,24 @@ import org.eclipse.glsp.graph.GHtmlRoot;
 public abstract class AbstractGHtmlRootBuilder<T extends GHtmlRoot, E extends AbstractGHtmlRootBuilder<T, E>>
    extends GModelRootBuilder<T, E> {
 
-   protected List<String> classes;
+   protected List<String> classes = new ArrayList<>();
 
-   public AbstractGHtmlRootBuilder(String type) {
+   public AbstractGHtmlRootBuilder(final String type) {
       super(type);
    }
 
-   public E addClass(String clazz) {
+   public E addClass(final String clazz) {
       this.classes.add(clazz);
       return self();
    }
 
-   public E addClasses(List<String> classes) {
+   public E addClasses(final List<String> classes) {
       this.classes.addAll(classes);
       return self();
    }
 
    @Override
-   protected void setProperties(T element) {
+   protected void setProperties(final T element) {
       super.setProperties(element);
       element.getClasses().addAll(classes);
    }

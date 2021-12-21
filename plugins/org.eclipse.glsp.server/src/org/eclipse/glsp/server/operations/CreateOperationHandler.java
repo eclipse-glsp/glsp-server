@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -18,17 +18,32 @@ package org.eclipse.glsp.server.operations;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.actions.TriggerEdgeCreationAction;
 import org.eclipse.glsp.server.actions.TriggerElementCreationAction;
 import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;
 
 import com.google.common.collect.Lists;
 
+/**
+ * This operation handler offers the basis implementation for creating {@link GModelElement}s. Depending on its
+ * operation type the triggered actions are {@link TriggerNodeCreationAction} or {@link TriggerEdgeCreationAction}s.
+ */
 public interface CreateOperationHandler extends OperationHandler {
 
+   /**
+    * Returns the {@link CreateOperation} type this handler has registered for.
+    *
+    * @return The {@link CreateOperation} type this handler has registered for.
+    */
    @Override
    Class<? extends CreateOperation> getHandledOperationType();
 
+   /**
+    * Returns a list of {@link TriggerElementCreationAction}s for registered element types.
+    *
+    * @return A list of {@link TriggerElementCreationAction}s.
+    */
    default List<TriggerElementCreationAction> getTriggerActions() {
       if (CreateNodeOperation.class.isAssignableFrom(getHandledOperationType())) {
          return getHandledElementTypeIds().stream().map(TriggerNodeCreationAction::new).collect(Collectors.toList());
@@ -38,5 +53,10 @@ public interface CreateOperationHandler extends OperationHandler {
       return Lists.newArrayList();
    }
 
+   /**
+    * Returns the list of element types for which this handler has registered for.
+    *
+    * @return The list of element types for which this handler has registered for.
+    */
    List<String> getHandledElementTypeIds();
 }

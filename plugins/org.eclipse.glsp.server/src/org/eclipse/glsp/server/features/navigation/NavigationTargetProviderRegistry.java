@@ -17,4 +17,7 @@ package org.eclipse.glsp.server.features.navigation;
 
 import org.eclipse.glsp.server.registry.Registry;
 
+/**
+ * This registry keeps track of registered {@link NavigationTargetProvider} for a certain target types.
+ */
 public interface NavigationTargetProviderRegistry extends Registry<String, NavigationTargetProvider> {}

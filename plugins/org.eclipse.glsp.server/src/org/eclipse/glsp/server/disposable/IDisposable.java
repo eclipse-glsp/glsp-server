@@ -42,6 +42,12 @@ public interface IDisposable {
       }
    }
 
+   /**
+    * Creates a new IDisposable for a given runnable.
+    *
+    * @param runnable The runnable for which a new IDisposable instance is created.
+    * @return A new instance of an IDisposable.
+    */
    static IDisposable create(final Runnable runnable) {
       return new Disposable() {
          @Override

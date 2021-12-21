@@ -17,6 +17,9 @@ package org.eclipse.glsp.server.operations;
 
 import org.eclipse.glsp.server.registry.Registry;
 
+/**
+ * This registry contains {@link OperationHandler}s that are registered for certain {@link Operation} types.
+ */
 public interface OperationHandlerRegistry extends Registry<Operation, OperationHandler> {
 
 }

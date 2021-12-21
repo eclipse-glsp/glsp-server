@@ -19,7 +19,16 @@ import java.util.List;
 
 import org.eclipse.glsp.server.registry.MultiRegistry;
 
+/**
+ * An action handler registry keeps track of registered action handlers for a certain action.
+ */
 public interface ActionHandlerRegistry extends MultiRegistry<Class<? extends Action>, ActionHandler> {
+   /**
+    * Returns the registered {@link ActionHandler} for a given {@link Action}.
+    *
+    * @param action The action for which the handler should be returned.
+    * @return The registered ActionHandler for the given action.
+    */
    default List<ActionHandler> get(final Action action) {
       return get(action.getClass());
    }

@@ -72,16 +72,16 @@ public interface ActionRegistry extends Registry<String, Map<String, Class<? ext
       boolean isServerAction);
 
    /**
-    * Returns a list of actions that are handled by the server for a registered diagramType.
+    * Returns a list of actions that are handled by the server for the given diagramType.
     *
-    * @return A list of actions that are handled on the server for a registered diagramType.
+    * @return A list of actions that are handled on the server for the given diagramType.
     */
    List<String> getServerHandledAction(String diagramType);
 
    /**
-    * Returns a map of all registered diagramTypes and their actions that are handled by the server.
+    * Returns a map of all registered diagramTypes and their server-handled actions.
     *
-    * @return A map of all registered diagramTypes and their actions hat are handled on the server.
+    * @return A map of all registered diagramTypes and their server-handled actions.
     */
    Map<String, List<String>> getServerHandledActions();
 

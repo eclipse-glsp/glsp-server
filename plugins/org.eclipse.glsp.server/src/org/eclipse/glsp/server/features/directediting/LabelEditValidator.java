@@ -29,7 +29,7 @@ public interface LabelEditValidator {
     *
     * @param label   The edited label to validate.
     * @param element The element for which the label is going to be edited.
-    * @return The {@link ValidationStatus} of the label
+    * @return The {@link ValidationStatus} of the label.
     */
    ValidationStatus validate(String label, GModelElement element);
 }

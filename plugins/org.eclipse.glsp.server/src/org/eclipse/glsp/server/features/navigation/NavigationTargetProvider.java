@@ -20,7 +20,7 @@ import java.util.List;
 import org.eclipse.glsp.server.types.EditorContext;
 
 /**
- * This provider retrieves NavigationTargets for by specifying its elementId.
+ * This provider retrieves navigation targets for its target type from a given {@link EditorContext}.
  */
 public interface NavigationTargetProvider {
 

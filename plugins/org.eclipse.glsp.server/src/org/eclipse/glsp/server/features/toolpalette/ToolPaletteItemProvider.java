@@ -29,7 +29,7 @@ public interface ToolPaletteItemProvider extends ContextActionsProvider {
    String CONTEXT_ID = "tool-palette";
 
    /**
-    * Returns the context id of the {@link ToolPaletteItemProvider}.
+    * Returns the context id of the provider.
     */
    @Override
    default String getContextId() { return ToolPaletteItemProvider.CONTEXT_ID; }
@@ -46,7 +46,7 @@ public interface ToolPaletteItemProvider extends ContextActionsProvider {
    }
 
    /**
-    * Returns a list of {@link PaletteItem}s for a given map of string arguments.
+    * Constructs a list of {@link PaletteItem}s from a given map of string arguments.
     *
     * @param args A map of string arguments.
     * @return A list of {@link PaletteItem}s for a given map of string arguments.

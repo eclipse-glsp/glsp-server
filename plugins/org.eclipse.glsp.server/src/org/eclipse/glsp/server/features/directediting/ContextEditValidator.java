@@ -33,10 +33,10 @@ public interface ContextEditValidator {
    ValidationStatus validate(RequestEditValidationAction action);
 
    /**
-    * Returns if the validator can handle a given contextId.
+    * Validates if the validator can handle a given contextId.
     *
     * @param contextId The contextId to check.
-    * @return A boolean if the validator can handle a given contextId.
+    * @return `true` if the validator can handle a given contextId.
     */
    default boolean handles(final String contextId) {
       return getContextId().equals(contextId);

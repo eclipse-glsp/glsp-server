@@ -35,7 +35,7 @@ import org.eclipse.glsp.graph.impl.GModelIndexImpl;
 public interface GModelIndex {
 
    /**
-    * Returns the {@link GModelIndex} instance that contains the root of the given {@link GModelElement}.
+    * Returns the GModelIndex instance that contains the root of the given {@link GModelElement}.
     *
     * @param element The GModelElement for which an index instance should be returned.
     * @return The GModelIndex instance that contains the root of the given GModelElement.
@@ -47,7 +47,7 @@ public interface GModelIndex {
    }
 
    /**
-    * Create a new {@link GModelIndex} instance of the root of the given {@link GModelElement}.
+    * Create a new GModelIndex instance of the root of the given {@link GModelElement}.
     *
     * @param element The GModelElement for which a new index instance should be created.
     * @return A new GModelIndex instance that contains the root of the given GModelElement.
@@ -57,7 +57,7 @@ public interface GModelIndex {
    }
 
    /**
-    * Removes the root of the given {@link GModelElement} from an existing {@link GModelIndex} instance.
+    * Removes the root of the given {@link GModelElement} from an existing GModelIndex instance.
     *
     * @param element The GModelElement which root should be removed from the index instance.
     */
@@ -103,23 +103,23 @@ public interface GModelIndex {
    Collection<GEdge> getOutgoingEdges(GModelElement node);
 
    /**
-    * Returns a set of all {@link GModelElement} ids contained in this instance of the {@link GModelIndex}.
+    * Returns a set of all {@link GModelElement} ids contained in this instance of the GModelIndex.
     *
     * @return A set of elementIds.
     */
    Set<String> allIds();
 
    /**
-    * Returns the contained {@link GModelRoot} in this instance of the {@link GModelIndex}.
+    * Returns the contained {@link GModelRoot} in this instance of the GModelIndex.
     *
     * @return The contained {@link GModelRoot} instance.
     */
    GModelElement getRoot();
 
    /**
-    * Returns the current amount of occurrences of an EClass in this instance of the {@link GModelIndex}.
+    * Returns the current amount of occurrences of an EClass in this instance of the GModelIndex.
     *
-    * @param eClass     The EClass to be counted in this instance of the {@link GModelIndex}.
+    * @param eClass     The EClass to be counted in this instance of the GModelIndex.
     * @param idProvider A function that provides an id based on the counter result.
     *
     * @return The amount of occurrences of an EClass.
@@ -245,9 +245,9 @@ public interface GModelIndex {
    }
 
    /**
-    * Returns the current amount of type occurrences in this instance of the {@link GModelIndex}.
+    * Returns the current amount of type occurrences in this instance of the GModelIndex.
     *
-    * @param eClass The EClass to be counted in this instance of the {@link GModelIndex}.
+    * @param eClass The EClass to be counted in this instance of the GModelIndex.
     *
     * @return The amount of type occurrences.
     */

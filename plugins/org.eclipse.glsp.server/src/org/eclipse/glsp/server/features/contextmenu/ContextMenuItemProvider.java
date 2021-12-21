@@ -40,12 +40,12 @@ public interface ContextMenuItemProvider extends ContextActionsProvider {
    default String getContextId() { return ContextMenuItemProvider.KEY; }
 
    /**
-    * Returns a list of {@link MenuItem}s for a given list selectedElementIds at a certain mouse position.
+    * Returns a list of {@link MenuItem}s for a given list of selected elements at a certain mouse position.
     *
     * @param selectedElementIds The list of currently selected elementIds.
     * @param position           The current mouse position.
     * @param args               Additional arguments.
-    * @return A list of {@link MenuItem}s for a given list selectedElementIds at a certain mouse position.
+    * @return A list of {@link MenuItem}s for a given list of selected elements at a certain mouse position.
     */
    List<MenuItem> getItems(List<String> selectedElementIds, GPoint position, Map<String, String> args);
 

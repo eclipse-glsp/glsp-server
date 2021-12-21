@@ -39,10 +39,10 @@ public interface ContextActionsProvider {
    List<? extends LabeledAction> getActions(EditorContext editorContext);
 
    /**
-    * Returns if a ContextActionsProvider can handle a given contextId.
+    * Validates if a ContextActionsProvider can handle the given contextId.
     *
     * @param contextId The contextIf that to be checked.
-    * @return If a ContextActionsProvider can handle a given contextId.
+    * @return `true` if a ContextActionsProvider can handle a given contextId.
     */
    default boolean handles(final String contextId) {
       return getContextId().equals(contextId);

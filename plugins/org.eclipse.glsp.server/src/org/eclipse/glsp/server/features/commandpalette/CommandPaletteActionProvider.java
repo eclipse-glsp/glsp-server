@@ -30,26 +30,26 @@ public interface CommandPaletteActionProvider extends ContextActionsProvider {
    String INDEX = "index";
 
    /**
-    * Returns the context id of the {@link CommandPaletteActionProvider}.
+    * Returns the context id of the provider.
     */
    @Override
    default String getContextId() { return CommandPaletteActionProvider.CONTEXT_ID; }
 
    /**
-    * Returns the content of the "text" argument for a given Map of arguments.
+    * Retrieves the value for the "text" key from the given arguments Map.
     *
     * @param args The given map of string arguments.
-    * @return The content of the "text" argument.
+    * @return The value associated with the "text" key.
     */
    default String getText(final Map<String, String> args) {
       return args.getOrDefault(TEXT, "");
    }
 
    /**
-    * Returns the content of the "index" argument for a given Map of arguments.
+    * Returns the value of the "index" key from a given Map of arguments.
     *
     * @param args The given map of string arguments.
-    * @return The content of the "index" argument.
+    * @return The value associated with the "index" key.
     */
    default int getIndex(final Map<String, String> args) {
       return (int) Double.parseDouble(args.getOrDefault(INDEX, "0.0"));

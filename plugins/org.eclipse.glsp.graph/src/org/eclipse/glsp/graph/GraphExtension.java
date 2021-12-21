@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EPackage;
 
 /**
  * Is used to configure a graph extension for a diagram language. A graph extension
- * is a custom Ecore model that extends the default GLSP Graph ecore model, e.g by adding new GModelElement types .
+ * is a custom Ecore model that extends the default GLSP Graph ecore model, e.g by adding new GModelElement types.
  */
 public interface GraphExtension {
    /**

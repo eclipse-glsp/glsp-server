@@ -26,7 +26,7 @@ import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;
 import com.google.common.collect.Lists;
 
 /**
- * This operation handler offers the basis implementation for creating {@link GModelElement}s. Depending on its
+ * A special {@link OperationHandler} that is responsible for the handling of {@link CreateOperation}s. Depending on its
  * operation type the triggered actions are {@link TriggerNodeCreationAction} or {@link TriggerEdgeCreationAction}s.
  */
 public interface CreateOperationHandler extends OperationHandler {

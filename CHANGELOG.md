@@ -1,4 +1,14 @@
 # Eclipse GLSP Server Changelog
+## v0.10.0 - Upcoming
+
+### Changes
+
+- [documentation] Improved existing API javadoc and added missing documentation for service interfaces. [#487](https://github.com/eclipse-glsp/glsp-server/pull/146) - Contributed on behalf of STMicroelectronics
+- 
+
+### Breaking Changes
+
+
 
 ## [v0.9.0- 09/12/2021](https://github.com/eclipse-glsp/glsp/releases/tag/0.9.0)
 

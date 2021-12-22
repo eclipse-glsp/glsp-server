@@ -19,7 +19,18 @@ import java.util.List;
 
 import org.eclipse.glsp.graph.GModelElement;
 
+/**
+ * Validates a list of {@link GModelElement}s based on a set of validation rules and returns corresponding issue
+ * {@link Marker}s.
+ * An issue marker is a serializable description of the validation violation that can be visualised by the GLSP client.
+ */
 public interface ModelValidator {
 
+   /**
+    * Validates the given list of {@link GModelElement}s and returns a list of {@link Marker}s.
+    *
+    * @param elements The list of {@link GModelElement} to validate.
+    * @return A list of {@link Marker}s for the validated {@link GModelElement}s.
+    */
    List<Marker> validate(GModelElement... elements);
 }

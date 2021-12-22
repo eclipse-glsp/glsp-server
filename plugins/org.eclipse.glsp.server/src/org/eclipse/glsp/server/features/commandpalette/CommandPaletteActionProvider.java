@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -19,6 +19,9 @@ import java.util.Map;
 
 import org.eclipse.glsp.server.features.contextactions.ContextActionsProvider;
 
+/**
+ * A {@link ContextActionsProvider} for CommandPaletteActions.
+ */
 @FunctionalInterface
 public interface CommandPaletteActionProvider extends ContextActionsProvider {
 
@@ -26,13 +29,28 @@ public interface CommandPaletteActionProvider extends ContextActionsProvider {
    String TEXT = "text";
    String INDEX = "index";
 
+   /**
+    * Returns the context id of the provider.
+    */
    @Override
    default String getContextId() { return CommandPaletteActionProvider.CONTEXT_ID; }
 
+   /**
+    * Retrieves the value for the "text" key from the given arguments Map.
+    *
+    * @param args The given map of string arguments.
+    * @return The value associated with the "text" key.
+    */
    default String getText(final Map<String, String> args) {
       return args.getOrDefault(TEXT, "");
    }
 
+   /**
+    * Returns the value of the "index" key from a given Map of arguments.
+    *
+    * @param args The given map of string arguments.
+    * @return The value associated with the "index" key.
+    */
    default int getIndex(final Map<String, String> args) {
       return (int) Double.parseDouble(args.getOrDefault(INDEX, "0.0"));
    }

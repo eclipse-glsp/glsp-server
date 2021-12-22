@@ -19,7 +19,7 @@ package org.eclipse.glsp.server.layout;
  * A layout engine is able to compute layout information for a model.
  */
 public interface LayoutEngine {
-   /*
+   /**
     * Compute a layout for the model state and modify the model accordingly.
     */
    void layout();

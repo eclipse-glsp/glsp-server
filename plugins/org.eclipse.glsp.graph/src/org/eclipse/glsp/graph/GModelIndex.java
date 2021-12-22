@@ -220,7 +220,7 @@ public interface GModelIndex {
     *
     * @param <T>    Type of the elements to be returned.
     * @param parent The parent element to start the element search from.
-    * @param clazz  The class of which the returned elements should be instances.
+    * @param type   The class of which the returned elements should be instances.
     * @return A set containing the elements of type clazz.
     */
    default <T extends GModelElement> Set<T> findAll(final GModelElement parent, final Class<T> type) {

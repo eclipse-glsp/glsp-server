@@ -40,14 +40,15 @@ public interface ClientSession extends IDisposable {
    /**
     * Retrieve the diagram type of the client session.
     *
-    * @return The diagram type
+    * @return The diagram type.
     */
    String getDiagramType();
 
-   /*
+   /**
     * Return the action dispatcher of this diagram type. The action dispatcher is typically created by the session
     * specific injector and is basically the entrypoint to the session specific injection context.
-    * @return
+    *
+    * @return The action dispatcher of this diagram type.
     */
    ActionDispatcher getActionDispatcher();
 

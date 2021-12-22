@@ -20,12 +20,30 @@ import java.util.List;
 import org.eclipse.glsp.server.features.directediting.LabeledAction;
 import org.eclipse.glsp.server.types.EditorContext;
 
+/**
+ * A provider for a certain contextId that provides {@link LabeledAction}s.
+ */
 public interface ContextActionsProvider {
 
+   /**
+    * Returns the context id of the {@link ContextActionsProvider}.
+    */
    String getContextId();
 
+   /**
+    * Returns a list of {@link LabeledAction}s for a given {@link EditorContext}.
+    *
+    * @param editorContext The editorContext for which the actions are returned.
+    * @return A list of {@link LabeledAction}s for a given {@link EditorContext}.
+    */
    List<? extends LabeledAction> getActions(EditorContext editorContext);
 
+   /**
+    * Validates if a ContextActionsProvider can handle the given contextId.
+    *
+    * @param contextId The contextIf that to be checked.
+    * @return `true` if a ContextActionsProvider can handle a given contextId.
+    */
    default boolean handles(final String contextId) {
       return getContextId().equals(contextId);
    }

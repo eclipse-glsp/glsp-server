@@ -25,16 +25,36 @@ import org.eclipse.glsp.server.features.contextactions.ContextActionsProvider;
 import org.eclipse.glsp.server.features.directediting.LabeledAction;
 import org.eclipse.glsp.server.types.EditorContext;
 
+/**
+ * A {@link ContextActionsProvider} for {@link MenuItem}s.
+ */
 @FunctionalInterface
 public interface ContextMenuItemProvider extends ContextActionsProvider {
 
    String KEY = "context-menu";
 
+   /**
+    * Returns the context id of the {@link ContextMenuItemProvider}.
+    */
    @Override
    default String getContextId() { return ContextMenuItemProvider.KEY; }
 
+   /**
+    * Returns a list of {@link MenuItem}s for a given list of selected elements at a certain mouse position.
+    *
+    * @param selectedElementIds The list of currently selected elementIds.
+    * @param position           The current mouse position.
+    * @param args               Additional arguments.
+    * @return A list of {@link MenuItem}s for a given list of selected elements at a certain mouse position.
+    */
    List<MenuItem> getItems(List<String> selectedElementIds, GPoint position, Map<String, String> args);
 
+   /**
+    * Returns a list of {@link LabeledAction}s for a given {@link EditorContext}.
+    *
+    * @param editorContext The editorContext for which the actions are returned.
+    * @return A list of {@link LabeledAction}s for a given {@link EditorContext}.
+    */
    @Override
    default List<? extends LabeledAction> getActions(final EditorContext editorContext) {
       final GPoint position = editorContext.getLastMousePosition().orElse(point(0, 0));

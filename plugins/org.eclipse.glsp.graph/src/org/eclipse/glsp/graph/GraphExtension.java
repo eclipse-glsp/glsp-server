@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -18,9 +18,13 @@ package org.eclipse.glsp.graph;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EPackage;
 
+/**
+ * Is used to configure a graph extension for a diagram language. A graph extension
+ * is a custom Ecore model that extends the default GLSP Graph ecore model, e.g by adding new GModelElement types.
+ */
 public interface GraphExtension {
    /**
-    * Unique identifier for this graph extension (Default: NSURI of the Epackage).
+    * Unique identifier for this graph extension (Default: NSURI of the EPackage).
     *
     * @return Id as String
     */
@@ -37,7 +41,7 @@ public interface GraphExtension {
    /**
     * Returns the EFactory for this {@link GraphExtension}.
     *
-    * @return the EFfactory
+    * @return the EFactory
     */
    EFactory getEFactory();
 }

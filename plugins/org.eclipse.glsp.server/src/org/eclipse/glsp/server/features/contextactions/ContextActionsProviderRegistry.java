@@ -17,4 +17,7 @@ package org.eclipse.glsp.server.features.contextactions;
 
 import org.eclipse.glsp.server.registry.Registry;
 
+/**
+ * A registry that keeps track of all registered {@link ContextActionsProvider}s.
+ */
 public interface ContextActionsProviderRegistry extends Registry<String, ContextActionsProvider> {}

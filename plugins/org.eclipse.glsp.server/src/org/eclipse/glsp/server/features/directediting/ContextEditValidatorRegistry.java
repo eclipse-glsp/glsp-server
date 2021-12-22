@@ -17,4 +17,7 @@ package org.eclipse.glsp.server.features.directediting;
 
 import org.eclipse.glsp.server.registry.Registry;
 
+/**
+ * A registry that keeps track of all registered {@link ContextEditValidator}s.
+ */
 public interface ContextEditValidatorRegistry extends Registry<String, ContextEditValidator> {}

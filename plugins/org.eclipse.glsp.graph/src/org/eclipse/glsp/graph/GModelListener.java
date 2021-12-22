@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -17,8 +17,17 @@ package org.eclipse.glsp.graph;
 
 import org.eclipse.emf.common.notify.Notification;
 
+/**
+ * A listener to observe changes of the {@link GModelRoot}.
+ * It is typically associated with a {@link GModelChangeNotifier}.
+ */
 public interface GModelListener {
 
+   /**
+    * Triggered if a change to the {@link GModelRoot} has occurred.
+    *
+    * @param notification A description of the change to the GModelRoot.
+    */
    void notifyChanged(Notification notification);
 
 }

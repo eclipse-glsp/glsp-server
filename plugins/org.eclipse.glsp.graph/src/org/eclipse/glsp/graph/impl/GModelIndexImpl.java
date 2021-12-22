@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -38,9 +38,15 @@ import org.eclipse.emf.ecore.util.ECrossReferenceAdapter;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
+import org.eclipse.glsp.graph.GModelRoot;
 
 import com.google.common.base.Preconditions;
 
+/**
+ * Default implementation of {@link GModelIndex}. Registers itself as adapter of the {@link GModelRoot}
+ * to receive change notifications. This enables auto updating of the internal index if a child elements is
+ * added or removed from the {@link GModelRoot}.
+ */
 public class GModelIndexImpl extends ECrossReferenceAdapter implements GModelIndex {
 
    private final Map<String, GModelElement> idToElement = new HashMap<>();

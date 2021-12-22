@@ -15,12 +15,29 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.features.directediting;
 
+import org.eclipse.glsp.server.features.contextactions.ContextActionsProvider;
+
 public interface ContextEditValidator {
 
+   /**
+    * Returns the context id of the {@link ContextActionsProvider}.
+    */
    String getContextId();
 
+   /**
+    * Returns the {@link ValidationStatus} for a given {@link RequestEditValidationAction}.
+    *
+    * @param action The RequestEditValidationAction to validate.
+    * @return The {@link ValidationStatus} for a given {@link RequestEditValidationAction}.
+    */
    ValidationStatus validate(RequestEditValidationAction action);
 
+   /**
+    * Validates if the validator can handle a given contextId.
+    *
+    * @param contextId The contextId to check.
+    * @return `true` if the validator can handle a given contextId.
+    */
    default boolean handles(final String contextId) {
       return getContextId().equals(contextId);
    }

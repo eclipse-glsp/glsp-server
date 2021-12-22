@@ -19,6 +19,9 @@ import java.util.List;
 
 import org.eclipse.glsp.server.types.EditorContext;
 
+/**
+ * This provider retrieves navigation targets for its target type from a given {@link EditorContext}.
+ */
 public interface NavigationTargetProvider {
 
    String JSON_OPENER_OPTIONS = "jsonOpenerOptions";
@@ -43,8 +46,19 @@ public interface NavigationTargetProvider {
     */
    List<? extends NavigationTarget> getTargets(EditorContext editorContext);
 
+   /**
+    * Returns the targetTypeId of the provider.
+    *
+    * @return The targetTypeId of the provider.
+    */
    String getTargetTypeId();
 
+   /**
+    * Returns whether a provider can handle a given targetTypeId.
+    *
+    * @param targetTypeId The targetTypeId to be checked.
+    * @return A boolean that indicates if the targetTypeId can be handled by the provider.
+    */
    default boolean handles(final String targetTypeId) {
       return getTargetTypeId().equals(targetTypeId);
    }

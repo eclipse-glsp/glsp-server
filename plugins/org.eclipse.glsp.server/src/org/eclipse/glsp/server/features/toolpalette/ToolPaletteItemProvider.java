@@ -22,16 +22,34 @@ import org.eclipse.glsp.server.features.contextactions.ContextActionsProvider;
 import org.eclipse.glsp.server.features.directediting.LabeledAction;
 import org.eclipse.glsp.server.types.EditorContext;
 
+/**
+ * A {@link ContextActionsProvider} for {@link PaletteItem}s.
+ */
 public interface ToolPaletteItemProvider extends ContextActionsProvider {
    String CONTEXT_ID = "tool-palette";
 
+   /**
+    * Returns the context id of the provider.
+    */
    @Override
    default String getContextId() { return ToolPaletteItemProvider.CONTEXT_ID; }
 
+   /**
+    * Returns a list of {@link LabeledAction}s for a given {@link EditorContext}.
+    *
+    * @param editorContext The editorContext for which the actions are returned.
+    * @return A list of {@link LabeledAction}s for a given {@link EditorContext}.
+    */
    @Override
    default List<? extends LabeledAction> getActions(final EditorContext editorContext) {
       return getItems(editorContext.getArgs());
    }
 
+   /**
+    * Constructs a list of {@link PaletteItem}s from a given map of string arguments.
+    *
+    * @param args A map of string arguments.
+    * @return A list of {@link PaletteItem}s for a given map of string arguments.
+    */
    List<PaletteItem> getItems(Map<String, String> args);
 }

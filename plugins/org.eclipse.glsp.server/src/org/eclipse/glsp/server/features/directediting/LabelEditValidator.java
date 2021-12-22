@@ -17,9 +17,19 @@ package org.eclipse.glsp.server.features.directediting;
 
 import org.eclipse.glsp.graph.GModelElement;
 
+/**
+ * A validator that validates a new label for a given {@link GModelElement}.
+ */
 public interface LabelEditValidator {
 
    String CONTEXT_ID = "label-edit";
 
+   /**
+    * Returns the {@link ValidationStatus} for a given edited label of a {@link GModelElement}.
+    *
+    * @param label   The edited label to validate.
+    * @param element The element for which the label is going to be edited.
+    * @return The {@link ValidationStatus} of the label.
+    */
    ValidationStatus validate(String label, GModelElement element);
 }

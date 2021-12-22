@@ -18,7 +18,6 @@ package org.eclipse.glsp.server.operations;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.actions.TriggerEdgeCreationAction;
 import org.eclipse.glsp.server.actions.TriggerElementCreationAction;
 import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;

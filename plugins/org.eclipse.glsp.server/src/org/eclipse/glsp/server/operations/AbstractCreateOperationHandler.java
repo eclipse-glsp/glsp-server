@@ -36,8 +36,7 @@ public abstract class AbstractCreateOperationHandler<T extends CreateOperation> 
    @SuppressWarnings("unchecked")
    @Override
    protected Class<T> deriveOperationType() {
-      return (Class<T>) (GenericsUtil.getParametrizedType(getClass(), AbstractCreateOperationHandler.class))
-         .getActualTypeArguments()[0];
+      return (Class<T>) GenericsUtil.getActualTypeArgument(getClass(), CreateOperation.class);
    }
 
    @Override

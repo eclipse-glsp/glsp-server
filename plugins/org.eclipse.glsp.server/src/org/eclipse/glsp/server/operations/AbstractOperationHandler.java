@@ -36,8 +36,7 @@ public abstract class AbstractOperationHandler<O extends Operation> implements O
 
    @SuppressWarnings("unchecked")
    protected Class<O> deriveOperationType() {
-      return (Class<O>) (GenericsUtil.getParametrizedType(getClass(), AbstractOperationHandler.class))
-         .getActualTypeArguments()[0];
+      return (Class<O>) GenericsUtil.getActualTypeArgument(getClass(), Operation.class);
    }
 
    @Override

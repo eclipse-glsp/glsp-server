@@ -35,7 +35,7 @@ public abstract class BasicActionHandler<T extends Action> extends AbstractActio
    @Override
    @SuppressWarnings("unchecked")
    protected Class<T> deriveActionType() {
-      return (Class<T>) GenericsUtil.getGenericTypeParameterClass(getClass(), BasicActionHandler.class);
+      return (Class<T>) GenericsUtil.getActualTypeArgument(getClass(), Action.class);
    }
 
    @Override

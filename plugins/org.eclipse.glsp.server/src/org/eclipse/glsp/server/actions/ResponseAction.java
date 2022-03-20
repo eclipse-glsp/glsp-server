@@ -37,10 +37,8 @@ public class ResponseAction extends Action {
     */
    public static Action respond(final Action request, final Action response) {
       if (request instanceof RequestAction<?>) {
-         Class<?> responseType = GenericsUtil.getGenericTypeParameterClass(request.getClass(), RequestAction.class);
-         if (responseType.isInstance(response)) {
-            ((ResponseAction) response).setResponseId(((RequestAction<?>) request).getRequestId());
-         }
+         GenericsUtil.asActualTypeArgument(request.getClass(), ResponseAction.class, response)
+            .ifPresent(matchingResponse -> matchingResponse.setResponseId(((RequestAction<?>) request).getRequestId()));
       }
       return response;
    }

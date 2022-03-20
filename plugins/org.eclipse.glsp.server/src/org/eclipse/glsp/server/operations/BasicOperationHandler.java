@@ -38,8 +38,7 @@ public abstract class BasicOperationHandler<T extends Operation> extends Abstrac
    @Override
    @SuppressWarnings("unchecked")
    protected Class<T> deriveOperationType() {
-      return (Class<T>) (GenericsUtil.getParametrizedType(getClass(), BasicOperationHandler.class))
-         .getActualTypeArguments()[0];
+      return (Class<T>) GenericsUtil.getActualTypeArgument(getClass(), Operation.class);
    }
 
    protected abstract void executeOperation(T operation, GModelState modelState);

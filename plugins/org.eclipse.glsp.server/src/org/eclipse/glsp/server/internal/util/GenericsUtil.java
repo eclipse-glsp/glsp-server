@@ -93,7 +93,7 @@ public final class GenericsUtil {
     * @param searchStop search stop or <code>null</code> if we should search up to Object
     * @return the type argument that is closest to the given <code>clazz</code> and matches the given base base
     */
-   @SuppressWarnings("unchecked")
+   @SuppressWarnings({ "unchecked", "checkstyle:CyclomaticComplexity" })
    public static <T> Optional<Class<? extends T>> findActualTypeArgument(final Class<?> clazz,
       final Class<T> baseType, final Class<?> searchStop) {
       if (clazz == null || baseType == null) {

@@ -70,7 +70,7 @@ public class GenericsUtilTest {
 
    public static class MyResponseActionExt extends MyResponseAction {}
 
-   public static abstract class IntermediateRequestAction<T extends MyResponseAction> extends RequestAction<T> {
+   public abstract static class IntermediateRequestAction<T extends MyResponseAction> extends RequestAction<T> {
       public IntermediateRequestAction(final String kind) {
          super(kind);
       }

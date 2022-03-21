@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2021 EclipseSource and others.
+ * Copyright (c) 2020-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -36,8 +36,7 @@ public abstract class AbstractOperationHandler<O extends Operation> implements O
 
    @SuppressWarnings("unchecked")
    protected Class<O> deriveOperationType() {
-      return (Class<O>) (GenericsUtil.getParametrizedType(getClass(), AbstractOperationHandler.class))
-         .getActualTypeArguments()[0];
+      return (Class<O>) GenericsUtil.getActualTypeArgument(getClass(), Operation.class);
    }
 
    @Override

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -38,7 +38,7 @@ public abstract class AbstractActionHandler<A extends Action> implements ActionH
 
    @SuppressWarnings("unchecked")
    protected Class<A> deriveActionType() {
-      return (Class<A>) GenericsUtil.getGenericTypeParameterClass(getClass(), AbstractActionHandler.class);
+      return (Class<A>) GenericsUtil.getActualTypeArgument(getClass(), Action.class);
    }
 
    @Override

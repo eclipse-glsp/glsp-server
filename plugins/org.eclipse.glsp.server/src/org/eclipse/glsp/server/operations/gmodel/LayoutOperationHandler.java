@@ -15,6 +15,8 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operations.gmodel;
 
+import java.util.Optional;
+
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
 import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.layout.ServerLayoutKind;
@@ -24,8 +26,8 @@ import org.eclipse.glsp.server.operations.LayoutOperation;
 import com.google.inject.Inject;
 
 public class LayoutOperationHandler extends AbstractOperationHandler<LayoutOperation> {
-   @Inject
-   protected LayoutEngine layoutEngine;
+   @Inject()
+   protected Optional<LayoutEngine> layoutEngine;
 
    @Inject
    protected DiagramConfiguration diagramConfiguration;
@@ -33,8 +35,8 @@ public class LayoutOperationHandler extends AbstractOperationHandler<LayoutOpera
    @Override
    protected void executeOperation(final LayoutOperation action) {
       if (diagramConfiguration.getLayoutKind() == ServerLayoutKind.MANUAL) {
-         if (layoutEngine != null) {
-            layoutEngine.layout();
+         if (layoutEngine.isPresent()) {
+            layoutEngine.get().layout();
          }
       }
    }

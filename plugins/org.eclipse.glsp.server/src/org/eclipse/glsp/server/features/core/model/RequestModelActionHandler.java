@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -21,7 +21,7 @@ import java.util.Optional;
 import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
-import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
+import org.eclipse.glsp.server.features.modelsourcewatcher.SourceModelWatcher;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.ServerMessageUtil;
 import org.eclipse.glsp.server.utils.ServerStatusUtil;
@@ -31,13 +31,13 @@ import com.google.inject.Inject;
 public class RequestModelActionHandler extends AbstractActionHandler<RequestModelAction> {
 
    @Inject
-   protected ModelSourceLoader sourceModelLoader;
+   protected SourceModelStorage sourceModelStorage;
 
    @Inject
    protected ActionDispatcher actionDispatcher;
 
    @Inject
-   protected Optional<ModelSourceWatcher> modelSourceWatcher;
+   protected Optional<SourceModelWatcher> sourceModelWatcher;
 
    @Inject
    protected ModelSubmissionHandler modelSubmissionHandler;
@@ -50,10 +50,10 @@ public class RequestModelActionHandler extends AbstractActionHandler<RequestMode
       modelState.setClientOptions(action.getOptions());
 
       notifyStartLoading();
-      sourceModelLoader.loadSourceModel(action);
+      sourceModelStorage.loadSourceModel(action);
       notifyFinishedLoading();
 
-      modelSourceWatcher.ifPresent(watcher -> watcher.startWatching());
+      sourceModelWatcher.ifPresent(watcher -> watcher.startWatching());
 
       return modelSubmissionHandler.submitModel();
    }

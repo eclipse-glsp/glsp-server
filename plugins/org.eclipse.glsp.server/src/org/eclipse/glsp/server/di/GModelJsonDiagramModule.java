@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2021-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -20,8 +20,8 @@ import org.eclipse.glsp.server.actions.SaveModelActionHandler;
 import org.eclipse.glsp.server.features.clipboard.RequestClipboardDataActionHandler;
 import org.eclipse.glsp.server.features.core.model.ComputedBoundsActionHandler;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
-import org.eclipse.glsp.server.features.core.model.JsonFileGModelLoader;
-import org.eclipse.glsp.server.features.core.model.ModelSourceLoader;
+import org.eclipse.glsp.server.features.core.model.JsonFileGModelStore;
+import org.eclipse.glsp.server.features.core.model.SourceModelStorage;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperationHandler;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.features.undoredo.UndoRedoActionHandler;
@@ -40,8 +40,8 @@ import org.eclipse.glsp.server.operations.gmodel.ReconnectEdgeOperationHandler;
 public abstract class GModelJsonDiagramModule extends DiagramModule {
 
    @Override
-   protected Class<? extends ModelSourceLoader> bindSourceModelLoader() {
-      return JsonFileGModelLoader.class;
+   protected Class<? extends SourceModelStorage> bindSourceModelStorage() {
+      return JsonFileGModelStore.class;
    }
 
    @Override

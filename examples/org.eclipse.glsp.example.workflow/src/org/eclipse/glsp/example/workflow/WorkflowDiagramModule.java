@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -48,12 +48,12 @@ import org.eclipse.glsp.server.features.commandpalette.CommandPaletteActionProvi
 import org.eclipse.glsp.server.features.contextactions.ContextActionsProvider;
 import org.eclipse.glsp.server.features.contextactions.RequestContextActionsHandler;
 import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
-import org.eclipse.glsp.server.features.core.model.JsonFileGModelLoader;
-import org.eclipse.glsp.server.features.core.model.ModelSourceLoader;
+import org.eclipse.glsp.server.features.core.model.JsonFileGModelStore;
+import org.eclipse.glsp.server.features.core.model.SourceModelStorage;
 import org.eclipse.glsp.server.features.directediting.ContextEditValidator;
 import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
 import org.eclipse.glsp.server.features.modelsourcewatcher.FileWatcher;
-import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
+import org.eclipse.glsp.server.features.modelsourcewatcher.SourceModelWatcher;
 import org.eclipse.glsp.server.features.navigation.NavigationTargetProvider;
 import org.eclipse.glsp.server.features.navigation.NavigationTargetResolver;
 import org.eclipse.glsp.server.features.popup.PopupModelFactory;
@@ -69,12 +69,12 @@ public class WorkflowDiagramModule extends GModelJsonDiagramModule {
    }
 
    @Override
-   protected Class<? extends ModelSourceLoader> bindSourceModelLoader() {
-      return JsonFileGModelLoader.class;
+   protected Class<? extends SourceModelStorage> bindSourceModelStorage() {
+      return JsonFileGModelStore.class;
    }
 
    @Override
-   protected Class<? extends ModelSourceWatcher> bindModelSourceWatcher() {
+   protected Class<? extends SourceModelWatcher> bindSourceModelWatcher() {
       return FileWatcher.class;
    }
 

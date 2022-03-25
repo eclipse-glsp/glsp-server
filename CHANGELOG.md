@@ -9,9 +9,9 @@
 ### Breaking Changes
 
 - [server] Source model refactorings [#582](https://github.com/eclipse-glsp/glsp/issues/582) ([java: #154](https://github.com/eclipse-glsp/glsp-server/pull/154))
-  - `ModelSourceLoader` → `SourceModelPersistence`
+  - `ModelSourceLoader` → `SourceModelStorage`
   - `ModelSourceWatcher` → `SourceModelWatcher`
-  - Added method to `SourceModelPersistence`
+  - Added method to `SourceModelStorage`
 - 
 
 

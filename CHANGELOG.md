@@ -8,7 +8,11 @@
 
 ### Breaking Changes
 
-
+- [server] Source model refactorings [#582](https://github.com/eclipse-glsp/glsp/issues/582) ([java: #154](https://github.com/eclipse-glsp/glsp-server/pull/154))
+  - `ModelSourceLoader` → `SourceModelPersistence`
+  - `ModelSourceWatcher` → `SourceModelWatcher`
+  - Added method to `SourceModelPersistence`
+- 
 
 ## [v0.9.0- 09/12/2021](https://github.com/eclipse-glsp/glsp/releases/tag/0.9.0)
 

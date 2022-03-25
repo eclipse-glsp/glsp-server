@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2021 EclipseSource and others.
+ * Copyright (c) 2020-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -16,18 +16,17 @@
 package org.eclipse.glsp.server.features.modelsourcewatcher;
 
 /**
- * A model source watcher observes the model source and notifies the client if the model
- * source has changed.
+ * A source model watcher observes the source model resource and notifies the client if the source model has changed.
  */
-public interface ModelSourceWatcher {
+public interface SourceModelWatcher {
 
    /**
-    * Starts watching the model source.
+    * Starts watching the source model.
     */
    default void startWatching() {}
 
    /**
-    * Stops watching the model source.
+    * Stops watching the source model.
     * <p>
     * If the watching hasn't been started before, this won't do anything.
     * </p>

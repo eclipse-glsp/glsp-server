@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2021-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -50,11 +50,11 @@ import org.eclipse.glsp.server.features.contextactions.RequestContextActionsHand
 import org.eclipse.glsp.server.features.contextactions.SetContextActions;
 import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
-import org.eclipse.glsp.server.features.core.model.ModelSourceLoader;
 import org.eclipse.glsp.server.features.core.model.RequestBoundsAction;
 import org.eclipse.glsp.server.features.core.model.RequestModelActionHandler;
 import org.eclipse.glsp.server.features.core.model.SetBoundsAction;
 import org.eclipse.glsp.server.features.core.model.SetModelAction;
+import org.eclipse.glsp.server.features.core.model.SourceModelStorage;
 import org.eclipse.glsp.server.features.core.model.UpdateModelAction;
 import org.eclipse.glsp.server.features.directediting.ContextEditValidator;
 import org.eclipse.glsp.server.features.directediting.ContextEditValidatorRegistry;
@@ -62,7 +62,7 @@ import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
 import org.eclipse.glsp.server.features.directediting.RequestEditValidationHandler;
 import org.eclipse.glsp.server.features.directediting.SetEditValidationResultAction;
 import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceChangedAction;
-import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
+import org.eclipse.glsp.server.features.modelsourcewatcher.SourceModelWatcher;
 import org.eclipse.glsp.server.features.navigation.NavigateToExternalTargetAction;
 import org.eclipse.glsp.server.features.navigation.NavigateToTargetAction;
 import org.eclipse.glsp.server.features.navigation.NavigationTargetProvider;
@@ -121,9 +121,9 @@ import com.google.inject.multibindings.Multibinder;
  * <li>{@link DiagramConfiguration}
  * <li>{@link ServerConfigurationContribution}
  * <li>{@link GModelState}
- * <li>{@link ModelSourceLoader}
+ * <li>{@link SourceModelStorage}
  * <li>{@link GModelFactory}
- * <li>{@link ModelSourceWatcher} as {@link Optional}
+ * <li>{@link SourceModelWatcher} as {@link Optional}
  * <li>{@link GraphGsonConfigurationFactory}
  * <li>{@link ModelValidator} as {@link Optional}
  * <li>{@link LabelEditValidator} as {@link Optional}
@@ -167,9 +167,9 @@ public abstract class DiagramModule extends GLSPModule {
       bind(ServerConfigurationContribution.class).to(bindServerConfigurationContribution()).in(Singleton.class);
       // Model-related bindings
       configureGModelState(bindGModelState());
-      bind(ModelSourceLoader.class).to(bindSourceModelLoader());
+      bind(SourceModelStorage.class).to(bindSourceModelStorage());
       bind(GModelFactory.class).to(bindGModelFactory());
-      bindOptionally(ModelSourceWatcher.class, bindModelSourceWatcher())
+      bindOptionally(SourceModelWatcher.class, bindSourceModelWatcher())
          .ifPresent(binder -> binder.in(Singleton.class));
       bind(GraphGsonConfigurationFactory.class).to(bindGraphGsonConfiguratorFactory()).in(Singleton.class);
 
@@ -234,11 +234,11 @@ public abstract class DiagramModule extends GLSPModule {
       return DefaultGModelState.class;
    }
 
-   protected abstract Class<? extends ModelSourceLoader> bindSourceModelLoader();
+   protected abstract Class<? extends SourceModelStorage> bindSourceModelStorage();
 
    protected abstract Class<? extends GModelFactory> bindGModelFactory();
 
-   protected Class<? extends ModelSourceWatcher> bindModelSourceWatcher() {
+   protected Class<? extends SourceModelWatcher> bindSourceModelWatcher() {
       return null;
    }
 

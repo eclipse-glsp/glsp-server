@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019-2020 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -26,7 +26,7 @@ import org.eclipse.glsp.server.operations.OperationHandler;
  * <p>
  * The responsibility of a {@link GModelFactory} implementation is to define how a {@link GModelState} is to be
  * translated into a {@link GModelRoot} that is sent to the client for rendering. Before a {@link GModelFactory}
- * is invoked, the {@link ModelSourceLoader} has already been executed for loading the source model into the
+ * is invoked, the {@link SourceModelStorage} has already been executed for loading the source model into the
  * {@link GModelState}. The {@link GModelFactory} then produces the {@link GModelRoot} from the source model in the
  * {@link GModelState}. Implementations of {@link GModelFactory} are usually specific to the type of source model, as
  * they need to understand the source model in order to translate it into a graph model.
@@ -40,11 +40,11 @@ import org.eclipse.glsp.server.operations.OperationHandler;
  * If an index is needed for mapping between the graph model and the source model, as is typically the case for
  * {@link ActionHandler action handlers} and {@link OperationHandler operation handlers}, it is the responsibility of
  * the graph model factory to create such an index while producing the graph model from the source model. The index
- * shall be put into the model state too. Typically the {@link GModelIndex} is extended for a particular model source
+ * shall be put into the model state too. Typically the {@link GModelIndex} is extended for a particular source model
  * type as well.
  * </p>
  *
- * @see ModelSourceLoader
+ * @see SourceModelStorage
  * @see GModelIndex
  */
 public interface GModelFactory {
@@ -57,7 +57,7 @@ public interface GModelFactory {
    void createGModel();
 
    /**
-    * Graph model factory to be used if the graph model is already available from the model source.
+    * Graph model factory to be used if the graph model is already available from the source model.
     */
    final class NullImpl implements GModelFactory {
       @Override

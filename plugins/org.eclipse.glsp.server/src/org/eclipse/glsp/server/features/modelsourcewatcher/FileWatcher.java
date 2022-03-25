@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2021 EclipseSource and others.
+ * Copyright (c) 2020-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -44,7 +44,7 @@ import org.eclipse.glsp.server.utils.Debouncer;
 
 import com.google.inject.Inject;
 
-public class FileWatcher implements ClientSessionListener, ModelSourceWatcher {
+public class FileWatcher implements ClientSessionListener, SourceModelWatcher {
 
    protected Debouncer<ClientNotification> clientNotificationDebouncer;
 

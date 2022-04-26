@@ -25,6 +25,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
 import org.apache.log4j.Logger;
+import org.eclipse.glsp.server.actions.ActionExecutor;
 import org.eclipse.glsp.server.actions.ActionMessage;
 import org.eclipse.glsp.server.actions.ActionRegistry;
 import org.eclipse.glsp.server.session.ClientSession;
@@ -45,6 +46,9 @@ public class DefaultGLSPServer implements GLSPServer {
 
    @Inject
    protected ActionRegistry actionRegistry;
+
+   @Inject
+   protected ActionExecutor actionExecutor;
 
    protected GLSPClient clientProxy;
    protected CompletableFuture<InitializeResult> initialized;
@@ -189,6 +193,9 @@ public class DefaultGLSPServer implements GLSPServer {
       clientSessions.clear();
       initialized = new CompletableFuture<>();
       this.clientProxy = null;
+      if (actionExecutor != null) {
+         actionExecutor.dispose();
+      }
    }
 
    public String getApplicationId() { return applicationId; }

@@ -47,14 +47,6 @@ public class DefaultClientSession extends Disposable implements ClientSession {
    public ActionDispatcher getActionDispatcher() { return actionDispatcher; }
 
    @Override
-   protected void doDispose() {
-      super.doDispose();
-      if (actionDispatcher != null) {
-         actionDispatcher.dispose();
-      }
-   }
-
-   @Override
    public Injector getInjector() { return injector; }
 
 }

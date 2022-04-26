@@ -18,9 +18,11 @@ package org.eclipse.glsp.server.di;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.glsp.server.actions.ActionExecutor;
 import org.eclipse.glsp.server.actions.ActionRegistry;
 import org.eclipse.glsp.server.di.scope.DiagramGlobalScope;
 import org.eclipse.glsp.server.gson.ServerGsonConfigurator;
+import org.eclipse.glsp.server.internal.actions.DefaultActionExecutor;
 import org.eclipse.glsp.server.internal.actions.DefaultActionRegistry;
 import org.eclipse.glsp.server.internal.di.scope.DefaultDiagramGlobalScope;
 import org.eclipse.glsp.server.internal.gson.DefaultServerGsonConfigurator;
@@ -105,6 +107,7 @@ public class ServerModule extends GLSPModule {
       bind(ClientSessionManager.class).to(bindClientSessionManager()).in(Singleton.class);
 
       bind(ActionRegistry.class).to(bindActionRegistry()).in(Singleton.class);
+      bind(ActionExecutor.class).to(bindActionExecutor()).in(Singleton.class);
 
       bind(DiagramGlobalScope.class).to(bindDiagramGlobalScope()).in(Singleton.class);
    }
@@ -144,6 +147,10 @@ public class ServerModule extends GLSPModule {
 
    protected Class<? extends ActionRegistry> bindActionRegistry() {
       return DefaultActionRegistry.class;
+   }
+
+   protected Class<? extends ActionExecutor> bindActionExecutor() {
+      return DefaultActionExecutor.class;
    }
 
    protected Class<? extends DiagramGlobalScope> bindDiagramGlobalScope() {

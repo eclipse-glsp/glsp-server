@@ -19,14 +19,13 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
-import org.eclipse.glsp.server.disposable.IDisposable;
 import org.eclipse.glsp.server.features.core.model.UpdateModelAction;
 
 /**
  * The central component that process all {@link Action}s by dispatching them to their designated
  * handlers.
  */
-public interface ActionDispatcher extends IDisposable {
+public interface ActionDispatcher {
 
    /**
     * <p>

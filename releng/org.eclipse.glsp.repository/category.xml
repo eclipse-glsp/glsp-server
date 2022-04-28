@@ -15,7 +15,7 @@
    <bundle id="org.eclipse.glsp.server.websocket">
       <category name="org.eclipse.glsp"/>
    </bundle>
-    <bundle id="org.eclipse.glsp.server.websocket.source">
+   <bundle id="org.eclipse.glsp.server.websocket.source">
       <category name="org.eclipse.glsp"/>
    </bundle>
    <bundle id="org.eclipse.glsp.example.workflow">
@@ -23,6 +23,9 @@
    </bundle>
    <bundle id="org.eclipse.glsp.example.workflow.source">
       <category name="org.eclipse.glsp.examples"/>
+   </bundle>
+   <bundle id="org.eclipse.glsp.server.emf">
+      <category name="org.eclipse.glsp"/>
    </bundle>
    <category-def name="org.eclipse.glsp" label="Eclipse GLSP"/>
    <category-def name="org.eclipse.glsp.examples" label="GLSP Examples"/>

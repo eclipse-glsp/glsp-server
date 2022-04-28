@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.graph.builder;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.eclipse.glsp.graph.GEdgePlacement;
@@ -31,8 +32,16 @@ public abstract class AbstractGNodeBuilder<T extends GNode, E extends AbstractGN
       super(type);
    }
 
+   public E addLayoutOptions(final Map<String, Object> layoutOptions) {
+      if (this.layoutOptions == null) {
+         this.layoutOptions = new LinkedHashMap<>();
+      }
+      this.layoutOptions.putAll(layoutOptions);
+      return self();
+   }
+
    public E layoutOptions(final Map<String, Object> layoutOptions) {
-      this.layoutOptions = layoutOptions;
+      addLayoutOptions(layoutOptions);
       return self();
    }
 
@@ -46,13 +55,19 @@ public abstract class AbstractGNodeBuilder<T extends GNode, E extends AbstractGN
       return self();
    }
 
+   public E layout(final String layout, final Map<String, Object> layoutOptions) {
+      this.layout = layout;
+      addLayoutOptions(layoutOptions);
+      return self();
+   }
+
    @Override
    protected void setProperties(final T node) {
       super.setProperties(node);
-      if (layoutOptions != null) {
+      node.setLayout(layout);
+      if (layout != null && layoutOptions != null) {
          node.getLayoutOptions().putAll(layoutOptions);
       }
-      node.setLayout(layout);
       node.setEdgePlacement(edgePlacement);
    }
 }

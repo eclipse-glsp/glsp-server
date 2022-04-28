@@ -3,7 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>org.eclipse.glsp.server</artifactId>
+	<artifactId>org.eclipse.glsp.server.emf</artifactId>
+	<description>GLSP Server EMF</description>
 	<packaging>${package-type}</packaging>
 	<parent>
 		<groupId>org.eclipse.glsp</groupId>
@@ -40,8 +41,18 @@
 	<properties>
 		<package-type>eclipse-plugin</package-type>
 	</properties>
-
+	
 	<dependencies>
+		<dependency>
+			<groupId>org.eclipse.glsp</groupId>
+			<artifactId>org.eclipse.glsp.server</artifactId>
+			<version>0.10.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.glsp</groupId>
+			<artifactId>org.eclipse.glsp.graph</artifactId>
+			<version>0.10.0-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 			<groupId>com.google.inject</groupId>
 			<artifactId>guice</artifactId>
@@ -54,23 +65,13 @@
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.emf</groupId>
-			<artifactId>org.eclipse.emf.ecore.xmi</artifactId>
-			<version>2.15.0</version>
+			<artifactId>org.eclipse.emf.ecore.edit</artifactId>
+			<version>2.13.0</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-cli</groupId>
 			<artifactId>commons-cli</artifactId>
 			<version>1.4</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.glsp</groupId>
-			<artifactId>org.eclipse.glsp.graph</artifactId>
-			<version>0.10.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.lsp4j</groupId>
-			<artifactId>org.eclipse.lsp4j.jsonrpc</artifactId>
-			<version>0.9.0</version>
 		</dependency>
 	</dependencies>
 
@@ -93,8 +94,31 @@
 							<skip>false</skip>
 						</configuration>
 					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>build-helper-maven-plugin</artifactId>
+						<version>3.3.0</version>
+						<executions>
+							<execution>
+								<id>add-resource</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>add-resource</goal>
+								</goals>
+								<configuration>
+									<resources>
+										<resource>
+											<directory>model</directory>
+											<targetPath>model</targetPath>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
 				</plugins>
 			</build>
 		</profile>
 	</profiles>
+
 </project>

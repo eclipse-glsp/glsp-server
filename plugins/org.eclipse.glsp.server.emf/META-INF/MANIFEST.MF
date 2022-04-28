@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: GLSP Server EMF
+Bundle-SymbolicName: org.eclipse.glsp.server.emf;singleton:=true
+Bundle-Version: 0.10.0.qualifier
+Bundle-ClassPath: .
+Bundle-Vendor: Eclipse GLSP
+Bundle-Localization: plugin
+Automatic-Module-Name: org.eclipse.glsp.example.emf
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Require-Bundle: org.eclipse.glsp.server;bundle-version="0.10.0",
+ org.eclipse.glsp.graph;bundle-version="0.10.0",
+ org.eclipse.emf.ecore;bundle-version="2.23.0",
+ org.eclipse.emf.ecore.edit;bundle-version="2.13.0",
+ org.eclipse.emf.ecore.xmi;bundle-version="2.16.0",
+ org.apache.log4j;bundle-version="1.2.15"
+Export-Package: 
+ org.eclipse.glsp.server.emf,
+ org.eclipse.glsp.server.emf.model.notation,
+ org.eclipse.glsp.server.emf.model.notation.impl,
+ org.eclipse.glsp.server.emf.model.notation.util,
+ org.eclipse.glsp.server.emf.notation,
+ org.eclipse.glsp.server.emf.notation.util
+

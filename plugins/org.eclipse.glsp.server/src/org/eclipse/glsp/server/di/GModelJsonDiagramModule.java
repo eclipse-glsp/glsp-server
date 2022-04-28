@@ -16,15 +16,12 @@
 package org.eclipse.glsp.server.di;
 
 import org.eclipse.glsp.server.actions.ActionHandler;
-import org.eclipse.glsp.server.actions.SaveModelActionHandler;
 import org.eclipse.glsp.server.features.clipboard.RequestClipboardDataActionHandler;
-import org.eclipse.glsp.server.features.core.model.ComputedBoundsActionHandler;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
 import org.eclipse.glsp.server.features.core.model.JsonFileGModelStore;
 import org.eclipse.glsp.server.features.core.model.SourceModelStorage;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperationHandler;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
-import org.eclipse.glsp.server.features.undoredo.UndoRedoActionHandler;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.ChangeBoundsOperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.ChangeRoutingPointsHandler;
@@ -52,9 +49,6 @@ public abstract class GModelJsonDiagramModule extends DiagramModule {
    @Override
    protected void configureActionHandlers(final MultiBinding<ActionHandler> binding) {
       super.configureActionHandlers(binding);
-      binding.add(ComputedBoundsActionHandler.class);
-      binding.add(SaveModelActionHandler.class);
-      binding.add(UndoRedoActionHandler.class);
       binding.add(RequestClipboardDataActionHandler.class);
    }
 

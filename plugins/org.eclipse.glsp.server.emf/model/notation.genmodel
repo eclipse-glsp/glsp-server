@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2022 EclipseSource and others.&#xA;&#xA;This program and the accompanying materials are made available under the&#xA;terms of the Eclipse Public License v. 2.0 which is available at&#xA;https://www.eclipse.org/legal/epl-2.0.&#xA;&#xA;This Source Code may also be made available under the following Secondary&#xA;Licenses when the conditions for such availability set forth in the Eclipse&#xA;Public License v. 2.0 are satisfied: GNU General Public License, version 2&#xA;with the GNU Classpath Exception which is available at&#xA;https://www.gnu.org/software/classpath/license.html.&#xA;&#xA;SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0"
+    modelDirectory="/org.eclipse.glsp.server.emf/src-gen"
+    editDirectory="" editorDirectory="" modelPluginID="org.eclipse.glsp.server.emf"
+    modelName="Notation" editPluginClass="" editorPluginClass="" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    testsDirectory="" testSuiteClass="" importerID="org.eclipse.emf.importer.ecore"
+    bundleManifest="false" complianceLevel="8.0" copyrightFields="false" usedGenPackages="../../org.eclipse.glsp.graph/model/glsp-graph.genmodel#//graph"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>notation.ecore</foreignModel>
+  <genPackages prefix="Notation" basePackage="org.eclipse.glsp.server.emf.model"
+      disposableProviderFactory="true" ecorePackage="notation.ecore#/">
+    <genClasses ecoreClass="notation.ecore#//Shape">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference notation.ecore#//Shape/position"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference notation.ecore#//Shape/size"/>
+    </genClasses>
+    <genClasses ecoreClass="notation.ecore#//Edge">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference notation.ecore#//Edge/bendPoints"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference notation.ecore#//Edge/source"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference notation.ecore#//Edge/target"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="notation.ecore#//NotationElement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference notation.ecore#//NotationElement/semanticElement"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute notation.ecore#//NotationElement/type"/>
+    </genClasses>
+    <genClasses ecoreClass="notation.ecore#//Diagram">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference notation.ecore#//Diagram/elements"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute notation.ecore#//Diagram/diagramType"/>
+    </genClasses>
+    <genClasses ecoreClass="notation.ecore#//SemanticElementReference">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute notation.ecore#//SemanticElementReference/elementId"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference notation.ecore#//SemanticElementReference/resolvedSemanticElement"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

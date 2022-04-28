@@ -56,7 +56,6 @@ public class GModelIndexImpl extends ECrossReferenceAdapter implements GModelInd
    public GModelIndexImpl(final EObject target) {
       Preconditions.checkArgument(target instanceof GModelElement);
       this.root = (GModelElement) target;
-      target.eAdapters().add(this);
       addIfGModelElement(target);
    }
 
@@ -127,7 +126,7 @@ public class GModelIndexImpl extends ECrossReferenceAdapter implements GModelInd
    public Optional<GModelElement> get(final String elementId) {
       Optional<GModelElement> indexMatch = Optional.ofNullable(idToElement.get(elementId));
       if (!indexMatch.isPresent() && isCurrentlyBuildingIndex()) {
-         return searchElementInModel(elementId);
+         return searchInModel(elementId);
       }
       return indexMatch;
    }
@@ -183,6 +182,12 @@ public class GModelIndexImpl extends ECrossReferenceAdapter implements GModelInd
    @Override
    public GModelElement getRoot() { return root; }
 
+   @Override
+   public void clear() {
+      idToElement.clear();
+      typeToElements.clear();
+   }
+
    /**
     * Indicates whether this indexer is currently setting targets and thus not done indexing.
     *
@@ -196,7 +201,7 @@ public class GModelIndexImpl extends ECrossReferenceAdapter implements GModelInd
     * @param elementId The element id to search for.
     * @return The element with the <code>elementId</code> or {@link Optional#empty()}.
     */
-   public Optional<GModelElement> searchElementInModel(final String elementId) {
+   public Optional<GModelElement> searchInModel(final String elementId) {
       if (elementId.equals(root.getId())) {
          return Optional.of(root);
       }

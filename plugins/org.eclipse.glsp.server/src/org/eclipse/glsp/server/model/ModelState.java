@@ -34,6 +34,8 @@ interface ModelState<T> {
 
    void setRoot(T newRoot);
 
+   void updateRoot(T newRoot);
+
    boolean canUndo();
 
    boolean canRedo();

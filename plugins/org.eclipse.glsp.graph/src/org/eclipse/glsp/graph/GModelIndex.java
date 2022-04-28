@@ -16,6 +16,7 @@
 package org.eclipse.glsp.graph;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -27,6 +28,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.glsp.graph.impl.GModelIndexImpl;
+import org.eclipse.glsp.graph.util.RootAdapterUtil;
 
 /**
  * Is used to index all child elements of a {@link GModelRoot} by their id. Offers a set
@@ -41,9 +43,7 @@ public interface GModelIndex {
     * @return The GModelIndex instance that contains the root of the given GModelElement.
     */
    static GModelIndex get(final GModelElement element) {
-      EObject root = EcoreUtil.getRootContainer(element);
-      GModelIndex existingIndex = (GModelIndexImpl) EcoreUtil.getExistingAdapter(root, GModelIndexImpl.class);
-      return Optional.ofNullable(existingIndex).orElseGet(() -> (create(element)));
+      return RootAdapterUtil.getOrCreate(element, GModelIndexImpl::new, GModelIndexImpl.class);
    }
 
    /**
@@ -125,6 +125,11 @@ public interface GModelIndex {
     * @return The amount of occurrences of an EClass.
     */
    int getCounter(EClass eClass, Function<Integer, String> idProvider);
+
+   /**
+    * Clears any information retained by the index.
+    */
+   void clear();
 
    /**
     * Returns the first element of type clazz starting from the element with the
@@ -253,4 +258,58 @@ public interface GModelIndex {
     */
    int getTypeCount(EClass eClass);
 
+   /**
+    * Returns an empty 'null' implementation for the index.
+    *
+    * @return empty implementation
+    */
+   static GModelIndex empty() {
+      return new NullImpl();
+   }
+
+   final class NullImpl implements GModelIndex {
+      @Override
+      public Optional<GModelElement> get(final String elementId) {
+         return Optional.empty();
+      }
+
+      @Override
+      public Set<GModelElement> getAll(final Collection<String> elementIds) {
+         return Collections.emptySet();
+      }
+
+      @Override
+      public Collection<GEdge> getIncomingEdges(final GModelElement node) {
+         return Collections.emptyList();
+      }
+
+      @Override
+      public Collection<GEdge> getOutgoingEdges(final GModelElement node) {
+         return Collections.emptyList();
+      }
+
+      @Override
+      public Set<String> allIds() {
+         return Collections.emptySet();
+      }
+
+      @Override
+      public GModelElement getRoot() { return null; }
+
+      @Override
+      public int getCounter(final EClass eClass, final Function<Integer, String> idProvider) {
+         return -1;
+      }
+
+      @Override
+      public int getTypeCount(final EClass eClass) {
+         return 0;
+      }
+
+      @Override
+      public void clear() {
+         // nothing to do
+      }
+
+   }
 }

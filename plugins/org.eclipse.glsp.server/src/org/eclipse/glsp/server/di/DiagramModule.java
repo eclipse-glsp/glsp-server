@@ -26,6 +26,7 @@ import org.eclipse.glsp.server.actions.CenterAction;
 import org.eclipse.glsp.server.actions.ClientActionHandler;
 import org.eclipse.glsp.server.actions.ExportSVGAction;
 import org.eclipse.glsp.server.actions.FitToScreenAction;
+import org.eclipse.glsp.server.actions.SaveModelActionHandler;
 import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.actions.SelectAllAction;
 import org.eclipse.glsp.server.actions.ServerMessageAction;
@@ -49,6 +50,7 @@ import org.eclipse.glsp.server.features.contextactions.ContextActionsProviderReg
 import org.eclipse.glsp.server.features.contextactions.RequestContextActionsHandler;
 import org.eclipse.glsp.server.features.contextactions.SetContextActions;
 import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
+import org.eclipse.glsp.server.features.core.model.ComputedBoundsActionHandler;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
 import org.eclipse.glsp.server.features.core.model.RequestBoundsAction;
 import org.eclipse.glsp.server.features.core.model.RequestModelActionHandler;
@@ -76,6 +78,7 @@ import org.eclipse.glsp.server.features.popup.PopupModelFactory;
 import org.eclipse.glsp.server.features.popup.RequestPopupModelActionHandler;
 import org.eclipse.glsp.server.features.popup.SetPopupModelAction;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
+import org.eclipse.glsp.server.features.undoredo.UndoRedoActionHandler;
 import org.eclipse.glsp.server.features.validation.DeleteMarkersAction;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.features.validation.RequestMarkersHandler;
@@ -319,6 +322,9 @@ public abstract class DiagramModule extends GLSPModule {
       binding.add(RequestEditValidationHandler.class);
       binding.add(RequestMarkersHandler.class);
       binding.add(SetEditModeActionHandler.class);
+      binding.add(ComputedBoundsActionHandler.class);
+      binding.add(SaveModelActionHandler.class);
+      binding.add(UndoRedoActionHandler.class);
    }
 
    protected Class<? extends ActionHandlerRegistry> bindActionHandlerRegistry() {

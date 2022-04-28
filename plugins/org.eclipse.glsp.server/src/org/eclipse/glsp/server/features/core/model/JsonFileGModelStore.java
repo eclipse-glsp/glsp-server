@@ -65,7 +65,7 @@ public class JsonFileGModelStore implements SourceModelStorage {
    public void loadSourceModel(final RequestModelAction action) {
       final File file = convertToFile(action.getOptions());
       loadSourceModel(file, modelState).ifPresent(root -> {
-         modelState.setRoot(root);
+         modelState.updateRoot(root);
          modelState.getRoot().setRevision(-1);
       });
    }

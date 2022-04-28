@@ -38,8 +38,14 @@ public class DefaultGModelState implements GModelState {
    protected Map<String, String> options;
    protected final Map<String, Object> properties = new HashMap<>();
    protected GModelRoot currentModel;
-   protected BasicCommandStack commandStack;
+   protected CommandStack commandStack;
    protected String editMode;
+   protected GModelIndex index = GModelIndex.empty();
+
+   @Inject
+   public void init() {
+      setCommandStack(new GModelCommandStack());
+   }
 
    @Override
    public Map<String, String> getClientOptions() { return options; }
@@ -54,25 +60,22 @@ public class DefaultGModelState implements GModelState {
    public GModelRoot getRoot() { return currentModel; }
 
    @Override
-   public void setRoot(final GModelRoot newRoot) {
-      this.currentModel = newRoot;
-      initializeCommandStack();
+   public void updateRoot(final GModelRoot newRoot) {
+      setRoot(newRoot);
+      this.index = getOrUpdateIndex(newRoot);
    }
 
-   protected void initializeCommandStack() {
-      if (commandStack != null) {
-         commandStack.flush();
-      }
-      commandStack = new GModelCommandStack();
+   protected GModelIndex getOrUpdateIndex(final GModelRoot newRoot) {
+      return GModelIndex.get(newRoot);
    }
 
-   public CommandStack getCommandStack() { return commandStack; }
+   @Override
+   public void setRoot(final GModelRoot newRoot) { this.currentModel = newRoot; }
 
-   protected void setCommandStack(final BasicCommandStack commandStack) {
+   protected void setCommandStack(final CommandStack commandStack) {
       if (this.commandStack != null) {
          this.commandStack.flush();
       }
-
       this.commandStack = commandStack;
    }
 
@@ -80,54 +83,49 @@ public class DefaultGModelState implements GModelState {
    public void setClientOptions(final Map<String, String> options) { this.options = options; }
 
    @Override
-   public GModelIndex getIndex() { return GModelIndex.get(currentModel); }
+   public GModelIndex getIndex() { return index; }
 
    @Override
    public void execute(final Command command) {
-      if (commandStack == null) {
-         return;
+      if (commandStack != null) {
+         commandStack.execute(command);
       }
-      commandStack.execute(command);
    }
 
    @Override
    public boolean canUndo() {
-      if (commandStack == null) {
-         return false;
-      }
-      return commandStack.canUndo();
+      return commandStack != null && commandStack.canUndo();
    }
 
    @Override
    public boolean canRedo() {
-      if (commandStack == null) {
-         return false;
-      }
-      return commandStack.canRedo();
+      return commandStack != null && commandStack.canRedo();
    }
 
    @Override
    public void undo() {
-      if (commandStack == null) {
-         return;
+      if (commandStack != null) {
+         commandStack.undo();
       }
-      commandStack.undo();
    }
 
    @Override
    public void redo() {
-      if (commandStack == null) {
-         return;
+      if (commandStack != null) {
+         commandStack.redo();
       }
-      commandStack.redo();
    }
 
    @Override
-   public boolean isDirty() { return commandStack.isSaveNeeded(); }
+   public boolean isDirty() {
+      return commandStack instanceof BasicCommandStack && ((BasicCommandStack) commandStack).isSaveNeeded();
+   }
 
    @Override
    public void saveIsDone() {
-      commandStack.saveIsDone();
+      if (commandStack instanceof BasicCommandStack) {
+         ((BasicCommandStack) commandStack).saveIsDone();
+      }
    }
 
    @Override

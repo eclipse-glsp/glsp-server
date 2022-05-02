@@ -19,7 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.util.RootAdapterUtil;
@@ -38,7 +39,7 @@ import com.google.common.collect.HashBiMap;
  * Offers a set of query methods retrieve, initialize and resolve indexed notation elements.
  */
 public class EMFNotationModelIndex extends EMFModelIndex {
-   protected static Logger LOGGER = Logger.getLogger(EMFNotationModelIndex.class);
+   protected static Logger LOGGER = LogManager.getLogger(EMFNotationModelIndex.class);
 
    protected BiMap<EObject, NotationElement> notationIndex;
    protected final EMFSemanticIdConverter idConverter;

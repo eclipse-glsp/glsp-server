@@ -68,9 +68,9 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.17.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
@@ -203,7 +203,7 @@
 								<artifact>
 									<groupId>org.eclipse.glsp</groupId>
 									<artifactId>org.eclipse.glsp.parent</artifactId>
-									<classifier>targetplatforms/r2021-03</classifier>
+									<classifier>targetplatforms/r2022-03</classifier>
 									<version>${project.version}</version>
 								</artifact>
 							</target>

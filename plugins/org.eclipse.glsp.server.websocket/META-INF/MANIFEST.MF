@@ -18,7 +18,7 @@ Require-Bundle: javax.websocket;bundle-version="1.0.0";visibility:=reexport,
  org.eclipse.jetty.websocket.api;bundle-version="9.4.0";visibility:=reexport,
  com.google.gson,
  org.eclipse.lsp4j,
- org.eclipse.lsp4j.jsonrpc
+ org.eclipse.lsp4j.jsonrpc,
+ org.apache.logging.log4j;bundle-version="2.17.1"
 Export-Package: org.eclipse.glsp.server.websocket
-Import-Package: javax.servlet;version="[3.1.0,4.0.0)",
- org.apache.log4j;version="1.2.15"
+Import-Package: javax.servlet;version="[3.1.0,4.0.0)"

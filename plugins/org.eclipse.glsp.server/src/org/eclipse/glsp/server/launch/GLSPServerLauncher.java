@@ -15,11 +15,17 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.launch;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.apache.commons.cli.ParseException;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.server.di.ServerModule;
+import org.eclipse.glsp.server.utils.LaunchUtil;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -27,6 +33,7 @@ import com.google.inject.Module;
 
 public abstract class GLSPServerLauncher {
 
+   private static Logger LOGGER = LogManager.getLogger(GLSPServerLauncher.class);
    private final List<Module> modules;
 
    public GLSPServerLauncher(final ServerModule serverModule, final Module... additionalModules) {
@@ -40,6 +47,27 @@ public abstract class GLSPServerLauncher {
    }
 
    public abstract void start(String hostname, int port);
+
+   public void start(final String hostname, final int port, final boolean consoleLogging, final String logDir,
+      final Level logLevel) {
+      try {
+         // configure logging
+         LaunchUtil.configureLogger(consoleLogging, logDir, logLevel);
+      } catch (IOException e) {
+         LOGGER.error("Error during log configuration!", e);
+      }
+      start(hostname, port);
+   }
+
+   public void start(final String hostname, final int port, final DefaultCLIParser parser) {
+      try {
+         // configure logging
+         LaunchUtil.configure(parser);
+      } catch (IOException | ParseException e) {
+         LOGGER.error("Error during log configuration!", e);
+      }
+      start(hostname, port);
+   }
 
    public abstract void shutdown();
 

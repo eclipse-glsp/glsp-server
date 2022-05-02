@@ -29,7 +29,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Optional;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GModelRoot;
@@ -48,7 +49,7 @@ import com.google.inject.Inject;
  */
 public class JsonFileGModelStore implements SourceModelStorage {
 
-   private static Logger LOG = Logger.getLogger(JsonFileGModelStore.class);
+   private static Logger LOGGER = LogManager.getLogger(JsonFileGModelStore.class);
    private static String EMPTY_ROOT_ID = "glsp-graph";
 
    @Inject
@@ -82,7 +83,7 @@ public class JsonFileGModelStore implements SourceModelStorage {
          }
          return Optional.ofNullable(root);
       } catch (IOException e) {
-         LOG.error(e);
+         LOGGER.error(e);
          throw new GLSPServerException("Could not load model from file: " + file.toURI().toString(), e);
       }
    }
@@ -100,7 +101,7 @@ public class JsonFileGModelStore implements SourceModelStorage {
       try (Writer writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)) {
          gson.toJson(modelState.getRoot(), GGraph.class, writer);
       } catch (IOException e) {
-         LOG.error(e);
+         LOGGER.error(e);
          throw new GLSPServerException("An error occured during save process.", e);
       }
    }

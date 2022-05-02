@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -24,7 +24,8 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.server.actions.ActionMessage;
 import org.eclipse.glsp.server.actions.ActionRegistry;
 import org.eclipse.glsp.server.session.ClientSession;
@@ -37,7 +38,7 @@ import org.eclipse.lsp4j.jsonrpc.messages.ResponseErrorCode;
 import com.google.inject.Inject;
 
 public class DefaultGLSPServer implements GLSPServer {
-   private static Logger LOG = Logger.getLogger(DefaultGLSPServer.class);
+   private static Logger LOGGER = LogManager.getLogger(DefaultGLSPServer.class);
    public static final String PROTOCOL_VERSION = "0.9.0";
 
    @Inject
@@ -63,7 +64,7 @@ public class DefaultGLSPServer implements GLSPServer {
    @Override
    @SuppressWarnings("checkstyle:IllegalCatch")
    public CompletableFuture<InitializeResult> initialize(final InitializeParameters params) {
-      LOG.debug("Initializing server with the following params:\n" + params);
+      LOGGER.debug("Initializing server with the following params:\n" + params);
 
       validateProtocolVersion(params);
 
@@ -111,7 +112,7 @@ public class DefaultGLSPServer implements GLSPServer {
 
    @Override
    public CompletableFuture<Void> initializeClientSession(final InitializeClientSessionParameters params) {
-      LOG.debug("Initializing client session with the following params:\n" + params);
+      LOGGER.debug("Initializing client session with the following params:\n" + params);
 
       validateServerInitialized();
 
@@ -133,7 +134,7 @@ public class DefaultGLSPServer implements GLSPServer {
 
    @Override
    public CompletableFuture<Void> disposeClientSession(final DisposeClientSessionParameters params) {
-      LOG.debug("Dispose client session with the following params:\n" + params);
+      LOGGER.debug("Dispose client session with the following params:\n" + params);
       validateServerInitialized();
       if (sessionManager.disposeClientSession(params.getClientSessionId())) {
          clientSessions.remove(params.getClientSessionId());
@@ -158,7 +159,7 @@ public class DefaultGLSPServer implements GLSPServer {
    @SuppressWarnings("checkstyle:IllegalCatch")
    public void process(final ActionMessage message) {
       validateServerInitialized();
-      LOG.debug("process " + message);
+      LOGGER.debug("process " + message);
       String clientSessionId = message.getClientId();
       if (!clientSessions.containsKey(clientSessionId)) {
          throw new ResponseErrorException(new ResponseError(ResponseErrorCode.InvalidParams,
@@ -167,7 +168,7 @@ public class DefaultGLSPServer implements GLSPServer {
 
       Function<Throwable, Void> errorHandler = ex -> {
          String errorMsg = "Could not process message:" + message;
-         LOG.error("[ERROR] " + errorMsg, ex);
+         LOGGER.error("[ERROR] " + errorMsg, ex);
          getClient().process(new ActionMessage(clientSessionId, error("[GLSP-Server] " + errorMsg, ex)));
          return null;
       };
@@ -184,7 +185,7 @@ public class DefaultGLSPServer implements GLSPServer {
 
    @Override
    public void shutdown() {
-      LOG.info("Shutdown GLSP Server " + this);
+      LOGGER.info("Shutdown GLSP Server " + this);
       serverConnectionListeners.forEach(listener -> listener.serverShutDown(this));
       clientSessions.clear();
       initialized = new CompletableFuture<>();

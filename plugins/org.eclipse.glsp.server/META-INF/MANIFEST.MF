@@ -14,7 +14,8 @@ Require-Bundle: org.eclipse.emf.ecore.change;bundle-version="2.13.0",
  com.google.inject;bundle-version="5.0.1";visibility:=reexport,
  javax.websocket;bundle-version="1.0.0";visibility:=reexport,
  org.eclipse.glsp.graph;bundle-version="[0.10.0,1.0.0)";visibility:=reexport,
- javax.inject;bundle-version="1.0.0"
+ javax.inject;bundle-version="1.0.0",
+ org.apache.logging.log4j;bundle-version="2.17.1"
 Export-Package: org.eclipse.glsp.server.actions,
  org.eclipse.glsp.server.di,
  org.eclipse.glsp.server.di.scope,
@@ -57,4 +58,3 @@ Export-Package: org.eclipse.glsp.server.actions,
  org.eclipse.glsp.server.session,
  org.eclipse.glsp.server.types,
  org.eclipse.glsp.server.utils
-Import-Package: org.apache.log4j;version="1.2.15"

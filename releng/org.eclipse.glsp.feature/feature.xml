@@ -321,12 +321,12 @@ version(s), and exceptions or additional permissions here}.&quot;
       <import plugin="javax.websocket" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.glsp.graph" version="0.10.0" match="compatible"/>
       <import plugin="javax.inject" version="1.0.0" match="greaterOrEqual"/>
-      <import plugin="org.apache.log4j"/>
       <import plugin="org.junit"/>
       <import plugin="org.junit.jupiter.api"/>
       <import plugin="org.eclipse.emf.common" version="2.15.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.emf.ecore" version="2.15.0" match="greaterOrEqual"/>
       <import plugin="com.google.guava" version="30.1.0" match="greaterOrEqual"/>
+      <import plugin="org.apache.logging.log4j"/>
    </requires>
 
    <plugin

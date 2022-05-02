@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -28,7 +28,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.ActionHandler;
@@ -52,7 +53,7 @@ import com.google.inject.Provider;
  */
 public class DefaultActionDispatcher extends Disposable implements ActionDispatcher {
 
-   private static final Logger LOG = Logger.getLogger(DefaultActionDispatcher.class);
+   private static final Logger LOGGER = LogManager.getLogger(DefaultActionDispatcher.class);
 
    private static final AtomicInteger COUNT = new AtomicInteger(0);
 
@@ -111,7 +112,7 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
 
    protected void addToQueue(final Action action) {
       if (Thread.currentThread() == this.thread) {
-         LOG.error("Actions shouldn't be added to the actions queue from the dispatcher thread!");
+         LOGGER.error("Actions shouldn't be added to the actions queue from the dispatcher thread!");
          // Handle the action immediately, to avoid deadlocks when the queue if full
          handleAction(action);
          return;
@@ -121,7 +122,7 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
          if (!thread.isAlive() || thread.isInterrupted()) {
             // This may happen if e.g. some background tasks were still running when the client disconnected.
             // This (probably) isn't critical and can be safely ignored.
-            LOG.warn(String.format(
+            LOGGER.warn(String.format(
                "Received an action after the ActionDispatcher was stopped. Ignoring action: %s", action));
             return;
          }
@@ -130,7 +131,7 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
             // but if this keeps failing for a long time, it might indicate a deadlock
             success = actionsQueue.offer(action, 1, TimeUnit.SECONDS);
             if (!success) {
-               LOG.warn(String.format("Actions queue is currently full for dispatcher %s ; retrying...", name));
+               LOGGER.warn(String.format("Actions queue is currently full for dispatcher %s ; retrying...", name));
             }
          } catch (final InterruptedException ex) {
             break;
@@ -143,11 +144,12 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
          try {
             handleNextAction();
          } catch (final InterruptedException e) {
-            LOG.info(String.format("Terminating DefaultActionDispatcher thread %s", Thread.currentThread().getName()));
+            LOGGER
+               .info(String.format("Terminating DefaultActionDispatcher thread %s", Thread.currentThread().getName()));
             break;
          }
       }
-      LOG.info("Terminating DefaultActionDispatcher");
+      LOGGER.info("Terminating DefaultActionDispatcher");
    }
 
    private void handleNextAction()
@@ -162,7 +164,7 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
    protected void handleAction(final Action action) {
       checkThread();
       if (action == null) {
-         LOG.warn(String.format("Received a null action for client %s", clientId));
+         LOGGER.warn(String.format("Received a null action for client %s", clientId));
          return;
       }
 

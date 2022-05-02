@@ -38,11 +38,17 @@ The example can be used to try out different GLSP features, as well as several a
 As the example is fully open source, you can also use it as a blueprint for a custom implementation of a GLSP diagram editor.
 See [our project website](https://www.eclipse.org/glsp/documentation/#workflowoverview) for an overview of the workflow example and all components implementing it.
 
-![alt](https://www.eclipse.org/glsp/images/diagramanimated.gif)
+https://user-images.githubusercontent.com/588090/154459938-849ca684-11b3-472c-8a59-98ea6cb0b4c1.mp4
 
 ### How to start the Workflow Diagram example?
 
-To see the diagram in action, you will need to choose and launch one diagram client, see [here for an overview](https://www.eclipse.org/glsp/documentation/#workflowoverview).
+To see the diagram in action, you need to choose and launch one diagram client, see [here for an overview of available clients](https://www.eclipse.org/glsp/examples/#workflowoverview).
+
+-   [`glsp-theia-integration`](https://github.com/eclipse-glsp/glsp-theia-integration): Diagrams clients integrated into [Theia](https://github.com/theia-ide/theia).
+-   [`glsp-vscode-integration`](https://github.com/eclipse-glsp/glsp-vscode-integration): Diagram clients integrated into [VSCode](https://github.com/microsoft/vscode).
+-   [`glsp-eclipse-integration`](https://github.com/eclipse-glsp/glsp-eclipse-integration): Diagram clients integrated into Eclipse IDE.
+
+Please look at the workflow example guides in the repository linked above to get more information on building and running the respecitive GLSP clients.
 
 ### Building the Workflow Diagram example server
 

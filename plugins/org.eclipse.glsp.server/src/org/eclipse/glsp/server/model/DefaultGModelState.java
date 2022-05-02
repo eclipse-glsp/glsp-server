@@ -69,8 +69,7 @@ public class DefaultGModelState implements GModelState {
       return GModelIndex.get(newRoot);
    }
 
-   @Override
-   public void setRoot(final GModelRoot newRoot) { this.currentModel = newRoot; }
+   protected void setRoot(final GModelRoot newRoot) { this.currentModel = newRoot; }
 
    protected void setCommandStack(final CommandStack commandStack) {
       if (this.commandStack != null) {

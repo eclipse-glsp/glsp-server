@@ -12,7 +12,8 @@
   - `ModelSourceLoader` → `SourceModelStorage`
   - `ModelSourceWatcher` → `SourceModelWatcher`
   - Added method to `SourceModelStorage`
-- 
+- [server] Refactorings as part of adding new GLSP examples [#622](https://github.com/eclipse-glsp/glsp/issues/622) ([java: #159](https://github.com/eclipse-glsp/glsp-server/pull/159), [java: #161](https://github.com/eclipse-glsp/glsp-server/pull/161))
+  - Renamed `setRoot` to `updateRoot` in model state to better reflect dependent updates, remove re-generation of command stack in method but add index re-generation
 
 
 ## [v0.9.0- 09/12/2021](https://github.com/eclipse-glsp/glsp/releases/tag/0.9.0)

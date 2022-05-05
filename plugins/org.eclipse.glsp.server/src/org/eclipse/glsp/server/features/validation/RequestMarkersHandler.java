@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -20,7 +20,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.server.actions.AbstractActionHandler;
@@ -31,7 +32,7 @@ import com.google.inject.Inject;
 
 public class RequestMarkersHandler extends AbstractActionHandler<RequestMarkersAction> {
 
-   private static final Logger LOG = Logger.getLogger(RequestMarkersHandler.class);
+   private static final Logger LOGGER = LogManager.getLogger(RequestMarkersHandler.class);
 
    @Inject
    protected Optional<ModelValidator> validator;
@@ -44,7 +45,7 @@ public class RequestMarkersHandler extends AbstractActionHandler<RequestMarkersA
    public List<Action> executeAction(final RequestMarkersAction action) {
       List<String> elementsIDs = action.getElementsIDs();
       if (validator.isEmpty()) {
-         LOG.warn("Cannot compute markers! No implementation for " + ModelValidator.class + " has been bound");
+         LOGGER.warn("Cannot compute markers! No implementation for " + ModelValidator.class + " has been bound");
          return none();
       }
 

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -21,11 +21,12 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.server.utils.LaunchUtil;
 
 public abstract class CLIParser {
-   private static final Logger LOG = Logger.getLogger(CLIParser.class);
+   private static final Logger LOGGER = LogManager.getLogger(CLIParser.class);
    protected static final String INVALID_ARGUMENT_MESSAGE = "%s' is not a valid argument for option '--%s'! The default value '%s' is used.";
 
    protected final CommandLine cmd;
@@ -52,7 +53,7 @@ public abstract class CLIParser {
          if (validator == null || validator.test(arg)) {
             return arg;
          }
-         LOG.warn(String.format(INVALID_ARGUMENT_MESSAGE,
+         LOGGER.warn(String.format(INVALID_ARGUMENT_MESSAGE,
             arg, optionName, defaultValue));
       }
       return defaultValue;
@@ -72,7 +73,7 @@ public abstract class CLIParser {
                throw new NumberFormatException();
             }
          } catch (NumberFormatException e) {
-            LOG.warn(String.format(INVALID_ARGUMENT_MESSAGE,
+            LOGGER.warn(String.format(INVALID_ARGUMENT_MESSAGE,
                intArg, optionName, defaultValue));
          }
       }

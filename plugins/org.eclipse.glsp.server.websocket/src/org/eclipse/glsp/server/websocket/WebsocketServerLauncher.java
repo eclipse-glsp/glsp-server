@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -21,7 +21,8 @@ import java.net.InetSocketAddress;
 import javax.websocket.server.ServerContainer;
 import javax.websocket.server.ServerEndpointConfig;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.server.di.ServerModule;
 import org.eclipse.glsp.server.launch.GLSPServerLauncher;
 import org.eclipse.jetty.server.Server;
@@ -32,7 +33,7 @@ import org.eclipse.jetty.websocket.jsr356.server.deploy.WebSocketServerContainer
 import com.google.inject.Module;
 
 public class WebsocketServerLauncher extends GLSPServerLauncher {
-   private static Logger LOG = Logger.getLogger(WebsocketServerLauncher.class);
+   private static Logger LOGGER = LogManager.getLogger(WebsocketServerLauncher.class);
    protected Server server;
    protected String clientAppPath;
    protected final String endpointPath;
@@ -41,20 +42,20 @@ public class WebsocketServerLauncher extends GLSPServerLauncher {
       final Module... additionalModules) {
       super(serverModule, additionalModules);
       this.endpointPath = endpointPath.startsWith("/") ? endpointPath.substring(1) : endpointPath;
-
    }
 
    @Override
    @SuppressWarnings("checkstyle:IllegalCatch")
    public void start(final String hostname, final int port) {
       try {
+         org.eclipse.jetty.util.log.Log.setLog(new Log4j2Logger("WebsocketServerLauncher"));
          // Setup Jetty Server
          server = new Server(new InetSocketAddress(hostname, port));
          ServletContextHandler webAppContext;
 
          // (If a clientAppPath is given)setup client app serving
          if (clientAppPath != null && !clientAppPath.isEmpty()) {
-            LOG.info("Serving client app from :" + clientAppPath);
+            LOGGER.info("Serving client app from :" + clientAppPath);
             webAppContext = new WebAppContext();
             webAppContext.setResourceBase(clientAppPath);
             String[] welcomeFiles = { "index.html" };
@@ -79,28 +80,28 @@ public class WebsocketServerLauncher extends GLSPServerLauncher {
          // Start the server
          try {
             server.start();
-            LOG.info("GLSP server is running and listening on Endpoint : " + server.getURI() + endpointPath);
-            LOG.info("Press enter to stop the server...");
+            LOGGER.info("GLSP server is running and listening on Endpoint : " + server.getURI() + endpointPath);
+            LOGGER.info("Press enter to stop the server...");
             new Thread(() -> {
                try {
                   int key = System.in.read();
                   this.shutdown();
                   if (key == -1) {
-                     LOG.warn("The standard input stream is empty");
+                     LOGGER.warn("The standard input stream is empty");
                   }
                } catch (IOException e) {
-                  LOG.warn(e);
+                  LOGGER.warn(e);
                }
 
             }).start();
 
             server.join();
          } catch (Exception exception) {
-            LOG.warn("Shutting down due to exception", exception);
+            LOGGER.warn("Shutting down due to exception", exception);
             System.exit(1);
          }
       } catch (Exception ex) {
-         LOG.error("Failed to start Websocket GLSP server " + ex.getMessage(), ex);
+         LOGGER.error("Failed to start Websocket GLSP server " + ex.getMessage(), ex);
       }
    }
 
@@ -115,7 +116,7 @@ public class WebsocketServerLauncher extends GLSPServerLauncher {
          try {
             server.stop();
          } catch (Exception ex) {
-            LOG.error("Failed to stop Websocket GLSP server " + ex.getMessage(), ex);
+            LOGGER.error("Failed to stop Websocket GLSP server " + ex.getMessage(), ex);
          }
       }
 

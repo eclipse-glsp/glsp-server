@@ -57,4 +57,10 @@ Export-Package: org.eclipse.glsp.server.actions,
  org.eclipse.glsp.server.session,
  org.eclipse.glsp.server.types,
  org.eclipse.glsp.server.utils
-Import-Package: org.apache.log4j;version="1.2.15"
+Import-Package: org.apache.logging.log4j;version="2.17.1",
+ org.apache.logging.log4j.core;version="2.17.1",
+ org.apache.logging.log4j.core.appender;version="2.17.1",
+ org.apache.logging.log4j.core.config;version="2.17.1",
+ org.apache.logging.log4j.core.config.builder.api;version="2.17.1",
+ org.apache.logging.log4j.core.config.builder.impl;version="2.17.1",
+ org.apache.logging.log4j.core.util;version="2.17.1"

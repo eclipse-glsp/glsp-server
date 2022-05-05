@@ -1,20 +1,20 @@
-target "2021-03 - Release" with source requirements
+target "2022-03 - Release" with source requirements
 
-location "http://download.eclipse.org/releases/2021-03" {
+location "http://download.eclipse.org/releases/2022-03" {
 	org.eclipse.equinox.p2.discovery.feature.feature.group
 	org.eclipse.equinox.executable.feature.group
 	org.eclipse.emf.sdk.feature.group
 }
 
-location "https://download.eclipse.org/tools/orbit/downloads/drops/R20210602031627/repository/" {
-	org.apache.log4j
-	org.apache.commons.cli
-	javax.servlet
+location "https://download.eclipse.org/tools/orbit/downloads/drops/R20220302172233/repository/" {
+	org.apache.logging.log4j [2.17.1,3.0.0)
+	org.apache.commons.cli [1.4.0,2.0.0)
+	javax.servlet [3.1.0,4.0.0)
 	com.google.gson [2.8.2,3.0.0)
 	com.google.inject [5.0.1,5.0.2)
 	com.google.guava [30.1.0,31.0.0)
 	org.junit [4.12.0,4.13.0)
-	org.junit.jupiter.api [5.7.1,5.7.2)
+	org.junit.jupiter.api [5.8.1,6.0.0)
 }
 
 location "https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.44.v20210927/" {

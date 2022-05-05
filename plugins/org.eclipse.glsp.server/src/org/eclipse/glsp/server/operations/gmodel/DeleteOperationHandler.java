@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -22,7 +22,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelElement;
@@ -38,7 +39,7 @@ import com.google.inject.Inject;
  * Generic handler implementation for {@link DeleteOperation}.
  */
 public class DeleteOperationHandler extends AbstractOperationHandler<DeleteOperation> {
-   private static Logger log = Logger.getLogger(DeleteOperationHandler.class);
+   private static Logger LOGGER = LogManager.getLogger(DeleteOperationHandler.class);
    protected Set<String> allDependantsIds;
 
    @Inject
@@ -48,14 +49,14 @@ public class DeleteOperationHandler extends AbstractOperationHandler<DeleteOpera
    public void executeOperation(final DeleteOperation operation) {
       List<String> elementIds = operation.getElementIds();
       if (elementIds == null || elementIds.size() == 0) {
-         log.warn("Elements to delete are not specified");
+         LOGGER.warn("Elements to delete are not specified");
          return;
       }
       GModelIndex index = modelState.getIndex();
       allDependantsIds = new HashSet<>();
       boolean success = elementIds.stream().allMatch(eId -> delete(eId, index));
       if (!success) {
-         log.warn("Could not delete all elements as requested (see messages above to find out why)");
+         LOGGER.warn("Could not delete all elements as requested (see messages above to find out why)");
       }
    }
 
@@ -68,14 +69,14 @@ public class DeleteOperationHandler extends AbstractOperationHandler<DeleteOpera
 
       Optional<GModelElement> element = index.get(elementId);
       if (!element.isPresent()) {
-         log.warn("Element not found: " + elementId);
+         LOGGER.warn("Element not found: " + elementId);
          return false;
       }
 
       // Always delete the top-level node
       GModelElement nodeToDelete = findTopLevelElement(element.get());
       if (nodeToDelete.getParent() == null) {
-         log.warn("The requested node doesn't have a parent; it can't be deleted");
+         LOGGER.warn("The requested node doesn't have a parent; it can't be deleted");
          return false; // Can't delete the root, or an element that doesn't belong to the model
       }
 

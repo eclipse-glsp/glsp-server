@@ -19,4 +19,4 @@ Export-Package: org.eclipse.glsp.graph,
  org.eclipse.glsp.graph.impl,
  org.eclipse.glsp.graph.util,
  org.eclipse.glsp.graph.util
-Import-Package: org.apache.log4j;version="1.2.15"
+Import-Package: org.apache.logging.log4j;version="2.17.1"

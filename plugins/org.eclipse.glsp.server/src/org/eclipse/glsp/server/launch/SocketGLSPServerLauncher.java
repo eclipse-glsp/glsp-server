@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -31,7 +31,8 @@ import java.util.concurrent.Future;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.server.di.ServerModule;
 import org.eclipse.glsp.server.gson.ServerGsonConfigurator;
 import org.eclipse.glsp.server.protocol.GLSPClient;
@@ -45,7 +46,7 @@ import com.google.inject.Module;
 
 public class SocketGLSPServerLauncher extends GLSPServerLauncher {
    public static final String START_UP_COMPLETE_MSG = "[GLSP-Server]:Startup completed";
-   private static Logger log = Logger.getLogger(SocketGLSPServerLauncher.class);
+   private static Logger LOGGER = LogManager.getLogger(SocketGLSPServerLauncher.class);
 
    private ExecutorService threadPool;
    private AsynchronousServerSocketChannel serverSocket;
@@ -61,9 +62,11 @@ public class SocketGLSPServerLauncher extends GLSPServerLauncher {
       try {
          onClose = asyncRun(hostname, port);
          onClose.get();
-         log.info("Stopped GLSP server");
-      } catch (IOException | InterruptedException | ExecutionException e) {
-         log.error("Error during server shutdown!", e);
+         LOGGER.info("Stopped GLSP server");
+      } catch (IOException e) {
+         LOGGER.error("Error during server startup!", e);
+      } catch (InterruptedException | ExecutionException e) {
+         LOGGER.error("Error during server shutdown!", e);
       }
    }
 
@@ -85,12 +88,12 @@ public class SocketGLSPServerLauncher extends GLSPServerLauncher {
 
          @Override
          public void failed(final Throwable exc, final Void attachment) {
-            log.error("Client Connection Failed: " + exc.getMessage(), exc);
+            LOGGER.error("Client Connection Failed: " + exc.getMessage(), exc);
          }
       };
 
       serverSocket.accept(null, handler);
-      log.info("The GLSP server is ready to accept new client requests on port: " + port);
+      LOGGER.info("The GLSP server is ready to accept new client requests on port: " + port);
       // Print a message to the output stream that indicates that the start is completed.
       // This indicates to the client that the sever process is ready (in an embedded scenario).
       System.out.println(getStartupCompleteMessage());
@@ -109,11 +112,11 @@ public class SocketGLSPServerLauncher extends GLSPServerLauncher {
          Launcher<GLSPClient> launcher = Launcher.createIoLauncher(glspServer, GLSPClient.class, in, out,
             threadPool, messageWrapper(injector), configureGson(injector));
          glspServer.connect(launcher.getRemoteProxy());
-         log.info("Starting GLSP server connection for client " + socketChannel.getRemoteAddress());
+         LOGGER.info("Starting GLSP server connection for client " + socketChannel.getRemoteAddress());
          launcher.startListening().get();
-         log.info("Stopping GLSP server connection for client " + socketChannel.getRemoteAddress());
+         LOGGER.info("Stopping GLSP server connection for client " + socketChannel.getRemoteAddress());
       } catch (IOException | InterruptedException | ExecutionException ex) {
-         log.error("Failed to create client connection " + ex.getMessage(), ex);
+         LOGGER.error("Failed to create client connection " + ex.getMessage(), ex);
       } finally {
          try {
             socketChannel.close();
@@ -121,7 +124,7 @@ public class SocketGLSPServerLauncher extends GLSPServerLauncher {
                glspServer.shutdown();
             }
          } catch (IOException e) {
-            log.error("Excpetion occured when trying to close socketChannel", e);
+            LOGGER.error("Excpetion occured when trying to close socketChannel", e);
          }
       }
    }
@@ -137,17 +140,17 @@ public class SocketGLSPServerLauncher extends GLSPServerLauncher {
 
    @Override
    public void shutdown() {
-      log.info("Closing all connections to the GLSP server...");
+      LOGGER.info("Closing all connections to the GLSP server...");
       if (serverSocket.isOpen()) {
          try {
             serverSocket.close();
          } catch (IOException e) {
-            log.error("Failed to close server socket: " + e.getMessage(), e);
+            LOGGER.error("Failed to close server socket: " + e.getMessage(), e);
          }
       }
 
       threadPool.shutdown();
       onShutdown.complete(null);
-      log.info("Shutdown GLSP server");
+      LOGGER.info("Shutdown GLSP server");
    }
 }

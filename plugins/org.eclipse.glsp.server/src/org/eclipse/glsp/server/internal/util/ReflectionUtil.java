@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2021 EclipseSource and others.
+ * Copyright (c) 2020-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -22,10 +22,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public final class ReflectionUtil {
-   private static Logger LOG = Logger.getLogger(ReflectionUtil.class);
+   private static Logger LOGGER = LogManager.getLogger(ReflectionUtil.class);
 
    private ReflectionUtil() {}
 
@@ -33,7 +34,7 @@ public final class ReflectionUtil {
       try {
          return Optional.of(clazz.getConstructor().newInstance());
       } catch (ReflectiveOperationException | SecurityException e) {
-         LOG.error("Could not construct instance of class: " + clazz, e);
+         LOGGER.error("Could not construct instance of class: " + clazz, e);
          return Optional.empty();
       }
    }

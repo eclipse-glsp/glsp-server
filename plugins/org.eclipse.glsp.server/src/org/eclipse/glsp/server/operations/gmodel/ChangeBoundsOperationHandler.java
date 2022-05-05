@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -17,7 +17,8 @@ package org.eclipse.glsp.server.operations.gmodel;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
@@ -38,7 +39,7 @@ import com.google.inject.Inject;
  */
 public class ChangeBoundsOperationHandler extends AbstractOperationHandler<ChangeBoundsOperation> {
 
-   private static Logger log = Logger.getLogger(ChangeBoundsOperationHandler.class);
+   private static Logger LOGGER = LogManager.getLogger(ChangeBoundsOperationHandler.class);
 
    @Inject
    protected GModelState modelState;
@@ -52,7 +53,7 @@ public class ChangeBoundsOperationHandler extends AbstractOperationHandler<Chang
 
    protected void changeElementBounds(final String elementId, final GPoint newPosition, final GDimension newSize) {
       if (elementId == null) {
-         log.warn("Invalid ChangeBounds Action; missing mandatory arguments");
+         LOGGER.warn("Invalid ChangeBounds Action; missing mandatory arguments");
          return;
       }
 

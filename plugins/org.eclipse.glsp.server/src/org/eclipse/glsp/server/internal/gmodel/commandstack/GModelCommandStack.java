@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,16 +15,17 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.internal.gmodel.commandstack;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.emf.common.command.BasicCommandStack;
 
 public class GModelCommandStack extends BasicCommandStack {
 
-   private static Logger LOG = Logger.getLogger(GModelCommandStack.class);
+   private static Logger LOGGER = LogManager.getLogger(GModelCommandStack.class);
 
    @Override
    protected void handleError(final Exception exception) {
-      LOG.error("Error while executing command", exception);
+      LOGGER.error("Error while executing command", exception);
    }
 
 }

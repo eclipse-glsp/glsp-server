@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -25,7 +25,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
@@ -43,7 +44,7 @@ import com.google.gson.stream.JsonWriter;
 
 public class GModelElementTypeAdapter extends PropertyBasedTypeAdapter<GModelElement> {
 
-   private static final Logger LOG = Logger.getLogger(GModelElementTypeAdapter.class);
+   private static final Logger LOGGER = LogManager.getLogger(GModelElementTypeAdapter.class);
 
    private final Gson gson;
    private final Map<String, EClass> typeMap;
@@ -84,7 +85,7 @@ public class GModelElementTypeAdapter extends PropertyBasedTypeAdapter<GModelEle
          element.setType(type);
          return element;
       }
-      LOG.error("Cannot find class for type " + type);
+      LOGGER.error("Cannot find class for type " + type);
       return null;
    }
 

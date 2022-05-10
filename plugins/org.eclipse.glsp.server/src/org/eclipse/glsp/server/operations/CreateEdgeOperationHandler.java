@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2022 EclipseSource and others.
+ * Copyright (c) 2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,27 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operations;
 
-import java.util.List;
-
-import com.google.common.collect.Lists;
-
-public abstract class AbstractCreateOperationHandler<T extends CreateOperation> extends AbstractOperationHandler<T>
-   implements CreateOperationHandler {
-   protected List<String> handledElementTypeIds;
-
-   public AbstractCreateOperationHandler(final String... elementTypeIds) {
-      this(Lists.newArrayList(elementTypeIds));
-   }
-
-   public AbstractCreateOperationHandler(final List<String> handledElementTypeIds) {
-      this.handledElementTypeIds = handledElementTypeIds;
-   }
-
+public interface CreateEdgeOperationHandler extends CreateOperationHandler {
    @Override
-   public List<String> getHandledElementTypeIds() { return handledElementTypeIds; }
-
-   public void setHandledElementTypeIds(final List<String> handledElementTypeIds) {
-      this.handledElementTypeIds = handledElementTypeIds;
-   }
-
+   Class<? extends CreateEdgeOperation> getHandledOperationType();
 }

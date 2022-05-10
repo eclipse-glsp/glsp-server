@@ -17,6 +17,7 @@ package org.eclipse.glsp.server.operations.gmodel;
 
 import static org.eclipse.glsp.server.utils.GModelUtil.IS_CONNECTABLE;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.glsp.graph.GEdge;
@@ -24,21 +25,33 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.operations.AbstractCreateOperationHandler;
+import org.eclipse.glsp.server.operations.CreateEdgeOperation;
+import org.eclipse.glsp.server.operations.CreateEdgeOperationHandler;
 
 import com.google.inject.Inject;
 
-public abstract class CreateEdgeOperationHandler extends AbstractCreateOperationHandler<CreateEdgeOperation> {
+public abstract class AbstractCreateEdgeOperationHandler extends AbstractCreateOperationHandler<CreateEdgeOperation>
+   implements CreateEdgeOperationHandler {
 
    protected final String label;
 
    @Inject
    protected GModelState modelState;
 
-   public CreateEdgeOperationHandler(final String elementTypeId, final String label) {
+   public AbstractCreateEdgeOperationHandler(final String elementTypeId, final String label) {
       super(elementTypeId);
       this.label = label;
+   }
+
+   public AbstractCreateEdgeOperationHandler(final String... elementTypeIds) {
+      super(elementTypeIds);
+      this.label = super.getLabel();
+   }
+
+   public AbstractCreateEdgeOperationHandler(final List<String> handledElementTypeIds) {
+      super(handledElementTypeIds);
+      this.label = super.getLabel();
    }
 
    @Override

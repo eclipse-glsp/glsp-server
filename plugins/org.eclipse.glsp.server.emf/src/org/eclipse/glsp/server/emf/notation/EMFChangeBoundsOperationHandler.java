@@ -24,7 +24,7 @@ import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.glsp.server.emf.AbstractEMFBaseOperationHandler;
+import org.eclipse.glsp.server.emf.AbstractEMFOperationHandler;
 import org.eclipse.glsp.server.emf.model.notation.NotationPackage;
 import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.glsp.server.operations.ChangeBoundsOperation;
@@ -35,13 +35,13 @@ import com.google.inject.Inject;
 /**
  * A custom change bounds operation handler that updates the notation model for the moved shape elements.
  */
-public class EMFChangeBoundsOperationHandler extends AbstractEMFBaseOperationHandler<ChangeBoundsOperation> {
+public class EMFChangeBoundsOperationHandler extends AbstractEMFOperationHandler<ChangeBoundsOperation> {
 
    @Inject
    protected EMFNotationModelState modelState;
 
    @Override
-   protected Optional<Command> createCommand(final ChangeBoundsOperation operation) {
+   public Optional<Command> createCommand(final ChangeBoundsOperation operation) {
       EditingDomain editingDomain = modelState.getEditingDomain();
 
       CompoundCommand compoundCommand = new CompoundCommand();
@@ -69,7 +69,4 @@ public class EMFChangeBoundsOperationHandler extends AbstractEMFBaseOperationHan
       }
       return commands;
    }
-
-   @Override
-   public String getLabel() { return "Change bounds"; }
 }

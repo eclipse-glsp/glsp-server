@@ -58,4 +58,10 @@ public interface CreateOperationHandler extends OperationHandler {
     * @return The list of element types for which this handler has registered for.
     */
    List<String> getHandledElementTypeIds();
+
+   @Override
+   default boolean handles(final Operation operation) {
+      return OperationHandler.super.handles(operation)
+         && getHandledElementTypeIds().contains(getHandledOperationType().cast(operation).getElementTypeId());
+   }
 }

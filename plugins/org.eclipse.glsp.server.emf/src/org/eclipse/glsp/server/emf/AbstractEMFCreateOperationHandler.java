@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2022 EclipseSource and others.
+ * Copyright (c) 2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,29 +13,27 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.operations;
+package org.eclipse.glsp.server.emf;
 
 import java.util.List;
 
-import com.google.common.collect.Lists;
+import org.eclipse.glsp.server.operations.AbstractCreateOperationHandler;
+import org.eclipse.glsp.server.operations.CreateOperation;
 
-public abstract class AbstractCreateOperationHandler<T extends CreateOperation> extends AbstractOperationHandler<T>
-   implements CreateOperationHandler {
-   protected List<String> handledElementTypeIds;
+public abstract class AbstractEMFCreateOperationHandler<O extends CreateOperation>
+   extends AbstractCreateOperationHandler<O> implements EMFOperationHandler<O> {
 
-   public AbstractCreateOperationHandler(final String... elementTypeIds) {
-      this(Lists.newArrayList(elementTypeIds));
+   public AbstractEMFCreateOperationHandler(final String... elementTypeIds) {
+      super(elementTypeIds);
    }
 
-   public AbstractCreateOperationHandler(final List<String> handledElementTypeIds) {
-      this.handledElementTypeIds = handledElementTypeIds;
+   public AbstractEMFCreateOperationHandler(final List<String> handledElementTypeIds) {
+      super(handledElementTypeIds);
    }
 
    @Override
-   public List<String> getHandledElementTypeIds() { return handledElementTypeIds; }
-
-   public void setHandledElementTypeIds(final List<String> handledElementTypeIds) {
-      this.handledElementTypeIds = handledElementTypeIds;
+   protected void executeOperation(final O operation) {
+      EMFOperationHandler.super.execute(operation);
    }
 
 }

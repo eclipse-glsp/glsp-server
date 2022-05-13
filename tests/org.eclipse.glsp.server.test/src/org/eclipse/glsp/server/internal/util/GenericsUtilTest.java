@@ -36,7 +36,7 @@ import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperationHan
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.operations.ReconnectEdgeOperation;
-import org.eclipse.glsp.server.operations.gmodel.CreateEdgeOperationHandler;
+import org.eclipse.glsp.server.operations.gmodel.AbstractCreateEdgeOperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.ReconnectEdgeOperationHandler;
 import org.eclipse.glsp.server.types.GLSPServerException;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -109,7 +109,7 @@ public class GenericsUtilTest {
    private static Stream<Arguments> matchingOperationHandler() {
       return Stream.of(
          arguments(ApplyLabelEditOperationHandler.class, ApplyLabelEditOperation.class),
-         arguments(CreateEdgeOperationHandler.class, CreateEdgeOperation.class),
+         arguments(AbstractCreateEdgeOperationHandler.class, CreateEdgeOperation.class),
          arguments(ReconnectEdgeOperationHandler.class, ReconnectEdgeOperation.class));
    }
 
@@ -149,8 +149,8 @@ public class GenericsUtilTest {
          arguments(RequestModelAction.class, ResponseAction.class, Optional.of(SetModelAction.class)),
          arguments(RequestModelAction.class, MyResponseActionExt.class, Optional.empty()),
          arguments(ApplyLabelEditOperationHandler.class, Operation.class, Optional.of(ApplyLabelEditOperation.class)),
-         arguments(CreateEdgeOperationHandler.class, Operation.class, Optional.of(CreateEdgeOperation.class)),
-         arguments(CreateEdgeOperationHandler.class, ResponseAction.class, Optional.empty()),
+         arguments(AbstractCreateEdgeOperationHandler.class, Operation.class, Optional.of(CreateEdgeOperation.class)),
+         arguments(AbstractCreateEdgeOperationHandler.class, ResponseAction.class, Optional.empty()),
          arguments(null, null, Optional.empty()),
          arguments(MyRequestAction.class, null, Optional.empty()),
          arguments(null, ResponseAction.class, Optional.empty()));

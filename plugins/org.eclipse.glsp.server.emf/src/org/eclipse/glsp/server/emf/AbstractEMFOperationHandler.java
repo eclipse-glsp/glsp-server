@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2022 EclipseSource and others.
+ * Copyright (c) 2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,26 +13,17 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.operations.gmodel;
+package org.eclipse.glsp.server.emf;
 
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
-import org.eclipse.glsp.server.operations.CompoundOperation;
 import org.eclipse.glsp.server.operations.Operation;
-import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
 
-import com.google.inject.Inject;
-
-public class CompoundOperationHandler extends AbstractOperationHandler<CompoundOperation> {
-   @Inject
-   protected OperationHandlerRegistry operationHandlerRegistry;
+public abstract class AbstractEMFOperationHandler<O extends Operation> extends AbstractOperationHandler<O>
+   implements EMFOperationHandler<O> {
 
    @Override
-   protected void executeOperation(final CompoundOperation operation) {
-      operation.getOperationList().forEach(nestedOperation -> executeNestedOperation(nestedOperation));
-   }
-
-   protected void executeNestedOperation(final Operation operation) {
-      operationHandlerRegistry.getOperationHandler(operation).ifPresent(handler -> handler.execute(operation));
+   protected void executeOperation(final O operation) {
+      EMFOperationHandler.super.execute(operation);
    }
 
 }

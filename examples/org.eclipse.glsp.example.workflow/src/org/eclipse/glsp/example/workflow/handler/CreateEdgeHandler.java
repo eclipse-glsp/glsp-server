@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -23,9 +23,9 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.graph.builder.impl.GEdgeBuilder;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.gmodel.CreateEdgeOperationHandler;
+import org.eclipse.glsp.server.operations.gmodel.AbstractCreateEdgeOperationHandler;
 
-public class CreateEdgeHandler extends CreateEdgeOperationHandler {
+public class CreateEdgeHandler extends AbstractCreateEdgeOperationHandler {
 
    public CreateEdgeHandler() {
       super(DefaultTypes.EDGE, "Edge");

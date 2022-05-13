@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2021 EclipseSource and others.
+ * Copyright (c) 2020-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -23,16 +23,16 @@ import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.eclipse.glsp.server.operations.gmodel.CreateNodeOperationHandler;
+import org.eclipse.glsp.server.operations.gmodel.AbstractCreateNodeOperationHandler;
 
-public abstract class CreateWorkflowNodeOperationHandler extends CreateNodeOperationHandler {
+public abstract class CreateWorkflowNodeOperationHandler extends AbstractCreateNodeOperationHandler {
 
    public CreateWorkflowNodeOperationHandler(final String elementTypeId) {
       super(elementTypeId);
    }
 
    @Override
-   protected Optional<GPoint> getLocation(final CreateNodeOperation operation) {
+   public Optional<GPoint> getLocation(final CreateNodeOperation operation) {
       return GridSnapper.snap(operation.getLocation());
    }
 

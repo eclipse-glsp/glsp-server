@@ -19,7 +19,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.glsp.server.actions.RequestAction;
+import org.eclipse.glsp.server.di.DiagramModule;
 
+/**
+ * Sent from the client to the server in order to request a GModel.
+ *
+ * <p>
+ * This is the first request sent by the client in order to obtain a GModel for rendering from the server.
+ * The server then uses the {@link SourceModelStorage} configured in the {@link DiagramModule} to load the source model
+ * and transforms it with the configured {@link GModelFactory} into a GModel and send this GModel to the client via the
+ * {@link ModelSubmissionHandler}.
+ * </p>
+ *
+ * @see RequestModelActionHandler
+ */
 public class RequestModelAction extends RequestAction<SetModelAction> {
 
    public static final String KIND = "requestModel";

@@ -32,12 +32,12 @@ import org.eclipse.glsp.server.features.core.model.RequestModelAction;
 import org.eclipse.glsp.server.features.core.model.SetBoundsAction;
 import org.eclipse.glsp.server.features.core.model.SetModelAction;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
-import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperationHandler;
+import org.eclipse.glsp.server.gmodel.AbstractGModelCreateEdgeOperationHandler;
+import org.eclipse.glsp.server.gmodel.GModelApplyLabelEditOperationHandler;
+import org.eclipse.glsp.server.gmodel.GModelReconnectEdgeOperationHandler;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.operations.ReconnectEdgeOperation;
-import org.eclipse.glsp.server.operations.gmodel.AbstractCreateEdgeOperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.ReconnectEdgeOperationHandler;
 import org.eclipse.glsp.server.types.GLSPServerException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -108,9 +108,9 @@ public class GenericsUtilTest {
 
    private static Stream<Arguments> matchingOperationHandler() {
       return Stream.of(
-         arguments(ApplyLabelEditOperationHandler.class, ApplyLabelEditOperation.class),
-         arguments(AbstractCreateEdgeOperationHandler.class, CreateEdgeOperation.class),
-         arguments(ReconnectEdgeOperationHandler.class, ReconnectEdgeOperation.class));
+         arguments(GModelApplyLabelEditOperationHandler.class, ApplyLabelEditOperation.class),
+         arguments(AbstractGModelCreateEdgeOperationHandler.class, CreateEdgeOperation.class),
+         arguments(GModelReconnectEdgeOperationHandler.class, ReconnectEdgeOperation.class));
    }
 
    @ParameterizedTest
@@ -130,7 +130,7 @@ public class GenericsUtilTest {
    private static Stream<Arguments> erroneousMatching() {
       return Stream.of(
          arguments(RequestBoundsAction.class, Operation.class),
-         arguments(ApplyLabelEditOperationHandler.class, ResponseAction.class),
+         arguments(GModelApplyLabelEditOperationHandler.class, ResponseAction.class),
          arguments(RequestModelAction.class, MyResponseActionExt.class));
    }
 
@@ -148,9 +148,11 @@ public class GenericsUtilTest {
          arguments(MyRequestActionExt.class, ResponseAction.class, Optional.of(MyResponseActionExt.class)),
          arguments(RequestModelAction.class, ResponseAction.class, Optional.of(SetModelAction.class)),
          arguments(RequestModelAction.class, MyResponseActionExt.class, Optional.empty()),
-         arguments(ApplyLabelEditOperationHandler.class, Operation.class, Optional.of(ApplyLabelEditOperation.class)),
-         arguments(AbstractCreateEdgeOperationHandler.class, Operation.class, Optional.of(CreateEdgeOperation.class)),
-         arguments(AbstractCreateEdgeOperationHandler.class, ResponseAction.class, Optional.empty()),
+         arguments(GModelApplyLabelEditOperationHandler.class, Operation.class,
+            Optional.of(ApplyLabelEditOperation.class)),
+         arguments(AbstractGModelCreateEdgeOperationHandler.class, Operation.class,
+            Optional.of(CreateEdgeOperation.class)),
+         arguments(AbstractGModelCreateEdgeOperationHandler.class, ResponseAction.class, Optional.empty()),
          arguments(null, null, Optional.empty()),
          arguments(MyRequestAction.class, null, Optional.empty()),
          arguments(null, ResponseAction.class, Optional.empty()));

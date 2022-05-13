@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2021 EclipseSource and others.
+ * Copyright (c) 2020-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.features.clipboard;
+package org.eclipse.glsp.server.gmodel;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,8 +21,10 @@ import java.util.Set;
 
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
-import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.AbstractActionHandler;
+import org.eclipse.glsp.server.actions.Action;
+import org.eclipse.glsp.server.features.clipboard.RequestClipboardDataAction;
+import org.eclipse.glsp.server.features.clipboard.SetClipboardDataAction;
 import org.eclipse.glsp.server.gson.GraphGsonConfigurationFactory;
 import org.eclipse.glsp.server.model.GModelState;
 
@@ -31,7 +33,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.inject.Inject;
 
-public class RequestClipboardDataActionHandler extends AbstractActionHandler<RequestClipboardDataAction> {
+/**
+ * Returns the serialized JSON data of the selected GModel elements as a {@link SetClipboardDataAction}.
+ */
+public class GModelRequestClipboardDataActionHandler extends AbstractActionHandler<RequestClipboardDataAction> {
 
    protected final Gson gson;
 
@@ -39,7 +44,7 @@ public class RequestClipboardDataActionHandler extends AbstractActionHandler<Req
    protected GModelState modelState;
 
    @Inject
-   public RequestClipboardDataActionHandler(final GraphGsonConfigurationFactory gsonConfigurator) {
+   public GModelRequestClipboardDataActionHandler(final GraphGsonConfigurationFactory gsonConfigurator) {
       GsonBuilder builder = gsonConfigurator.configureGson();
       gson = builder.create();
    }

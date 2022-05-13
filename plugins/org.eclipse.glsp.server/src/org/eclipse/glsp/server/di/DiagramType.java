@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2021-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -26,7 +26,6 @@ import java.lang.annotation.Target;
 import javax.inject.Qualifier;
 
 /**
- *
  * Helper annotation that is used for injecting the diagram type string into classes of diagram session (client session)
  * specific injectors.
  *

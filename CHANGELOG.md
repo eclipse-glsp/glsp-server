@@ -17,6 +17,7 @@
 - [server] Refactorings as part of cleaning up operation handlers [#622](https://github.com/eclipse-glsp/glsp/issues/648) ([java: #164](https://github.com/eclipse-glsp/glsp-server/pull/164))
   - Renamed `CreateEdgeOperationHandler` to `AbstractCreateEdgeOperationHandler`
   - Renamed `CreateNodeOperationHandler` to `AbstractCreateNodeOperationHandler`
+- [server] Move base diagram module and operation handlers that operate directly on GModels (as a model source) to the dedicated package `org.eclipse.glsp.server.gmodel` and add prefix `GModel` in the class name [#165](https://github.com/eclipse-glsp/glsp-server/pull/165)
 
 
 ## [v0.9.0- 09/12/2021](https://github.com/eclipse-glsp/glsp/releases/tag/0.9.0)

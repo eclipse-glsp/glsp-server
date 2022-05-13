@@ -24,6 +24,11 @@ import org.eclipse.glsp.server.model.GModelState;
 
 import com.google.inject.Inject;
 
+/**
+ * Default handler for the {@link SaveModelAction}.
+ *
+ * The implementation delegates to the {@link SourceModelStorage} to perform the save.
+ */
 public class SaveModelActionHandler extends AbstractActionHandler<SaveModelAction> {
 
    @Inject

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2021 EclipseSource and others.
+ * Copyright (c) 2020-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,6 +15,11 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actions;
 
+/**
+ * Notifies about a change of the edit mode, e.g. to readonly or editable.
+ *
+ * Clients typically enable or disable all editing tools with such an action.
+ */
 public class SetEditModeAction extends Action {
    public static final String KIND = "setEditMode";
    public static final String EDIT_MODE_READONLY = "readonly";

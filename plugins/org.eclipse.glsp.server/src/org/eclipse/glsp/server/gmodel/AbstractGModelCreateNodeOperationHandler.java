@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.operations.gmodel;
+package org.eclipse.glsp.server.gmodel;
 
 import java.util.List;
 import java.util.Map;
@@ -32,7 +32,11 @@ import org.eclipse.glsp.server.operations.CreateNodeOperationHandler;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
-public abstract class AbstractCreateNodeOperationHandler extends AbstractCreateOperationHandler<CreateNodeOperation>
+/**
+ * Abstract base class for applying an {@link CreateNodeOperation} directly to the GModel.
+ */
+public abstract class AbstractGModelCreateNodeOperationHandler
+   extends AbstractCreateOperationHandler<CreateNodeOperation>
    implements CreateNodeOperationHandler {
 
    @Inject
@@ -41,11 +45,11 @@ public abstract class AbstractCreateNodeOperationHandler extends AbstractCreateO
    @Inject
    protected ActionDispatcher actionDispatcher;
 
-   public AbstractCreateNodeOperationHandler(final String... elementTypeIds) {
+   public AbstractGModelCreateNodeOperationHandler(final String... elementTypeIds) {
       super(Lists.newArrayList(elementTypeIds));
    }
 
-   public AbstractCreateNodeOperationHandler(final List<String> handledElementTypeIds) {
+   public AbstractGModelCreateNodeOperationHandler(final List<String> handledElementTypeIds) {
       super(handledElementTypeIds);
    }
 
@@ -77,7 +81,7 @@ public abstract class AbstractCreateNodeOperationHandler extends AbstractCreateO
    /**
     * Create and return the new Node at the specified (optional) location. The location
     * is given in coordinates relative to the
-    * {@link AbstractCreateNodeOperationHandler#getContainer(CreateNodeOperation)}
+    * {@link AbstractGModelCreateNodeOperationHandler#getContainer(CreateNodeOperation)}
     * container.
     *
     * @param relativeLocation

@@ -96,11 +96,12 @@ import org.eclipse.glsp.server.internal.toolpalette.DefaultToolPaletteItemProvid
 import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.model.DefaultGModelState;
 import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.operations.CompoundOperationHandler;
+import org.eclipse.glsp.server.operations.CutOperationHandler;
+import org.eclipse.glsp.server.operations.LayoutOperationHandler;
 import org.eclipse.glsp.server.operations.OperationActionHandler;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
-import org.eclipse.glsp.server.operations.gmodel.CompoundOperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
 import org.eclipse.glsp.server.protocol.GLSPServer;
 
 import com.google.inject.Singleton;
@@ -334,6 +335,7 @@ public abstract class DiagramModule extends GLSPModule {
    protected void configureOperationHandlers(final MultiBinding<OperationHandler> binding) {
       binding.add(CompoundOperationHandler.class);
       binding.add(LayoutOperationHandler.class);
+      binding.add(CutOperationHandler.class);
    }
 
    protected Class<? extends OperationHandlerRegistry> bindOperationHandlerRegistry() {

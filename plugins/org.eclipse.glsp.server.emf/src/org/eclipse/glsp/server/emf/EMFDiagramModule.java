@@ -19,9 +19,9 @@ import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.di.DiagramModule;
 import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.operations.CompoundOperationHandler;
 import org.eclipse.glsp.server.operations.OperationActionHandler;
 import org.eclipse.glsp.server.operations.OperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.CompoundOperationHandler;
 
 import com.google.inject.Singleton;
 

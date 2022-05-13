@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,6 +15,9 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.operations;
 
+/**
+ * Changes the source and / or the target of an exisitng edge.
+ */
 public class ReconnectEdgeOperation extends Operation {
 
    public static final String KIND = "reconnectEdge";

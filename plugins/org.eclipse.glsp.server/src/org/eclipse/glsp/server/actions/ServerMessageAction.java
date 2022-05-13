@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -20,6 +20,9 @@ import java.util.Optional;
 import org.eclipse.glsp.server.types.ServerStatus;
 import org.eclipse.glsp.server.types.Severity;
 
+/**
+ * Instructs the client to show a notification message to the user.
+ */
 public class ServerMessageAction extends Action {
 
    public static final String KIND = "serverMessage";

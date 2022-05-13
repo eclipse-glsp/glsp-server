@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2021 EclipseSource and others.
+ * Copyright (c) 2020-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -17,6 +17,10 @@ package org.eclipse.glsp.server.actions;
 
 import java.util.Optional;
 
+/**
+ * Notifies the client about the state of the source model, whether it is saved or contains unsaved changes (i.e.,
+ * dirty).
+ */
 public class SetDirtyStateAction extends Action {
    public static final String KIND = "setDirtyState";
 

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2021 EclipseSource and others.
+ * Copyright (c) 2020-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -18,6 +18,9 @@ package org.eclipse.glsp.server.actions;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Instructs the client to trigger the node creation tool for a specified edge element type.
+ */
 public class TriggerNodeCreationAction extends TriggerElementCreationAction {
 
    public static final String KIND = "triggerNodeCreation";

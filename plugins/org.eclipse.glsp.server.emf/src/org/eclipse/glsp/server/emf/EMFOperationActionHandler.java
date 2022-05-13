@@ -23,7 +23,6 @@ import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.SetDirtyStateAction;
 import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.operations.OperationActionHandler;
-import org.eclipse.glsp.server.operations.OperationHandler;
 
 /**
  * A special {@link OperationActionHandler} that executes provided EMF commands of {@link EMFOperationHandler}
@@ -32,15 +31,13 @@ import org.eclipse.glsp.server.operations.OperationHandler;
 public class EMFOperationActionHandler extends OperationActionHandler {
 
    @Override
-   protected List<Action> executeHandler(final Operation operation, final OperationHandler handler) {
-      if (handler instanceof EMFOperationHandler) {
-         Optional<Command> cmd = EMFOperationHandler.class.cast(handler).getCommand(operation);
-         if (cmd.isPresent()) {
-            exexcuteCommand(cmd.get());
-            return submitModel();
-         }
+   protected List<Action> executeOperation(final Operation operation) {
+      Optional<Command> command = EMFOperationHandler.getCommand(operationHandlerRegistry, operation);
+      if (command.isPresent()) {
+         exexcuteCommand(command.get());
+         return submitModel();
       }
-      return super.executeHandler(operation, handler);
+      return super.executeOperation(operation);
    }
 
    protected void exexcuteCommand(final Command cmd) {

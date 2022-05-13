@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2021 EclipseSource and others.
+ * Copyright (c) 2020-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -58,4 +58,10 @@ public interface CreateOperationHandler extends OperationHandler {
     * @return The list of element types for which this handler has registered for.
     */
    List<String> getHandledElementTypeIds();
+
+   @Override
+   default boolean handles(final Operation operation) {
+      return OperationHandler.super.handles(operation)
+         && getHandledElementTypeIds().contains(getHandledOperationType().cast(operation).getElementTypeId());
+   }
 }

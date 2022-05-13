@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -25,6 +25,7 @@ import org.eclipse.glsp.graph.GBounds;
 import org.eclipse.glsp.graph.GBoundsAware;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GEdge;
+import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GModelRoot;
@@ -71,6 +72,32 @@ public final class LayoutUtil {
             alignable.setAlignment(a.getNewAlignment());
          }
       }
+   }
+
+   /**
+    * Returns the relative location of the given absolute location within the container.
+    *
+    * @param absoluteLocation absolute location
+    * @param container        container
+    * @return relative location if it can be determined, absolute location in case of error and null if the container
+    *         cannot contain any location.
+    */
+   public static GPoint getRelativeLocation(final GPoint absoluteLocation, final GModelElement container) {
+      // Only allow negative coordinates on the root graph, otherwise coordinates must be positive within the container
+      boolean allowNegativeCoordinates = container instanceof GGraph;
+      GModelElement modelElement = container;
+      if (modelElement instanceof GBoundsAware) {
+         try {
+            GPoint relativePosition = GeometryUtil.absoluteToRelative(absoluteLocation, (GBoundsAware) modelElement);
+            GPoint relativeLocation = allowNegativeCoordinates
+               ? relativePosition
+               : GraphUtil.point(Math.max(0, relativePosition.getX()), Math.max(0, relativePosition.getY()));
+            return relativeLocation;
+         } catch (IllegalArgumentException ex) {
+            return absoluteLocation;
+         }
+      }
+      return null;
    }
 
    /**

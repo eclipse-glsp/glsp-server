@@ -21,8 +21,6 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.glsp.server.operations.CompoundOperation;
 import org.eclipse.glsp.server.operations.Operation;
-import org.eclipse.glsp.server.operations.OperationActionHandler;
-import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
 
 import com.google.inject.Inject;
@@ -30,35 +28,23 @@ import com.google.inject.Inject;
 /**
  * Creates a compound command to wrap multiple commands into one command that is executed on the command stack.
  */
-public class EMFCompoundOperationHandler extends AbstractEMFBaseOperationHandler<CompoundOperation> {
+public class EMFCompoundOperationHandler extends AbstractEMFOperationHandler<CompoundOperation> {
 
    @Inject
    protected OperationHandlerRegistry operationHandlerRegistry;
 
    @Override
-   protected Optional<Command> createCommand(final CompoundOperation operation) {
+   public Optional<Command> createCommand(final CompoundOperation operation) {
       CompoundCommand compoundCommand = new CompoundCommand();
-      operation.getOperationList().forEach(nestedOperation -> {
-         Optional<Command> nestedCommand = collectNestedCommands(nestedOperation);
-         if (nestedCommand.isPresent()) {
-            compoundCommand.append(nestedCommand.get());
-         }
-      });
-      if (compoundCommand.getCommandList().isEmpty()) {
-         return Optional.empty();
-      }
-      return Optional.of(compoundCommand);
+      operation.getOperationList()
+         .forEach(nestedOperation -> getNestedCommand(nestedOperation).ifPresent(compoundCommand::append));
+      return compoundCommand.getCommandList().isEmpty()
+         ? Optional.empty()
+         : Optional.of(compoundCommand);
    }
 
-   protected Optional<Command> collectNestedCommands(final Operation operation) {
-      Optional<? extends OperationHandler> operationHandler = OperationActionHandler.getOperationHandler(operation,
-         operationHandlerRegistry);
-      if (operationHandler.isPresent()) {
-         if (operationHandler.get() instanceof EMFOperationHandler) {
-            return EMFOperationHandler.class.cast(operationHandler.get()).getCommand(operation);
-         }
-      }
-      return Optional.empty();
+   protected Optional<Command> getNestedCommand(final Operation operation) {
+      return EMFOperationHandler.getCommand(operationHandlerRegistry, operation);
    }
 
 }

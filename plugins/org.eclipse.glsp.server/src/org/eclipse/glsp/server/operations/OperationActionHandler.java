@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -50,11 +50,13 @@ public class OperationActionHandler extends AbstractActionHandler<Operation> {
          return listOf(ServerMessageUtil
             .warn("Server is in readonly-mode! Could not execute operation: " + operation.getKind()));
       }
-      Optional<? extends OperationHandler> operationHandler = getOperationHandler(operation, operationHandlerRegistry);
-      if (operationHandler.isPresent()) {
-         return executeHandler(operation, operationHandler.get());
-      }
-      return none();
+      return executeOperation(operation);
+   }
+
+   protected List<Action> executeOperation(final Operation operation) {
+      return operationHandlerRegistry.getOperationHandler(operation)
+         .map(handler -> executeHandler(operation, handler))
+         .orElseGet(this::none);
    }
 
    protected List<Action> executeHandler(final Operation operation, final OperationHandler handler) {
@@ -64,19 +66,12 @@ public class OperationActionHandler extends AbstractActionHandler<Operation> {
       return modelSubmissionHandler.submitModel(SetDirtyStateAction.Reason.OPERATION);
    }
 
+   /**
+    * Use {@link OperationHandlerRegistry#getOperationHandler(Operation) instead}.
+    */
+   @Deprecated
    public static Optional<? extends OperationHandler> getOperationHandler(final Operation operation,
       final OperationHandlerRegistry registry) {
-      Optional<? extends OperationHandler> operationHandler;
-      if (operation instanceof CreateOperation) {
-         operationHandler = registry.get(operation)
-            .filter(CreateOperationHandler.class::isInstance)
-            .map(CreateOperationHandler.class::cast)
-            .filter(
-               handler -> handler.getHandledElementTypeIds()
-                  .contains(((CreateOperation) operation).getElementTypeId()));
-      } else {
-         operationHandler = registry.get(operation);
-      }
-      return operationHandler;
+      return registry.getOperationHandler(operation);
    }
 }

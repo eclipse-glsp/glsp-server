@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.operations.gmodel;
+package org.eclipse.glsp.server.gmodel;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
@@ -35,11 +35,11 @@ import org.eclipse.glsp.server.types.ElementAndBounds;
 import com.google.inject.Inject;
 
 /**
- * Generic handler implementation for {@link ChangeBoundsOperation}.
+ * Applies {@link ChangeBoundsOperation} directly to the GModel.
  */
-public class ChangeBoundsOperationHandler extends AbstractOperationHandler<ChangeBoundsOperation> {
+public class GModelChangeBoundsOperationHandler extends AbstractOperationHandler<ChangeBoundsOperation> {
 
-   private static Logger LOGGER = LogManager.getLogger(ChangeBoundsOperationHandler.class);
+   private static Logger LOGGER = LogManager.getLogger(GModelChangeBoundsOperationHandler.class);
 
    @Inject
    protected GModelState modelState;

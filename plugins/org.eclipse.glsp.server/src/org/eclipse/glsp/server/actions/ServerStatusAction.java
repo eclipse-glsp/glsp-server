@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -18,6 +18,9 @@ package org.eclipse.glsp.server.actions;
 import org.eclipse.glsp.server.types.ServerStatus;
 import org.eclipse.glsp.server.types.Severity;
 
+/**
+ * Sent by the server to the client to notify it about a server status.
+ */
 public class ServerStatusAction extends Action {
    public static final String KIND = "serverStatus";
    private static final int NO_TIMEOUT = -1;

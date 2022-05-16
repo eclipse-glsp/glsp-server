@@ -13,26 +13,31 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.operations.gmodel;
+package org.eclipse.glsp.server.operations;
 
-import org.eclipse.glsp.server.operations.AbstractOperationHandler;
-import org.eclipse.glsp.server.operations.CompoundOperation;
-import org.eclipse.glsp.server.operations.Operation;
-import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
+import java.util.List;
+
+import org.eclipse.glsp.server.actions.ActionDispatcher;
 
 import com.google.inject.Inject;
 
-public class CompoundOperationHandler extends AbstractOperationHandler<CompoundOperation> {
+/**
+ * Performs the cut operation by dispatching a {@link DeleteOperation} for the elements to be cut.
+ */
+public class CutOperationHandler extends AbstractOperationHandler<CutOperation> {
+
    @Inject
-   protected OperationHandlerRegistry operationHandlerRegistry;
+   protected ActionDispatcher actionDispatcher;
 
    @Override
-   protected void executeOperation(final CompoundOperation operation) {
-      operation.getOperationList().forEach(nestedOperation -> executeNestedOperation(nestedOperation));
+   public void executeOperation(final CutOperation operation) {
+      List<String> cutableElementIds = getElementToCut(operation);
+      if (!cutableElementIds.isEmpty()) {
+         actionDispatcher.dispatch(new DeleteOperation(cutableElementIds));
+      }
    }
 
-   protected void executeNestedOperation(final Operation operation) {
-      operationHandlerRegistry.getOperationHandler(operation).ifPresent(handler -> handler.execute(operation));
+   protected List<String> getElementToCut(final CutOperation cutAction) {
+      return cutAction.getEditorContext().getSelectedElementIds();
    }
-
 }

@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.operations.gmodel;
+package org.eclipse.glsp.server.gmodel;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -36,10 +36,10 @@ import org.eclipse.glsp.server.operations.DeleteOperation;
 import com.google.inject.Inject;
 
 /**
- * Generic handler implementation for {@link DeleteOperation}.
+ * Applies {@link DeleteOperation} directly to the GModel.
  */
-public class DeleteOperationHandler extends AbstractOperationHandler<DeleteOperation> {
-   private static Logger LOGGER = LogManager.getLogger(DeleteOperationHandler.class);
+public class GModelDeleteOperationHandler extends AbstractOperationHandler<DeleteOperation> {
+   private static Logger LOGGER = LogManager.getLogger(GModelDeleteOperationHandler.class);
    protected Set<String> allDependantsIds;
 
    @Inject

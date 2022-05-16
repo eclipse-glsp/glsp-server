@@ -30,8 +30,8 @@ import com.google.inject.Inject;
  * the diagram type and the graph extension. In addition, default type mappings are configured.
  */
 public abstract class BaseDiagramConfiguration implements DiagramConfiguration {
-   @Inject()
-   @DiagramType()
+   @Inject
+   @DiagramType
    protected String diagramType;
 
    @Inject

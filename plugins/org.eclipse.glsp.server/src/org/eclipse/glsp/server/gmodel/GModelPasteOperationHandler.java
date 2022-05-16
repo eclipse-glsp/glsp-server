@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2021 EclipseSource and others.
+ * Copyright (c) 2020-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.operations.gmodel;
+package org.eclipse.glsp.server.gmodel;
 
 import static org.eclipse.glsp.server.utils.GModelUtil.filterByType;
 import static org.eclipse.glsp.server.utils.GeometryUtil.shift;
@@ -41,7 +41,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 
-public class PasteOperationHandler extends AbstractOperationHandler<PasteOperation> {
+/**
+ * Applies {@link PasteOperation} from the clipboard directly to the GModel.
+ *
+ * @see GModelRequestClipboardDataActionHandler
+ */
+public class GModelPasteOperationHandler extends AbstractOperationHandler<PasteOperation> {
 
    private static final int DEFAULT_OFFSET = 20;
 
@@ -51,7 +56,7 @@ public class PasteOperationHandler extends AbstractOperationHandler<PasteOperati
    protected final Gson gson;
 
    @Inject
-   public PasteOperationHandler(final GraphGsonConfigurationFactory gsonConfigurator) {
+   public GModelPasteOperationHandler(final GraphGsonConfigurationFactory gsonConfigurator) {
       GsonBuilder builder = gsonConfigurator.configureGson();
       gson = builder.create();
    }

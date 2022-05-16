@@ -37,7 +37,7 @@ import com.google.inject.Inject;
 public final class DefaultClientSessionManager extends Disposable implements ClientSessionManager, GLSPServerListener {
    private static final String ALL_CLIENT_IDS_KEY = "*";
 
-   @Inject()
+   @Inject
    protected ClientSessionFactory sessionFactory;
 
    protected final Map<String, ClientSession> clientSessions = new HashMap<>();

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,29 +13,34 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.features.directediting;
+package org.eclipse.glsp.server.operations;
 
 import java.util.Optional;
 
-import org.eclipse.glsp.graph.GLabel;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.AbstractOperationHandler;
+import org.eclipse.glsp.server.diagram.DiagramConfiguration;
+import org.eclipse.glsp.server.layout.LayoutEngine;
+import org.eclipse.glsp.server.layout.ServerLayoutKind;
 
 import com.google.inject.Inject;
 
-public class ApplyLabelEditOperationHandler extends AbstractOperationHandler<ApplyLabelEditOperation> {
+/**
+ * Delegates to the configured {@link LayoutEngine} to apply a layout.
+ */
+public class LayoutOperationHandler extends AbstractOperationHandler<LayoutOperation> {
 
    @Inject
-   protected GModelState modelState;
+   protected Optional<LayoutEngine> layoutEngine;
+
+   @Inject
+   protected DiagramConfiguration diagramConfiguration;
 
    @Override
-   public void executeOperation(final ApplyLabelEditOperation operation) {
-      Optional<GModelElement> element = modelState.getIndex().get(operation.getLabelId());
-      if (!element.isPresent() && !(element.get() instanceof GLabel)) {
-         throw new IllegalArgumentException("Element with provided ID cannot be found or is not a GLabel");
+   protected void executeOperation(final LayoutOperation action) {
+      if (diagramConfiguration.getLayoutKind() == ServerLayoutKind.MANUAL) {
+         if (layoutEngine.isPresent()) {
+            layoutEngine.get().layout();
+         }
       }
-      GLabel sLabel = (GLabel) element.get();
-      sLabel.setText(operation.getText());
    }
+
 }

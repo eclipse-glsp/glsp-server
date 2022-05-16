@@ -36,13 +36,13 @@ import com.google.inject.name.Named;
 
 public class DefaultClientSessionFactory implements ClientSessionFactory {
 
-   @Inject()
+   @Inject
    protected Injector serverInjector;
 
-   @Inject()
+   @Inject
    protected DiagramGlobalScope diagramGlobalScope;
 
-   @Inject()
+   @Inject
    @Named(ServerModule.DIAGRAM_MODULES)
    protected Map<String, Module> diagramModules;
 

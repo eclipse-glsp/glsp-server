@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,6 +15,17 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.types;
 
+import org.eclipse.glsp.server.diagram.RequestTypeHintsAction;
+
+/**
+ * Type hints are sent from the server to the client to provide information on which edit operations are possible for
+ * elements of a certain type.
+ *
+ * This additional information helps the client to configure editing tools and visual feedback for elements accordingly
+ * without needing to interact during a user interaction.
+ *
+ * @see RequestTypeHintsAction
+ */
 public abstract class ElementTypeHint {
 
    private String elementTypeId;

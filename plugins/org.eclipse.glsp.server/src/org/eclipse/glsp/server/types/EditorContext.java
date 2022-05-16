@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -22,6 +22,13 @@ import java.util.Optional;
 
 import org.eclipse.glsp.graph.GPoint;
 
+/**
+ * An editor context contains contextual information about the editor state on the client.
+ *
+ * This context covers aspects, like selection or mouse position, but can be extended with custom arguments.
+ * An editor context is sent by the client as part of certain actions, where additional context information may be
+ * needed to process certain actions.
+ */
 public class EditorContext {
 
    private List<String> selectedElementIds;

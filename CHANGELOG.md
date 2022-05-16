@@ -1,23 +1,34 @@
 # Eclipse GLSP Server Changelog
-## v0.10.0 - Upcoming
+
+## v0.1.0 - Upcoming
 
 ### Changes
 
-- [documentation] Improved existing API javadoc and added missing documentation for service interfaces. [#487](https://github.com/eclipse-glsp/glsp-server/pull/146) - Contributed on behalf of STMicroelectronics
-- 
+- [documentation] Improved existing API javadoc and added missing documentation for service interfaces. [#164](https://github.com/eclipse-glsp/glsp-server/pull/146) - Contributed on behalf of STMicroelectronics
+- [graph] Fixed a bug that lead to incomplete `GModelIndex` initialization [#143](https://github.com/eclipse-glsp/glsp-server/pull/143)
+- [example] Improved styling and cleaned up code of the workflow example [#148](https://github.com/eclipse-glsp/glsp-server/pull/148) [#156](https://github.com/eclipse-glsp/glsp-server/pull/156)
+- [gson] Ensure that `DefaultServerGsonConfigurator` properly disposes temporary DI diagram sessions after server initialization.[#151](https://github.com/eclipse-glsp/glsp-server/pull/151)
+- [layout] Ensure that `LayoutEngine` is injected as optional field to avoid `NullPointerExceptions`s if no implementation is bound [#153](https://github.com/eclipse-glsp/glsp-server/pull/153/)
+- [build] Remove dependency to `org.apache.commons.io` [#157](https://github.com/eclipse-glsp/glsp-server/pull/157)
+- [emf] Inception of new `org.eclipse.glsp.server.emf` package + example models
+  - Provides reusable base classes for EMF-based source models [#159](https://github.com/eclipse-glsp/glsp-server/pull/159)
 
 ### Breaking Changes
 
-- [server] Source model refactorings [#582](https://github.com/eclipse-glsp/glsp/issues/582) ([java: #154](https://github.com/eclipse-glsp/glsp-server/pull/154))
+- [protocol] Align server actions with the definitions in @eclipse-glsp-protocol [#142](https://github.com/eclipse-glsp/glsp-server/pull/142)
+  - Affects methods and return types of all action classes.
+- [model] Source model refactoring  [#154](https://github.com/eclipse-glsp/glsp-server/pull/154)
   - `ModelSourceLoader` → `SourceModelStorage`
   - `ModelSourceWatcher` → `SourceModelWatcher`
   - Added method to `SourceModelStorage`
-- [server] Refactorings as part of adding new GLSP examples [#622](https://github.com/eclipse-glsp/glsp/issues/622) ([java: #159](https://github.com/eclipse-glsp/glsp-server/pull/159), [java: #161](https://github.com/eclipse-glsp/glsp-server/pull/161))
+- [model] Refactoring as part of adding new GLSP examples [#159](https://github.com/eclipse-glsp/glsp-server/pull/159), [#161](https://github.com/eclipse-glsp/glsp-server/pull/161)
   - Renamed `setRoot` to `updateRoot` in model state to better reflect dependent updates, remove re-generation of command stack in method but add index re-generation
-- [server] Refactorings as part of cleaning up operation handlers [#622](https://github.com/eclipse-glsp/glsp/issues/648) ([java: #164](https://github.com/eclipse-glsp/glsp-server/pull/164))
+- [operation] Refactoring as part of cleaning up operation handlers [#164](https://github.com/eclipse-glsp/glsp-server/pull/164)
   - Renamed `CreateEdgeOperationHandler` to `AbstractCreateEdgeOperationHandler`
   - Renamed `CreateNodeOperationHandler` to `AbstractCreateNodeOperationHandler`
-
+- [gmodel] Move base diagram module and operation handlers that operate directly on GModels (as a model source) to the dedicated package `org.eclipse.glsp.server.gmodel` and add prefix `GModel` in the class name [#165](https://github.com/eclipse-glsp/glsp-server/pull/165)
+- [logging] Update from log4j 1.x to log4j 2.17.1. [#163](https://github.com/eclipse-glsp/glsp-server/pull/163/)
+  - Affects logger creation across all classes
 
 ## [v0.9.0- 09/12/2021](https://github.com/eclipse-glsp/glsp/releases/tag/0.9.0)
 

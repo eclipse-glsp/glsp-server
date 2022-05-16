@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2021 EclipseSource and others.
+ * Copyright (c) 2020-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -29,6 +29,12 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.name.Named;
 
+/**
+ * Action handler for client actions.
+ *
+ * This action handler is registered for all actions that are handled on the
+ * client and sends them to the client on execution.
+ */
 public class ClientActionHandler implements ActionHandler {
 
    @Inject
@@ -57,4 +63,5 @@ public class ClientActionHandler implements ActionHandler {
       ActionMessage message = new ActionMessage(clientId, action);
       client.get().process(message);
    }
+
 }

@@ -17,6 +17,9 @@ package org.eclipse.glsp.server.actions;
 
 import org.eclipse.glsp.server.internal.util.GenericsUtil;
 
+/**
+ * The response to a {@link RequestAction}.
+ */
 public class ResponseAction extends Action {
    private String responseId;
 

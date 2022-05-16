@@ -37,20 +37,20 @@ import com.google.inject.name.Named;
 
 public class DefaultServerConfigurationContribution implements ServerConfigurationContribution {
 
-   @Inject()
+   @Inject
    @DiagramType
    protected String diagramType;
 
-   @Inject()
+   @Inject
    protected GraphGsonConfigurationFactory graphGsonConfigurationFactory;
 
-   @Inject()
+   @Inject
    protected Set<ActionHandler> actionHandlers;
 
-   @Inject()
+   @Inject
    protected Set<OperationHandler> operationHandlers;
 
-   @Inject()
+   @Inject
    @Named(CLIENT_ACTIONS)
    protected Set<Action> clientActions;
 

@@ -13,32 +13,37 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.di;
+package org.eclipse.glsp.server.gmodel;
 
 import org.eclipse.glsp.server.actions.ActionHandler;
-import org.eclipse.glsp.server.features.clipboard.RequestClipboardDataActionHandler;
+import org.eclipse.glsp.server.di.DiagramModule;
+import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
-import org.eclipse.glsp.server.features.core.model.JsonFileGModelStore;
 import org.eclipse.glsp.server.features.core.model.SourceModelStorage;
-import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperationHandler;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.operations.OperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.ChangeBoundsOperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.ChangeRoutingPointsHandler;
-import org.eclipse.glsp.server.operations.gmodel.CutOperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.DeleteOperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.PasteOperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.ReconnectEdgeOperationHandler;
 
 /**
- * Reusable base class for diagram implementations that operate on the plain gmodel and use JSON for serialization.
+ * Base class for diagram implementations where the GModel is used as source model directly.
+ * <p>
+ * Thus, diagram implementations that use this module operate on the plain GModel directly and use JSON for
+ * serialization. They don't use any other information source to produce the GModel (see {@link GModelFactory}) and all
+ * operation handlers directly manipulate the GModel (as this is the source model in this scenario).
+ * </p>
+ * <p>
+ * This module is <b>not</b> intended to be used for editors that operate on another source model, such as an EMF model,
+ * etc. In those scenarios, a dedicated {@link SourceModelStorage}, {@link GModelFactory}, and set of operation
+ * handlers, etc. are required that load, transform (into a GModel) and manipulate that particular source model
+ * directly and re-create the GModel after each manipulation of the source model.
+ * For those scenarios please extend the {@link DiagramModule} directly or use a dedicated base module, such as
+ * the `org.eclipse.glsp.server.emf.EMFDiagramModule`.
+ * </p>
  **/
-public abstract class GModelJsonDiagramModule extends DiagramModule {
+public abstract class GModelDiagramModule extends DiagramModule {
 
    @Override
    protected Class<? extends SourceModelStorage> bindSourceModelStorage() {
-      return JsonFileGModelStore.class;
+      return GModelStorage.class;
    }
 
    @Override
@@ -49,20 +54,18 @@ public abstract class GModelJsonDiagramModule extends DiagramModule {
    @Override
    protected void configureActionHandlers(final MultiBinding<ActionHandler> binding) {
       super.configureActionHandlers(binding);
-      binding.add(RequestClipboardDataActionHandler.class);
+      binding.add(GModelRequestClipboardDataActionHandler.class);
    }
 
    @Override
    protected void configureOperationHandlers(final MultiBinding<OperationHandler> binding) {
       super.configureOperationHandlers(binding);
-      binding.add(ApplyLabelEditOperationHandler.class);
-      binding.add(ChangeBoundsOperationHandler.class);
-      binding.add(ChangeRoutingPointsHandler.class);
-      binding.add(CutOperationHandler.class);
-      binding.add(DeleteOperationHandler.class);
-      binding.add(LayoutOperationHandler.class);
-      binding.add(PasteOperationHandler.class);
-      binding.add(ReconnectEdgeOperationHandler.class);
+      binding.add(GModelApplyLabelEditOperationHandler.class);
+      binding.add(GModelChangeBoundsOperationHandler.class);
+      binding.add(GModelChangeRoutingPointsHandler.class);
+      binding.add(GModelDeleteOperationHandler.class);
+      binding.add(GModelReconnectEdgeOperationHandler.class);
+      binding.add(GModelPasteOperationHandler.class);
    }
 
    @Override

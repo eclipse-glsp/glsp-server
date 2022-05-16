@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2021-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -17,6 +17,9 @@ package org.eclipse.glsp.server.actions;
 
 import org.eclipse.glsp.server.types.Viewport;
 
+/**
+ * Instructs the client to set a specific {@link Viewport} (zoom level and scroll coordinates).
+ */
 public class SetViewportAction extends Action {
 
    public static final String KIND = "viewport";

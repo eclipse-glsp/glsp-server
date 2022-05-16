@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -19,6 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Instructs the client to fit one or more specified elements into viewport.
+ *
+ * This will adjust the viewport by panning and zooming so that the specified elements
+ * are visible and take the full space in the viewport.
+ */
 public class FitToScreenAction extends Action {
 
    public static final String KIND = "fit";

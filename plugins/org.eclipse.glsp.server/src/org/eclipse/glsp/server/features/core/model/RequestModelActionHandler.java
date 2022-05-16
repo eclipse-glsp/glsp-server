@@ -21,6 +21,7 @@ import java.util.Optional;
 import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
+import org.eclipse.glsp.server.di.DiagramModule;
 import org.eclipse.glsp.server.features.modelsourcewatcher.SourceModelWatcher;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.ServerMessageUtil;
@@ -28,6 +29,16 @@ import org.eclipse.glsp.server.utils.ServerStatusUtil;
 
 import com.google.inject.Inject;
 
+/**
+ * Default handler for {@link RequestModelAction}.
+ *
+ * <p>
+ * The {@link RequestModelAction} is the first request sent by the client in order to obtain a GModel for rendering from
+ * the server. The server then uses the {@link SourceModelStorage} configured in the {@link DiagramModule} to load the
+ * source model and transforms it with the configured {@link GModelFactory} into a GModel and send this GModel to the
+ * client via the {@link ModelSubmissionHandler}.
+ * </p>
+ */
 public class RequestModelActionHandler extends AbstractActionHandler<RequestModelAction> {
 
    @Inject

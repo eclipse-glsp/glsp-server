@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.operations.gmodel;
+package org.eclipse.glsp.server.gmodel;
 
 import static org.eclipse.glsp.server.utils.GModelUtil.IS_CONNECTABLE;
 
@@ -31,7 +31,11 @@ import org.eclipse.glsp.server.operations.CreateEdgeOperationHandler;
 
 import com.google.inject.Inject;
 
-public abstract class AbstractCreateEdgeOperationHandler extends AbstractCreateOperationHandler<CreateEdgeOperation>
+/**
+ * Abstract base class for applying an {@link CreateEdgeOperation} directly to the GModel.
+ */
+public abstract class AbstractGModelCreateEdgeOperationHandler
+   extends AbstractCreateOperationHandler<CreateEdgeOperation>
    implements CreateEdgeOperationHandler {
 
    protected final String label;
@@ -39,17 +43,17 @@ public abstract class AbstractCreateEdgeOperationHandler extends AbstractCreateO
    @Inject
    protected GModelState modelState;
 
-   public AbstractCreateEdgeOperationHandler(final String elementTypeId, final String label) {
+   public AbstractGModelCreateEdgeOperationHandler(final String elementTypeId, final String label) {
       super(elementTypeId);
       this.label = label;
    }
 
-   public AbstractCreateEdgeOperationHandler(final String... elementTypeIds) {
+   public AbstractGModelCreateEdgeOperationHandler(final String... elementTypeIds) {
       super(elementTypeIds);
       this.label = super.getLabel();
    }
 
-   public AbstractCreateEdgeOperationHandler(final List<String> handledElementTypeIds) {
+   public AbstractGModelCreateEdgeOperationHandler(final List<String> handledElementTypeIds) {
       super(handledElementTypeIds);
       this.label = super.getLabel();
    }

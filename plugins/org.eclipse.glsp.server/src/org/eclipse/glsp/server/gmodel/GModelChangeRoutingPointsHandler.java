@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.operations.gmodel;
+package org.eclipse.glsp.server.gmodel;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
@@ -22,13 +22,16 @@ import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.ChangeRoutingPointsOperation;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
+import org.eclipse.glsp.server.operations.ChangeRoutingPointsOperation;
 import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
 
 import com.google.inject.Inject;
 
-public class ChangeRoutingPointsHandler extends AbstractOperationHandler<ChangeRoutingPointsOperation> {
+/**
+ * Applies {@link ChangeRoutingPointsOperation} directly to the GModel.
+ */
+public class GModelChangeRoutingPointsHandler extends AbstractOperationHandler<ChangeRoutingPointsOperation> {
 
    @Inject
    protected GModelState modelState;

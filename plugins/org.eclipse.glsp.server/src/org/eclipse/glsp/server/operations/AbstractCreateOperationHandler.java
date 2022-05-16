@@ -21,6 +21,7 @@ import com.google.common.collect.Lists;
 
 public abstract class AbstractCreateOperationHandler<T extends CreateOperation> extends AbstractOperationHandler<T>
    implements CreateOperationHandler {
+
    protected List<String> handledElementTypeIds;
 
    public AbstractCreateOperationHandler(final String... elementTypeIds) {

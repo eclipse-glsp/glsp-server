@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.features.core.model;
+package org.eclipse.glsp.server.gmodel;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
@@ -36,6 +36,8 @@ import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.graph.GraphFactory;
 import org.eclipse.glsp.server.actions.SaveModelAction;
+import org.eclipse.glsp.server.features.core.model.RequestModelAction;
+import org.eclipse.glsp.server.features.core.model.SourceModelStorage;
 import org.eclipse.glsp.server.gson.GraphGsonConfigurationFactory;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.types.GLSPServerException;
@@ -47,9 +49,9 @@ import com.google.inject.Inject;
 /**
  * A source model storage that reads and writes the graph model directly from and to a JSON file.
  */
-public class JsonFileGModelStore implements SourceModelStorage {
+public class GModelStorage implements SourceModelStorage {
 
-   private static Logger LOGGER = LogManager.getLogger(JsonFileGModelStore.class);
+   private static Logger LOGGER = LogManager.getLogger(GModelStorage.class);
    private static String EMPTY_ROOT_ID = "glsp-graph";
 
    @Inject

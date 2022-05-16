@@ -40,7 +40,7 @@ public class DefaultServerGsonConfigurator implements ServerGsonConfigurator {
    protected ActionRegistry actionRegistry;
    protected GraphGsonConfigurator graphGsonConfigurator;
 
-   @Inject()
+   @Inject
    public DefaultServerGsonConfigurator(final Injector serverInjector,
       @Named(DIAGRAM_MODULES) final Map<String, Module> diagramModules, final ActionRegistry actionRegistry,
       final ClientSessionManager sessionManager) {

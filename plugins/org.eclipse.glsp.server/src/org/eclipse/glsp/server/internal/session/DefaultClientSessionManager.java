@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2021 EclipseSource and others.
+ * Copyright (c) 2020-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -34,7 +34,7 @@ import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.google.inject.Inject;
 
-public final class DefaultClientSessionManager extends Disposable implements ClientSessionManager, GLSPServerListener {
+public class DefaultClientSessionManager extends Disposable implements ClientSessionManager, GLSPServerListener {
    private static final String ALL_CLIENT_IDS_KEY = "*";
 
    @Inject

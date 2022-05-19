@@ -86,7 +86,7 @@ import org.eclipse.glsp.server.features.validation.SetMarkersAction;
 import org.eclipse.glsp.server.gson.GraphGsonConfigurationFactory;
 import org.eclipse.glsp.server.internal.actions.DefaultActionDispatcher;
 import org.eclipse.glsp.server.internal.actions.DefaultActionHandlerRegistry;
-import org.eclipse.glsp.server.internal.digram.DefaultServerConfigurationContribution;
+import org.eclipse.glsp.server.internal.diagram.DefaultServerConfigurationContribution;
 import org.eclipse.glsp.server.internal.featues.directediting.DefaultContextEditValidatorRegistry;
 import org.eclipse.glsp.server.internal.featues.navigation.DefaultNavigationTargetProviderRegistry;
 import org.eclipse.glsp.server.internal.features.contextactions.DefaultContextActionsProviderRegistry;

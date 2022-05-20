@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  * 
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -331,6 +331,21 @@ public class GraphSwitch<T> extends Switch<T> {
                result = caseGModelElement(gPreRenderedElement);
             if (result == null)
                result = caseGArgumentable(gPreRenderedElement);
+            if (result == null)
+               result = defaultCase(theEObject);
+            return result;
+         }
+         case GraphPackage.GSHAPE_PRE_RENDERED_ELEMENT: {
+            GShapePreRenderedElement gShapePreRenderedElement = (GShapePreRenderedElement) theEObject;
+            T result = caseGShapePreRenderedElement(gShapePreRenderedElement);
+            if (result == null)
+               result = caseGPreRenderedElement(gShapePreRenderedElement);
+            if (result == null)
+               result = caseGBoundsAware(gShapePreRenderedElement);
+            if (result == null)
+               result = caseGModelElement(gShapePreRenderedElement);
+            if (result == null)
+               result = caseGArgumentable(gShapePreRenderedElement);
             if (result == null)
                result = defaultCase(theEObject);
             return result;
@@ -694,16 +709,31 @@ public class GraphSwitch<T> extends Switch<T> {
    }
 
    /**
-    * Returns the result of interpreting the object as an instance of '<em>String To Object Map Entry</em>'.
+    * Returns the result of interpreting the object as an instance of '<em>GShape Pre Rendered Element</em>'.
     * <!-- begin-user-doc -->
     * This implementation returns null;
     * returning a non-null result will terminate the switch.
     * <!-- end-user-doc -->
     * @param object the target of the switch.
-    * @return the result of interpreting the object as an instance of '<em>String To Object Map Entry</em>'.
+    * @return the result of interpreting the object as an instance of '<em>GShape Pre Rendered Element</em>'.
     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
     * @generated
     */
+   public T caseGShapePreRenderedElement(GShapePreRenderedElement object) {
+      return null;
+   }
+
+   /**
+   	 * Returns the result of interpreting the object as an instance of '<em>String To Object Map Entry</em>'.
+   	 * <!-- begin-user-doc -->
+    * This implementation returns null;
+    * returning a non-null result will terminate the switch.
+    * <!-- end-user-doc -->
+   	 * @param object the target of the switch.
+   	 * @return the result of interpreting the object as an instance of '<em>String To Object Map Entry</em>'.
+   	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   	 * @generated
+   	 */
    public T caseStringToObjectMapEntry(Map.Entry<String, Object> object) {
       return null;
    }

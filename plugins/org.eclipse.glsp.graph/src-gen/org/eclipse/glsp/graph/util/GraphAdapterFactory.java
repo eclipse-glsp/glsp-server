@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  * 
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -195,6 +195,11 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
       @Override
       public Adapter caseGPreRenderedElement(GPreRenderedElement object) {
          return createGPreRenderedElementAdapter();
+      }
+
+      @Override
+      public Adapter caseGShapePreRenderedElement(GShapePreRenderedElement object) {
+         return createGShapePreRenderedElementAdapter();
       }
 
       @Override
@@ -544,15 +549,29 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
    }
 
    /**
-    * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Object Map Entry</em>}'.
+    * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GShapePreRenderedElement <em>GShape Pre Rendered Element</em>}'.
     * <!-- begin-user-doc -->
     * This default implementation returns null so that we can easily ignore cases;
     * it's useful to ignore a case when inheritance will catch all the cases anyway.
     * <!-- end-user-doc -->
     * @return the new adapter.
-    * @see java.util.Map.Entry
+    * @see org.eclipse.glsp.graph.GShapePreRenderedElement
     * @generated
     */
+   public Adapter createGShapePreRenderedElementAdapter() {
+      return null;
+   }
+
+   /**
+   	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Object Map Entry</em>}'.
+   	 * <!-- begin-user-doc -->
+    * This default implementation returns null so that we can easily ignore cases;
+    * it's useful to ignore a case when inheritance will catch all the cases anyway.
+    * <!-- end-user-doc -->
+   	 * @return the new adapter.
+   	 * @see java.util.Map.Entry
+   	 * @generated
+   	 */
    public Adapter createStringToObjectMapEntryAdapter() {
       return null;
    }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  * 
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -198,12 +198,21 @@ public interface GraphFactory extends EFactory {
    GPreRenderedElement createGPreRenderedElement();
 
    /**
-    * Returns the package supported by this factory.
+    * Returns a new object of class '<em>GShape Pre Rendered Element</em>'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @return the package supported by this factory.
+    * @return a new object of class '<em>GShape Pre Rendered Element</em>'.
     * @generated
     */
+   GShapePreRenderedElement createGShapePreRenderedElement();
+
+   /**
+   	 * Returns the package supported by this factory.
+   	 * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+   	 * @return the package supported by this factory.
+   	 * @generated
+   	 */
    GraphPackage getGraphPackage();
 
 } //GraphFactory

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  * 
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -50,6 +50,7 @@ import org.eclipse.glsp.graph.GPort;
 import org.eclipse.glsp.graph.GPreRenderedElement;
 import org.eclipse.glsp.graph.GSeverity;
 import org.eclipse.glsp.graph.GShapeElement;
+import org.eclipse.glsp.graph.GShapePreRenderedElement;
 import org.eclipse.glsp.graph.GraphFactory;
 import org.eclipse.glsp.graph.GraphPackage;
 
@@ -226,6 +227,13 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
     * <!-- end-user-doc -->
     * @generated
     */
+   private EClass gShapePreRenderedElementEClass = null;
+
+   /**
+   	 * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+   	 * @generated
+   	 */
    private EClass stringToObjectMapEntryEClass = null;
 
    /**
@@ -849,6 +857,14 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
     * @generated
     */
    @Override
+   public EClass getGShapePreRenderedElement() { return gShapePreRenderedElementEClass; }
+
+   /**
+   	 * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+   	 * @generated
+   	 */
+   @Override
    public EClass getStringToObjectMapEntry() { return stringToObjectMapEntryEClass; }
 
    /**
@@ -994,6 +1010,8 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
       gPreRenderedElementEClass = createEClass(GPRE_RENDERED_ELEMENT);
       createEAttribute(gPreRenderedElementEClass, GPRE_RENDERED_ELEMENT__CODE);
 
+      gShapePreRenderedElementEClass = createEClass(GSHAPE_PRE_RENDERED_ELEMENT);
+
       stringToObjectMapEntryEClass = createEClass(STRING_TO_OBJECT_MAP_ENTRY);
       createEAttribute(stringToObjectMapEntryEClass, STRING_TO_OBJECT_MAP_ENTRY__KEY);
       createEAttribute(stringToObjectMapEntryEClass, STRING_TO_OBJECT_MAP_ENTRY__VALUE);
@@ -1051,6 +1069,8 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
       gButtonEClass.getESuperTypes().add(this.getGShapeElement());
       gHtmlRootEClass.getESuperTypes().add(this.getGModelRoot());
       gPreRenderedElementEClass.getESuperTypes().add(this.getGModelElement());
+      gShapePreRenderedElementEClass.getESuperTypes().add(this.getGPreRenderedElement());
+      gShapePreRenderedElementEClass.getESuperTypes().add(this.getGBoundsAware());
 
       // Initialize classes, features, and operations; add parameters
       initEClass(gModelElementEClass, GModelElement.class, "GModelElement", IS_ABSTRACT, IS_INTERFACE,
@@ -1212,6 +1232,9 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
       initEAttribute(getGPreRenderedElement_Code(), ecorePackage.getEString(), "code", null, 0, 1,
          GPreRenderedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
          !IS_DERIVED, IS_ORDERED);
+
+      initEClass(gShapePreRenderedElementEClass, GShapePreRenderedElement.class, "GShapePreRenderedElement",
+         !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
       initEClass(stringToObjectMapEntryEClass, Map.Entry.class, "StringToObjectMapEntry", !IS_ABSTRACT, !IS_INTERFACE,
          !IS_GENERATED_INSTANCE_CLASS);

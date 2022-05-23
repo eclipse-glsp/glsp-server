@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  * 
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -2093,14 +2093,132 @@ public interface GraphPackage extends EPackage {
    int GPRE_RENDERED_ELEMENT_OPERATION_COUNT = GMODEL_ELEMENT_OPERATION_COUNT + 0;
 
    /**
-    * The meta object id for the '{@link org.eclipse.glsp.graph.impl.StringToObjectMapEntryImpl <em>String To Object Map Entry</em>}' class.
+    * The meta object id for the '{@link org.eclipse.glsp.graph.impl.GShapePreRenderedElementImpl <em>GShape Pre Rendered Element</em>}' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @see org.eclipse.glsp.graph.impl.StringToObjectMapEntryImpl
-    * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getStringToObjectMapEntry()
+    * @see org.eclipse.glsp.graph.impl.GShapePreRenderedElementImpl
+    * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGShapePreRenderedElement()
     * @generated
     */
-   int STRING_TO_OBJECT_MAP_ENTRY = 23;
+   int GSHAPE_PRE_RENDERED_ELEMENT = 23;
+
+   /**
+   	 * The feature id for the '<em><b>Args</b></em>' map.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @generated
+   	 * @ordered
+   	 */
+   int GSHAPE_PRE_RENDERED_ELEMENT__ARGS = GPRE_RENDERED_ELEMENT__ARGS;
+
+   /**
+   	 * The feature id for the '<em><b>Id</b></em>' attribute.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @generated
+   	 * @ordered
+   	 */
+   int GSHAPE_PRE_RENDERED_ELEMENT__ID = GPRE_RENDERED_ELEMENT__ID;
+
+   /**
+   	 * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @generated
+   	 * @ordered
+   	 */
+   int GSHAPE_PRE_RENDERED_ELEMENT__CSS_CLASSES = GPRE_RENDERED_ELEMENT__CSS_CLASSES;
+
+   /**
+   	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @generated
+   	 * @ordered
+   	 */
+   int GSHAPE_PRE_RENDERED_ELEMENT__CHILDREN = GPRE_RENDERED_ELEMENT__CHILDREN;
+
+   /**
+   	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @generated
+   	 * @ordered
+   	 */
+   int GSHAPE_PRE_RENDERED_ELEMENT__PARENT = GPRE_RENDERED_ELEMENT__PARENT;
+
+   /**
+   	 * The feature id for the '<em><b>Trace</b></em>' attribute.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @generated
+   	 * @ordered
+   	 */
+   int GSHAPE_PRE_RENDERED_ELEMENT__TRACE = GPRE_RENDERED_ELEMENT__TRACE;
+
+   /**
+   	 * The feature id for the '<em><b>Type</b></em>' attribute.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @generated
+   	 * @ordered
+   	 */
+   int GSHAPE_PRE_RENDERED_ELEMENT__TYPE = GPRE_RENDERED_ELEMENT__TYPE;
+
+   /**
+   	 * The feature id for the '<em><b>Code</b></em>' attribute.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @generated
+   	 * @ordered
+   	 */
+   int GSHAPE_PRE_RENDERED_ELEMENT__CODE = GPRE_RENDERED_ELEMENT__CODE;
+
+   /**
+   	 * The feature id for the '<em><b>Position</b></em>' containment reference.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @generated
+   	 * @ordered
+   	 */
+   int GSHAPE_PRE_RENDERED_ELEMENT__POSITION = GPRE_RENDERED_ELEMENT_FEATURE_COUNT + 0;
+
+   /**
+   	 * The feature id for the '<em><b>Size</b></em>' containment reference.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @generated
+   	 * @ordered
+   	 */
+   int GSHAPE_PRE_RENDERED_ELEMENT__SIZE = GPRE_RENDERED_ELEMENT_FEATURE_COUNT + 1;
+
+   /**
+   	 * The number of structural features of the '<em>GShape Pre Rendered Element</em>' class.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @generated
+   	 * @ordered
+   	 */
+   int GSHAPE_PRE_RENDERED_ELEMENT_FEATURE_COUNT = GPRE_RENDERED_ELEMENT_FEATURE_COUNT + 2;
+
+   /**
+   	 * The number of operations of the '<em>GShape Pre Rendered Element</em>' class.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @generated
+   	 * @ordered
+   	 */
+   int GSHAPE_PRE_RENDERED_ELEMENT_OPERATION_COUNT = GPRE_RENDERED_ELEMENT_OPERATION_COUNT + 0;
+
+   /**
+   	 * The meta object id for the '{@link org.eclipse.glsp.graph.impl.StringToObjectMapEntryImpl <em>String To Object Map Entry</em>}' class.
+   	 * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+   	 * @see org.eclipse.glsp.graph.impl.StringToObjectMapEntryImpl
+   	 * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getStringToObjectMapEntry()
+   	 * @generated
+   	 */
+   int STRING_TO_OBJECT_MAP_ENTRY = 24;
 
    /**
     * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -2146,7 +2264,7 @@ public interface GraphPackage extends EPackage {
     * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGSeverity()
     * @generated
     */
-   int GSEVERITY = 24;
+   int GSEVERITY = 25;
 
    /**
     * Returns the meta object for class '{@link org.eclipse.glsp.graph.GModelElement <em>GModel Element</em>}'.
@@ -2830,15 +2948,25 @@ public interface GraphPackage extends EPackage {
    EAttribute getGPreRenderedElement_Code();
 
    /**
-    * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Object Map Entry</em>}'.
+    * Returns the meta object for class '{@link org.eclipse.glsp.graph.GShapePreRenderedElement <em>GShape Pre Rendered Element</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @return the meta object for class '<em>String To Object Map Entry</em>'.
-    * @see java.util.Map.Entry
-    * @model keyDataType="org.eclipse.emf.ecore.EString" keyRequired="true"
-    *        valueDataType="org.eclipse.emf.ecore.EJavaObject"
+    * @return the meta object for class '<em>GShape Pre Rendered Element</em>'.
+    * @see org.eclipse.glsp.graph.GShapePreRenderedElement
     * @generated
     */
+   EClass getGShapePreRenderedElement();
+
+   /**
+   	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Object Map Entry</em>}'.
+   	 * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+   	 * @return the meta object for class '<em>String To Object Map Entry</em>'.
+   	 * @see java.util.Map.Entry
+   	 * @model keyDataType="org.eclipse.emf.ecore.EString" keyRequired="true"
+   	 *        valueDataType="org.eclipse.emf.ecore.EJavaObject"
+   	 * @generated
+   	 */
    EClass getStringToObjectMapEntry();
 
    /**
@@ -3455,13 +3583,23 @@ public interface GraphPackage extends EPackage {
       EAttribute GPRE_RENDERED_ELEMENT__CODE = eINSTANCE.getGPreRenderedElement_Code();
 
       /**
-       * The meta object literal for the '{@link org.eclipse.glsp.graph.impl.StringToObjectMapEntryImpl <em>String To Object Map Entry</em>}' class.
+       * The meta object literal for the '{@link org.eclipse.glsp.graph.impl.GShapePreRenderedElementImpl <em>GShape Pre Rendered Element</em>}' class.
        * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-       * @see org.eclipse.glsp.graph.impl.StringToObjectMapEntryImpl
-       * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getStringToObjectMapEntry()
+       * @see org.eclipse.glsp.graph.impl.GShapePreRenderedElementImpl
+       * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGShapePreRenderedElement()
        * @generated
        */
+      EClass GSHAPE_PRE_RENDERED_ELEMENT = eINSTANCE.getGShapePreRenderedElement();
+
+      /**
+      	 * The meta object literal for the '{@link org.eclipse.glsp.graph.impl.StringToObjectMapEntryImpl <em>String To Object Map Entry</em>}' class.
+      	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+      	 * @see org.eclipse.glsp.graph.impl.StringToObjectMapEntryImpl
+      	 * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getStringToObjectMapEntry()
+      	 * @generated
+      	 */
       EClass STRING_TO_OBJECT_MAP_ENTRY = eINSTANCE.getStringToObjectMapEntry();
 
       /**

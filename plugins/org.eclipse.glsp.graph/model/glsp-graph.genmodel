@@ -100,6 +100,7 @@
     <genClasses ecoreClass="glsp-graph.ecore#//GPreRenderedElement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GPreRenderedElement/code"/>
     </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GShapePreRenderedElement"/>
     <genClasses ecoreClass="glsp-graph.ecore#//StringToObjectMapEntry">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//StringToObjectMapEntry/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//StringToObjectMapEntry/value"/>

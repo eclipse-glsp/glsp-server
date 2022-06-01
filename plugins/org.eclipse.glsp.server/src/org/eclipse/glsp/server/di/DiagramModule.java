@@ -63,8 +63,6 @@ import org.eclipse.glsp.server.features.directediting.ContextEditValidatorRegist
 import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
 import org.eclipse.glsp.server.features.directediting.RequestEditValidationHandler;
 import org.eclipse.glsp.server.features.directediting.SetEditValidationResultAction;
-import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceChangedAction;
-import org.eclipse.glsp.server.features.modelsourcewatcher.SourceModelWatcher;
 import org.eclipse.glsp.server.features.navigation.NavigateToExternalTargetAction;
 import org.eclipse.glsp.server.features.navigation.NavigateToTargetAction;
 import org.eclipse.glsp.server.features.navigation.NavigationTargetProvider;
@@ -77,6 +75,8 @@ import org.eclipse.glsp.server.features.navigation.SetResolvedNavigationTargetAc
 import org.eclipse.glsp.server.features.popup.PopupModelFactory;
 import org.eclipse.glsp.server.features.popup.RequestPopupModelActionHandler;
 import org.eclipse.glsp.server.features.popup.SetPopupModelAction;
+import org.eclipse.glsp.server.features.sourcemodelwatcher.SourceModelChangedAction;
+import org.eclipse.glsp.server.features.sourcemodelwatcher.SourceModelWatcher;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.features.undoredo.UndoRedoActionHandler;
 import org.eclipse.glsp.server.features.validation.DeleteMarkersAction;
@@ -285,7 +285,7 @@ public abstract class DiagramModule extends GLSPModule {
       binding.add(ExportSVGAction.class);
       binding.add(DeleteMarkersAction.class);
       binding.add(FitToScreenAction.class);
-      binding.add(ModelSourceChangedAction.class);
+      binding.add(SourceModelChangedAction.class);
       binding.add(NavigateToTargetAction.class);
       binding.add(NavigateToExternalTargetAction.class);
       binding.add(RequestBoundsAction.class);

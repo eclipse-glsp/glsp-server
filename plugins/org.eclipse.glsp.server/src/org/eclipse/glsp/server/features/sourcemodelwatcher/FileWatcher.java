@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.features.modelsourcewatcher;
+package org.eclipse.glsp.server.features.sourcemodelwatcher;
 
 import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
@@ -141,7 +141,7 @@ public class FileWatcher implements ClientSessionListener, SourceModelWatcher {
    }
 
    protected void notifyClient(final ClientNotification clientNotification) {
-      actionDispatcher.dispatch(new ModelSourceChangedAction(clientNotification.modelSourceName));
+      actionDispatcher.dispatch(new SourceModelChangedAction(clientNotification.modelSourceName));
    }
 
    class FileWatchWorker extends Thread {

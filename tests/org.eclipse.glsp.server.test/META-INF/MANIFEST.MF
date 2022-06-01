@@ -8,6 +8,6 @@ Automatic-Module-Name: org.eclipse.glsp.graph.test
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-Vendor: Eclipse GLSP
 Export-Package: 
- org.eclipse.glsp.server.features.modelsourcewatcher
+ org.eclipse.glsp.server.features.sourcemodelwatcher
 Import-Package: org.junit;version="4.12.0",
  org.junit.jupiter.api;version="5.0.0"

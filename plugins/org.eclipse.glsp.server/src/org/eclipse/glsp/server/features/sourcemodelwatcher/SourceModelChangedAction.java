@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,23 +13,23 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.features.modelsourcewatcher;
+package org.eclipse.glsp.server.features.sourcemodelwatcher;
 
 import org.eclipse.glsp.server.actions.Action;
 
-public class ModelSourceChangedAction extends Action {
+public class SourceModelChangedAction extends Action {
 
-   private String modelSourceName = "";
+   private String sourceModelName = "";
 
-   public ModelSourceChangedAction() {
-      super("modelSourceChanged");
+   public SourceModelChangedAction() {
+      super("sourceModelChanged");
    }
 
-   public ModelSourceChangedAction(final String modelSource) {
+   public SourceModelChangedAction(final String sourceModelName) {
       this();
-      this.modelSourceName = modelSource;
+      this.sourceModelName = sourceModelName;
    }
 
-   public String getModelSourceName() { return modelSourceName; }
+   public String getSourceModelName() { return sourceModelName; }
 
 }

@@ -22,7 +22,7 @@ import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.di.DiagramModule;
-import org.eclipse.glsp.server.features.modelsourcewatcher.SourceModelWatcher;
+import org.eclipse.glsp.server.features.sourcemodelwatcher.SourceModelWatcher;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.ServerMessageUtil;
 import org.eclipse.glsp.server.utils.ServerStatusUtil;

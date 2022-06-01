@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.features.modelsourcewatcher;
+package org.eclipse.glsp.server.features.sourcemodelwatcher;
 
 /**
  * A source model watcher observes the source model resource and notifies the client if the source model has changed.

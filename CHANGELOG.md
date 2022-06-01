@@ -29,6 +29,7 @@
 - [gmodel] Move base diagram module and operation handlers that operate directly on GModels (as a model source) to the dedicated package `org.eclipse.glsp.server.gmodel` and add prefix `GModel` in the class name [#165](https://github.com/eclipse-glsp/glsp-server/pull/165)
 - [logging] Update from log4j 1.x to log4j 2.17.1. [#163](https://github.com/eclipse-glsp/glsp-server/pull/163/)
   - Affects logger creation across all classes
+- [protocol] Rename `ModelSourceChangedAction` to `SourceModelChangedAction` including handlers [#171](https://github.com/eclipse-glsp/glsp-server/pull/171)
 
 ## [v0.9.0- 09/12/2021](https://github.com/eclipse-glsp/glsp/releases/tag/0.9.0)
 

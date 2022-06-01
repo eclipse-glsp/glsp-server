@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.glsp.server.features.core.model.SourceModelStorage;
-import org.eclipse.glsp.server.features.modelsourcewatcher.SourceModelWatcher;
+import org.eclipse.glsp.server.features.sourcemodelwatcher.SourceModelWatcher;
 import org.eclipse.glsp.server.model.GModelState;
 
 import com.google.inject.Inject;

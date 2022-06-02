@@ -22,7 +22,7 @@ import org.eclipse.glsp.server.launch.DefaultCLIParser;
 
 public class WorkflowCLIParser extends DefaultCLIParser {
    public static final String OPTION_WEBSOCKET = "websocket";
-   public static final String OPTION_WEBSOCKET_LOG_LEVEL = "websocketLogLevel";
+   public static final String OPTION_JETTY_LOG_LEVEL = "jettyLogLevel";
 
    public static final class WorkflowOptions {
       public static final Level WEBSOCKET_LOG_LEVEL = Level.INFO;
@@ -36,7 +36,7 @@ public class WorkflowCLIParser extends DefaultCLIParser {
    public boolean isWebsocket() { return hasOption(OPTION_WEBSOCKET); }
 
    public Level parseWebsocketLogLevel() {
-      String levelArg = parseOption(OPTION_WEBSOCKET_LOG_LEVEL, WorkflowOptions.WEBSOCKET_LOG_LEVEL.toString());
+      String levelArg = parseOption(OPTION_JETTY_LOG_LEVEL, WorkflowOptions.WEBSOCKET_LOG_LEVEL.toString());
       return Level.toLevel(levelArg, WorkflowOptions.WEBSOCKET_LOG_LEVEL);
    }
 
@@ -44,7 +44,7 @@ public class WorkflowCLIParser extends DefaultCLIParser {
       Options options = DefaultCLIParser.getDefaultOptions();
       options.addOption("w", OPTION_WEBSOCKET, false,
          "Use websocket launcher instead of default launcher.");
-      options.addOption("v", OPTION_WEBSOCKET_LOG_LEVEL, true,
+      options.addOption("j", OPTION_JETTY_LOG_LEVEL, true,
          "Set the log level for the Jetty websocket server. [default='INFO']");
       return options;
    }

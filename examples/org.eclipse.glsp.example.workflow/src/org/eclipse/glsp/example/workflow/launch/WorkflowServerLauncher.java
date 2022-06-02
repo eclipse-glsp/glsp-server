@@ -40,7 +40,7 @@ public final class WorkflowServerLauncher {
             .configureDiagramModule(new WorkflowDiagramModule());
 
          GLSPServerLauncher launcher = parser.isWebsocket()
-            ? new WebsocketServerLauncher(workflowServerModule, "/workflow")
+            ? new WebsocketServerLauncher(workflowServerModule, "/workflow", parser.parseWebsocketLogLevel())
             : new SocketGLSPServerLauncher(workflowServerModule);
 
          launcher.start("localhost", port, parser);

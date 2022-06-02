@@ -22,4 +22,5 @@ Require-Bundle: javax.websocket;bundle-version="1.0.0";visibility:=reexport,
 Export-Package: org.eclipse.glsp.server.websocket
 Import-Package: javax.servlet;version="[3.1.0,4.0.0)",
  org.apache.logging.log4j;version="2.17.1",
+ org.apache.logging.log4j.core.config;version="2.17.1",
  org.apache.logging.log4j.spi;version="2.17.1"

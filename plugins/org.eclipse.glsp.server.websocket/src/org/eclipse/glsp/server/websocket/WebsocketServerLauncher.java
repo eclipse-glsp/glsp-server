@@ -21,12 +21,15 @@ import java.net.InetSocketAddress;
 import javax.websocket.server.ServerContainer;
 import javax.websocket.server.ServerEndpointConfig;
 
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.config.Configurator;
 import org.eclipse.glsp.server.di.ServerModule;
 import org.eclipse.glsp.server.launch.GLSPServerLauncher;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.eclipse.jetty.websocket.jsr356.server.deploy.WebSocketServerContainerInitializer;
 
@@ -37,18 +40,27 @@ public class WebsocketServerLauncher extends GLSPServerLauncher {
    protected Server server;
    protected String clientAppPath;
    protected final String endpointPath;
+   protected final Level websocketLogLevel;
 
    public WebsocketServerLauncher(final ServerModule serverModule, final String endpointPath,
       final Module... additionalModules) {
+      this(serverModule, endpointPath, Level.INFO, additionalModules);
+   }
+
+   public WebsocketServerLauncher(final ServerModule serverModule, final String endpointPath, final Level websocketLogLevel,
+      final Module... additionalModules) {
       super(serverModule, additionalModules);
       this.endpointPath = endpointPath.startsWith("/") ? endpointPath.substring(1) : endpointPath;
+      this.websocketLogLevel = websocketLogLevel;
    }
 
    @Override
    @SuppressWarnings("checkstyle:IllegalCatch")
    public void start(final String hostname, final int port) {
       try {
-         org.eclipse.jetty.util.log.Log.setLog(new Log4j2Logger("WebsocketServerLauncher"));
+         Log.setLog(new Log4j2Logger("WebsocketServerLauncher"));
+         Configurator.setLevel("org.eclipse.jetty", this.websocketLogLevel);
+
          // Setup Jetty Server
          server = new Server(new InetSocketAddress(hostname, port));
          ServletContextHandler webAppContext;

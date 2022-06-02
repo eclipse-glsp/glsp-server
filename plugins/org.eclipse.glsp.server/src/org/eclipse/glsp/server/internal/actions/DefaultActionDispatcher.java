@@ -51,7 +51,7 @@ import com.google.inject.Provider;
  * the server.
  * </p>
  */
-public class DefaultActionDispatcher extends Disposable implements ActionDispatcher {
+public class DefaultActionDispatcher extends Disposable implements ActionDispatcher, ActionHandler {
 
    private static final Logger LOGGER = LogManager.getLogger(DefaultActionDispatcher.class);
 
@@ -215,10 +215,33 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
       }
    }
 
+   protected void executeAllPendingActions() {
+      // block until all pending actions have been executed
+      dispatch(new JoinAction()).join();
+   }
+
    @Override
    public void doDispose() {
+      executeAllPendingActions();
       if (thread.isAlive()) {
          thread.interrupt();
+      }
+   }
+
+   @Override
+   public List<Class<? extends Action>> getHandledActionTypes() { return List.of(JoinAction.class); }
+
+   @Override
+   public List<Action> execute(final Action action) {
+      return none();
+   }
+
+   /**
+    * An internal action class that is used to define a join-point within the queue of all pending actions.
+    */
+   public static class JoinAction extends Action {
+      public JoinAction() {
+         super("internal.join");
       }
    }
 }

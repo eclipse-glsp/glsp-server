@@ -79,17 +79,19 @@ To run the Workflow Diagram example server standalone JAR, run this command in y
 
 ```console
     usage: java -jar org.eclipse.glsp.example.workflow-X.X.X-glsp.jar [-c <arg>] [-d <arg>]
-        [-f <arg>] [-h] [-l <arg>] [-p <arg>] [-w]
+        [-f <arg>] [-h] [-j <arg>] [-l <arg>] [-p <arg>] [-w]
 
     options:
-    -c,--consoleLog <arg>   Enable/Disable console logging. [default='true']
-    -d,--logDir <arg>       Set the directory for log files (File logging has to be enabled)
-    -f,--fileLog <arg>      Enable/Disable file logging. [default='false']
-    -h,--help               Display usage information about GLSPServerLauncher
-    -l,--logLevel <arg>     Set the log level. [default='INFO']
-    -p,--port <arg>         Set server port. [default='5007']
-    -w,--websocket          Use websocket launcher instead of default launcher.
-                            [default='false']
+    -c,--consoleLog <arg>      Enable/Disable console logging. [default='true']
+    -d,--logDir <arg>          Set the directory for log files (File logging has to be
+                                enabled)
+    -f,--fileLog <arg>         Enable/Disable file logging. [default='false']
+    -h,--help                  Display usage information about GLSPServerLauncher
+    -j,--jettyLogLevel <arg>   Set the log level for the Jetty websocket server.
+                                [default='INFO']
+    -l,--logLevel <arg>        Set the log level. [default='INFO']
+    -p,--port <arg>            Set server port. [default='5007']
+    -w,--websocket             Use websocket launcher instead of default launcher.
 ```
 
 Once the server is running, choose a diagram client integration (such as Eclipse Theia, VSCode, Eclipse, or Standalone) below.

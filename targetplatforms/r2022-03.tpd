@@ -10,7 +10,7 @@ location "https://download.eclipse.org/tools/orbit/downloads/drops/R202203021722
 	org.apache.logging.log4j [2.17.1,3.0.0)
 	org.apache.commons.cli [1.4.0,2.0.0)
 	javax.servlet [3.1.0,4.0.0)
-	com.google.gson [2.8.2,3.0.0)
+	com.google.gson [2.8.9,3.0.0)
 	com.google.inject [5.0.1,5.0.2)
 	com.google.guava [30.1.0,31.0.0)
 	org.junit [4.12.0,4.13.0)

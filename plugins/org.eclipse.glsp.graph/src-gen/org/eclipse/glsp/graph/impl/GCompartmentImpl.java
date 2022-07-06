@@ -39,6 +39,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.glsp.graph.GBoundsAware;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GDimension;
+import org.eclipse.glsp.graph.GLayoutable;
 import org.eclipse.glsp.graph.GLayouting;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
@@ -60,8 +61,8 @@ import org.eclipse.glsp.graph.GraphPackage;
  *   <li>{@link org.eclipse.glsp.graph.impl.GCompartmentImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GCompartmentImpl#getPosition <em>Position</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GCompartmentImpl#getSize <em>Size</em>}</li>
- *   <li>{@link org.eclipse.glsp.graph.impl.GCompartmentImpl#getLayout <em>Layout</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GCompartmentImpl#getLayoutOptions <em>Layout Options</em>}</li>
+ *   <li>{@link org.eclipse.glsp.graph.impl.GCompartmentImpl#getLayout <em>Layout</em>}</li>
  * </ul>
  *
  * @generated
@@ -168,6 +169,16 @@ public class GCompartmentImpl extends GArgumentableImpl implements GCompartment 
    protected GDimension size;
 
    /**
+    * The cached value of the '{@link #getLayoutOptions() <em>Layout Options</em>}' map.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #getLayoutOptions()
+    * @generated
+    * @ordered
+    */
+   protected EMap<String, Object> layoutOptions;
+
+   /**
     * The default value of the '{@link #getLayout() <em>Layout</em>}' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -186,16 +197,6 @@ public class GCompartmentImpl extends GArgumentableImpl implements GCompartment 
     * @ordered
     */
    protected String layout = LAYOUT_EDEFAULT;
-
-   /**
-    * The cached value of the '{@link #getLayoutOptions() <em>Layout Options</em>}' map.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @see #getLayoutOptions()
-    * @generated
-    * @ordered
-    */
-   protected EMap<String, Object> layoutOptions;
 
    /**
     * <!-- begin-user-doc -->
@@ -567,13 +568,13 @@ public class GCompartmentImpl extends GArgumentableImpl implements GCompartment 
             return getPosition();
          case GraphPackage.GCOMPARTMENT__SIZE:
             return getSize();
-         case GraphPackage.GCOMPARTMENT__LAYOUT:
-            return getLayout();
          case GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS:
             if (coreType)
                return getLayoutOptions();
             else
                return getLayoutOptions().map();
+         case GraphPackage.GCOMPARTMENT__LAYOUT:
+            return getLayout();
       }
       return super.eGet(featureID, resolve, coreType);
    }
@@ -613,11 +614,11 @@ public class GCompartmentImpl extends GArgumentableImpl implements GCompartment 
          case GraphPackage.GCOMPARTMENT__SIZE:
             setSize((GDimension) newValue);
             return;
-         case GraphPackage.GCOMPARTMENT__LAYOUT:
-            setLayout((String) newValue);
-            return;
          case GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS:
             ((EStructuralFeature.Setting) getLayoutOptions()).set(newValue);
+            return;
+         case GraphPackage.GCOMPARTMENT__LAYOUT:
+            setLayout((String) newValue);
             return;
       }
       super.eSet(featureID, newValue);
@@ -655,11 +656,11 @@ public class GCompartmentImpl extends GArgumentableImpl implements GCompartment 
          case GraphPackage.GCOMPARTMENT__SIZE:
             setSize((GDimension) null);
             return;
-         case GraphPackage.GCOMPARTMENT__LAYOUT:
-            setLayout(LAYOUT_EDEFAULT);
-            return;
          case GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS:
             getLayoutOptions().clear();
+            return;
+         case GraphPackage.GCOMPARTMENT__LAYOUT:
+            setLayout(LAYOUT_EDEFAULT);
             return;
       }
       super.eUnset(featureID);
@@ -689,10 +690,10 @@ public class GCompartmentImpl extends GArgumentableImpl implements GCompartment 
             return position != null;
          case GraphPackage.GCOMPARTMENT__SIZE:
             return size != null;
-         case GraphPackage.GCOMPARTMENT__LAYOUT:
-            return LAYOUT_EDEFAULT == null ? layout != null : !LAYOUT_EDEFAULT.equals(layout);
          case GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS:
             return layoutOptions != null && !layoutOptions.isEmpty();
+         case GraphPackage.GCOMPARTMENT__LAYOUT:
+            return LAYOUT_EDEFAULT == null ? layout != null : !LAYOUT_EDEFAULT.equals(layout);
       }
       return super.eIsSet(featureID);
    }
@@ -714,12 +715,18 @@ public class GCompartmentImpl extends GArgumentableImpl implements GCompartment 
                return -1;
          }
       }
+      if (baseClass == GLayoutable.class) {
+         switch (derivedFeatureID) {
+            case GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS:
+               return GraphPackage.GLAYOUTABLE__LAYOUT_OPTIONS;
+            default:
+               return -1;
+         }
+      }
       if (baseClass == GLayouting.class) {
          switch (derivedFeatureID) {
             case GraphPackage.GCOMPARTMENT__LAYOUT:
                return GraphPackage.GLAYOUTING__LAYOUT;
-            case GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS:
-               return GraphPackage.GLAYOUTING__LAYOUT_OPTIONS;
             default:
                return -1;
          }
@@ -744,12 +751,18 @@ public class GCompartmentImpl extends GArgumentableImpl implements GCompartment 
                return -1;
          }
       }
+      if (baseClass == GLayoutable.class) {
+         switch (baseFeatureID) {
+            case GraphPackage.GLAYOUTABLE__LAYOUT_OPTIONS:
+               return GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS;
+            default:
+               return -1;
+         }
+      }
       if (baseClass == GLayouting.class) {
          switch (baseFeatureID) {
             case GraphPackage.GLAYOUTING__LAYOUT:
                return GraphPackage.GCOMPARTMENT__LAYOUT;
-            case GraphPackage.GLAYOUTING__LAYOUT_OPTIONS:
-               return GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS;
             default:
                return -1;
          }

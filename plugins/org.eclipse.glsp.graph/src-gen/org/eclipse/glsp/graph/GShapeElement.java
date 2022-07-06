@@ -26,4 +26,4 @@ package org.eclipse.glsp.graph;
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface GShapeElement extends GModelElement, GBoundsAware {} // GShapeElement
+public interface GShapeElement extends GModelElement, GBoundsAware, GLayoutable {} // GShapeElement

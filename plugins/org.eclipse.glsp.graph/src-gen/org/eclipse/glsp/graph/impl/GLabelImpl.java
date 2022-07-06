@@ -42,6 +42,7 @@ import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GEdgeLayoutable;
 import org.eclipse.glsp.graph.GEdgePlacement;
 import org.eclipse.glsp.graph.GLabel;
+import org.eclipse.glsp.graph.GLayoutable;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.GShapeElement;
@@ -65,6 +66,7 @@ import org.eclipse.glsp.graph.GraphPackage;
  *   <li>{@link org.eclipse.glsp.graph.impl.GLabelImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GLabelImpl#getPosition <em>Position</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GLabelImpl#getSize <em>Size</em>}</li>
+ *   <li>{@link org.eclipse.glsp.graph.impl.GLabelImpl#getLayoutOptions <em>Layout Options</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GLabelImpl#getText <em>Text</em>}</li>
  * </ul>
  *
@@ -190,6 +192,16 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
     * @ordered
     */
    protected GDimension size;
+
+   /**
+    * The cached value of the '{@link #getLayoutOptions() <em>Layout Options</em>}' map.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #getLayoutOptions()
+    * @generated
+    * @ordered
+    */
+   protected EMap<String, Object> layoutOptions;
 
    /**
     * The default value of the '{@link #getText() <em>Text</em>}' attribute.
@@ -535,6 +547,20 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
     * @generated
     */
    @Override
+   public EMap<String, Object> getLayoutOptions() {
+      if (layoutOptions == null) {
+         layoutOptions = new EcoreEMap<String, Object>(GraphPackage.Literals.STRING_TO_OBJECT_MAP_ENTRY,
+            StringToObjectMapEntryImpl.class, this, GraphPackage.GLABEL__LAYOUT_OPTIONS);
+      }
+      return layoutOptions;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
    public String getText() { return text; }
 
    /**
@@ -589,6 +615,8 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
             return basicSetPosition(null, msgs);
          case GraphPackage.GLABEL__SIZE:
             return basicSetSize(null, msgs);
+         case GraphPackage.GLABEL__LAYOUT_OPTIONS:
+            return ((InternalEList<?>) getLayoutOptions()).basicRemove(otherEnd, msgs);
       }
       return super.eInverseRemove(otherEnd, featureID, msgs);
    }
@@ -639,6 +667,11 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
             return getPosition();
          case GraphPackage.GLABEL__SIZE:
             return getSize();
+         case GraphPackage.GLABEL__LAYOUT_OPTIONS:
+            if (coreType)
+               return getLayoutOptions();
+            else
+               return getLayoutOptions().map();
          case GraphPackage.GLABEL__TEXT:
             return getText();
       }
@@ -686,6 +719,9 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
          case GraphPackage.GLABEL__SIZE:
             setSize((GDimension) newValue);
             return;
+         case GraphPackage.GLABEL__LAYOUT_OPTIONS:
+            ((EStructuralFeature.Setting) getLayoutOptions()).set(newValue);
+            return;
          case GraphPackage.GLABEL__TEXT:
             setText((String) newValue);
             return;
@@ -731,6 +767,9 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
          case GraphPackage.GLABEL__SIZE:
             setSize((GDimension) null);
             return;
+         case GraphPackage.GLABEL__LAYOUT_OPTIONS:
+            getLayoutOptions().clear();
+            return;
          case GraphPackage.GLABEL__TEXT:
             setText(TEXT_EDEFAULT);
             return;
@@ -766,6 +805,8 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
             return position != null;
          case GraphPackage.GLABEL__SIZE:
             return size != null;
+         case GraphPackage.GLABEL__LAYOUT_OPTIONS:
+            return layoutOptions != null && !layoutOptions.isEmpty();
          case GraphPackage.GLABEL__TEXT:
             return TEXT_EDEFAULT == null ? text != null : !TEXT_EDEFAULT.equals(text);
       }
@@ -819,6 +860,14 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
                return GraphPackage.GBOUNDS_AWARE__POSITION;
             case GraphPackage.GLABEL__SIZE:
                return GraphPackage.GBOUNDS_AWARE__SIZE;
+            default:
+               return -1;
+         }
+      }
+      if (baseClass == GLayoutable.class) {
+         switch (derivedFeatureID) {
+            case GraphPackage.GLABEL__LAYOUT_OPTIONS:
+               return GraphPackage.GLAYOUTABLE__LAYOUT_OPTIONS;
             default:
                return -1;
          }
@@ -879,6 +928,14 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
                return GraphPackage.GLABEL__POSITION;
             case GraphPackage.GBOUNDS_AWARE__SIZE:
                return GraphPackage.GLABEL__SIZE;
+            default:
+               return -1;
+         }
+      }
+      if (baseClass == GLayoutable.class) {
+         switch (baseFeatureID) {
+            case GraphPackage.GLAYOUTABLE__LAYOUT_OPTIONS:
+               return GraphPackage.GLABEL__LAYOUT_OPTIONS;
             default:
                return -1;
          }

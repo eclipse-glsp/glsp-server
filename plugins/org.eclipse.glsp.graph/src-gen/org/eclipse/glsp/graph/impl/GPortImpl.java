@@ -23,18 +23,22 @@ import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.glsp.graph.GBoundsAware;
 import org.eclipse.glsp.graph.GDimension;
+import org.eclipse.glsp.graph.GLayoutable;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.GPort;
@@ -56,6 +60,7 @@ import org.eclipse.glsp.graph.GraphPackage;
  *   <li>{@link org.eclipse.glsp.graph.impl.GPortImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GPortImpl#getPosition <em>Position</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GPortImpl#getSize <em>Size</em>}</li>
+ *   <li>{@link org.eclipse.glsp.graph.impl.GPortImpl#getLayoutOptions <em>Layout Options</em>}</li>
  * </ul>
  *
  * @generated
@@ -160,6 +165,16 @@ public class GPortImpl extends GArgumentableImpl implements GPort {
     * @ordered
     */
    protected GDimension size;
+
+   /**
+    * The cached value of the '{@link #getLayoutOptions() <em>Layout Options</em>}' map.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #getLayoutOptions()
+    * @generated
+    * @ordered
+    */
+   protected EMap<String, Object> layoutOptions;
 
    /**
     * <!-- begin-user-doc -->
@@ -419,6 +434,20 @@ public class GPortImpl extends GArgumentableImpl implements GPort {
     * <!-- end-user-doc -->
     * @generated
     */
+   @Override
+   public EMap<String, Object> getLayoutOptions() {
+      if (layoutOptions == null) {
+         layoutOptions = new EcoreEMap<String, Object>(GraphPackage.Literals.STRING_TO_OBJECT_MAP_ENTRY,
+            StringToObjectMapEntryImpl.class, this, GraphPackage.GPORT__LAYOUT_OPTIONS);
+      }
+      return layoutOptions;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
    @SuppressWarnings("unchecked")
    @Override
    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -449,6 +478,8 @@ public class GPortImpl extends GArgumentableImpl implements GPort {
             return basicSetPosition(null, msgs);
          case GraphPackage.GPORT__SIZE:
             return basicSetSize(null, msgs);
+         case GraphPackage.GPORT__LAYOUT_OPTIONS:
+            return ((InternalEList<?>) getLayoutOptions()).basicRemove(otherEnd, msgs);
       }
       return super.eInverseRemove(otherEnd, featureID, msgs);
    }
@@ -492,6 +523,11 @@ public class GPortImpl extends GArgumentableImpl implements GPort {
             return getPosition();
          case GraphPackage.GPORT__SIZE:
             return getSize();
+         case GraphPackage.GPORT__LAYOUT_OPTIONS:
+            if (coreType)
+               return getLayoutOptions();
+            else
+               return getLayoutOptions().map();
       }
       return super.eGet(featureID, resolve, coreType);
    }
@@ -531,6 +567,9 @@ public class GPortImpl extends GArgumentableImpl implements GPort {
          case GraphPackage.GPORT__SIZE:
             setSize((GDimension) newValue);
             return;
+         case GraphPackage.GPORT__LAYOUT_OPTIONS:
+            ((EStructuralFeature.Setting) getLayoutOptions()).set(newValue);
+            return;
       }
       super.eSet(featureID, newValue);
    }
@@ -567,6 +606,9 @@ public class GPortImpl extends GArgumentableImpl implements GPort {
          case GraphPackage.GPORT__SIZE:
             setSize((GDimension) null);
             return;
+         case GraphPackage.GPORT__LAYOUT_OPTIONS:
+            getLayoutOptions().clear();
+            return;
       }
       super.eUnset(featureID);
    }
@@ -595,6 +637,8 @@ public class GPortImpl extends GArgumentableImpl implements GPort {
             return position != null;
          case GraphPackage.GPORT__SIZE:
             return size != null;
+         case GraphPackage.GPORT__LAYOUT_OPTIONS:
+            return layoutOptions != null && !layoutOptions.isEmpty();
       }
       return super.eIsSet(featureID);
    }
@@ -616,6 +660,14 @@ public class GPortImpl extends GArgumentableImpl implements GPort {
                return -1;
          }
       }
+      if (baseClass == GLayoutable.class) {
+         switch (derivedFeatureID) {
+            case GraphPackage.GPORT__LAYOUT_OPTIONS:
+               return GraphPackage.GLAYOUTABLE__LAYOUT_OPTIONS;
+            default:
+               return -1;
+         }
+      }
       return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
    }
 
@@ -632,6 +684,14 @@ public class GPortImpl extends GArgumentableImpl implements GPort {
                return GraphPackage.GPORT__POSITION;
             case GraphPackage.GBOUNDS_AWARE__SIZE:
                return GraphPackage.GPORT__SIZE;
+            default:
+               return -1;
+         }
+      }
+      if (baseClass == GLayoutable.class) {
+         switch (baseFeatureID) {
+            case GraphPackage.GLAYOUTABLE__LAYOUT_OPTIONS:
+               return GraphPackage.GPORT__LAYOUT_OPTIONS;
             default:
                return -1;
          }

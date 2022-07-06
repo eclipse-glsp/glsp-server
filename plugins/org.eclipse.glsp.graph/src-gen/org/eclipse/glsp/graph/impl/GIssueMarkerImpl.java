@@ -23,7 +23,9 @@ import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -31,6 +33,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -38,6 +41,7 @@ import org.eclipse.glsp.graph.GBoundsAware;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GIssue;
 import org.eclipse.glsp.graph.GIssueMarker;
+import org.eclipse.glsp.graph.GLayoutable;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.GraphPackage;
@@ -58,6 +62,7 @@ import org.eclipse.glsp.graph.GraphPackage;
  *   <li>{@link org.eclipse.glsp.graph.impl.GIssueMarkerImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GIssueMarkerImpl#getPosition <em>Position</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GIssueMarkerImpl#getSize <em>Size</em>}</li>
+ *   <li>{@link org.eclipse.glsp.graph.impl.GIssueMarkerImpl#getLayoutOptions <em>Layout Options</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GIssueMarkerImpl#getIssues <em>Issues</em>}</li>
  * </ul>
  *
@@ -163,6 +168,16 @@ public class GIssueMarkerImpl extends GArgumentableImpl implements GIssueMarker 
     * @ordered
     */
    protected GDimension size;
+
+   /**
+    * The cached value of the '{@link #getLayoutOptions() <em>Layout Options</em>}' map.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #getLayoutOptions()
+    * @generated
+    * @ordered
+    */
+   protected EMap<String, Object> layoutOptions;
 
    /**
     * The cached value of the '{@link #getIssues() <em>Issues</em>}' containment reference list.
@@ -435,6 +450,20 @@ public class GIssueMarkerImpl extends GArgumentableImpl implements GIssueMarker 
     * @generated
     */
    @Override
+   public EMap<String, Object> getLayoutOptions() {
+      if (layoutOptions == null) {
+         layoutOptions = new EcoreEMap<String, Object>(GraphPackage.Literals.STRING_TO_OBJECT_MAP_ENTRY,
+            StringToObjectMapEntryImpl.class, this, GraphPackage.GISSUE_MARKER__LAYOUT_OPTIONS);
+      }
+      return layoutOptions;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
    public EList<GIssue> getIssues() {
       if (issues == null) {
          issues = new EObjectContainmentEList<GIssue>(GIssue.class, this, GraphPackage.GISSUE_MARKER__ISSUES);
@@ -477,6 +506,8 @@ public class GIssueMarkerImpl extends GArgumentableImpl implements GIssueMarker 
             return basicSetPosition(null, msgs);
          case GraphPackage.GISSUE_MARKER__SIZE:
             return basicSetSize(null, msgs);
+         case GraphPackage.GISSUE_MARKER__LAYOUT_OPTIONS:
+            return ((InternalEList<?>) getLayoutOptions()).basicRemove(otherEnd, msgs);
          case GraphPackage.GISSUE_MARKER__ISSUES:
             return ((InternalEList<?>) getIssues()).basicRemove(otherEnd, msgs);
       }
@@ -522,6 +553,11 @@ public class GIssueMarkerImpl extends GArgumentableImpl implements GIssueMarker 
             return getPosition();
          case GraphPackage.GISSUE_MARKER__SIZE:
             return getSize();
+         case GraphPackage.GISSUE_MARKER__LAYOUT_OPTIONS:
+            if (coreType)
+               return getLayoutOptions();
+            else
+               return getLayoutOptions().map();
          case GraphPackage.GISSUE_MARKER__ISSUES:
             return getIssues();
       }
@@ -563,6 +599,9 @@ public class GIssueMarkerImpl extends GArgumentableImpl implements GIssueMarker 
          case GraphPackage.GISSUE_MARKER__SIZE:
             setSize((GDimension) newValue);
             return;
+         case GraphPackage.GISSUE_MARKER__LAYOUT_OPTIONS:
+            ((EStructuralFeature.Setting) getLayoutOptions()).set(newValue);
+            return;
          case GraphPackage.GISSUE_MARKER__ISSUES:
             getIssues().clear();
             getIssues().addAll((Collection<? extends GIssue>) newValue);
@@ -603,6 +642,9 @@ public class GIssueMarkerImpl extends GArgumentableImpl implements GIssueMarker 
          case GraphPackage.GISSUE_MARKER__SIZE:
             setSize((GDimension) null);
             return;
+         case GraphPackage.GISSUE_MARKER__LAYOUT_OPTIONS:
+            getLayoutOptions().clear();
+            return;
          case GraphPackage.GISSUE_MARKER__ISSUES:
             getIssues().clear();
             return;
@@ -634,6 +676,8 @@ public class GIssueMarkerImpl extends GArgumentableImpl implements GIssueMarker 
             return position != null;
          case GraphPackage.GISSUE_MARKER__SIZE:
             return size != null;
+         case GraphPackage.GISSUE_MARKER__LAYOUT_OPTIONS:
+            return layoutOptions != null && !layoutOptions.isEmpty();
          case GraphPackage.GISSUE_MARKER__ISSUES:
             return issues != null && !issues.isEmpty();
       }
@@ -657,6 +701,14 @@ public class GIssueMarkerImpl extends GArgumentableImpl implements GIssueMarker 
                return -1;
          }
       }
+      if (baseClass == GLayoutable.class) {
+         switch (derivedFeatureID) {
+            case GraphPackage.GISSUE_MARKER__LAYOUT_OPTIONS:
+               return GraphPackage.GLAYOUTABLE__LAYOUT_OPTIONS;
+            default:
+               return -1;
+         }
+      }
       return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
    }
 
@@ -673,6 +725,14 @@ public class GIssueMarkerImpl extends GArgumentableImpl implements GIssueMarker 
                return GraphPackage.GISSUE_MARKER__POSITION;
             case GraphPackage.GBOUNDS_AWARE__SIZE:
                return GraphPackage.GISSUE_MARKER__SIZE;
+            default:
+               return -1;
+         }
+      }
+      if (baseClass == GLayoutable.class) {
+         switch (baseFeatureID) {
+            case GraphPackage.GLAYOUTABLE__LAYOUT_OPTIONS:
+               return GraphPackage.GISSUE_MARKER__LAYOUT_OPTIONS;
             default:
                return -1;
          }

@@ -112,6 +112,8 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
             return createGShapePreRenderedElement();
          case GraphPackage.STRING_TO_OBJECT_MAP_ENTRY:
             return (EObject) createStringToObjectMapEntry();
+         case GraphPackage.GLAYOUTABLE:
+            return createGLayoutable();
          default:
             throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
       }
@@ -357,13 +359,24 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
    }
 
    /**
-   	 * <!-- begin-user-doc -->
+    * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-   	 * @generated
-   	 */
+    * @generated
+    */
    public Map.Entry<String, Object> createStringToObjectMapEntry() {
       StringToObjectMapEntryImpl stringToObjectMapEntry = new StringToObjectMapEntryImpl();
       return stringToObjectMapEntry;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
+   public GLayoutable createGLayoutable() {
+      GLayoutableImpl gLayoutable = new GLayoutableImpl();
+      return gLayoutable;
    }
 
    /**

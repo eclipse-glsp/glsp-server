@@ -99,6 +99,8 @@ public class GraphSwitch<T> extends Switch<T> {
             if (result == null)
                result = caseGBoundsAware(gShapeElement);
             if (result == null)
+               result = caseGLayoutable(gShapeElement);
+            if (result == null)
                result = caseGArgumentable(gShapeElement);
             if (result == null)
                result = defaultCase(theEObject);
@@ -111,6 +113,8 @@ public class GraphSwitch<T> extends Switch<T> {
                result = caseGModelRoot(gGraph);
             if (result == null)
                result = caseGBoundsAware(gGraph);
+            if (result == null)
+               result = caseGLayoutable(gGraph);
             if (result == null)
                result = caseGModelElement(gGraph);
             if (result == null)
@@ -144,6 +148,8 @@ public class GraphSwitch<T> extends Switch<T> {
             if (result == null)
                result = caseGBoundsAware(gNode);
             if (result == null)
+               result = caseGLayoutable(gNode);
+            if (result == null)
                result = caseGArgumentable(gNode);
             if (result == null)
                result = defaultCase(theEObject);
@@ -172,6 +178,8 @@ public class GraphSwitch<T> extends Switch<T> {
             if (result == null)
                result = caseGBoundsAware(gCompartment);
             if (result == null)
+               result = caseGLayoutable(gCompartment);
+            if (result == null)
                result = caseGArgumentable(gCompartment);
             if (result == null)
                result = defaultCase(theEObject);
@@ -191,6 +199,8 @@ public class GraphSwitch<T> extends Switch<T> {
             if (result == null)
                result = caseGBoundsAware(gLabel);
             if (result == null)
+               result = caseGLayoutable(gLabel);
+            if (result == null)
                result = caseGArgumentable(gLabel);
             if (result == null)
                result = defaultCase(theEObject);
@@ -205,6 +215,8 @@ public class GraphSwitch<T> extends Switch<T> {
                result = caseGModelElement(gIssueMarker);
             if (result == null)
                result = caseGBoundsAware(gIssueMarker);
+            if (result == null)
+               result = caseGLayoutable(gIssueMarker);
             if (result == null)
                result = caseGArgumentable(gIssueMarker);
             if (result == null)
@@ -221,6 +233,8 @@ public class GraphSwitch<T> extends Switch<T> {
             if (result == null)
                result = caseGBoundsAware(gPort);
             if (result == null)
+               result = caseGLayoutable(gPort);
+            if (result == null)
                result = caseGArgumentable(gPort);
             if (result == null)
                result = defaultCase(theEObject);
@@ -235,6 +249,8 @@ public class GraphSwitch<T> extends Switch<T> {
                result = caseGModelElement(gButton);
             if (result == null)
                result = caseGBoundsAware(gButton);
+            if (result == null)
+               result = caseGLayoutable(gButton);
             if (result == null)
                result = caseGArgumentable(gButton);
             if (result == null)
@@ -279,6 +295,8 @@ public class GraphSwitch<T> extends Switch<T> {
          case GraphPackage.GLAYOUTING: {
             GLayouting gLayouting = (GLayouting) theEObject;
             T result = caseGLayouting(gLayouting);
+            if (result == null)
+               result = caseGLayoutable(gLayouting);
             if (result == null)
                result = defaultCase(theEObject);
             return result;
@@ -354,6 +372,13 @@ public class GraphSwitch<T> extends Switch<T> {
             @SuppressWarnings("unchecked")
             Map.Entry<String, Object> stringToObjectMapEntry = (Map.Entry<String, Object>) theEObject;
             T result = caseStringToObjectMapEntry(stringToObjectMapEntry);
+            if (result == null)
+               result = defaultCase(theEObject);
+            return result;
+         }
+         case GraphPackage.GLAYOUTABLE: {
+            GLayoutable gLayoutable = (GLayoutable) theEObject;
+            T result = caseGLayoutable(gLayoutable);
             if (result == null)
                result = defaultCase(theEObject);
             return result;
@@ -724,17 +749,32 @@ public class GraphSwitch<T> extends Switch<T> {
    }
 
    /**
-   	 * Returns the result of interpreting the object as an instance of '<em>String To Object Map Entry</em>'.
-   	 * <!-- begin-user-doc -->
+    * Returns the result of interpreting the object as an instance of '<em>String To Object Map Entry</em>'.
+    * <!-- begin-user-doc -->
     * This implementation returns null;
     * returning a non-null result will terminate the switch.
     * <!-- end-user-doc -->
-   	 * @param object the target of the switch.
-   	 * @return the result of interpreting the object as an instance of '<em>String To Object Map Entry</em>'.
-   	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   	 * @generated
-   	 */
+    * @param object the target of the switch.
+    * @return the result of interpreting the object as an instance of '<em>String To Object Map Entry</em>'.
+    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+    * @generated
+    */
    public T caseStringToObjectMapEntry(Map.Entry<String, Object> object) {
+      return null;
+   }
+
+   /**
+    * Returns the result of interpreting the object as an instance of '<em>GLayoutable</em>'.
+    * <!-- begin-user-doc -->
+    * This implementation returns null;
+    * returning a non-null result will terminate the switch.
+    * <!-- end-user-doc -->
+    * @param object the target of the switch.
+    * @return the result of interpreting the object as an instance of '<em>GLayoutable</em>'.
+    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+    * @generated
+    */
+   public T caseGLayoutable(GLayoutable object) {
       return null;
    }
 

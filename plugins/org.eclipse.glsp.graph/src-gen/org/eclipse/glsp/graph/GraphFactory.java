@@ -207,12 +207,21 @@ public interface GraphFactory extends EFactory {
    GShapePreRenderedElement createGShapePreRenderedElement();
 
    /**
-   	 * Returns the package supported by this factory.
-   	 * <!-- begin-user-doc -->
+    * Returns a new object of class '<em>GLayoutable</em>'.
+    * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-   	 * @return the package supported by this factory.
-   	 * @generated
-   	 */
+    * @return a new object of class '<em>GLayoutable</em>'.
+    * @generated
+    */
+   GLayoutable createGLayoutable();
+
+   /**
+    * Returns the package supported by this factory.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the package supported by this factory.
+    * @generated
+    */
    GraphPackage getGraphPackage();
 
 } //GraphFactory

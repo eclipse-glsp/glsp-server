@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  * 
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -16,43 +16,38 @@
  */
 package org.eclipse.glsp.graph;
 
+import org.eclipse.emf.common.util.EMap;
+
+import org.eclipse.emf.ecore.EObject;
+
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>GLayouting</b></em>'.
+ * A representation of the model object '<em><b>GLayoutable</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.glsp.graph.GLayouting#getLayout <em>Layout</em>}</li>
+ *   <li>{@link org.eclipse.glsp.graph.GLayoutable#getLayoutOptions <em>Layout Options</em>}</li>
  * </ul>
  *
- * @see org.eclipse.glsp.graph.GraphPackage#getGLayouting()
- * @model interface="true" abstract="true"
+ * @see org.eclipse.glsp.graph.GraphPackage#getGLayoutable()
+ * @model
  * @generated
  */
-public interface GLayouting extends GLayoutable {
+public interface GLayoutable extends EObject {
    /**
-    * Returns the value of the '<em><b>Layout</b></em>' attribute.
+    * Returns the value of the '<em><b>Layout Options</b></em>' map.
+    * The key is of type {@link java.lang.String},
+    * and the value is of type {@link java.lang.Object},
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @return the value of the '<em>Layout</em>' attribute.
-    * @see #setLayout(String)
-    * @see org.eclipse.glsp.graph.GraphPackage#getGLayouting_Layout()
-    * @model
+    * @return the value of the '<em>Layout Options</em>' map.
+    * @see org.eclipse.glsp.graph.GraphPackage#getGLayoutable_LayoutOptions()
+    * @model mapType="org.eclipse.glsp.graph.StringToObjectMapEntry&lt;org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EJavaObject&gt;"
     * @generated
     */
-   String getLayout();
+   EMap<String, Object> getLayoutOptions();
 
-   /**
-    * Sets the value of the '{@link org.eclipse.glsp.graph.GLayouting#getLayout <em>Layout</em>}' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @param value the new value of the '<em>Layout</em>' attribute.
-    * @see #getLayout()
-    * @generated
-    */
-   void setLayout(String value);
-
-} // GLayouting
+} // GLayoutable

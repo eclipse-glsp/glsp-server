@@ -1,5 +1,11 @@
 # Eclipse GLSP Server Changelog
 
+## v1.1.0 - upcoming
+
+### Changes
+
+- [graph] Update the Graph model and add Layoutable interface [#175](https://github.com/eclipse-glsp/glsp-server/pull/175) - Contributed on behalf of STMicroelectronics
+
 ## [v1.0.0 - 30/06/2022](https://github.com/eclipse-glsp/glsp-server/releases/tag/v1.0.0)
 
 ### Changes
@@ -19,7 +25,7 @@
 
 - [protocol] Align server actions with the definitions in @eclipse-glsp-protocol [#142](https://github.com/eclipse-glsp/glsp-server/pull/142)
   - Affects methods and return types of all action classes.
-- [model] Source model refactoring  [#154](https://github.com/eclipse-glsp/glsp-server/pull/154)
+- [model] Source model refactoring [#154](https://github.com/eclipse-glsp/glsp-server/pull/154)
   - `ModelSourceLoader` → `SourceModelStorage`
   - `ModelSourceWatcher` → `SourceModelWatcher`
   - Added method to `SourceModelStorage`
@@ -66,7 +72,7 @@
 - [build] Update dependencies of Google Guava (>= 30.1) and Google Guice (>= 5.0.0). [#119](https://github.com/eclipse-glsp/glsp-server/pull/119)
 - [build] The `org.apache.log4j` dependency is not reexported any more when consumed as p2 artifact. You need to import `org.apache.log4j` in your own plugins if you use the log4j API there. [#43](https://github.com/eclipse-glsp/glsp-eclipse-integration/pull/43)
 - [protocol] Refactor the base communication protocol to support initializing and disposing a client session. Remove now obsolete `InitializeClientSessionAction` and `DisposeClientSessionAction`. [#123](https://github.com/eclipse-glsp/glsp-server/pull/123)
-- [di] Complete rework of DI architecture. Your main module now has to extend `DiagramModule` instead of `GLSPModule`. Includes restructurings,cleanups and refactorings that  affect most of the API components. [#127](https://github.com/eclipse-glsp/glsp-server/pull/127)
+- [di] Complete rework of DI architecture. Your main module now has to extend `DiagramModule` instead of `GLSPModule`. Includes restructurings,cleanups and refactorings that affect most of the API components. [#127](https://github.com/eclipse-glsp/glsp-server/pull/127)
 - [server] Refactor json-rpc protocol and `DefaultGLSPServerImplementation`. This includes changes of method names and parameters [#133](https://github.com/eclipse-glsp/glsp-server/pull/133)
 
 ## [v0.8.0 - 20/10/2020](https://github.com/eclipse-glsp/glsp/releases/tag/0.8.0)

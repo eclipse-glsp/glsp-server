@@ -15,11 +15,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GShapeElement" abstract="true" interface="true"
-      eSuperTypes="#//GModelElement #//GBoundsAware"/>
-  <eClassifiers xsi:type="ecore:EClass" name="GGraph" eSuperTypes="#//GModelRoot #//GBoundsAware">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="layoutOptions" upperBound="-1"
-        eType="#//StringToObjectMapEntry" containment="true"/>
-  </eClassifiers>
+      eSuperTypes="#//GModelElement #//GBoundsAware #//GLayoutable"/>
+  <eClassifiers xsi:type="ecore:EClass" name="GGraph" eSuperTypes="#//GModelRoot #//GBoundsAware #//GLayoutable"/>
   <eClassifiers xsi:type="ecore:EClass" name="GModelRoot" eSuperTypes="#//GModelElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="canvasBounds" eType="#//GBounds"
         containment="true"/>
@@ -87,10 +84,9 @@
         defaultValueLiteral="left"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="rotate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="GLayouting" abstract="true" interface="true">
+  <eClassifiers xsi:type="ecore:EClass" name="GLayouting" abstract="true" interface="true"
+      eSuperTypes="#//GLayoutable">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="layout" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="layoutOptions" upperBound="-1"
-        eType="#//StringToObjectMapEntry" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GBounds">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
@@ -131,5 +127,9 @@
   <eClassifiers xsi:type="ecore:EClass" name="StringToObjectMapEntry" instanceClassName="java.util.Map$Entry">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GLayoutable">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="layoutOptions" upperBound="-1"
+        eType="#//StringToObjectMapEntry" containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

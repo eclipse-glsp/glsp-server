@@ -208,6 +208,11 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
       }
 
       @Override
+      public Adapter caseGLayoutable(GLayoutable object) {
+         return createGLayoutableAdapter();
+      }
+
+      @Override
       public Adapter defaultCase(EObject object) {
          return createEObjectAdapter();
       }
@@ -563,16 +568,30 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
    }
 
    /**
-   	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Object Map Entry</em>}'.
-   	 * <!-- begin-user-doc -->
+    * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Object Map Entry</em>}'.
+    * <!-- begin-user-doc -->
     * This default implementation returns null so that we can easily ignore cases;
     * it's useful to ignore a case when inheritance will catch all the cases anyway.
     * <!-- end-user-doc -->
-   	 * @return the new adapter.
-   	 * @see java.util.Map.Entry
-   	 * @generated
-   	 */
+    * @return the new adapter.
+    * @see java.util.Map.Entry
+    * @generated
+    */
    public Adapter createStringToObjectMapEntryAdapter() {
+      return null;
+   }
+
+   /**
+    * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GLayoutable <em>GLayoutable</em>}'.
+    * <!-- begin-user-doc -->
+    * This default implementation returns null so that we can easily ignore cases;
+    * it's useful to ignore a case when inheritance will catch all the cases anyway.
+    * <!-- end-user-doc -->
+    * @return the new adapter.
+    * @see org.eclipse.glsp.graph.GLayoutable
+    * @generated
+    */
+   public Adapter createGLayoutableAdapter() {
       return null;
    }
 

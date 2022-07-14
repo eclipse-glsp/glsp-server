@@ -40,6 +40,7 @@ import org.eclipse.glsp.graph.GBoundsAware;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GEdgeLayoutable;
 import org.eclipse.glsp.graph.GEdgePlacement;
+import org.eclipse.glsp.graph.GLayoutable;
 import org.eclipse.glsp.graph.GLayouting;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
@@ -62,9 +63,9 @@ import org.eclipse.glsp.graph.GraphPackage;
  *   <li>{@link org.eclipse.glsp.graph.impl.GNodeImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GNodeImpl#getPosition <em>Position</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GNodeImpl#getSize <em>Size</em>}</li>
+ *   <li>{@link org.eclipse.glsp.graph.impl.GNodeImpl#getLayoutOptions <em>Layout Options</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GNodeImpl#getEdgePlacement <em>Edge Placement</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GNodeImpl#getLayout <em>Layout</em>}</li>
- *   <li>{@link org.eclipse.glsp.graph.impl.GNodeImpl#getLayoutOptions <em>Layout Options</em>}</li>
  * </ul>
  *
  * @generated
@@ -171,6 +172,16 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
    protected GDimension size;
 
    /**
+    * The cached value of the '{@link #getLayoutOptions() <em>Layout Options</em>}' map.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #getLayoutOptions()
+    * @generated
+    * @ordered
+    */
+   protected EMap<String, Object> layoutOptions;
+
+   /**
     * The cached value of the '{@link #getEdgePlacement() <em>Edge Placement</em>}' containment reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -199,16 +210,6 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
     * @ordered
     */
    protected String layout = LAYOUT_EDEFAULT;
-
-   /**
-    * The cached value of the '{@link #getLayoutOptions() <em>Layout Options</em>}' map.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @see #getLayoutOptions()
-    * @generated
-    * @ordered
-    */
-   protected EMap<String, Object> layoutOptions;
 
    /**
     * <!-- begin-user-doc -->
@@ -583,10 +584,10 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
             return basicSetPosition(null, msgs);
          case GraphPackage.GNODE__SIZE:
             return basicSetSize(null, msgs);
-         case GraphPackage.GNODE__EDGE_PLACEMENT:
-            return basicSetEdgePlacement(null, msgs);
          case GraphPackage.GNODE__LAYOUT_OPTIONS:
             return ((InternalEList<?>) getLayoutOptions()).basicRemove(otherEnd, msgs);
+         case GraphPackage.GNODE__EDGE_PLACEMENT:
+            return basicSetEdgePlacement(null, msgs);
       }
       return super.eInverseRemove(otherEnd, featureID, msgs);
    }
@@ -630,15 +631,15 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
             return getPosition();
          case GraphPackage.GNODE__SIZE:
             return getSize();
-         case GraphPackage.GNODE__EDGE_PLACEMENT:
-            return getEdgePlacement();
-         case GraphPackage.GNODE__LAYOUT:
-            return getLayout();
          case GraphPackage.GNODE__LAYOUT_OPTIONS:
             if (coreType)
                return getLayoutOptions();
             else
                return getLayoutOptions().map();
+         case GraphPackage.GNODE__EDGE_PLACEMENT:
+            return getEdgePlacement();
+         case GraphPackage.GNODE__LAYOUT:
+            return getLayout();
       }
       return super.eGet(featureID, resolve, coreType);
    }
@@ -678,14 +679,14 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
          case GraphPackage.GNODE__SIZE:
             setSize((GDimension) newValue);
             return;
+         case GraphPackage.GNODE__LAYOUT_OPTIONS:
+            ((EStructuralFeature.Setting) getLayoutOptions()).set(newValue);
+            return;
          case GraphPackage.GNODE__EDGE_PLACEMENT:
             setEdgePlacement((GEdgePlacement) newValue);
             return;
          case GraphPackage.GNODE__LAYOUT:
             setLayout((String) newValue);
-            return;
-         case GraphPackage.GNODE__LAYOUT_OPTIONS:
-            ((EStructuralFeature.Setting) getLayoutOptions()).set(newValue);
             return;
       }
       super.eSet(featureID, newValue);
@@ -723,14 +724,14 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
          case GraphPackage.GNODE__SIZE:
             setSize((GDimension) null);
             return;
+         case GraphPackage.GNODE__LAYOUT_OPTIONS:
+            getLayoutOptions().clear();
+            return;
          case GraphPackage.GNODE__EDGE_PLACEMENT:
             setEdgePlacement((GEdgePlacement) null);
             return;
          case GraphPackage.GNODE__LAYOUT:
             setLayout(LAYOUT_EDEFAULT);
-            return;
-         case GraphPackage.GNODE__LAYOUT_OPTIONS:
-            getLayoutOptions().clear();
             return;
       }
       super.eUnset(featureID);
@@ -760,12 +761,12 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
             return position != null;
          case GraphPackage.GNODE__SIZE:
             return size != null;
+         case GraphPackage.GNODE__LAYOUT_OPTIONS:
+            return layoutOptions != null && !layoutOptions.isEmpty();
          case GraphPackage.GNODE__EDGE_PLACEMENT:
             return edgePlacement != null;
          case GraphPackage.GNODE__LAYOUT:
             return LAYOUT_EDEFAULT == null ? layout != null : !LAYOUT_EDEFAULT.equals(layout);
-         case GraphPackage.GNODE__LAYOUT_OPTIONS:
-            return layoutOptions != null && !layoutOptions.isEmpty();
       }
       return super.eIsSet(featureID);
    }
@@ -787,6 +788,14 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
                return -1;
          }
       }
+      if (baseClass == GLayoutable.class) {
+         switch (derivedFeatureID) {
+            case GraphPackage.GNODE__LAYOUT_OPTIONS:
+               return GraphPackage.GLAYOUTABLE__LAYOUT_OPTIONS;
+            default:
+               return -1;
+         }
+      }
       if (baseClass == GEdgeLayoutable.class) {
          switch (derivedFeatureID) {
             case GraphPackage.GNODE__EDGE_PLACEMENT:
@@ -799,8 +808,6 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
          switch (derivedFeatureID) {
             case GraphPackage.GNODE__LAYOUT:
                return GraphPackage.GLAYOUTING__LAYOUT;
-            case GraphPackage.GNODE__LAYOUT_OPTIONS:
-               return GraphPackage.GLAYOUTING__LAYOUT_OPTIONS;
             default:
                return -1;
          }
@@ -825,6 +832,14 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
                return -1;
          }
       }
+      if (baseClass == GLayoutable.class) {
+         switch (baseFeatureID) {
+            case GraphPackage.GLAYOUTABLE__LAYOUT_OPTIONS:
+               return GraphPackage.GNODE__LAYOUT_OPTIONS;
+            default:
+               return -1;
+         }
+      }
       if (baseClass == GEdgeLayoutable.class) {
          switch (baseFeatureID) {
             case GraphPackage.GEDGE_LAYOUTABLE__EDGE_PLACEMENT:
@@ -837,8 +852,6 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
          switch (baseFeatureID) {
             case GraphPackage.GLAYOUTING__LAYOUT:
                return GraphPackage.GNODE__LAYOUT;
-            case GraphPackage.GLAYOUTING__LAYOUT_OPTIONS:
-               return GraphPackage.GNODE__LAYOUT_OPTIONS;
             default:
                return -1;
          }

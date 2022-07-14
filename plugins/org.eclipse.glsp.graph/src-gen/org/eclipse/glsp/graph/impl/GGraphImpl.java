@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.glsp.graph.GBoundsAware;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GGraph;
+import org.eclipse.glsp.graph.GLayoutable;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.GraphPackage;
 
@@ -330,6 +331,14 @@ public class GGraphImpl extends GModelRootImpl implements GGraph {
                return -1;
          }
       }
+      if (baseClass == GLayoutable.class) {
+         switch (derivedFeatureID) {
+            case GraphPackage.GGRAPH__LAYOUT_OPTIONS:
+               return GraphPackage.GLAYOUTABLE__LAYOUT_OPTIONS;
+            default:
+               return -1;
+         }
+      }
       return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
    }
 
@@ -346,6 +355,14 @@ public class GGraphImpl extends GModelRootImpl implements GGraph {
                return GraphPackage.GGRAPH__POSITION;
             case GraphPackage.GBOUNDS_AWARE__SIZE:
                return GraphPackage.GGRAPH__SIZE;
+            default:
+               return -1;
+         }
+      }
+      if (baseClass == GLayoutable.class) {
+         switch (baseFeatureID) {
+            case GraphPackage.GLAYOUTABLE__LAYOUT_OPTIONS:
+               return GraphPackage.GGRAPH__LAYOUT_OPTIONS;
             default:
                return -1;
          }

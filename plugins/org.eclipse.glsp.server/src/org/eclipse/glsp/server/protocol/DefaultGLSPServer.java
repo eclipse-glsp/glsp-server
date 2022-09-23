@@ -39,7 +39,7 @@ import com.google.inject.Inject;
 
 public class DefaultGLSPServer implements GLSPServer {
    private static Logger LOGGER = LogManager.getLogger(DefaultGLSPServer.class);
-   public static final String PROTOCOL_VERSION = "0.9.0";
+   public static final String PROTOCOL_VERSION = "1.0.0";
 
    @Inject
    protected ClientSessionManager sessionManager;

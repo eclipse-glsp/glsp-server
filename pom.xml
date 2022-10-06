@@ -180,7 +180,6 @@
 						<groupId>org.eclipse.tycho</groupId>
 						<artifactId>target-platform-configuration</artifactId>
 						<configuration>
-							<includePackedArtifacts>false</includePackedArtifacts>
 							<targetDefinitionIncludeSource>honor</targetDefinitionIncludeSource>
 							<environments>
 								<environment>

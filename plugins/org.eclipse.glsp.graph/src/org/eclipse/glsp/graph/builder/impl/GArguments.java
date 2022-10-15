@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2021-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -18,8 +18,13 @@ package org.eclipse.glsp.graph.builder.impl;
 import java.util.Map;
 import java.util.Optional;
 
+import org.eclipse.emf.common.util.EMap;
+import org.eclipse.glsp.graph.GPoint;
+
 public final class GArguments {
    public static final String KEY_EDGE_PADDING = "edgePadding";
+   public static final String KEY_EDGE_SOURCE_POINT = "edgeSourcePoint";
+   public static final String KEY_EDGE_TARGET_POINT = "edgeTargetPoint";
 
    public static final String KEY_RADIUS_TOP_LEFT = "radiusTopLeft";
    public static final String KEY_RADIUS_TOP_RIGHT = "radiusTopRight";
@@ -52,6 +57,14 @@ public final class GArguments {
       return getDouble(arguments, KEY_EDGE_PADDING);
    }
 
+   public static Optional<GPoint> getEdgeSourcePoint(final Map<String, Object> arguments) {
+      return get(arguments, KEY_EDGE_SOURCE_POINT, GPoint.class);
+   }
+
+   public static Optional<GPoint> getEdgeTargetPoint(final Map<String, Object> arguments) {
+      return get(arguments, KEY_EDGE_TARGET_POINT, GPoint.class);
+   }
+
    public static Optional<Double> getDouble(final Map<String, Object> arguments, final String key) {
       return getNumber(arguments, key).map(Number::doubleValue);
    }
@@ -61,17 +74,56 @@ public final class GArguments {
    }
 
    public static Optional<Number> getNumber(final Map<String, Object> arguments, final String key) {
-      Object value = arguments.get(key);
-      return value instanceof Number ? Optional.of((Number) value) : Optional.empty();
+      return get(arguments, key, Number.class);
    }
 
    public static Optional<Boolean> getBoolean(final Map<String, Object> arguments, final String key) {
-      Object value = arguments.get(key);
-      return value instanceof Boolean ? Optional.of((Boolean) value) : Optional.empty();
+      return get(arguments, key, Boolean.class);
    }
 
    public static Optional<String> getString(final Map<String, Object> arguments, final String key) {
+      return get(arguments, key, String.class);
+   }
+
+   public static <T> Optional<T> get(final Map<String, Object> arguments, final String key, final Class<T> clazz) {
       Object value = arguments.get(key);
-      return value instanceof String ? Optional.of((String) value) : Optional.empty();
+      return clazz.isInstance(value) ? Optional.of(clazz.cast(value)) : Optional.empty();
+   }
+
+   public static Optional<Double> getEdgePadding(final EMap<String, Object> arguments) {
+      return getDouble(arguments, KEY_EDGE_PADDING);
+   }
+
+   public static Optional<GPoint> getEdgeSourcePoint(final EMap<String, Object> arguments) {
+      return get(arguments, KEY_EDGE_SOURCE_POINT, GPoint.class);
+   }
+
+   public static Optional<GPoint> getEdgeTargetPoint(final EMap<String, Object> arguments) {
+      return get(arguments, KEY_EDGE_TARGET_POINT, GPoint.class);
+   }
+
+   public static Optional<Double> getDouble(final EMap<String, Object> arguments, final String key) {
+      return getNumber(arguments, key).map(Number::doubleValue);
+   }
+
+   public static Optional<Integer> getInteger(final EMap<String, Object> arguments, final String key) {
+      return getNumber(arguments, key).map(Number::intValue);
+   }
+
+   public static Optional<Number> getNumber(final EMap<String, Object> arguments, final String key) {
+      return get(arguments, key, Number.class);
+   }
+
+   public static Optional<Boolean> getBoolean(final EMap<String, Object> arguments, final String key) {
+      return get(arguments, key, Boolean.class);
+   }
+
+   public static Optional<String> getString(final EMap<String, Object> arguments, final String key) {
+      return get(arguments, key, String.class);
+   }
+
+   public static <T> Optional<T> get(final EMap<String, Object> arguments, final String key, final Class<T> clazz) {
+      Object value = arguments.get(key);
+      return clazz.isInstance(value) ? Optional.of(clazz.cast(value)) : Optional.empty();
    }
 }

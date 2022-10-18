@@ -45,7 +45,7 @@ public class PaletteItem extends LabeledAction {
    }
 
    /**
-    * Construct a PaletteItem providing a custom sort string
+    * Construct a PaletteItem providing a custom sort string.
     *
     * @param id
     * @param label

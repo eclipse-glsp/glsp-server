@@ -44,6 +44,22 @@ public class PaletteItem extends LabeledAction {
       this.sortString = ("" + label.charAt(0));
    }
 
+   /**
+    * Construct a PaletteItem providing a custom sort string
+    *
+    * @param id
+    * @param label
+    * @param initalizeAction
+    * @param icon
+    * @param sortString
+    */
+   public PaletteItem(final String id, final String label, final TriggerElementCreationAction initalizeAction,
+      final String icon, final String sortString) {
+      super(label, Arrays.asList(initalizeAction), icon);
+      this.id = id;
+      this.sortString = sortString;
+   }
+
    public String getId() { return id; }
 
    public void setId(final String id) { this.id = id; }

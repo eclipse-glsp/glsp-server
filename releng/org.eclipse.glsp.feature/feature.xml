@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.glsp.feature"
       label="GLSP SDK"
-      version="1.1.0.qualifier"
+      version="1.1.0.RC02"
       provider-name="Eclipse GLSP">
 
    <description url="http://www.example.com/description">

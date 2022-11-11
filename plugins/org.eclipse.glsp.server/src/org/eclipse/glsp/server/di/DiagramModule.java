@@ -26,6 +26,7 @@ import org.eclipse.glsp.server.actions.CenterAction;
 import org.eclipse.glsp.server.actions.ClientActionHandler;
 import org.eclipse.glsp.server.actions.ExportSVGAction;
 import org.eclipse.glsp.server.actions.FitToScreenAction;
+import org.eclipse.glsp.server.actions.RequestExportSvgAction;
 import org.eclipse.glsp.server.actions.SaveModelActionHandler;
 import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.actions.SelectAllAction;
@@ -283,6 +284,7 @@ public abstract class DiagramModule extends GLSPModule {
    protected void configureClientActions(final MultiBinding<Action> binding) {
       binding.add(CenterAction.class);
       binding.add(ExportSVGAction.class);
+      binding.add(RequestExportSvgAction.class);
       binding.add(DeleteMarkersAction.class);
       binding.add(FitToScreenAction.class);
       binding.add(SourceModelChangedAction.class);

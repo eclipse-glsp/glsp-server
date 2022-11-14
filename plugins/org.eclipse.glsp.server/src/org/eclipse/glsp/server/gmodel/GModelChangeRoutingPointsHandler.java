@@ -15,16 +15,11 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.gmodel;
 
-import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
-
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelIndex;
-import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.ChangeRoutingPointsOperation;
-import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
+import org.eclipse.glsp.server.utils.LayoutUtil;
 
 import com.google.inject.Inject;
 
@@ -38,24 +33,11 @@ public class GModelChangeRoutingPointsHandler extends AbstractOperationHandler<C
 
    @Override
    protected void executeOperation(final ChangeRoutingPointsOperation operation) {
-
-      // check for null-values
       if (operation.getNewRoutingPoints() == null) {
          throw new IllegalArgumentException("Incomplete change routingPoints  action");
       }
 
-      // check for existence of matching elements
       GModelIndex index = modelState.getIndex();
-
-      for (ElementAndRoutingPoints ear : operation.getNewRoutingPoints()) {
-         GEdge edge = getOrThrow(index.findElementByClass(ear.getElementId(), GEdge.class),
-            "Invalid edge: edge ID " + ear.getElementId());
-
-         // reroute
-         EList<GPoint> routingPoints = edge.getRoutingPoints();
-         routingPoints.clear();
-         routingPoints.addAll(ear.getNewRoutingPoints());
-      }
-
+      operation.getNewRoutingPoints().forEach(routingPoints -> LayoutUtil.applyRoutingPoints(routingPoints, index));
    }
 }

@@ -14,8 +14,8 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<tycho-version>2.1.0</tycho-version>
-		<tycho-extras-version>2.1.0</tycho-extras-version>
+		<tycho-version>2.7.5</tycho-version>
+		<tycho-extras-version>2.7.5</tycho-extras-version>
 		<targetPlatform.application.name>org.eclipse.cbi.targetplatform.tpd.converter</targetPlatform.application.name>
 		<targetPlatform.application.args>r2020-06.tpd</targetPlatform.application.args>
 	</properties>

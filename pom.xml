@@ -87,7 +87,7 @@
 			</activation>
 
 			<properties>
-				<tycho-version>2.3.0</tycho-version>
+				<tycho-version>2.7.5</tycho-version>
 				<maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
 			</properties>
 
@@ -180,7 +180,6 @@
 						<groupId>org.eclipse.tycho</groupId>
 						<artifactId>target-platform-configuration</artifactId>
 						<configuration>
-							<includePackedArtifacts>true</includePackedArtifacts>
 							<targetDefinitionIncludeSource>honor</targetDefinitionIncludeSource>
 							<environments>
 								<environment>

@@ -1,4 +1,4 @@
-# Eclipse GLSP Server [![build-status](https://img.shields.io/jenkins/build?jobUrl=https%3A%2F%2Fci.eclipse.org%2Fglsp%2Fjob%2Feclipse-glsp%2Fjob%2Fglsp-server%2Fjob%2Fmaster%2F)](https://ci.eclipse.org/glsp/job/eclipse-glsp/job/glsp-server/job/master/)
+# Eclipse GLSP Server [![Build Status](https://ci.eclipse.org/glsp/job/eclipse-glsp/job/glsp-server/job/master/badge/icon)](https://ci.eclipse.org/glsp/job/eclipse-glsp/job/glsp-server/job/master/)
 
 Contains the code for the Java-based framework to create [GLSP](https://github.com/eclipse-glsp/glsp) server components.
 
@@ -8,12 +8,12 @@ The GLSP server bundles are built with Java 11 or higher and maven.
 Execute `mvn clean verify -Pm2` (for maven) or `mvn clean verify -Pp2` (for p2).
 The nightly builds are available as maven repository or p2 update site.
 
-### Maven Repositories [![build-status-server](https://img.shields.io/jenkins/build?jobUrl=https://ci.eclipse.org/glsp/job/deploy-m2-glsp-server/&label=publish)](https://ci.eclipse.org/glsp/job/deploy-m2-glsp-server/)
+### Maven Repositories 
 
 - *Snapshots:* <https://oss.sonatype.org/content/repositories/snapshots/org/eclipse/glsp/>
 - *Releases/Release Candiates:* <https://oss.sonatype.org/content/groups/public/org/eclipse/glsp/> (also mirrored to the [maven central repository](https://search.maven.org/search?q=org.eclipse.glsp))
 
-### P2 Update Sites   [![build-status-server](https://img.shields.io/jenkins/build?jobUrl=https://ci.eclipse.org/glsp/job/deploy-p2-glsp-server/&label=publish)](https://ci.eclipse.org/glsp/job/deploy-p2-glsp-server/)
+### P2 Update Sites 
 
 - *Snapshots:* <https://download.eclipse.org/glsp/server/p2/nightly/>
 - *Release Candidates:* <https://download.eclipse.org/glsp/server/p2/staging/>

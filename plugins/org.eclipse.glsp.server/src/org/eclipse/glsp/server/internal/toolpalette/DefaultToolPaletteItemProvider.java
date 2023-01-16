@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2021 EclipseSource and others.
+ * Copyright (c) 2020-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -38,12 +38,14 @@ public class DefaultToolPaletteItemProvider implements ToolPaletteItemProvider {
    protected OperationHandlerRegistry operationHandlerRegistry;
    private int counter;
 
+   @SuppressWarnings("rawtypes")
    @Override
    public List<PaletteItem> getItems(final Map<String, String> args) {
       List<CreateOperationHandler> handlers = operationHandlerRegistry.getAll().stream()
          .filter(CreateOperationHandler.class::isInstance)
          .map(CreateOperationHandler.class::cast)
          .collect(Collectors.toList());
+
       counter = 0;
       List<PaletteItem> nodes = createPaletteItems(handlers, CreateNodeOperation.class);
       List<PaletteItem> edges = createPaletteItems(handlers, CreateEdgeOperation.class);
@@ -53,11 +55,12 @@ public class DefaultToolPaletteItemProvider implements ToolPaletteItemProvider {
 
    }
 
+   @SuppressWarnings({ "rawtypes", "unchecked" })
    protected List<PaletteItem> createPaletteItems(final List<CreateOperationHandler> handlers,
       final Class<? extends CreateOperation> operationClass) {
       return handlers.stream()
-         .filter(h -> operationClass.isAssignableFrom(h.getHandledOperationType()))
-         .flatMap(handler -> handler.getTriggerActions()
+         .filter(handler -> operationClass.isAssignableFrom(handler.getHandledOperationType()))
+         .flatMap(handler -> ((List<TriggerElementCreationAction>) handler.getTriggerActions())
             .stream()
             .map(action -> create(action, handler.getLabel())))
          .sorted(Comparator.comparing(PaletteItem::getLabel))

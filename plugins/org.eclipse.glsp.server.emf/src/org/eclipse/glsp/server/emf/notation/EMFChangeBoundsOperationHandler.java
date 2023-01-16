@@ -24,7 +24,7 @@ import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.glsp.server.emf.AbstractEMFOperationHandler;
+import org.eclipse.glsp.server.emf.EMFOperationHandler;
 import org.eclipse.glsp.server.emf.model.notation.NotationPackage;
 import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.glsp.server.operations.ChangeBoundsOperation;
@@ -35,7 +35,7 @@ import com.google.inject.Inject;
 /**
  * A custom change bounds operation handler that updates the notation model for the moved shape elements.
  */
-public class EMFChangeBoundsOperationHandler extends AbstractEMFOperationHandler<ChangeBoundsOperation> {
+public class EMFChangeBoundsOperationHandler extends EMFOperationHandler<ChangeBoundsOperation> {
 
    @Inject
    protected EMFNotationModelState modelState;

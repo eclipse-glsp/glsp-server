@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,18 +15,18 @@
  ********************************************************************************/
 package org.eclipse.glsp.example.workflow.taskedit;
 
-import org.eclipse.glsp.server.operations.Operation;
+import org.eclipse.glsp.server.actions.Action;
 
-public class ApplyTaskEditOperation extends Operation {
+public class ApplyTaskEditAction extends Action {
 
    private String taskId;
    private String expression;
 
-   public ApplyTaskEditOperation() {
+   public ApplyTaskEditAction() {
       super("applyTaskEdit");
    }
 
-   public ApplyTaskEditOperation(final String taskId, final String expression) {
+   public ApplyTaskEditAction(final String taskId, final String expression) {
       this();
       this.taskId = taskId;
       this.expression = expression;

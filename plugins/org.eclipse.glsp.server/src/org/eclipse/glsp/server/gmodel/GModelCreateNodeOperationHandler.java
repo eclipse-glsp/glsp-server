@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2023 EclipseSource and others.
+ * Copyright (c) 2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -19,47 +19,56 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
-import org.eclipse.glsp.server.operations.AbstractCreateOperationHandler;
+import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.LayoutUtil;
 
-import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 /**
- * Abstract base class for applying an {@link CreateNodeOperation} directly to the GModel.
- *
- * @deprecated Use {@link GModelCreateNodeOperationHandler}
+ * Abstract base class for applying an {@link CreateEdgeOperation} directly to the GModel.
  */
-@Deprecated
-public abstract class AbstractGModelCreateNodeOperationHandler
-   extends AbstractCreateOperationHandler<CreateNodeOperation> {
+public abstract class GModelCreateNodeOperationHandler
+   extends GModelCreateOperationHandler<CreateNodeOperation> {
 
    @Inject
    protected ActionDispatcher actionDispatcher;
 
-   public AbstractGModelCreateNodeOperationHandler(final String... elementTypeIds) {
-      super(Lists.newArrayList(elementTypeIds));
+   public GModelCreateNodeOperationHandler(final String... elementTypeIds) {
+      super(elementTypeIds);
    }
 
-   public AbstractGModelCreateNodeOperationHandler(final List<String> handledElementTypeIds) {
+   public GModelCreateNodeOperationHandler(final List<String> handledElementTypeIds) {
       super(handledElementTypeIds);
    }
 
    @Override
-   public void executeOperation(final CreateNodeOperation operation) {
+   public Optional<Command> createCommand(final CreateNodeOperation operation) {
+      return commandOf(() -> executeCreation(operation));
+   }
+
+   public void executeCreation(final CreateNodeOperation operation) {
       GModelElement container = getContainer(operation).orElseGet(modelState::getRoot);
-      Optional<GPoint> absoluteLocation = operation.getLocation();
-      Optional<GPoint> relativeLocation = absoluteLocation
-         .map(location -> LayoutUtil.getRelativeLocation(location, container));
+      Optional<GPoint> absoluteLocation = getLocation(operation);
+      Optional<GPoint> relativeLocation = getRelativeLocation(container, absoluteLocation);
       GModelElement element = createNode(relativeLocation, operation.getArgs());
       container.getChildren().add(element);
       actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(element.getId())));
+   }
+
+   protected Optional<GPoint> getLocation(final CreateNodeOperation operation) {
+      return operation.getLocation();
+   }
+
+   protected Optional<GPoint> getRelativeLocation(final GModelElement container,
+      final Optional<GPoint> absoluteLocation) {
+      return absoluteLocation.map(location -> LayoutUtil.getRelativeLocation(location, container));
    }
 
    /**
@@ -89,4 +98,5 @@ public abstract class AbstractGModelCreateNodeOperationHandler
     *         The created {@link GNode Node}.
     */
    protected abstract GNode createNode(Optional<GPoint> relativeLocation, Map<String, String> args);
+
 }

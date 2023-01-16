@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2022 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -24,34 +24,34 @@ import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.DeleteOperation;
-
-import com.google.inject.Inject;
+import org.eclipse.glsp.server.operations.GModelOperationHandler;
 
 /**
  * Applies {@link DeleteOperation} directly to the GModel.
  */
-public class GModelDeleteOperationHandler extends AbstractOperationHandler<DeleteOperation> {
+public class GModelDeleteOperationHandler extends GModelOperationHandler<DeleteOperation> {
    private static Logger LOGGER = LogManager.getLogger(GModelDeleteOperationHandler.class);
    protected Set<String> allDependantsIds;
 
-   @Inject
-   protected GModelState modelState;
-
    @Override
-   public void executeOperation(final DeleteOperation operation) {
+   public Optional<Command> createCommand(final DeleteOperation operation) {
       List<String> elementIds = operation.getElementIds();
       if (elementIds == null || elementIds.size() == 0) {
          LOGGER.warn("Elements to delete are not specified");
-         return;
+         return doNothing();
       }
+      return commandOf(() -> deleteElements(elementIds));
+   }
+
+   public void deleteElements(final List<String> elementIds) {
       GModelIndex index = modelState.getIndex();
       allDependantsIds = new HashSet<>();
       boolean success = elementIds.stream().allMatch(eId -> delete(eId, index));

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2022 EclipseSource and others.
+ * Copyright (c) 2020-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,19 +15,22 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operations;
 
+import java.util.Optional;
+
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
+
 import com.google.inject.Inject;
 
-public class CompoundOperationHandler extends AbstractOperationHandler<CompoundOperation> {
+public class CompoundOperationHandler extends BasicOperationHandler<CompoundOperation> {
    @Inject
    protected OperationHandlerRegistry operationHandlerRegistry;
 
    @Override
-   protected void executeOperation(final CompoundOperation operation) {
-      operation.getOperationList().forEach(nestedOperation -> executeNestedOperation(nestedOperation));
+   public Optional<Command> createCommand(final CompoundOperation operation) {
+      CompoundCommand command = new CompoundCommand();
+      operation.getOperationList().forEach(
+         childOperation -> operationHandlerRegistry.getExecutableCommand(childOperation).ifPresent(command::append));
+      return command.getCommandList().isEmpty() ? Optional.empty() : Optional.of(command);
    }
-
-   protected void executeNestedOperation(final Operation operation) {
-      operationHandlerRegistry.getOperationHandler(operation).ifPresent(handler -> handler.execute(operation));
-   }
-
 }

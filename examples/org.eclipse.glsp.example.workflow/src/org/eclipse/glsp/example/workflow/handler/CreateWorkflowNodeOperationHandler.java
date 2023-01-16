@@ -22,10 +22,10 @@ import org.eclipse.glsp.example.workflow.wfgraph.Category;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.server.gmodel.AbstractGModelCreateNodeOperationHandler;
+import org.eclipse.glsp.server.gmodel.GModelCreateNodeOperationHandler;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 
-public abstract class CreateWorkflowNodeOperationHandler extends AbstractGModelCreateNodeOperationHandler {
+public abstract class CreateWorkflowNodeOperationHandler extends GModelCreateNodeOperationHandler {
 
    public CreateWorkflowNodeOperationHandler(final String elementTypeId) {
       super(elementTypeId);

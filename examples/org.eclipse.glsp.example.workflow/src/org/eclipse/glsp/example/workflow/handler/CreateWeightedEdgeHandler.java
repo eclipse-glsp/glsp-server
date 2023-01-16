@@ -21,10 +21,10 @@ import org.eclipse.glsp.example.workflow.utils.ModelTypes;
 import org.eclipse.glsp.example.workflow.utils.WorkflowBuilder.WeightedEdgeBuilder;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.server.gmodel.AbstractGModelCreateEdgeOperationHandler;
+import org.eclipse.glsp.server.gmodel.GModelCreateEdgeOperationHandler;
 import org.eclipse.glsp.server.model.GModelState;
 
-public class CreateWeightedEdgeHandler extends AbstractGModelCreateEdgeOperationHandler {
+public class CreateWeightedEdgeHandler extends GModelCreateEdgeOperationHandler {
 
    public CreateWeightedEdgeHandler() {
       super(ModelTypes.WEIGHTED_EDGE, "Weighted edge");

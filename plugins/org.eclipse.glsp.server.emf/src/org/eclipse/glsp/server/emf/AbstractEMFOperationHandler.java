@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2022 EclipseSource and others.
+ * Copyright (c) 2022-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,15 +15,10 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.emf;
 
-import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.Operation;
 
-public abstract class AbstractEMFOperationHandler<O extends Operation> extends AbstractOperationHandler<O>
-   implements EMFOperationHandler<O> {
-
-   @Override
-   protected void executeOperation(final O operation) {
-      EMFOperationHandler.super.execute(operation);
-   }
-
-}
+/**
+ * @deprecated Use {@link EMFOperationHandler} instead
+ */
+@Deprecated
+public abstract class AbstractEMFOperationHandler<O extends Operation> extends EMFOperationHandler<O> {}

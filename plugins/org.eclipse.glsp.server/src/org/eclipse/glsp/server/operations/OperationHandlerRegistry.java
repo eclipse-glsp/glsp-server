@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019-2022 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -17,21 +17,35 @@ package org.eclipse.glsp.server.operations;
 
 import java.util.Optional;
 
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.server.registry.Registry;
 
 /**
  * This registry contains {@link OperationHandler}s that are registered for certain {@link Operation} types.
  */
-public interface OperationHandlerRegistry extends Registry<Operation, OperationHandler> {
-   default Optional<? extends OperationHandler> getOperationHandler(final Operation operation) {
-      Optional<? extends OperationHandler> operationHandler = get(operation);
+public interface OperationHandlerRegistry extends Registry<Operation, OperationHandler<?>> {
+   default Optional<OperationHandler<?>> getOperationHandler(final Operation operation) {
+      Optional<OperationHandler<?>> operationHandler = get(operation);
       if (operation instanceof CreateOperation) {
          // create operations need to be handled by create operation handlers that support the element type id
          CreateOperation createOperation = (CreateOperation) operation;
-         return operationHandler.filter(CreateOperationHandler.class::isInstance)
+         return operationHandler
+            .filter(CreateOperationHandler.class::isInstance)
             .map(CreateOperationHandler.class::cast)
-            .filter(handler -> handler.getHandledElementTypeIds().contains(createOperation.getElementTypeId()));
+            .filter(handler -> handler.getHandledElementTypeIds().contains(createOperation.getElementTypeId()))
+            .map(OperationHandler.class::cast);
       }
       return operationHandler;
+   }
+
+   /**
+    * Returns the matching command for the given operation.
+    *
+    * @param registry  operation handler registry
+    * @param operation operation
+    * @return the matching command for the given operation
+    */
+   default Optional<Command> getExecutableCommand(final Operation operation) {
+      return getOperationHandler(operation).flatMap(handler -> handler.execute(operation));
    }
 }

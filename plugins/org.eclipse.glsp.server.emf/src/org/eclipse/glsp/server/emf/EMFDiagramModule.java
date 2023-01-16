@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2022 EclipseSource and others.
+ * Copyright (c) 2022-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,13 +15,8 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.emf;
 
-import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.di.DiagramModule;
-import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.CompoundOperationHandler;
-import org.eclipse.glsp.server.operations.OperationActionHandler;
-import org.eclipse.glsp.server.operations.OperationHandler;
 
 import com.google.inject.Singleton;
 
@@ -71,15 +66,4 @@ public abstract class EMFDiagramModule extends DiagramModule {
       bind(EMFModelState.class).to((Class<? extends EMFModelState>) gmodelStateClass);
    }
 
-   @Override
-   protected void configureActionHandlers(final MultiBinding<ActionHandler> binding) {
-      super.configureActionHandlers(binding);
-      binding.rebind(OperationActionHandler.class, EMFOperationActionHandler.class);
-   }
-
-   @Override
-   protected void configureOperationHandlers(final MultiBinding<OperationHandler> binding) {
-      super.configureOperationHandlers(binding);
-      binding.rebind(CompoundOperationHandler.class, EMFCompoundOperationHandler.class);
-   }
 }

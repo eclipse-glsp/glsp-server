@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2022 EclipseSource and others.
+ * Copyright (c) 2022-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,36 +15,12 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.emf;
 
-import java.util.Optional;
-
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.glsp.server.operations.CompoundOperation;
-import org.eclipse.glsp.server.operations.Operation;
-import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
-
-import com.google.inject.Inject;
+import org.eclipse.glsp.server.operations.CompoundOperationHandler;
 
 /**
  * Creates a compound command to wrap multiple commands into one command that is executed on the command stack.
+ *
+ * @deprecated Use {@link CompoundOperationHandler} directly.
  */
-public class EMFCompoundOperationHandler extends AbstractEMFOperationHandler<CompoundOperation> {
-
-   @Inject
-   protected OperationHandlerRegistry operationHandlerRegistry;
-
-   @Override
-   public Optional<Command> createCommand(final CompoundOperation operation) {
-      CompoundCommand compoundCommand = new CompoundCommand();
-      operation.getOperationList()
-         .forEach(nestedOperation -> getNestedCommand(nestedOperation).ifPresent(compoundCommand::append));
-      return compoundCommand.getCommandList().isEmpty()
-         ? Optional.empty()
-         : Optional.of(compoundCommand);
-   }
-
-   protected Optional<Command> getNestedCommand(final Operation operation) {
-      return EMFOperationHandler.getCommand(operationHandlerRegistry, operation);
-   }
-
-}
+@Deprecated
+public class EMFCompoundOperationHandler extends CompoundOperationHandler {}

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2022 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -17,6 +17,7 @@ package org.eclipse.glsp.server.operations;
 
 import java.util.Optional;
 
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
 import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.layout.ServerLayoutKind;
@@ -26,7 +27,7 @@ import com.google.inject.Inject;
 /**
  * Delegates to the configured {@link LayoutEngine} to apply a layout.
  */
-public class LayoutOperationHandler extends AbstractOperationHandler<LayoutOperation> {
+public class LayoutOperationHandler extends GModelOperationHandler<LayoutOperation> {
 
    @Inject
    protected Optional<LayoutEngine> layoutEngine;
@@ -35,12 +36,10 @@ public class LayoutOperationHandler extends AbstractOperationHandler<LayoutOpera
    protected DiagramConfiguration diagramConfiguration;
 
    @Override
-   protected void executeOperation(final LayoutOperation action) {
-      if (diagramConfiguration.getLayoutKind() == ServerLayoutKind.MANUAL) {
-         if (layoutEngine.isPresent()) {
-            layoutEngine.get().layout();
-         }
-      }
+   public Optional<Command> createCommand(final LayoutOperation operation) {
+      return layoutEngine.isEmpty() || diagramConfiguration.getLayoutKind() != ServerLayoutKind.MANUAL
+         ? doNothing()
+         : commandOf(() -> layoutEngine.get().layout());
    }
 
 }

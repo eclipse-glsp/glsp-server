@@ -32,8 +32,8 @@ import org.eclipse.glsp.server.features.core.model.RequestModelAction;
 import org.eclipse.glsp.server.features.core.model.SetBoundsAction;
 import org.eclipse.glsp.server.features.core.model.SetModelAction;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
-import org.eclipse.glsp.server.gmodel.AbstractGModelCreateEdgeOperationHandler;
 import org.eclipse.glsp.server.gmodel.GModelApplyLabelEditOperationHandler;
+import org.eclipse.glsp.server.gmodel.GModelCreateEdgeOperationHandler;
 import org.eclipse.glsp.server.gmodel.GModelReconnectEdgeOperationHandler;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.operations.Operation;
@@ -109,7 +109,7 @@ public class GenericsUtilTest {
    private static Stream<Arguments> matchingOperationHandler() {
       return Stream.of(
          arguments(GModelApplyLabelEditOperationHandler.class, ApplyLabelEditOperation.class),
-         arguments(AbstractGModelCreateEdgeOperationHandler.class, CreateEdgeOperation.class),
+         arguments(GModelCreateEdgeOperationHandler.class, CreateEdgeOperation.class),
          arguments(GModelReconnectEdgeOperationHandler.class, ReconnectEdgeOperation.class));
    }
 
@@ -150,9 +150,9 @@ public class GenericsUtilTest {
          arguments(RequestModelAction.class, MyResponseActionExt.class, Optional.empty()),
          arguments(GModelApplyLabelEditOperationHandler.class, Operation.class,
             Optional.of(ApplyLabelEditOperation.class)),
-         arguments(AbstractGModelCreateEdgeOperationHandler.class, Operation.class,
+         arguments(GModelCreateEdgeOperationHandler.class, Operation.class,
             Optional.of(CreateEdgeOperation.class)),
-         arguments(AbstractGModelCreateEdgeOperationHandler.class, ResponseAction.class, Optional.empty()),
+         arguments(GModelCreateEdgeOperationHandler.class, ResponseAction.class, Optional.empty()),
          arguments(null, null, Optional.empty()),
          arguments(MyRequestAction.class, null, Optional.empty()),
          arguments(null, ResponseAction.class, Optional.empty()));

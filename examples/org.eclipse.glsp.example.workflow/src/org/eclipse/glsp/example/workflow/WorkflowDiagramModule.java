@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2022 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -35,7 +35,7 @@ import org.eclipse.glsp.example.workflow.provider.NodeDocumentationNavigationTar
 import org.eclipse.glsp.example.workflow.provider.PreviousNodeNavigationTargetProvider;
 import org.eclipse.glsp.example.workflow.provider.WorkflowCommandPaletteActionProvider;
 import org.eclipse.glsp.example.workflow.provider.WorkflowContextMenuItemProvider;
-import org.eclipse.glsp.example.workflow.taskedit.ApplyTaskEditOperationHandler;
+import org.eclipse.glsp.example.workflow.taskedit.ApplyTaskEditActionHandler;
 import org.eclipse.glsp.example.workflow.taskedit.EditTaskOperationHandler;
 import org.eclipse.glsp.example.workflow.taskedit.TaskEditContextActionProvider;
 import org.eclipse.glsp.example.workflow.taskedit.TaskEditValidator;
@@ -104,7 +104,7 @@ public class WorkflowDiagramModule extends GModelDiagramModule {
    }
 
    @Override
-   protected void configureOperationHandlers(final MultiBinding<OperationHandler> binding) {
+   protected void configureOperationHandlers(final MultiBinding<OperationHandler<?>> binding) {
       super.configureOperationHandlers(binding);
       binding.add(CreateAutomatedTaskHandler.class);
       binding.add(CreateManualTaskHandler.class);
@@ -116,7 +116,6 @@ public class WorkflowDiagramModule extends GModelDiagramModule {
       binding.add(CreateWeightedEdgeHandler.class);
       binding.add(CreateCategoryHandler.class);
       binding.add(EditTaskOperationHandler.class);
-      binding.add(ApplyTaskEditOperationHandler.class);
    }
 
    @Override
@@ -124,6 +123,7 @@ public class WorkflowDiagramModule extends GModelDiagramModule {
       super.configureActionHandlers(binding);
       binding.rebind(RequestContextActionsHandler.class, WorkflowRequestContextActionsHandler.class);
       binding.add(LogActionHandler.class);
+      binding.add(ApplyTaskEditActionHandler.class);
    }
 
    @Override

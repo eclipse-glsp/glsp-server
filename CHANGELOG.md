@@ -12,6 +12,9 @@
        - Jetty 9.x -> Jetty 10.0.13
        - LSP4J -> 0.8.0 -> 0.11.0
        - ELK 0.7.0 -> 0.8.1
+- [operation] Rework `OperationHandler` to provide an optional command instead of direct execution to allow more execution control [#187](https://github.com/eclipse-glsp/glsp-server/pull/187)
+    - `Abstract<XYZ>` base implementations were deprecated in favor of `GModelOperationHandler` and `EMFOperationHandler` base classes
+    - Long-termin deprecated and unused `Basic<XYZ>` base classes were removed
 
 ## [v1.0.0 - 30/06/2022](https://github.com/eclipse-glsp/glsp-server/releases/tag/v1.0.0)
 

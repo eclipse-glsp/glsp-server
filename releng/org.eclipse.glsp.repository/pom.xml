@@ -16,7 +16,7 @@
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-p2-publisher-plugin</artifactId>
-				<version>${tycho-version}</version>
+				<version>${tycho.version}</version>
 				<configuration>
 					<profiles>JavaSE-11</profiles>
 				</configuration>
@@ -25,7 +25,7 @@
 				on the jenkins instance -->
 			<plugin>
 				<artifactId>maven-clean-plugin</artifactId>
-				<version>3.1.0</version>
+				<version>${maven.clean.version}</version>
 				<configuration>
 					<skip>true</skip>
 				</configuration>
@@ -58,7 +58,7 @@
 				<plugins>
 					<plugin>
 						<artifactId>maven-antrun-plugin</artifactId>
-						<version>${maven-antrun-plugin.version}</version>
+						<version>${maven.antrun.version}</version>
 						<executions>
 							<execution>
 								<id>update-local-repository</id>
@@ -93,7 +93,7 @@
 					<plugin>
 						<groupId>org.eclipse.tycho.extras</groupId>
 						<artifactId>tycho-eclipserun-plugin</artifactId>
-						<version>${tycho-version}</version>
+						<version>${tycho.version}</version>
 						<configuration>
 							<executionEnvironment>JavaSE-11</executionEnvironment>
 							<!-- IMPORTANT: DO NOT split the arg line -->

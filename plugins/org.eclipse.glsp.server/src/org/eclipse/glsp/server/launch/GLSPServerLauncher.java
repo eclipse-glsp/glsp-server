@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,7 +15,6 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.launch;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -50,12 +49,9 @@ public abstract class GLSPServerLauncher {
 
    public void start(final String hostname, final int port, final boolean consoleLogging, final String logDir,
       final Level logLevel) {
-      try {
-         // configure logging
-         LaunchUtil.configureLogger(consoleLogging, logDir, logLevel);
-      } catch (IOException e) {
-         LOGGER.error("Error during log configuration!", e);
-      }
+      // configure logging
+      LaunchUtil.configureLogger(consoleLogging, logDir, logLevel);
+
       start(hostname, port);
    }
 
@@ -63,7 +59,7 @@ public abstract class GLSPServerLauncher {
       try {
          // configure logging
          LaunchUtil.configure(parser);
-      } catch (IOException | ParseException e) {
+      } catch (ParseException e) {
          LOGGER.error("Error during log configuration!", e);
       }
       start(hostname, port);

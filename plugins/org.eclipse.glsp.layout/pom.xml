@@ -45,26 +45,33 @@
 		<dependency>
 			<groupId>org.eclipse.glsp</groupId>
 			<artifactId>org.eclipse.glsp.server</artifactId>
-			<version>1.1.0-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.elk</groupId>
 			<artifactId>org.eclipse.elk.core</artifactId>
-			<version>0.7.1</version>
-			<!-- Can be removed once https://github.com/eclipse-glsp/glsp/issues/265 
-				is resolved -->
+			<version>${elk.version}</version>
 			<exclusions>
+				<!--ELK still has a log4J 1.2 dependency. So we exclude it -->
 				<exclusion>
-					<groupId>com.google.guava</groupId>
-					<artifactId>guava</artifactId>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
 				</exclusion>
 			</exclusions>
+
 		</dependency>
 
 		<dependency>
 			<groupId>org.eclipse.elk</groupId>
 			<artifactId>org.eclipse.elk.graph.text</artifactId>
-			<version>0.7.1</version>
+			<version>${elk.version}</version>
+			<exclusions>
+				<!--ELK still has a log4J 1.2 dependency. So we exclude it -->
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 
@@ -82,7 +89,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-deploy-plugin</artifactId>
-						<version>2.8</version>
+						<version>${maven.deploy.version}</version>
 						<configuration>
 							<skip>false</skip>
 						</configuration>

@@ -12,16 +12,10 @@
    <bundle id="org.eclipse.glsp.layout.source">
       <category name="org.eclipse.glsp"/>
    </bundle>
-   <bundle id="org.eclipse.glsp.server.websocket">
-      <category name="org.eclipse.glsp"/>
-   </bundle>
    <bundle id="org.eclipse.glsp.server.websocket.source">
       <category name="org.eclipse.glsp"/>
    </bundle>
    <bundle id="org.eclipse.glsp.example.workflow">
-      <category name="org.eclipse.glsp.examples"/>
-   </bundle>
-   <bundle id="org.eclipse.glsp.example.workflow.source">
       <category name="org.eclipse.glsp.examples"/>
    </bundle>
    <bundle id="org.eclipse.glsp.server.emf">
@@ -30,6 +24,31 @@
    <bundle id="org.eclipse.glsp.server.emf.source">
       <category name="org.eclipse.glsp"/>
    </bundle>
+   <bundle id="org.eclipse.glsp.server.websocket">
+      <category name="org.eclipse.glsp"/>
+   </bundle>
+   <bundle id="org.eclipse.glsp.example.workflow.source">
+      <category name="org.eclipse.glsp.examples"/>
+   </bundle>
+   <bundle id="org.apache.logging.log4j.api">
+      <category name="org.eclipse.glsp.dependencies"/>
+   </bundle>
+   <bundle id="org.apache.logging.log4j.core">
+      <category name="org.eclipse.glsp.dependencies"/>
+   </bundle>
+   <bundle id="org.apache.logging.log4j.slf4j2-impl">
+      <category name="org.eclipse.glsp.dependencies"/>
+   </bundle>
+   <bundle id="slf4j.api">
+      <category name="org.eclipse.glsp.dependencies"/>
+   </bundle>
    <category-def name="org.eclipse.glsp" label="Eclipse GLSP"/>
-   <category-def name="org.eclipse.glsp.examples" label="GLSP Examples"/>
+   <category-def name="org.eclipse.glsp.examples" label="GLSP Examples">
+      <description>
+         The GLSP server implementation for the Workflow example
+      </description>
+   </category-def>
+   <category-def name="org.eclipse.glsp.dependencies" label="External Dependencies"/>
+   <repository-reference location="mvn:org.eclipse.jetty:jetty-p2:11.0.7:zip:p2site" enabled="true" />
+   <repository-reference location="https://download.eclipse.org/elk/updates/releases/0.8.1/" enabled="true" />
 </site>

@@ -44,42 +44,31 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.google.inject</groupId>
-			<artifactId>guice</artifactId>
-			<version>5.0.1</version>
-		</dependency>
-		<dependency>
 			<groupId>org.eclipse.glsp</groupId>
 			<artifactId>org.eclipse.glsp.server</artifactId>
-			<version>1.1.0-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.glsp</groupId>
 			<artifactId>org.eclipse.glsp.server.websocket</artifactId>
-			<version>1.1.0-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.glsp</groupId>
 			<artifactId>org.eclipse.glsp.layout</artifactId>
-			<version>1.1.0-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.elk</groupId>
 			<artifactId>org.eclipse.elk.alg.layered</artifactId>
-			<version>0.7.1</version>
-			<!-- Can be removed once https://github.com/eclipse-glsp/glsp/issues/265 
-				is resolved -->
-			<exclusions>
-				<exclusion>
-					<groupId>com.google.guava</groupId>
-					<artifactId>guava</artifactId>
-				</exclusion>
+			<version>${elk.version}</version>
+				<exclusions>
+				<!--ELK still has a log4J 1.2 dependency. So we exclude it -->
+					<exclusion>
+						<groupId>log4j</groupId>
+						<artifactId>log4j</artifactId>
+					</exclusion>
 			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>30.1-jre</version>
 		</dependency>
 	</dependencies>
 
@@ -97,7 +86,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-deploy-plugin</artifactId>
-						<version>2.8</version>
+						<version>${maven.deploy.version}</version>
 						<configuration>
 							<skip>false</skip>
 						</configuration>
@@ -105,7 +94,7 @@
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>build-helper-maven-plugin</artifactId>
-						<version>3.3.0</version>
+						<version>${buildhelper.maven.version}</version>
 						<executions>
 							<execution>
 								<id>add-resource</id>
@@ -137,7 +126,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-shade-plugin</artifactId>
-						<version>3.2.4</version>
+						<version>${maven.shade.version}</version>
 						<configuration>
 							<transformers>
 								<transformer
@@ -150,7 +139,8 @@
 							</transformers>
 							<artifactSet>
 								<excludes>
-									<exclude>javax.websocket:javax.websocket-client-api</exclude>
+									<exclude>javax.websocket:javax.websocket-api</exclude>
+									<exclude>log4j:log4j</exclude>
 								</excludes>
 							</artifactSet>
 							<filters>
@@ -162,7 +152,9 @@
 										<exclude>META-INF/ECLIPSE_*</exclude>
 										<exclude>META-INF/LICENSE*</exclude>
 										<exclude>META-INF/services/javax.servlet.ServletContainerInitializer*</exclude>
+										<exclude>META-INF/services/org.eclipse.jetty.webapp.Configuration*</exclude>
 										<exclude>META-INF/services/org.eclipse.elk.core.data.ILayoutMetaDataProvider*</exclude>
+										<exclude>META-INF/versions/9/module-info.class</exclude>
 										<exclude>META-INF/NOTICE*</exclude>
 										<exclude>.options</exclude>
 										<exclude>.api_description</exclude>

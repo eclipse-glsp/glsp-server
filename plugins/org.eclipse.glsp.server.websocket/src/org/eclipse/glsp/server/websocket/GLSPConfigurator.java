@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -19,15 +19,15 @@ import java.util.List;
 import java.util.ServiceLoader;
 import java.util.function.Supplier;
 
-import javax.websocket.Extension;
-import javax.websocket.HandshakeResponse;
-import javax.websocket.server.HandshakeRequest;
-import javax.websocket.server.ServerEndpointConfig;
-import javax.websocket.server.ServerEndpointConfig.Configurator;
-
-import org.eclipse.jetty.websocket.jsr356.server.ContainerDefaultConfigurator;
+import org.eclipse.jetty.websocket.jakarta.server.config.ContainerDefaultConfigurator;
 
 import com.google.inject.Injector;
+
+import jakarta.websocket.Extension;
+import jakarta.websocket.HandshakeResponse;
+import jakarta.websocket.server.HandshakeRequest;
+import jakarta.websocket.server.ServerEndpointConfig;
+import jakarta.websocket.server.ServerEndpointConfig.Configurator;
 
 public class GLSPConfigurator extends Configurator {
    protected Configurator containerConfigurator;
@@ -40,7 +40,7 @@ public class GLSPConfigurator extends Configurator {
    Configurator getContainerConfigurator() {
       if (containerConfigurator == null) {
          ServiceLoader<Configurator> loader = ServiceLoader
-            .load(javax.websocket.server.ServerEndpointConfig.Configurator.class);
+            .load(jakarta.websocket.server.ServerEndpointConfig.Configurator.class);
          if (loader.iterator().hasNext()) {
             containerConfigurator = loader.iterator().next();
          } else {

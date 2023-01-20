@@ -6,9 +6,9 @@ Bundle-Version: 1.1.0.qualifier
 Bundle-Vendor: Eclipse GLSP
 Automatic-Module-Name: org.eclipse.glsp.graph
 Bundle-RequiredExecutionEnvironment: JavaSE-11
-Require-Bundle: org.eclipse.emf.common;bundle-version="2.15.0",
- com.google.gson;bundle-version="2.8.9",
- org.eclipse.emf.ecore;bundle-version="2.15.0";visibility:=reexport,
+Require-Bundle: org.eclipse.emf.common;bundle-version="2.23.0",
+ com.google.gson;bundle-version="2.8.7",
+ org.eclipse.emf.ecore;bundle-version="2.25.0";visibility:=reexport,
  com.google.guava;bundle-version="30.1.0";visibility:=reexport
 Export-Package: org.eclipse.glsp.graph,
  org.eclipse.glsp.graph,

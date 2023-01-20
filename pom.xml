@@ -37,10 +37,58 @@
 	</scm>
 
 	<properties>
+	
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.source>11</java.source>
 		<java.target>11</java.target>
 		<project.build.java.target>11</project.build.java.target>
+		
+		<!-- Maven Plugin Versions: General maven plugin versions -->
+		<buildhelper.maven.version>3.3.0</buildhelper.maven.version>
+		<codehaus.mojo.maven.version>3.2.0</codehaus.mojo.maven.version>
+		<emfcloud.checkstyle.version>0.1.0-SNAPSHOT</emfcloud.checkstyle.version>
+		<maven.antrun.version>1.8</maven.antrun.version>
+		<maven.antrun.version>3.0.0</maven.antrun.version>
+		<maven.checkstyle.version>3.1.1</maven.checkstyle.version>
+		<maven.clean.version>3.1.0</maven.clean.version>
+		<maven.compiler.version>3.8.1</maven.compiler.version>
+		<maven.compiler.version>3.8.1</maven.compiler.version>
+		<maven.dependency.version>3.1.2</maven.dependency.version>
+		<maven.dependency.version>3.2.0</maven.dependency.version>
+		<maven.deploy.version>3.0.0-M1</maven.deploy.version>
+		<maven.failsafe.version>3.0.0-M5</maven.failsafe.version>
+		<maven.javdoc.version>3.3.1</maven.javdoc.version>
+		<maven.resources.version>2.7</maven.resources.version>
+		<maven.resources.version>3.2.0</maven.resources.version>
+		<maven.shade.version>3.2.4</maven.shade.version>
+		<maven.source.version>3.2.0</maven.source.version>
+		<maven.surefire.version>3.0.0-M5</maven.surefire.version>
+		<puppycrawl.checkstyle.version>8.44</puppycrawl.checkstyle.version>
+		<tycho.version>2.7.5</tycho.version>
+		<versions.maven.version>2.7</versions.maven.version>
+
+		<!-- Dependency Versions: Version of dependencies provided by the target 
+			platform in p2. We try to match the p2-version if possible. -->
+		<apache.logging.log4j.version>[2.19.0,)</apache.logging.log4j.version>
+		<commons.cli.version>[1.4,)</commons.cli.version>
+		<elk.version>[0.8.1,)</elk.version>
+		<emf.common.version>[2.23.0,)</emf.common.version>
+		<emf.ecore.change.version>[2.14.0,)</emf.ecore.change.version>
+		<emf.ecore.edit.version>[2.13.0,)</emf.ecore.edit.version>
+		<emf.ecore.version>[2.25.0,)</emf.ecore.version>
+		<emf.ecore.xmi.version>2.16.0</emf.ecore.xmi.version>
+		<emfjson.jackson.version>2.0.0</emfjson.jackson.version>
+		<google.guava.version>[30.1-jre,)</google.guava.version>
+		<google.guice.version>[5.0.1,)</google.guice.version>
+		<google.gson.version>[2.8.7,)</google.gson.version>
+		<junit.jupiter.engine.version>[5.7.1,6.0.0)</junit.jupiter.engine.version>
+		<lsp4j.version>[0.11.0,)</lsp4j.version>
+		<jetty.websocket.version>[10.0.12,)</jetty.websocket.version>
+
+		
+		<!-- Release Dependencies for M2 -->
+		<nexus.maven.version>1.6.8</nexus.maven.version>
+		<maven.gpg.version>1.6</maven.gpg.version>
 	</properties>
 
 	<pluginRepositories>
@@ -56,7 +104,7 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.0</version>
+				<version>${maven.compiler.version}</version>
 				<configuration>
 					<source>${java.source}</source>
 					<target>${java.target}</target>
@@ -66,18 +114,6 @@
 		</plugins>
 	</build>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-			<version>2.17.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>30.1-jre</version>
-		</dependency>
-	</dependencies>
 
 	<profiles>
 		<profile>
@@ -87,8 +123,8 @@
 			</activation>
 
 			<properties>
-				<tycho-version>2.7.5</tycho-version>
-				<maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
+			  <!-- Maven Plugin Versions: General maven plugin versions -->
+				
 			</properties>
 
 			<modules>
@@ -106,31 +142,31 @@
 						<plugin>
 							<groupId>org.eclipse.tycho</groupId>
 							<artifactId>tycho-compiler-plugin</artifactId>
-							<version>${tycho-version}</version>
+							<version>${tycho.version}</version>
 						</plugin>
 						<!-- enable tycho build extension -->
 						<plugin>
 							<groupId>org.eclipse.tycho</groupId>
 							<artifactId>tycho-maven-plugin</artifactId>
-							<version>${tycho-version}</version>
+							<version>${tycho.version}</version>
 							<extensions>true</extensions>
 						</plugin>
 						<plugin>
 							<!-- enable source bundle generation -->
 							<groupId>org.eclipse.tycho</groupId>
 							<artifactId>tycho-source-plugin</artifactId>
-							<version>${tycho-version}</version>
+							<version>${tycho.version}</version>
 						</plugin>
 						<plugin>
 							<!-- enable automated version updates -->
 							<groupId>org.eclipse.tycho</groupId>
 							<artifactId>tycho-versions-plugin</artifactId>
-							<version>${tycho-version}</version>
+							<version>${tycho.version}</version>
 						</plugin>
 						<plugin>
 							<groupId>org.eclipse.tycho</groupId>
 							<artifactId>target-platform-configuration</artifactId>
-							<version>${tycho-version}</version>
+							<version>${tycho.version}</version>
 						</plugin>
 					</plugins>
 				</pluginManagement>
@@ -138,7 +174,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-resources-plugin</artifactId>
-						<version>2.7</version>
+						<version>${maven.resources.version}</version>
 						<configuration>
 							<encoding>UTF-8</encoding>
 						</configuration>
@@ -202,7 +238,7 @@
 								<artifact>
 									<groupId>org.eclipse.glsp</groupId>
 									<artifactId>org.eclipse.glsp.parent</artifactId>
-									<classifier>targetplatforms/r2022-03</classifier>
+									<classifier>targetplatforms/r2022-12</classifier>
 									<version>${project.version}</version>
 								</artifact>
 							</target>
@@ -220,8 +256,7 @@
 			</activation>
 
 			<properties>
-				<checkstyle.plugin>3.1.2</checkstyle.plugin>
-				<checkstyle>8.44</checkstyle>
+				<checkstyle.version>8.44</checkstyle.version>		
 			</properties>
 
 			<modules>
@@ -233,6 +268,24 @@
 				<module>examples/org.eclipse.glsp.example.workflow</module>
 				<module>tests</module>
 			</modules>
+			
+			<dependencies>
+				<dependency>
+					<groupId>org.apache.logging.log4j</groupId>
+					<artifactId>log4j-core</artifactId>
+					<version>${apache.logging.log4j.version}</version>
+				</dependency>
+				<dependency>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava</artifactId>
+					<version>${google.guava.version}</version>
+				</dependency>
+				<dependency>
+				    <groupId>org.apache.logging.log4j</groupId>
+				    <artifactId>log4j-slf4j2-impl</artifactId>
+				    <version>${apache.logging.log4j.version}</version>
+				</dependency>
+			</dependencies>
 
 			<pluginRepositories>
 				<pluginRepository>
@@ -247,7 +300,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-source-plugin</artifactId>
-						<version>3.0.1</version>
+						<version>${maven.source.version}</version>
 						<configuration>
 							<argLine>
 								--illegal-access=permit
@@ -266,7 +319,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-surefire-plugin</artifactId>
-						<version>2.22.1</version>
+						<version>${maven.surefire.version}</version>
 						<configuration>
 							<argLine>
 								--illegal-access=permit
@@ -276,7 +329,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-failsafe-plugin</artifactId>
-						<version>2.22.1</version>
+						<version>${maven.failsafe.version}</version>
 						<configuration>
 							<argLine>
 								--illegal-access=permit
@@ -287,9 +340,9 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-checkstyle-plugin</artifactId>
-						<version>${checkstyle.plugin}</version>
+						<version>${maven.checkstyle.version}</version>
 						<configuration>
-							<configLocation>emfcloud-checkstyle-8.44.xml</configLocation>
+							<configLocation>emfcloud-checkstyle-${checkstyle.version}.xml</configLocation>
 							<consoleOutput>true</consoleOutput>
 							<excludes>**/src-gen/**/*.java</excludes>
 						</configuration>
@@ -305,12 +358,12 @@
 							<dependency>
 								<groupId>org.eclipse.emfcloud</groupId>
 								<artifactId>org.eclipse.emfcloud.checkstyle</artifactId>
-								<version>0.1.0-SNAPSHOT</version>
+								<version>${emfcloud.checkstyle.version}</version>
 							</dependency>
 							<dependency>
 								<groupId>com.puppycrawl.tools</groupId>
 								<artifactId>checkstyle</artifactId>
-								<version>${checkstyle}</version>
+								<version>${checkstyle.version}</version>
 							</dependency>
 						</dependencies>
 					</plugin>
@@ -327,6 +380,7 @@
 				<module>plugins/org.eclipse.glsp.server.websocket</module>
 				<module>examples/org.eclipse.glsp.example.workflow</module>
 			</modules>
+			
 
 			<distributionManagement>
 				<snapshotRepository>
@@ -340,7 +394,7 @@
 					<plugin>
 						<groupId>org.sonatype.plugins</groupId>
 						<artifactId>nexus-staging-maven-plugin</artifactId>
-						<version>1.6.8</version>
+						<version>${nexus.maven.version}</version>
 						<extensions>true</extensions>
 						<configuration>
 							<serverId>ossrh</serverId>
@@ -353,10 +407,10 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>3.3.1</version>
+						<version>${maven.javadoc.version}</version>
 						<configuration>
 						
-							<source>8</source>
+							<source>${java.source}</source>
 							<detectJavaApiLink>false</detectJavaApiLink>
 							<tags>
 								<tag>
@@ -387,7 +441,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
-						<version>1.6</version>
+						<version>${maven.gpg}</version>
 						<executions>
 							<execution>
 								<id>sign-artifacts</id>
@@ -408,7 +462,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-deploy-plugin</artifactId>
-						<version>2.8</version>
+						<version>${maven.deploy}</version>
 						<configuration>
 							<skip>true</skip>
 						</configuration>
@@ -416,7 +470,7 @@
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>versions-maven-plugin</artifactId>
-						<version>2.7</version>
+						<version>${versions.maven.version}</version>
 					</plugin>
 				</plugins>
 

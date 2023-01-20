@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2022 EclipseSource and others.
+ * Copyright (c) 2020-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -16,7 +16,6 @@
 package org.eclipse.glsp.server.utils;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,7 +41,7 @@ import org.apache.logging.log4j.core.config.builder.api.RootLoggerComponentBuild
 import org.apache.logging.log4j.core.config.builder.impl.BuiltConfiguration;
 import org.eclipse.glsp.server.launch.DefaultCLIParser;
 
-@SuppressWarnings({ "restriction", "rawtypes" })
+@SuppressWarnings("rawtypes")
 public final class LaunchUtil {
    private static Logger LOGGER = LogManager.getLogger(LaunchUtil.class);
 
@@ -60,7 +59,7 @@ public final class LaunchUtil {
       return port >= 0 && port <= 65535;
    }
 
-   public static void configure(final DefaultCLIParser cli) throws ParseException, IOException {
+   public static void configure(final DefaultCLIParser cli) throws ParseException {
       if (cli.isHelp()) {
          cli.printHelp();
          System.exit(0);
@@ -72,7 +71,7 @@ public final class LaunchUtil {
       }
    }
 
-   public static void configureLogger(final DefaultCLIParser cli) throws ParseException, IOException {
+   public static void configureLogger(final DefaultCLIParser cli) throws ParseException {
       if (cli.isFileLog()) {
          configureLogger(cli.isConsoleLog(), cli.parseLogDir(), cli.parseLogLevel());
       } else {
@@ -80,7 +79,7 @@ public final class LaunchUtil {
       }
    }
 
-   public static void configureLogger(final boolean logToConsole, final Level logLevel) throws IOException {
+   public static void configureLogger(final boolean logToConsole, final Level logLevel) {
       configureLogger(logToConsole, null, logLevel);
    }
 
@@ -120,8 +119,7 @@ public final class LaunchUtil {
     */
    protected static String getRollingFileSize() { return "5MB"; }
 
-   public static void configureLogger(final boolean logToConsole, final String logDir, final Level logLevel)
-      throws IOException {
+   public static void configureLogger(final boolean logToConsole, final String logDir, final Level logLevel) {
       ConfigurationBuilder<BuiltConfiguration> builder = ConfigurationBuilderFactory.newConfigurationBuilder();
 
       // Configure new root logger

@@ -319,9 +319,9 @@ version(s), and exceptions or additional permissions here}.&quot;
       <import plugin="org.apache.commons.cli" version="1.4.0" match="greaterOrEqual"/>
       <import plugin="com.google.inject" version="5.0.1" match="greaterOrEqual"/>
       <import plugin="org.eclipse.glsp.graph" version="1.0.0" match="compatible"/>
-      <import plugin="javax.inject" version="1.0.0" match="compatible"/>
-      <import plugin="org.apache.logging.log4j.api" version="2.17.1" match="greaterOrEqual"/>
-      <import plugin="org.apache.logging.log4j.core" version="2.17.1" match="greaterOrEqual"/>
+      <import plugin="javax.inject"/>
+      <import plugin="org.apache.logging.log4j.api"/>
+      <import plugin="org.apache.logging.log4j.core"/>
       <import plugin="org.eclipse.emf.common" version="2.23.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.emf.ecore" version="2.25.0" match="greaterOrEqual"/>
       <import plugin="com.google.guava" version="30.1.0" match="greaterOrEqual"/>

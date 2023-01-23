@@ -18,6 +18,8 @@ package org.eclipse.glsp.server.websocket;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
+import javax.websocket.server.ServerEndpointConfig;
+
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,11 +28,9 @@ import org.eclipse.glsp.server.di.ServerModule;
 import org.eclipse.glsp.server.launch.GLSPServerLauncher;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.websocket.jakarta.server.config.JakartaWebSocketServletContainerInitializer;
+import org.eclipse.jetty.websocket.javax.server.config.JavaxWebSocketServletContainerInitializer;
 
 import com.google.inject.Module;
-
-import jakarta.websocket.server.ServerEndpointConfig;
 
 public class WebsocketServerLauncher extends GLSPServerLauncher {
    private static Logger LOGGER = LogManager.getLogger(WebsocketServerLauncher.class);
@@ -65,7 +65,7 @@ public class WebsocketServerLauncher extends GLSPServerLauncher {
 
          // Configure web socket
 
-         JakartaWebSocketServletContainerInitializer.configure(webAppContext, (servletContext, wsContainer) -> {
+         JavaxWebSocketServletContainerInitializer.configure(webAppContext, (servletContext, wsContainer) -> {
             ServerEndpointConfig.Builder builder = ServerEndpointConfig.Builder.create(GLSPServerEndpoint.class,
                "/" + endpointPath);
             builder.configurator(new GLSPConfigurator(this::createInjector));

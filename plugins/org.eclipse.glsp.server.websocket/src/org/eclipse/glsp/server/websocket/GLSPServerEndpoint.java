@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -19,19 +19,19 @@ import java.util.Collection;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import javax.websocket.CloseReason;
+import javax.websocket.EndpointConfig;
+import javax.websocket.Session;
+
 import org.eclipse.glsp.server.gson.ServerGsonConfigurator;
 import org.eclipse.glsp.server.protocol.GLSPClient;
 import org.eclipse.glsp.server.protocol.GLSPServer;
 import org.eclipse.lsp4j.jsonrpc.Launcher.Builder;
 import org.eclipse.lsp4j.jsonrpc.MessageConsumer;
-import org.eclipse.lsp4j.websocket.jakarta.WebSocketEndpoint;
+import org.eclipse.lsp4j.websocket.WebSocketEndpoint;
 
 import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
-
-import jakarta.websocket.CloseReason;
-import jakarta.websocket.EndpointConfig;
-import jakarta.websocket.Session;
 
 public class GLSPServerEndpoint extends WebSocketEndpoint<GLSPClient> {
    public static final int MAX_TEXT_MESSAGE_BUFFER_SIZE = 8388608;

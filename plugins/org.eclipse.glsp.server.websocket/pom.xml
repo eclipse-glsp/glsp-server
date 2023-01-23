@@ -49,12 +49,12 @@
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty.websocket</groupId>
-			<artifactId>websocket-jakarta-server</artifactId>
+			<artifactId>websocket-javax-server</artifactId>
 			<version>${jetty.websocket.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.lsp4j</groupId>
-			<artifactId>org.eclipse.lsp4j.websocket.jakarta</artifactId>
+			<artifactId>org.eclipse.lsp4j.websocket</artifactId>
 			<version>${lsp4j.version}</version>
 		</dependency>
 	</dependencies>

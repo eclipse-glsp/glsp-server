@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2022 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -164,12 +164,12 @@ public class GModelElementTypeAdapter extends PropertyBasedTypeAdapter<GModelEle
    }
 
    @Override
-   @SuppressWarnings({ "checkstyle:CyclomaticComplexity", "restriction" })
+   @SuppressWarnings("checkstyle:CyclomaticComplexity")
    protected void writeProperties(final JsonWriter out, final GModelElement instance, final Class<?> type,
       final Set<String> written)
       throws IOException, IllegalAccessException {
       for (Field field : type.getDeclaredFields()) {
-         if (!gson.excluder().excludeField(field, true) && isSet(instance, field)) {
+         if (!EObjectExclusionStrategy.excludeField(field) && isSet(instance, field)) {
             int modifiers = field.getModifiers();
             if (!Modifier.isTransient(modifiers) && !Modifier.isStatic(modifiers) && written.add(field.getName())) {
                writeProperty(out, instance, field);

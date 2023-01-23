@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="2022-12 - Default" sequenceNumber="1674307319">
+<target name="2022-12 - Default" sequenceNumber="1674470297">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.emf.sdk.feature.group" version="2.32.0.v20221121-1400"/>
-      <unit id="jakarta.websocket" version="2.0.0.v20221112-0806"/>
-      <unit id="jakarta.servlet" version="5.0.0.v20221112-0806"/>
       <unit id="org.eclipse.lsp4j" version="0.19.0.v20221118-0359"/>
-      <unit id="org.eclipse.lsp4j.websocket.jakarta" version="0.19.0.v20221118-0359"/>
+      <unit id="org.eclipse.lsp4j.websocket" version="0.19.0.v20221118-0359"/>
       <unit id="org.apache.commons.cli" version="1.4.0.v20221112-0806"/>
       <unit id="com.google.gson" version="2.9.1.v20220915-1632"/>
       <unit id="com.google.inject" version="5.0.1.v20221112-0806"/>
@@ -28,8 +26,12 @@
       <repository location="https://download.eclipse.org/elk/updates/releases/0.8.1/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="org.eclipse.jetty.websocket.jakarta.server" version="11.0.13"/>
-      <repository location="mvn:org.eclipse.jetty:jetty-p2:11.0.13:zip:p2site"/>
+      <unit id="org.eclipse.jetty.websocket.javax.server" version="10.0.13"/>
+      <repository location="mvn:org.eclipse.jetty:jetty-p2:10.0.13:zip:p2site"/>
+    </location>
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
+      <unit id="javax.websocket" version="1.1.0.20180730"/>
+      <repository location="https://download.eclipse.org/gemini/updates/web/3.0.4"/>
     </location>
     <location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="false" missingManifest="generate" type="Maven" label="slf4j">
     <dependencies>

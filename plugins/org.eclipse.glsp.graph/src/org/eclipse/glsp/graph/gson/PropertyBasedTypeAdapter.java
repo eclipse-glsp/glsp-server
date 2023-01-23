@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -25,8 +25,8 @@ import java.util.Set;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.google.gson.TypeAdapter;
-import com.google.gson.internal.bind.JsonTreeWriter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
@@ -122,9 +122,7 @@ public abstract class PropertyBasedTypeAdapter<T> extends TypeAdapter<T> {
    }
 
    protected JsonElement toTree(final JsonReader in) throws IOException {
-      JsonTreeWriter writer = new JsonTreeWriter();
-      transfer(in, writer);
-      return writer.get();
+      return JsonParser.parseReader(in);
    }
 
    @SuppressWarnings("checkstyle:CyclomaticComplexity")

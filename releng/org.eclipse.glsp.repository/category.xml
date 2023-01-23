@@ -49,6 +49,6 @@
       </description>
    </category-def>
    <category-def name="org.eclipse.glsp.dependencies" label="External Dependencies"/>
-   <repository-reference location="mvn:org.eclipse.jetty:jetty-p2:11.0.7:zip:p2site" enabled="true" />
+   <repository-reference location="mvn:org.eclipse.jetty:jetty-p2:11.0.13:zip:p2site" enabled="true" />
    <repository-reference location="https://download.eclipse.org/elk/updates/releases/0.8.1/" enabled="true" />
 </site>

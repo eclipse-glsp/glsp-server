@@ -7,10 +7,10 @@
 - [graph] Updated the Graph model and add Layoutable interface [#175](https://github.com/eclipse-glsp/glsp-server/pull/175) - Contributed on behalf of STMicroelectronics
 
 ### Breaking Changes
-- [websocket] Update to Jetty Websocket 11 [#185](https://github.com/eclipse-glsp/glsp-server/pull/185) - Contributed on behalf of STMicroelectronics
-    - This includes breaking changes due to the namespace change (javax->jakarta) and the following new minimum versions:
-       - Jetty 9.x -> Jetty 11.0.12
-       - LSP4J -> 0.8.0 -> 0.19.0
+- [websocket] Update to Jetty Websocket 10 [#185](https://github.com/eclipse-glsp/glsp-server/pull/185) [#186](https://github.com/eclipse-glsp/glsp-server/pull/186) - Contributed on behalf of STMicroelectronics
+    - This includes breaking changes due to major API changes in Jetty and the following new minimum versions:
+       - Jetty 9.x -> Jetty 10.0.13
+       - LSP4J -> 0.8.0 -> 0.11.0
        - ELK 0.7.0 -> 0.8.1
 
 ## [v1.0.0 - 30/06/2022](https://github.com/eclipse-glsp/glsp-server/releases/tag/v1.0.0)

@@ -15,7 +15,6 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.websocket;
 
-import java.io.IOException;
 import java.net.InetSocketAddress;
 
 import javax.websocket.server.ServerEndpointConfig;
@@ -79,20 +78,6 @@ public class WebsocketServerLauncher extends GLSPServerLauncher {
          try {
             server.start();
             LOGGER.info("GLSP server is running and listening on Endpoint : " + server.getURI() + endpointPath);
-            LOGGER.info("Press enter to stop the server...");
-            new Thread(() -> {
-               try {
-                  int key = System.in.read();
-                  this.shutdown();
-                  if (key == -1) {
-                     LOGGER.warn("The standard input stream is empty");
-                  }
-               } catch (IOException e) {
-                  LOGGER.warn(e);
-               }
-
-            }).start();
-
             server.join();
          } catch (Exception exception) {
             LOGGER.warn("Shutting down due to exception", exception);

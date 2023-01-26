@@ -15,7 +15,6 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.websocket;
 
-import java.io.IOException;
 import java.net.InetSocketAddress;
 
 import javax.websocket.server.ServerEndpointConfig;

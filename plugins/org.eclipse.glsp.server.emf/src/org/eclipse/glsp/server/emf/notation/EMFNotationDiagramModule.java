@@ -54,7 +54,7 @@ public abstract class EMFNotationDiagramModule extends EMFDiagramModule {
    }
 
    @Override
-   protected void configureOperationHandlers(final MultiBinding<OperationHandler> binding) {
+   protected void configureOperationHandlers(final MultiBinding<OperationHandler<?>> binding) {
       super.configureOperationHandlers(binding);
       binding.add(EMFChangeBoundsOperationHandler.class);
    }

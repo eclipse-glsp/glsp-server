@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2023 EclipseSource and others.
+ * Copyright (c) 2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -20,42 +20,46 @@ import static org.eclipse.glsp.server.utils.GModelUtil.IS_CONNECTABLE;
 import java.util.List;
 import java.util.Optional;
 
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.AbstractCreateOperationHandler;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 
 /**
  * Abstract base class for applying an {@link CreateEdgeOperation} directly to the GModel.
- *
- * @deprecated Use {@link GModelCreateEdgeOperationHandler}
  */
-@Deprecated
-public abstract class AbstractGModelCreateEdgeOperationHandler
-   extends AbstractCreateOperationHandler<CreateEdgeOperation> {
+public abstract class GModelCreateEdgeOperationHandler
+   extends GModelCreateOperationHandler<CreateEdgeOperation> {
 
-   protected final String label;
+   protected String label;
 
-   public AbstractGModelCreateEdgeOperationHandler(final String elementTypeId, final String label) {
+   public GModelCreateEdgeOperationHandler(final String elementTypeId, final String label) {
       super(elementTypeId);
       this.label = label;
    }
 
-   public AbstractGModelCreateEdgeOperationHandler(final String... elementTypeIds) {
+   public GModelCreateEdgeOperationHandler(final String... elementTypeIds) {
       super(elementTypeIds);
       this.label = super.getLabel();
    }
 
-   public AbstractGModelCreateEdgeOperationHandler(final List<String> handledElementTypeIds) {
+   public GModelCreateEdgeOperationHandler(final List<String> handledElementTypeIds) {
       super(handledElementTypeIds);
       this.label = super.getLabel();
    }
 
    @Override
-   public void executeOperation(final CreateEdgeOperation operation) {
+   public String getLabel() { return label; }
+
+   @Override
+   public Optional<Command> createCommand(final CreateEdgeOperation operation) {
+      return commandOf(() -> executeCreation(operation));
+   }
+
+   public void executeCreation(final CreateEdgeOperation operation) {
       if (operation.getSourceElementId() == null || operation.getTargetElementId() == null) {
          throw new IllegalArgumentException("Incomplete create connection action");
       }
@@ -81,8 +85,5 @@ public abstract class AbstractGModelCreateEdgeOperationHandler
 
    protected abstract Optional<GEdge> createEdge(GModelElement source, GModelElement target,
       GModelState modelState);
-
-   @Override
-   public String getLabel() { return label; }
 
 }

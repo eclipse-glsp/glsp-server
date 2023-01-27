@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,10 +15,12 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.operations;
 
+import java.util.Optional;
+
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
+import org.eclipse.glsp.server.internal.util.GenericsUtil;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.types.GLSPServerException;
 
 /**
  * An operation handler can execute {@link Operation}s of a certain type (subclass).
@@ -32,24 +34,40 @@ import org.eclipse.glsp.server.types.GLSPServerException;
  * The {@link OperationActionHandler} is responsible for retrieving all available (valid) operation handlers for an
  * operation that is dispatched via {@link ActionDispatcher}.
  */
-public interface OperationHandler {
+public interface OperationHandler<O extends Operation> {
 
    /**
     * Returns the class of the operation type that can be handled by this operation handler.
     *
     * @return the {@link Operation} (sub)class that can be handled.
     */
-   Class<? extends Operation> getHandledOperationType();
+   @SuppressWarnings("unchecked")
+   default Class<O> getHandledOperationType() {
+      return (Class<O>) GenericsUtil.getActualTypeArgument(getClass(), Operation.class);
+   }
 
-   String getLabel();
+   default String getLabel() { return getHandledOperationType().getSimpleName(); }
 
    /**
-    * Executes the operation handler for the given {@link Operation} If the given action cannot be handled by this
-    * operation handler a {@link GLSPServerException} is thrown.
+    * Creates a command that performs the operation in the source model(s). If an empty command is returned, no update
+    * is performed on the model(s).
     *
-    * @param operation The operation that should be executed.
+    * @param operation The operation to process.
+    * @return The created command to be executed on the command stack or empty if nothing should be done.
     */
-   void execute(Operation operation);
+   Optional<Command> createCommand(O operation);
+
+   /**
+    * Executes the operation handler for the given {@link Operation}. If the given action cannot be handled by this
+    * operation handler an empty command is returned an no changes are executed.
+    *
+    * @param operation The operation that should be executed or empty if nothing should be done.
+    */
+   default Optional<Command> execute(final Operation operation) {
+      return handles(operation)
+         ? createCommand(getHandledOperationType().cast(operation))
+         : Optional.empty();
+   }
 
    /**
     * Validates whether the given {@link Operation} can be handled by this operation handler.

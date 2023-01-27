@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2022 EclipseSource and others.
+ * Copyright (c) 2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,25 +15,36 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operations;
 
+import java.util.Optional;
+
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.server.model.GModelState;
 
 import com.google.inject.Inject;
 
-/**
- * Deprecated, will be removed with version 1.0.
- * Please use {@link AbstractOperationHandler} instead and directly inject the {@link GModelState}.
- */
-@Deprecated
-public abstract class BasicOperationHandler<T extends Operation> extends AbstractOperationHandler<T> {
+public abstract class BasicOperationHandler<O extends Operation> implements OperationHandler<O> {
+
+   protected final Class<O> operationType;
 
    @Inject
    protected GModelState modelState;
 
-   @Override
-   protected void executeOperation(final T operation) {
-      executeOperation(operation, modelState);
+   public BasicOperationHandler() {
+      this.operationType = OperationHandler.super.getHandledOperationType();
    }
 
-   protected abstract void executeOperation(T operation, GModelState modelState);
+   @Override
+   public boolean handles(final Operation operation) {
+      return modelState.getRoot() != null && OperationHandler.super.handles(operation);
+   }
 
+   @Override
+   public Class<O> getHandledOperationType() { return operationType; }
+
+   @Override
+   public String getLabel() { return operationType.getSimpleName(); }
+
+   protected static Optional<Command> doNothing() {
+      return Optional.empty();
+   }
 }

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2022 EclipseSource and others.
+ * Copyright (c) 2020-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -28,15 +28,7 @@ import com.google.common.collect.Lists;
  * A special {@link OperationHandler} that is responsible for the handling of {@link CreateOperation}s. Depending on its
  * operation type the triggered actions are {@link TriggerNodeCreationAction} or {@link TriggerEdgeCreationAction}s.
  */
-public interface CreateOperationHandler extends OperationHandler {
-
-   /**
-    * Returns the {@link CreateOperation} type this handler has registered for.
-    *
-    * @return The {@link CreateOperation} type this handler has registered for.
-    */
-   @Override
-   Class<? extends CreateOperation> getHandledOperationType();
+public interface CreateOperationHandler<O extends CreateOperation> extends OperationHandler<O> {
 
    /**
     * Returns a list of {@link TriggerElementCreationAction}s for registered element types.

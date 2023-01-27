@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2022 EclipseSource and others.
+ * Copyright (c) 2020-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,7 +15,9 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operations;
 
-import org.eclipse.glsp.server.internal.util.GenericsUtil;
+import java.util.Optional;
+
+import org.eclipse.emf.common.command.Command;
 
 /**
  * Basic {@link OperationHandler} implementation that can handle exactly one {@link Operation} type.
@@ -25,32 +27,27 @@ import org.eclipse.glsp.server.internal.util.GenericsUtil;
  * and can work directly with the correct subtype instead of having to manually cast it.
  *
  * @param <O> class of the handled action type
+ *
+ * @deprecated Use {@link GModelOperationHandler} with optional command instead.
  */
-public abstract class AbstractOperationHandler<O extends Operation> implements OperationHandler {
-
-   protected final Class<O> operationType;
-
-   public AbstractOperationHandler() {
-      this.operationType = deriveOperationType();
+@Deprecated
+public abstract class AbstractOperationHandler<O extends Operation> extends GModelOperationHandler<O> {
+   @Override
+   public Optional<Command> createCommand(final O operation) {
+      return preExecute(operation) ? commandOf(() -> executeOperation(operation)) : doNothing();
    }
 
-   @SuppressWarnings("unchecked")
-   protected Class<O> deriveOperationType() {
-      return (Class<O>) GenericsUtil.getActualTypeArgument(getClass(), Operation.class);
-   }
-
-   @Override
-   public Class<O> getHandledOperationType() { return operationType; }
-
-   @Override
-   public void execute(final Operation operation) {
-      if (handles(operation)) {
-         executeOperation(operationType.cast(operation));
-      }
+   /**
+    * Returns whether the execution of the operation should continue. If <code>false</code> is returned,
+    * {@link #executeOperation(Operation)} is not called and no update is performed on the model. Otherwise, the
+    * execution continues normally and the model will be updated and marked dirty.
+    *
+    * @param operation operation
+    * @return <code>true</code> if the execution should continue, <code>false</code> if we should abort the execution.
+    */
+   protected boolean preExecute(final O operation) {
+      return true;
    }
 
    protected abstract void executeOperation(O operation);
-
-   @Override
-   public String getLabel() { return operationType.getSimpleName(); }
 }

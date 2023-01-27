@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2021 EclipseSource and others.
+ * Copyright (c) 2020-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,36 +15,31 @@
  ********************************************************************************/
 package org.eclipse.glsp.example.workflow.taskedit;
 
+import java.util.Objects;
 import java.util.Optional;
 
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.example.workflow.wfgraph.TaskNode;
-import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.AbstractOperationHandler;
-import org.eclipse.glsp.server.types.GLSPServerException;
+import org.eclipse.glsp.server.operations.GModelOperationHandler;
 
-import com.google.inject.Inject;
-
-public class EditTaskOperationHandler extends AbstractOperationHandler<EditTaskOperation> {
-
-   @Inject
-   protected GModelState modelState;
+public class EditTaskOperationHandler extends GModelOperationHandler<EditTaskOperation> {
 
    @Override
-   protected void executeOperation(final EditTaskOperation operation) {
-      Optional<TaskNode> task = modelState.getIndex().findElementByClass(operation.getTaskId(), TaskNode.class);
-      if (task.isEmpty()) {
-         throw new RuntimeException("Cannot find task with id '" + operation.getTaskId() + "'");
-      }
+   public Optional<Command> createCommand(final EditTaskOperation operation) {
+      TaskNode task = modelState.getIndex().findElementByClass(operation.getTaskId(), TaskNode.class)
+         .orElseThrow(() -> new RuntimeException("Cannot find task with id '" + operation.getTaskId() + "'"));
       switch (operation.getFeature()) {
          case "duration":
-            task.get().setDuration(Integer.parseInt(operation.getValue()));
-            break;
+            int duration = Integer.parseInt(operation.getValue());
+            return Objects.equals(task.getDuration(), duration)
+               ? doNothing()
+               : commandOf(() -> task.setDuration(duration));
          case "taskType":
-            task.get().setTaskType(operation.getValue());
-            break;
+            return Objects.equals(task.getTaskType(), operation.getValue())
+               ? doNothing()
+               : commandOf(() -> task.setTaskType(operation.getValue()));
          default:
-            throw new GLSPServerException("Cannot edit task at feature '" + operation.getFeature() + "'");
+            return doNothing();
       }
    }
-
 }

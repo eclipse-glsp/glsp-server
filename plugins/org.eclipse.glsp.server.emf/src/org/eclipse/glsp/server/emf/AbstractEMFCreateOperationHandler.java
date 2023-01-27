@@ -17,11 +17,14 @@ package org.eclipse.glsp.server.emf;
 
 import java.util.List;
 
-import org.eclipse.glsp.server.operations.AbstractCreateOperationHandler;
 import org.eclipse.glsp.server.operations.CreateOperation;
 
+/**
+ * @deprecated Use {@link EMFCreateOperationHandler}
+ */
+@Deprecated
 public abstract class AbstractEMFCreateOperationHandler<O extends CreateOperation>
-   extends AbstractCreateOperationHandler<O> implements EMFOperationHandler<O> {
+   extends EMFCreateOperationHandler<O> {
 
    public AbstractEMFCreateOperationHandler(final String... elementTypeIds) {
       super(elementTypeIds);
@@ -29,11 +32,6 @@ public abstract class AbstractEMFCreateOperationHandler<O extends CreateOperatio
 
    public AbstractEMFCreateOperationHandler(final List<String> handledElementTypeIds) {
       super(handledElementTypeIds);
-   }
-
-   @Override
-   protected void executeOperation(final O operation) {
-      EMFOperationHandler.super.execute(operation);
    }
 
 }

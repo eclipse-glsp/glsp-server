@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2022 EclipseSource and others.
+ * Copyright (c) 2020-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -27,15 +27,16 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.graph.GBoundsAware;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.impl.GPointImpl;
 import org.eclipse.glsp.server.gson.GraphGsonConfigurationFactory;
-import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.AbstractOperationHandler;
+import org.eclipse.glsp.server.operations.GModelOperationHandler;
 import org.eclipse.glsp.server.operations.PasteOperation;
+import org.eclipse.glsp.server.types.EditorContext;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -46,12 +47,9 @@ import com.google.inject.Inject;
  *
  * @see GModelRequestClipboardDataActionHandler
  */
-public class GModelPasteOperationHandler extends AbstractOperationHandler<PasteOperation> {
+public class GModelPasteOperationHandler extends GModelOperationHandler<PasteOperation> {
 
    private static final int DEFAULT_OFFSET = 20;
-
-   @Inject
-   protected GModelState modelState;
 
    protected final Gson gson;
 
@@ -62,10 +60,14 @@ public class GModelPasteOperationHandler extends AbstractOperationHandler<PasteO
    }
 
    @Override
-   public void executeOperation(final PasteOperation operation) {
+   public Optional<Command> createCommand(final PasteOperation operation) {
       List<GModelElement> elements = getCopiedElements(operation.getClipboardData().get("application/json"));
+      return elements.isEmpty() ? doNothing()
+         : commandOf(() -> executePaste(elements, operation.getEditorContext()));
+   }
 
-      shift(elements, computeOffset(elements, operation.getEditorContext().getLastMousePosition()));
+   public void executePaste(final List<GModelElement> elements, final EditorContext context) {
+      shift(elements, computeOffset(elements, context.getLastMousePosition()));
 
       Map<String, String> idMap = reassignIds(elements);
       filterElements(elements, idMap);
@@ -139,4 +141,5 @@ public class GModelPasteOperationHandler extends AbstractOperationHandler<PasteO
          }
       });
    }
+
 }

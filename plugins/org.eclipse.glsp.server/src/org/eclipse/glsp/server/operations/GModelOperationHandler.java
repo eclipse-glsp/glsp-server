@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2022 EclipseSource and others.
+ * Copyright (c) 2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,7 +15,18 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operations;
 
-public interface CreateEdgeOperationHandler extends CreateOperationHandler {
-   @Override
-   Class<? extends CreateEdgeOperation> getHandledOperationType();
+import java.util.Optional;
+
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.glsp.server.internal.gmodel.commandstack.GModelRecordingCommand;
+
+public abstract class GModelOperationHandler<O extends Operation> extends BasicOperationHandler<O> {
+
+   protected Optional<Command> commandOf(final Runnable runnable) {
+      return Optional.of(recordingCommand(runnable));
+   }
+
+   protected Command recordingCommand(final Runnable runnable) {
+      return new GModelRecordingCommand(modelState.getRoot(), getLabel(), runnable);
+   }
 }

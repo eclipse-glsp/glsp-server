@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2022 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -18,26 +18,27 @@ package org.eclipse.glsp.server.gmodel;
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 import static org.eclipse.glsp.server.utils.GModelUtil.IS_CONNECTABLE;
 
+import java.util.Optional;
+
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
-import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.AbstractOperationHandler;
+import org.eclipse.glsp.server.operations.GModelOperationHandler;
 import org.eclipse.glsp.server.operations.ReconnectEdgeOperation;
-
-import com.google.inject.Inject;
 
 /**
  * Applies {@link ReconnectEdgeOperation} directly to the GModel.
  */
-public class GModelReconnectEdgeOperationHandler extends AbstractOperationHandler<ReconnectEdgeOperation> {
-
-   @Inject
-   protected GModelState modelState;
+public class GModelReconnectEdgeOperationHandler extends GModelOperationHandler<ReconnectEdgeOperation> {
 
    @Override
+   public Optional<Command> createCommand(final ReconnectEdgeOperation operation) {
+      return commandOf(() -> executeReconnect(operation));
+   }
+
    @SuppressWarnings("checkstyle:CyclomaticComplexity")
-   public void executeOperation(final ReconnectEdgeOperation operation) {
+   protected void executeReconnect(final ReconnectEdgeOperation operation) {
 
       if (operation.getEdgeElementId() == null || operation.getSourceElementId() == null
          || operation.getTargetElementId() == null) {

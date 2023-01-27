@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2022 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -17,8 +17,11 @@ package org.eclipse.glsp.server.gmodel;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
+import java.util.Optional;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
@@ -27,25 +30,23 @@ import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.ChangeBoundsOperation;
+import org.eclipse.glsp.server.operations.GModelOperationHandler;
 import org.eclipse.glsp.server.types.ElementAndBounds;
-
-import com.google.inject.Inject;
 
 /**
  * Applies {@link ChangeBoundsOperation} directly to the GModel.
  */
-public class GModelChangeBoundsOperationHandler extends AbstractOperationHandler<ChangeBoundsOperation> {
+public class GModelChangeBoundsOperationHandler extends GModelOperationHandler<ChangeBoundsOperation> {
 
    private static Logger LOGGER = LogManager.getLogger(GModelChangeBoundsOperationHandler.class);
 
-   @Inject
-   protected GModelState modelState;
-
    @Override
-   public void executeOperation(final ChangeBoundsOperation operation) {
+   public Optional<Command> createCommand(final ChangeBoundsOperation operation) {
+      return commandOf(() -> executeChangeBounds(operation));
+   }
+
+   protected void executeChangeBounds(final ChangeBoundsOperation operation) {
       for (ElementAndBounds element : operation.getNewBounds()) {
          changeElementBounds(element.getElementId(), element.getNewPosition(), element.getNewSize());
       }

@@ -41,7 +41,6 @@ public interface OperationHandlerRegistry extends Registry<Operation, OperationH
    /**
     * Returns the matching command for the given operation.
     *
-    * @param registry  operation handler registry
     * @param operation operation
     * @return the matching command for the given operation
     */

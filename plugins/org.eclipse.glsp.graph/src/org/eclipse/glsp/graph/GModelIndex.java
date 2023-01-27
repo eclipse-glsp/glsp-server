@@ -79,14 +79,13 @@ public interface GModelIndex {
    Optional<GModelElement> get(String elementId);
 
    /**
-    * Returns an optional {@link GModelElement} by its elementId iff it also an instance of the given class.
+    * Returns an optional {@link GModelElement} by its elementId iff it also an instance of the given class. If you need
+    * to search the whole parent hierarchy, you can use {@link #findElementByClass(String, Class)}.
     *
     * @param <T>       The type of the element to be found.
     * @param elementId The id of the requested {@link GModelElement}.
     * @param clazz     The class of which the found element should be an instance.
     * @return An optional with the element of type clazz or an empty optional.
-    *
-    * @see {@link #findElementByClass(String, Class)} to search the whole parent hierarchy.
     */
    default <T extends GModelElement> Optional<T> getByClass(final String elementId, final Class<T> clazz) {
       if (elementId == null) {

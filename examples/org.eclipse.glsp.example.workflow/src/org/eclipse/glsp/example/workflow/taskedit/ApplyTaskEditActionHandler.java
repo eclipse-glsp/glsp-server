@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2021 EclipseSource and others.
+ * Copyright (c) 2020-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,33 +15,26 @@
  ********************************************************************************/
 package org.eclipse.glsp.example.workflow.taskedit;
 
-import org.eclipse.glsp.server.actions.ActionDispatcher;
-import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.AbstractOperationHandler;
+import java.util.List;
+
+import org.eclipse.glsp.server.actions.AbstractActionHandler;
+import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
-import com.google.inject.Inject;
-
-public class ApplyTaskEditOperationHandler extends AbstractOperationHandler<ApplyTaskEditOperation> {
-
-   @Inject
-   protected ActionDispatcher actionDispatcher;
-
-   @Inject
-   protected GModelState modelState;
+public class ApplyTaskEditActionHandler extends AbstractActionHandler<ApplyTaskEditAction> {
 
    @Override
-   protected void executeOperation(final ApplyTaskEditOperation operation) {
-      String text = operation.getExpression();
+   protected List<Action> executeAction(final ApplyTaskEditAction action) {
+      String text = action.getExpression();
       if (text.startsWith(TaskEditContextActionProvider.DURATION_PREFIX)) {
          String durationString = text.substring(TaskEditContextActionProvider.DURATION_PREFIX.length());
-         actionDispatcher.dispatch(new EditTaskOperation(operation.getTaskId(), "duration", durationString));
+         return listOf(new EditTaskOperation(action.getTaskId(), "duration", durationString));
       } else if (text.startsWith(TaskEditContextActionProvider.TYPE_PREFIX)) {
          String typeString = text.substring(TaskEditContextActionProvider.TYPE_PREFIX.length());
-         actionDispatcher.dispatch(new EditTaskOperation(operation.getTaskId(), "taskType", typeString));
+         return listOf(new EditTaskOperation(action.getTaskId(), "taskType", typeString));
       } else {
          throw new GLSPServerException(
-            "Cannot process 'ApplyTaskEditOperation' expression: " + operation.getExpression());
+            "Cannot process 'ApplyTaskEditOperation' expression: " + action.getExpression());
       }
    }
 

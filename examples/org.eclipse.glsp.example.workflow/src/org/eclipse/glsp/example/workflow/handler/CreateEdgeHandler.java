@@ -22,10 +22,10 @@ import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.graph.builder.impl.GEdgeBuilder;
-import org.eclipse.glsp.server.gmodel.AbstractGModelCreateEdgeOperationHandler;
+import org.eclipse.glsp.server.gmodel.GModelCreateEdgeOperationHandler;
 import org.eclipse.glsp.server.model.GModelState;
 
-public class CreateEdgeHandler extends AbstractGModelCreateEdgeOperationHandler {
+public class CreateEdgeHandler extends GModelCreateEdgeOperationHandler {
 
    public CreateEdgeHandler() {
       super(DefaultTypes.EDGE, "Edge");

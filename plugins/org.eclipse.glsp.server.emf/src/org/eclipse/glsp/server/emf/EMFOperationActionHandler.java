@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2022 EclipseSource and others.
+ * Copyright (c) 2022-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,36 +15,13 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.emf;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.SetDirtyStateAction;
-import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.operations.OperationActionHandler;
 
 /**
  * A special {@link OperationActionHandler} that executes provided EMF commands of {@link EMFOperationHandler}
  * on an EMF command stack via the {@link EMFModelState}.
+ *
+ * @deprecated Use {@link OperationActionHandler} directly
  */
-public class EMFOperationActionHandler extends OperationActionHandler {
-
-   @Override
-   protected List<Action> executeOperation(final Operation operation) {
-      Optional<Command> command = EMFOperationHandler.getCommand(operationHandlerRegistry, operation);
-      if (command.isPresent()) {
-         exexcuteCommand(command.get());
-         return submitModel();
-      }
-      return super.executeOperation(operation);
-   }
-
-   protected void exexcuteCommand(final Command cmd) {
-      modelState.execute(cmd);
-   }
-
-   protected List<Action> submitModel() {
-      return modelSubmissionHandler.submitModel(SetDirtyStateAction.Reason.OPERATION);
-   }
-}
+@Deprecated
+public class EMFOperationActionHandler extends OperationActionHandler {}

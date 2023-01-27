@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2022 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -18,11 +18,11 @@ package org.eclipse.glsp.server.operations;
 import java.util.List;
 import java.util.Optional;
 
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.SetDirtyStateAction;
 import org.eclipse.glsp.server.features.core.model.ModelSubmissionHandler;
-import org.eclipse.glsp.server.internal.gmodel.commandstack.GModelRecordingCommand;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.ServerMessageUtil;
 
@@ -59,10 +59,20 @@ public class OperationActionHandler extends AbstractActionHandler<Operation> {
          .orElseGet(this::none);
    }
 
-   protected List<Action> executeHandler(final Operation operation, final OperationHandler handler) {
-      GModelRecordingCommand command = new GModelRecordingCommand(modelState.getRoot(), handler.getLabel(),
-         () -> handler.execute(operation));
+   protected List<Action> executeHandler(final Operation operation, final OperationHandler<?> handler) {
+      Optional<Command> command = handler.execute(operation);
+      if (command.isPresent()) {
+         exexcuteCommand(command.get());
+         return submitModel();
+      }
+      return none();
+   }
+
+   protected void exexcuteCommand(final Command command) {
       modelState.execute(command);
+   }
+
+   protected List<Action> submitModel() {
       return modelSubmissionHandler.submitModel(SetDirtyStateAction.Reason.OPERATION);
    }
 
@@ -70,7 +80,7 @@ public class OperationActionHandler extends AbstractActionHandler<Operation> {
     * Use {@link OperationHandlerRegistry#getOperationHandler(Operation) instead}.
     */
    @Deprecated
-   public static Optional<? extends OperationHandler> getOperationHandler(final Operation operation,
+   public static Optional<? extends OperationHandler<?>> getOperationHandler(final Operation operation,
       final OperationHandlerRegistry registry) {
       return registry.getOperationHandler(operation);
    }

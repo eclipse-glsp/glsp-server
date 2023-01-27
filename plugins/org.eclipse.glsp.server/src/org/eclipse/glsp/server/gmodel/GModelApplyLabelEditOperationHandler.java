@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2022 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,31 +15,29 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.gmodel;
 
+import java.util.Objects;
 import java.util.Optional;
 
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.graph.GLabel;
-import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
-import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.AbstractOperationHandler;
-
-import com.google.inject.Inject;
+import org.eclipse.glsp.server.operations.GModelOperationHandler;
 
 /**
  * Applies label changes directly to the GModel.
  */
-public class GModelApplyLabelEditOperationHandler extends AbstractOperationHandler<ApplyLabelEditOperation> {
-
-   @Inject
-   protected GModelState modelState;
+public class GModelApplyLabelEditOperationHandler extends GModelOperationHandler<ApplyLabelEditOperation> {
 
    @Override
-   public void executeOperation(final ApplyLabelEditOperation operation) {
-      Optional<GModelElement> element = modelState.getIndex().get(operation.getLabelId());
-      if (!element.isPresent() && !(element.get() instanceof GLabel)) {
-         throw new IllegalArgumentException("Element with provided ID cannot be found or is not a GLabel");
-      }
-      GLabel sLabel = (GLabel) element.get();
-      sLabel.setText(operation.getText());
+   public Optional<Command> createCommand(final ApplyLabelEditOperation operation) {
+      GLabel label = findLabel(operation).orElseThrow(
+         () -> new IllegalArgumentException("Element with provided ID cannot be found or is not a GLabel"));
+      return Objects.equals(label.getText(), operation.getText())
+         ? doNothing()
+         : commandOf(() -> label.setText(operation.getText()));
+   }
+
+   protected Optional<GLabel> findLabel(final ApplyLabelEditOperation operation) {
+      return modelState.getIndex().getByClass(operation.getLabelId(), GLabel.class);
    }
 }

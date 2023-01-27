@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2022 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,24 +15,25 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.gmodel;
 
-import org.eclipse.glsp.graph.GModelIndex;
-import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.AbstractOperationHandler;
-import org.eclipse.glsp.server.operations.ChangeRoutingPointsOperation;
-import org.eclipse.glsp.server.utils.LayoutUtil;
+import java.util.Optional;
 
-import com.google.inject.Inject;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.glsp.graph.GModelIndex;
+import org.eclipse.glsp.server.operations.ChangeRoutingPointsOperation;
+import org.eclipse.glsp.server.operations.GModelOperationHandler;
+import org.eclipse.glsp.server.utils.LayoutUtil;
 
 /**
  * Applies {@link ChangeRoutingPointsOperation} directly to the GModel.
  */
-public class GModelChangeRoutingPointsHandler extends AbstractOperationHandler<ChangeRoutingPointsOperation> {
-
-   @Inject
-   protected GModelState modelState;
+public class GModelChangeRoutingPointsHandler extends GModelOperationHandler<ChangeRoutingPointsOperation> {
 
    @Override
-   protected void executeOperation(final ChangeRoutingPointsOperation operation) {
+   public Optional<Command> createCommand(final ChangeRoutingPointsOperation operation) {
+      return commandOf(() -> executeChangeRoutingPoints(operation));
+   }
+
+   protected void executeChangeRoutingPoints(final ChangeRoutingPointsOperation operation) {
       if (operation.getNewRoutingPoints() == null) {
          throw new IllegalArgumentException("Incomplete change routingPoints  action");
       }
@@ -40,4 +41,5 @@ public class GModelChangeRoutingPointsHandler extends AbstractOperationHandler<C
       GModelIndex index = modelState.getIndex();
       operation.getNewRoutingPoints().forEach(routingPoints -> LayoutUtil.applyRoutingPoints(routingPoints, index));
    }
+
 }

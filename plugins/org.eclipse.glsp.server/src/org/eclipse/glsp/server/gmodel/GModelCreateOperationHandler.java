@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2023 EclipseSource and others.
+ * Copyright (c) 2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,28 +13,35 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.operations;
+package org.eclipse.glsp.server.gmodel;
 
 import java.util.List;
 
-import org.eclipse.glsp.server.gmodel.GModelCreateOperationHandler;
+import org.eclipse.glsp.server.actions.ActionDispatcher;
+import org.eclipse.glsp.server.operations.CreateEdgeOperation;
+import org.eclipse.glsp.server.operations.CreateOperation;
+import org.eclipse.glsp.server.operations.CreateOperationHandler;
+import org.eclipse.glsp.server.operations.GModelOperationHandler;
 
 import com.google.common.collect.Lists;
+import com.google.inject.Inject;
 
 /**
- * @deprecated Use {@link GModelCreateOperationHandler}
+ * Abstract base class for applying an {@link CreateEdgeOperation} directly to the GModel.
  */
-@Deprecated
-public abstract class AbstractCreateOperationHandler<T extends CreateOperation> extends AbstractOperationHandler<T>
-   implements CreateOperationHandler<T> {
+public abstract class GModelCreateOperationHandler<T extends CreateOperation>
+   extends GModelOperationHandler<T> implements CreateOperationHandler<T> {
+
+   @Inject
+   protected ActionDispatcher actionDispatcher;
 
    protected List<String> handledElementTypeIds;
 
-   public AbstractCreateOperationHandler(final String... elementTypeIds) {
+   public GModelCreateOperationHandler(final String... elementTypeIds) {
       this(Lists.newArrayList(elementTypeIds));
    }
 
-   public AbstractCreateOperationHandler(final List<String> handledElementTypeIds) {
+   public GModelCreateOperationHandler(final List<String> handledElementTypeIds) {
       this.handledElementTypeIds = handledElementTypeIds;
    }
 

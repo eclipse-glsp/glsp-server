@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021-2022 EclipseSource and others.
+ * Copyright (c) 2021-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -105,6 +105,7 @@ import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
 import org.eclipse.glsp.server.protocol.GLSPServer;
 
 import com.google.inject.Singleton;
+import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
 
 /**
@@ -193,7 +194,7 @@ public abstract class DiagramModule extends GLSPModule {
       configure(MultiBinding.create(Action.class).setAnnotationName(CLIENT_ACTIONS), this::configureClientActions);
       configure(MultiBinding.create(ActionHandler.class), this::configureActionHandlers);
       bind(ActionHandlerRegistry.class).to(bindActionHandlerRegistry());
-      configure(MultiBinding.create(OperationHandler.class), this::configureOperationHandlers);
+      configure(MultiBinding.create(new TypeLiteral<OperationHandler<?>>() {}), this::configureOperationHandlers);
       bind(OperationHandlerRegistry.class).to(bindOperationHandlerRegistry());
 
       // Navigation
@@ -333,7 +334,7 @@ public abstract class DiagramModule extends GLSPModule {
       return DefaultActionHandlerRegistry.class;
    }
 
-   protected void configureOperationHandlers(final MultiBinding<OperationHandler> binding) {
+   protected void configureOperationHandlers(final MultiBinding<OperationHandler<?>> binding) {
       binding.add(CompoundOperationHandler.class);
       binding.add(LayoutOperationHandler.class);
       binding.add(CutOperationHandler.class);

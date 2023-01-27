@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -34,11 +34,11 @@ import com.google.inject.Inject;
 public class DefaultOperationHandlerRegistry
    implements OperationHandlerRegistry {
 
-   private final MapRegistry<String, OperationHandler> internalRegistry;
+   private final MapRegistry<String, OperationHandler<?>> internalRegistry;
    private final Map<String, Operation> operations;
 
    @Inject
-   public DefaultOperationHandlerRegistry(final Set<OperationHandler> handlers) {
+   public DefaultOperationHandlerRegistry(final Set<OperationHandler<?>> handlers) {
       operations = new HashMap<>();
       internalRegistry = new MapRegistry<>() {};
       handlers.forEach(handler -> {
@@ -61,9 +61,9 @@ public class DefaultOperationHandlerRegistry
    }
 
    @Override
-   public boolean register(final Operation key, final OperationHandler handler) {
+   public boolean register(final Operation key, final OperationHandler<?> handler) {
       if (handler instanceof CreateOperationHandler) {
-         return ((CreateOperationHandler) handler).getHandledElementTypeIds().stream()
+         return ((CreateOperationHandler<?>) handler).getHandledElementTypeIds().stream()
             .allMatch(typeId -> internalRegistry.register(deriveKey(key, typeId), handler));
 
       }
@@ -83,12 +83,12 @@ public class DefaultOperationHandlerRegistry
    }
 
    @Override
-   public Optional<OperationHandler> get(final Operation key) {
+   public Optional<OperationHandler<?>> get(final Operation key) {
       return internalRegistry.get(deriveKey(key));
    }
 
    @Override
-   public Set<OperationHandler> getAll() { return internalRegistry.getAll(); }
+   public Set<OperationHandler<?>> getAll() { return internalRegistry.getAll(); }
 
    @Override
    public Set<Operation> keys() {

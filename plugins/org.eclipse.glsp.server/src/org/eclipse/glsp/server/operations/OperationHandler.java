@@ -23,13 +23,11 @@ import org.eclipse.glsp.server.internal.util.GenericsUtil;
 import org.eclipse.glsp.server.model.GModelState;
 
 /**
- * An operation handler can execute {@link Operation}s of a certain type (subclass).
- * The operation handler processes the operation in the {@link OperationHandler#execute(Operation)} method. The result
- * of the execution is an update of the {@link GModelState} state.
- * This update is reversible (undo) and can be reapplied (redo). For basic diagram languages these updates are typically
- * applied directly on the {@link GModelState} using EMF {@link Command}s and the
- * {@link GModelState#execute(org.eclipse.emf.common.command.Command)} method. For more complex diagram languages the
- * GModel state might be updated indirectly and the operation handler manipulates a custom model representation.
+ * An operation handler can execute {@link Operation}s of a certain type (subclass). The operation handler creates a
+ * command in the {@link #createCommand(Operation)} method. The result represents an update of the {@link GModelState}
+ * state and is later executed via {@link GModelState#execute(org.eclipse.emf.common.command.Command)}. If an empty
+ * command is returned, no changes are executed and the state is not modified, i.e., not made dirty. The command
+ * execution is reversible (undo) and can be re-applied (redo).
  *
  * The {@link OperationActionHandler} is responsible for retrieving all available (valid) operation handlers for an
  * operation that is dispatched via {@link ActionDispatcher}.
@@ -58,7 +56,7 @@ public interface OperationHandler<O extends Operation> {
    Optional<Command> createCommand(O operation);
 
    /**
-    * Executes the operation handler for the given {@link Operation}. If the given action cannot be handled by this
+    * Executes the operation handler for the given {@link Operation}. If the given operation cannot be handled by this
     * operation handler an empty command is returned an no changes are executed.
     *
     * @param operation The operation that should be executed or empty if nothing should be done.

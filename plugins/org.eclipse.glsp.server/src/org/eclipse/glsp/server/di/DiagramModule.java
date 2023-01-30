@@ -83,6 +83,7 @@ import org.eclipse.glsp.server.features.validation.DeleteMarkersAction;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.features.validation.RequestMarkersHandler;
 import org.eclipse.glsp.server.features.validation.SetMarkersAction;
+import org.eclipse.glsp.server.gmodel.GModelCutOperationHandler;
 import org.eclipse.glsp.server.gson.GraphGsonConfigurationFactory;
 import org.eclipse.glsp.server.internal.actions.DefaultActionDispatcher;
 import org.eclipse.glsp.server.internal.actions.DefaultActionHandlerRegistry;
@@ -97,7 +98,6 @@ import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.model.DefaultGModelState;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.CompoundOperationHandler;
-import org.eclipse.glsp.server.operations.CutOperationHandler;
 import org.eclipse.glsp.server.operations.LayoutOperationHandler;
 import org.eclipse.glsp.server.operations.OperationActionHandler;
 import org.eclipse.glsp.server.operations.OperationHandler;
@@ -337,7 +337,7 @@ public abstract class DiagramModule extends GLSPModule {
    protected void configureOperationHandlers(final MultiBinding<OperationHandler<?>> binding) {
       binding.add(CompoundOperationHandler.class);
       binding.add(LayoutOperationHandler.class);
-      binding.add(CutOperationHandler.class);
+      binding.add(GModelCutOperationHandler.class);
    }
 
    protected Class<? extends OperationHandlerRegistry> bindOperationHandlerRegistry() {

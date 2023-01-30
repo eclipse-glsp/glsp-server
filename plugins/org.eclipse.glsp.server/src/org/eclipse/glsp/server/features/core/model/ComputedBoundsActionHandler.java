@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -25,6 +25,11 @@ import org.eclipse.glsp.server.utils.LayoutUtil;
 
 import com.google.inject.Inject;
 
+/**
+ * Syncs the bounds computed by the client (i.e. the actual bounds after applying CSS styles) back to the GModel. In
+ * this default implementation the updated bounds are stored transient. This means they are applied to the graphical
+ * model but are not persisted to the source model.
+ */
 public class ComputedBoundsActionHandler extends AbstractActionHandler<ComputedBoundsAction> {
 
    @Inject

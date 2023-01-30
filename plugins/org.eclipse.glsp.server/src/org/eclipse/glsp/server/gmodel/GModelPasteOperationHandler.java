@@ -20,6 +20,7 @@ import static org.eclipse.glsp.server.utils.GeometryUtil.shift;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +63,8 @@ public class GModelPasteOperationHandler extends GModelOperationHandler<PasteOpe
    @Override
    public Optional<Command> createCommand(final PasteOperation operation) {
       List<GModelElement> elements = getCopiedElements(operation.getClipboardData().get("application/json"));
-      return elements.isEmpty() ? doNothing()
+      return elements.isEmpty()
+         ? doNothing()
          : commandOf(() -> executePaste(elements, operation.getEditorContext()));
    }
 
@@ -76,8 +78,9 @@ public class GModelPasteOperationHandler extends GModelOperationHandler<PasteOpe
       modelState.getRoot().getChildren().addAll(elements);
    }
 
-   protected ArrayList<GModelElement> getCopiedElements(final String jsonString) {
-      return new ArrayList<>(Arrays.asList(gson.fromJson(jsonString, GModelElement[].class)));
+   protected List<GModelElement> getCopiedElements(final String jsonString) {
+      GModelElement[] elements = gson.fromJson(jsonString, GModelElement[].class);
+      return elements != null ? new ArrayList<>(Arrays.asList(elements)) : Collections.emptyList();
    }
 
    protected GPoint computeOffset(final List<GModelElement> elements, final Optional<GPoint> lastMousePosition) {

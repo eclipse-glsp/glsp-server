@@ -35,7 +35,6 @@ import org.eclipse.glsp.example.workflow.provider.NodeDocumentationNavigationTar
 import org.eclipse.glsp.example.workflow.provider.PreviousNodeNavigationTargetProvider;
 import org.eclipse.glsp.example.workflow.provider.WorkflowCommandPaletteActionProvider;
 import org.eclipse.glsp.example.workflow.provider.WorkflowContextMenuItemProvider;
-import org.eclipse.glsp.example.workflow.taskedit.ApplyTaskEditActionHandler;
 import org.eclipse.glsp.example.workflow.taskedit.EditTaskOperationHandler;
 import org.eclipse.glsp.example.workflow.taskedit.TaskEditContextActionProvider;
 import org.eclipse.glsp.example.workflow.taskedit.TaskEditValidator;
@@ -123,7 +122,6 @@ public class WorkflowDiagramModule extends GModelDiagramModule {
       super.configureActionHandlers(binding);
       binding.rebind(RequestContextActionsHandler.class, WorkflowRequestContextActionsHandler.class);
       binding.add(LogActionHandler.class);
-      binding.add(ApplyTaskEditActionHandler.class);
    }
 
    @Override

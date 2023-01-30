@@ -15,31 +15,10 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operations;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.glsp.server.actions.ActionDispatcher;
-
-import com.google.inject.Inject;
+import org.eclipse.glsp.server.gmodel.GModelCutOperationHandler;
 
 /**
- * Performs the cut operation by dispatching a {@link DeleteOperation} for the elements to be cut.
+ * @deprecated Use {@link GModelCutOperationHandler} instead for GModel-based languages.
  */
-public class CutOperationHandler extends GModelOperationHandler<CutOperation> {
-
-   @Inject
-   protected ActionDispatcher actionDispatcher;
-
-   protected List<String> getElementsToCut(final CutOperation cutAction) {
-      return cutAction.getEditorContext().getSelectedElementIds();
-   }
-
-   @Override
-   public Optional<Command> createCommand(final CutOperation operation) {
-      List<String> elementsToCut = getElementsToCut(operation);
-      return elementsToCut.isEmpty()
-         ? doNothing()
-         : commandOf(() -> actionDispatcher.dispatch(new DeleteOperation(elementsToCut)));
-   }
-}
+@Deprecated
+public class CutOperationHandler extends GModelCutOperationHandler {}

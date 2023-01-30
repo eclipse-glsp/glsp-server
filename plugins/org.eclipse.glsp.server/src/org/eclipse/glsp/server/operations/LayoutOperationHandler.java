@@ -19,15 +19,18 @@ import java.util.Optional;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
+import org.eclipse.glsp.server.internal.gmodel.commandstack.GModelRecordingCommand;
 import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.layout.ServerLayoutKind;
 
 import com.google.inject.Inject;
 
 /**
- * Delegates to the configured {@link LayoutEngine} to apply a layout.
+ * The default handler for `{@link LayoutOperation}s. Does invoke the (optional) layout engine if the server is
+ * configured for manual layouting. Changes are stored transient in the graphical model and are not persisted in the
+ * source model.
  */
-public class LayoutOperationHandler extends GModelOperationHandler<LayoutOperation> {
+public class LayoutOperationHandler extends BasicOperationHandler<LayoutOperation> {
 
    @Inject
    protected Optional<LayoutEngine> layoutEngine;
@@ -39,7 +42,7 @@ public class LayoutOperationHandler extends GModelOperationHandler<LayoutOperati
    public Optional<Command> createCommand(final LayoutOperation operation) {
       return layoutEngine.isEmpty() || diagramConfiguration.getLayoutKind() != ServerLayoutKind.MANUAL
          ? doNothing()
-         : commandOf(() -> layoutEngine.get().layout());
+         : Optional.of(new GModelRecordingCommand(modelState.getRoot(), getLabel(), () -> layoutEngine.get().layout()));
    }
 
 }

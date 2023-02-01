@@ -19,7 +19,6 @@ import java.util.UUID;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 public class IdKeeperAdapter extends AdapterImpl {
@@ -39,7 +38,7 @@ public class IdKeeperAdapter extends AdapterImpl {
 
    @Override
    public boolean isAdapterForType(final Object type) {
-      return type instanceof EObject;
+      return type == IdKeeperAdapter.class;
    }
 
    public static IdKeeperAdapter getOrCreate(final Notifier notifier) {

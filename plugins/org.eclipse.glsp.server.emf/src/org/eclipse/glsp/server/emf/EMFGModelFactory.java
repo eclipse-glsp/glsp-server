@@ -44,6 +44,7 @@ public abstract class EMFGModelFactory implements GModelFactory {
    protected GModelRoot createRootElement() {
       GGraph graph = new GGraphBuilder().build();
       graph.setId(ClientOptionsUtil.getSourceUri(modelState.getClientOptions()).orElse("root"));
+      graph.setRevision(modelState.getRoot() != null ? graph.getRevision() : -1);
       return graph;
    }
 

@@ -1,20 +1,24 @@
 # Eclipse GLSP Server Changelog
 
-## v1.1.0 - upcoming
+## v2.0.0 - upcoming
 
 ### Changes
 
 - [graph] Updated the Graph model and add Layoutable interface [#175](https://github.com/eclipse-glsp/glsp-server/pull/175) - Contributed on behalf of STMicroelectronics
+- [layout] Extend `ComputedBoundsAction` to also provide route data for client-side routed edges and store source/target point  in the `args` map [#181](https://github.com/eclipse-glsp/glsp-server/pull/181)
+- [websocket] Remove listing on `stdin` from `WebsocketServerLauncher` [#189](https://github.com/eclipse-glsp/glsp-server/pull/189)
+- [diagram] Fixed a bug that prevented stable ids within one session when using the `IdKeeperAdapter` [#192](https://github.com/eclipse-glsp/glsp-server/pull/192) - Contributed on behalf of STMicroelectronics
 
 ### Breaking Changes
+
 - [websocket] Update to Jetty Websocket 10 [#185](https://github.com/eclipse-glsp/glsp-server/pull/185) [#186](https://github.com/eclipse-glsp/glsp-server/pull/186) - Contributed on behalf of STMicroelectronics
-    - This includes breaking changes due to major API changes in Jetty and the following new minimum versions:
-       - Jetty 9.x -> Jetty 10.0.13
-       - LSP4J -> 0.8.0 -> 0.11.0
-       - ELK 0.7.0 -> 0.8.1
+  - This includes breaking changes due to major API changes in Jetty and the following new minimum versions:
+    - Jetty 9.x -> Jetty 10.0.13
+    - LSP4J -> 0.8.0 -> 0.11.0
+    - ELK 0.7.0 -> 0.8.1
 - [operation] Rework `OperationHandler` to provide an optional command instead of direct execution to allow more execution control [#187](https://github.com/eclipse-glsp/glsp-server/pull/187)
-    - `Abstract<XYZ>` base implementations were deprecated in favor of `GModelOperationHandler` and `EMFOperationHandler` base classes
-    - Long-termin deprecated and unused `Basic<XYZ>` base classes were removed
+  - `Abstract<XYZ>` base implementations were deprecated in favor of `GModelOperationHandler` and `EMFOperationHandler` base classes
+  - Long-term deprecated and unused `Basic<XYZ>` base classes were removed
 
 ## [v1.0.0 - 30/06/2022](https://github.com/eclipse-glsp/glsp-server/releases/tag/v1.0.0)
 

@@ -45,6 +45,9 @@
    <bundle id="javax.websocket">
       <category name="org.eclipse.glsp.dependencies"/>
    </bundle>
+   <bundle id="org.apache.aries.spifly.dynamic.bundle">
+      <category name="org.eclipse.glsp.dependencies"/>
+   </bundle>
    <category-def name="org.eclipse.glsp" label="Eclipse GLSP"/>
    <category-def name="org.eclipse.glsp.examples" label="GLSP Examples">
       <description>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="2022-12 - Default" sequenceNumber="1674470297">
+<target name="2022-12 - Default" sequenceNumber="1677074361">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.emf.sdk.feature.group" version="2.32.0.v20221121-1400"/>
@@ -32,6 +32,16 @@
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="javax.websocket" version="1.1.0.20180730"/>
       <repository location="https://download.eclipse.org/gemini/updates/web/3.0.4"/>
+    </location>
+    <location includeDependencyDepth="infinite" includeDependencyScopes="compile,test" includeSource="false" missingManifest="generate" type="Maven" label="spifly">
+    <dependencies>
+    	<dependency>
+    		<groupId>org.apache.aries.spifly</groupId>
+    		<artifactId>org.apache.aries.spifly.dynamic.bundle</artifactId>
+    		<version>1.3.6</version>
+    		<type>jar</type>
+    	</dependency>
+    </dependencies>
     </location>
     <location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="false" missingManifest="generate" type="Maven" label="slf4j">
     <dependencies>

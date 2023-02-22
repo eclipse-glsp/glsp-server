@@ -45,6 +45,24 @@
    <bundle id="javax.websocket">
       <category name="org.eclipse.glsp.dependencies"/>
    </bundle>
+   <bundle id="org.apache.aries.spifly.dynamic.bundle">
+      <category name="org.eclipse.glsp.dependencies"/>
+   </bundle>
+   <bundle id="org.objectweb.asm">
+      <category name="org.eclipse.glsp.dependencies"/>
+   </bundle>
+   <bundle id="org.objectweb.asm.commons">
+      <category name="org.eclipse.glsp.dependencies"/>
+   </bundle>
+   <bundle id="org.objectweb.asm.tree">
+      <category name="org.eclipse.glsp.dependencies"/>
+   </bundle>
+   <bundle id="org.objectweb.asm.tree.analysis">
+      <category name="org.eclipse.glsp.dependencies"/>
+   </bundle>
+   <bundle id="org.objectweb.asm.util">
+      <category name="org.eclipse.glsp.dependencies"/>
+   </bundle>
    <category-def name="org.eclipse.glsp" label="Eclipse GLSP"/>
    <category-def name="org.eclipse.glsp.examples" label="GLSP Examples">
       <description>

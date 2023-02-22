@@ -29,7 +29,7 @@ maven slf4j scope=compile dependencyDepth=none missingManifest=generate {
 	}
 }
 
-maven spifly scope=compile,test dependencyDepth=none missingManifest=generate {
+maven spifly scope=compile,test dependencyDepth=infinite missingManifest=generate {
 	dependency {
 		groupId="org.apache.aries.spifly"
 		artifactId="org.apache.aries.spifly.dynamic.bundle"

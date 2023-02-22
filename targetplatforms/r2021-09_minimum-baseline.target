@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="2021-09 - Minimum Baseline" sequenceNumber="1677071419">
+<target name="2021-09 - Minimum Baseline" sequenceNumber="1677074394">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.emf.sdk.feature.group" version="2.27.0.v20210816-1137"/>
@@ -33,7 +33,7 @@
       <unit id="javax.websocket" version="1.1.0.20180730"/>
       <repository location="https://download.eclipse.org/gemini/updates/web/3.0.4"/>
     </location>
-    <location includeDependencyDepth="none" includeDependencyScopes="compile,test" includeSource="false" missingManifest="generate" type="Maven" label="spifly">
+    <location includeDependencyDepth="infinite" includeDependencyScopes="compile,test" includeSource="false" missingManifest="generate" type="Maven" label="spifly">
     <dependencies>
     	<dependency>
     		<groupId>org.apache.aries.spifly</groupId>

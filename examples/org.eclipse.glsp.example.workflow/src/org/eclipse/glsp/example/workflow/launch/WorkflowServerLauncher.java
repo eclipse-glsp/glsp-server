@@ -36,7 +36,7 @@ public final class WorkflowServerLauncher {
          ElkLayoutEngine.initialize(new LayeredMetaDataProvider());
 
          int port = parser.parsePort();
-         ServerModule workflowServerModule = new ServerModule()
+         ServerModule workflowServerModule = new WorkflowServerModule()
             .configureDiagramModule(new WorkflowDiagramModule());
 
          GLSPServerLauncher launcher = parser.isWebsocket()

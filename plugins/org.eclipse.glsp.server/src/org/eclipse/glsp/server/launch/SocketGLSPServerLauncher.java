@@ -72,11 +72,15 @@ public class SocketGLSPServerLauncher extends GLSPServerLauncher {
 
    protected String getStartupCompleteMessage() { return START_UP_COMPLETE_MSG; }
 
-   public Future<Void> asyncRun(final String hostname, final int port)
+   public Future<Void> asyncRun(final String hostname, int port)
       throws IOException, InterruptedException, ExecutionException {
       onShutdown = new CompletableFuture<>();
 
       serverSocket = AsynchronousServerSocketChannel.open().bind(new InetSocketAddress(hostname, port));
+      if (port == 0) {
+         port = ((InetSocketAddress) serverSocket.getLocalAddress()).getPort();
+      }
+
       threadPool = Executors.newCachedThreadPool();
 
       CompletionHandler<AsynchronousSocketChannel, Void> handler = new CompletionHandler<>() {

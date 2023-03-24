@@ -27,6 +27,14 @@ pipeline {
             }
         }
 
+        stage ('Build: fatjar') {
+            steps {
+                timeout(30) {
+                    sh 'mvn clean verify -Pfatjar -B -Dcheckstyle.skip -DskipTests'
+                }
+            }
+        }
+
         stage('Checkstyle') {
             steps {
                 timeout(30) {

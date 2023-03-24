@@ -174,6 +174,9 @@
 										<exclude>**/*.mwe2</exclude>
 										<exclude>**/*.xtext</exclude>
 										<exclude>**/*.xtextbin</exclude>
+										<exclude>META-INF/*.SF</exclude>
+										<exclude>META-INF/*.RSA</exclude>
+										<exclude>META-INF/*.INF</exclude>
 									</excludes>
 								</filter>
 							</filters>

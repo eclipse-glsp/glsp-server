@@ -32,6 +32,7 @@ import org.eclipse.jetty.websocket.javax.server.config.JavaxWebSocketServletCont
 import com.google.inject.Module;
 
 public class WebsocketServerLauncher extends GLSPServerLauncher {
+   public static final String START_UP_COMPLETE_MSG = "[GLSP-Server]:Startup completed. Accepting requests on port:";
    private static Logger LOGGER = LogManager.getLogger(WebsocketServerLauncher.class);
    protected Server server;
    protected final String endpointPath;
@@ -50,11 +51,14 @@ public class WebsocketServerLauncher extends GLSPServerLauncher {
       this.websocketLogLevel = websocketLogLevel;
    }
 
+   protected String getStartupCompleteMessage() { return START_UP_COMPLETE_MSG; }
+
    @Override
    @SuppressWarnings("checkstyle:IllegalCatch")
-   public void start(final String hostname, final int port) {
+   public void start(final String hostname, int port) {
       try {
          Configurator.setLevel("org.eclipse.jetty", this.websocketLogLevel);
+
          // Setup Jetty Server
          server = new Server(new InetSocketAddress(hostname, port));
          ServletContextHandler webAppContext;
@@ -77,7 +81,11 @@ public class WebsocketServerLauncher extends GLSPServerLauncher {
          // Start the server
          try {
             server.start();
+            if (port == 0) {
+               port = server.getURI().getPort();
+            }
             LOGGER.info("GLSP server is running and listening on Endpoint : " + server.getURI() + endpointPath);
+            System.out.println(getStartupCompleteMessage() + port);
             server.join();
          } catch (Exception exception) {
             LOGGER.warn("Shutting down due to exception", exception);

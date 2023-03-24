@@ -45,7 +45,7 @@ import com.google.inject.Injector;
 import com.google.inject.Module;
 
 public class SocketGLSPServerLauncher extends GLSPServerLauncher {
-   public static final String START_UP_COMPLETE_MSG = "[GLSP-Server]:Startup completed";
+   public static final String START_UP_COMPLETE_MSG = "[GLSP-Server]:Startup completed. Accepting requests on port:";
    private static Logger LOGGER = LogManager.getLogger(SocketGLSPServerLauncher.class);
 
    private ExecutorService threadPool;
@@ -72,11 +72,15 @@ public class SocketGLSPServerLauncher extends GLSPServerLauncher {
 
    protected String getStartupCompleteMessage() { return START_UP_COMPLETE_MSG; }
 
-   public Future<Void> asyncRun(final String hostname, final int port)
+   public Future<Void> asyncRun(final String hostname, int port)
       throws IOException, InterruptedException, ExecutionException {
       onShutdown = new CompletableFuture<>();
 
       serverSocket = AsynchronousServerSocketChannel.open().bind(new InetSocketAddress(hostname, port));
+      if (port == 0) {
+         port = ((InetSocketAddress) serverSocket.getLocalAddress()).getPort();
+      }
+
       threadPool = Executors.newCachedThreadPool();
 
       CompletionHandler<AsynchronousSocketChannel, Void> handler = new CompletionHandler<>() {
@@ -96,7 +100,7 @@ public class SocketGLSPServerLauncher extends GLSPServerLauncher {
       LOGGER.info("The GLSP server is ready to accept new client requests on port: " + port);
       // Print a message to the output stream that indicates that the start is completed.
       // This indicates to the client that the sever process is ready (in an embedded scenario).
-      System.out.println(getStartupCompleteMessage());
+      System.out.println(getStartupCompleteMessage() + port);
 
       return onShutdown;
    }

@@ -90,7 +90,7 @@ To run the Workflow Diagram example server standalone JAR, run this command in y
     -j,--jettyLogLevel <arg>   Set the log level for the Jetty websocket server.
                                 [default='INFO']
     -l,--logLevel <arg>        Set the log level. [default='INFO']
-    -p,--port <arg>            Set server port. [default='5007']
+    -p,--port <arg>            Set server port. [default='0']
     -w,--websocket             Use websocket launcher instead of default launcher.
 ```
 

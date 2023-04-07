@@ -45,7 +45,7 @@ public abstract class EMFNotationDiagramModule extends EMFDiagramModule {
 
    @Override
    protected Class<? extends EMFNotationModelState> bindGModelState() {
-      return EMFNotationModelState.class;
+      return EMFNotationModelStateImpl.class;
    }
 
    @Override
@@ -57,6 +57,16 @@ public abstract class EMFNotationDiagramModule extends EMFDiagramModule {
    protected void configureOperationHandlers(final MultiBinding<OperationHandler<?>> binding) {
       super.configureOperationHandlers(binding);
       binding.add(EMFChangeBoundsOperationHandler.class);
+   }
+
+   @Override
+   protected void configure() {
+      super.configure();
+      configureEMFNotationModelState(bindGModelState());
+   }
+
+   protected void configureEMFNotationModelState(final Class<? extends EMFNotationModelState> modelState) {
+      bind(EMFNotationModelState.class).to(modelState).in(Singleton.class);
    }
 
 }

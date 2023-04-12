@@ -23,17 +23,17 @@ import org.eclipse.glsp.server.emf.model.notation.Diagram;
 
 public interface EMFNotationModelState extends EMFModelState {
 
-   <T extends Diagram> Optional<T> getNotationModel(final Class<T> clazz);
+   <T extends Diagram> Optional<T> getNotationModel(Class<T> clazz);
 
    Diagram getNotationModel();
 
-   void setNotationModel(final Diagram notationModel);
+   void setNotationModel(Diagram notationModel);
 
-   <T extends EObject> Optional<T> getSemanticModel(final Class<T> clazz);
+   <T extends EObject> Optional<T> getSemanticModel(Class<T> clazz);
 
    EObject getSemanticModel();
 
-   void setSemanticModel(final EObject semanticModel);
+   void setSemanticModel(EObject semanticModel);
 
    @Override
    EMFNotationModelIndex getIndex();

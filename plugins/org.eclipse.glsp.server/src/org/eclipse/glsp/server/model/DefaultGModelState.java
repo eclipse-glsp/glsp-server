@@ -28,7 +28,9 @@ import org.eclipse.glsp.server.di.ClientId;
 import org.eclipse.glsp.server.internal.gmodel.commandstack.GModelCommandStack;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
+@Singleton
 public class DefaultGModelState implements GModelState {
 
    @Inject
@@ -41,6 +43,10 @@ public class DefaultGModelState implements GModelState {
    protected CommandStack commandStack;
    protected String editMode;
    protected GModelIndex index = GModelIndex.empty();
+
+   public DefaultGModelState() {
+      System.err.println("Instantiate Model State " + getClass().getName());
+   }
 
    @Inject
    public void init() {

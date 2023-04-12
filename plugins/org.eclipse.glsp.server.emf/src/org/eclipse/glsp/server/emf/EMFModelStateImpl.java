@@ -30,6 +30,7 @@ import org.eclipse.glsp.server.session.ClientSessionListener;
 import org.eclipse.glsp.server.session.ClientSessionManager;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 /**
  * Model state that holds the status of an arbitrary EMF model in an EMF {@link ResourceSet}.
@@ -41,6 +42,7 @@ import com.google.inject.Inject;
  *
  * @see EMFDiagramModule
  */
+@Singleton
 public class EMFModelStateImpl extends DefaultGModelState implements EMFModelState, ClientSessionListener {
 
    private static Logger LOGGER = LogManager.getLogger(EMFModelStateImpl.class.getSimpleName());

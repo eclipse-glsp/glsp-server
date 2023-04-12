@@ -28,6 +28,7 @@ import org.eclipse.glsp.server.session.ClientSession;
 import org.eclipse.glsp.server.session.ClientSessionListener;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 /**
  * This state represents the status of the diagram based on the {@link GModelRoot}, contains the {@link EMFModelIndex},
@@ -36,6 +37,7 @@ import com.google.inject.Inject;
  *
  * This model state assumes that there is a single semantic root element and a single notation element.
  */
+@Singleton
 public class EMFNotationModelStateImpl extends EMFModelStateImpl
    implements EMFNotationModelState {
 

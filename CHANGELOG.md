@@ -19,6 +19,10 @@
 - [operation] Rework `OperationHandler` to provide an optional command instead of direct execution to allow more execution control [#187](https://github.com/eclipse-glsp/glsp-server/pull/187)
   - `Abstract<XYZ>` base implementations were deprecated in favor of `GModelOperationHandler` and `EMFOperationHandler` base classes
   - Long-term deprecated and unused `Basic<XYZ>` base classes were removed
+- [modelstate] Use interface-injection for all subclasses of GModelState (EMFModelState, EMFNotationModelState)
+  - EMFModelState and EMFNotationModelState are now interfaces instead of classes
+  - EMFModelStateImpl and EMFNotationModelStateImpl classes have been added
+  - Related Modules have been updated to inject these GModelState sub-types as a Singleton
 
 ## [v1.0.0 - 30/06/2022](https://github.com/eclipse-glsp/glsp-server/releases/tag/v1.0.0)
 

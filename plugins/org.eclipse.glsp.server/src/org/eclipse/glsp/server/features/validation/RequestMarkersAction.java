@@ -25,18 +25,28 @@ public class RequestMarkersAction extends RequestAction<SetMarkersAction> {
    public static final String KIND = "requestMarkers";
 
    private List<String> elementsIDs;
+   private String reason;
 
    public RequestMarkersAction() {
       this(new ArrayList<>());
    }
 
    public RequestMarkersAction(final List<String> elementsIDs) {
+      this(elementsIDs, null);
+   }
+
+   public RequestMarkersAction(final List<String> elementsIDs, final String reason) {
       super(KIND);
       this.elementsIDs = elementsIDs;
+      this.reason = reason;
    }
 
    public List<String> getElementsIDs() { return elementsIDs; }
 
    public void setElementsIDs(final List<String> elementsIDs) { this.elementsIDs = elementsIDs; }
+
+   public String getReason() { return reason; }
+
+   public void setReason(final String reason) { this.reason = reason; }
 
 }

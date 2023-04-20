@@ -15,15 +15,14 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.features.validation;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.model.GModelState;
@@ -43,27 +42,24 @@ public class RequestMarkersHandler extends AbstractActionHandler<RequestMarkersA
    @Override
    @SuppressWarnings("checkstyle:cyclomaticComplexity")
    public List<Action> executeAction(final RequestMarkersAction action) {
-      List<String> elementsIDs = action.getElementsIDs();
+      List<String> elementIds = action.getElementsIDs();
       if (validator.isEmpty()) {
          LOGGER.warn("Cannot compute markers! No implementation for " + ModelValidator.class + " has been bound");
          return none();
       }
 
       // if no element ID is provided, compute the markers for the complete model
-      if (elementsIDs == null || elementsIDs.size() == 0
-         || (elementsIDs.size() == 1 && "EMPTY".equals(elementsIDs.get(0)))) {
-         elementsIDs = Arrays.asList(modelState.getRoot().getId());
-      }
-      List<Marker> markers = new ArrayList<>();
-      GModelIndex currentModelIndex = modelState.getIndex();
-      for (String elementID : elementsIDs) {
-         Optional<GModelElement> modelElement = currentModelIndex.get(elementID);
-         if (modelElement.isPresent()) {
-            markers.addAll(validator.get().validate(modelElement.get()));
-         }
-
+      if (elementIds == null || elementIds.size() == 0
+         || (elementIds.size() == 1 && "EMPTY".equals(elementIds.get(0)))) {
+         elementIds = Arrays.asList(modelState.getRoot().getId());
       }
 
-      return listOf(new SetMarkersAction(markers));
+      String reason = action.getReason() != null ? action.getReason() : MarkersReason.BATCH;
+      List<GModelElement> elements = elementIds.stream()
+         .flatMap(element -> modelState.getIndex().get(element).stream())
+         .collect(Collectors.toList());
+      List<Marker> markers = validator.get().validate(elements, reason);
+
+      return listOf(new SetMarkersAction(markers, reason));
    }
 }

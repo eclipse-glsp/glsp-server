@@ -32,7 +32,7 @@ public class RequestMarkersAction extends RequestAction<SetMarkersAction> {
    }
 
    public RequestMarkersAction(final List<String> elementsIDs) {
-      this(elementsIDs, null);
+      this(elementsIDs, MarkersReason.BATCH);
    }
 
    public RequestMarkersAction(final List<String> elementsIDs, final String reason) {

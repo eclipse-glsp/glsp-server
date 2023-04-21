@@ -54,12 +54,11 @@ public class RequestMarkersHandler extends AbstractActionHandler<RequestMarkersA
          elementIds = Arrays.asList(modelState.getRoot().getId());
       }
 
-      String reason = action.getReason() != null ? action.getReason() : MarkersReason.BATCH;
       List<GModelElement> elements = elementIds.stream()
          .flatMap(element -> modelState.getIndex().get(element).stream())
          .collect(Collectors.toList());
-      List<Marker> markers = validator.get().validate(elements, reason);
+      List<Marker> markers = validator.get().validate(elements, action.getReason());
 
-      return listOf(new SetMarkersAction(markers, reason));
+      return listOf(new SetMarkersAction(markers, action.getReason()));
    }
 }

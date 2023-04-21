@@ -49,15 +49,28 @@ public interface ModelValidator {
       for (GModelElement element : elements) {
          if (MarkersReason.LIVE.equals(reason)) {
             markers.addAll(doLiveValidation(element));
-         } else {
+         } else if (MarkersReason.BATCH.equals(reason)) {
             markers.addAll(doBatchValidation(element));
+         } else {
+            markers.addAll(doValidationForCustomReason(element, reason));
          }
-         if (element.getChildren() != null) {
+         if (!element.getChildren().isEmpty()) {
             markers.addAll(validate(element.getChildren(), reason));
          }
       }
 
       return markers;
+   }
+
+   /**
+    * Runs a <code>batch</code> validation with the given list of {@link GModelElement}s and returns a list of
+    * {@link Marker}s.
+    *
+    * @param elements The list of {@link GModelElement} to validate.
+    * @return A list of {@link Marker}s for the validated {@link GModelElement}s.
+    */
+   default List<Marker> validate(final GModelElement... elements) {
+      return validate(List.of(elements), MarkersReason.BATCH);
    }
 
    /**
@@ -91,6 +104,24 @@ public interface ModelValidator {
     * @return A list of {@link Marker}s for the validated {@link GModelElement}.
     */
    default List<Marker> doBatchValidation(final GModelElement element) {
+      return Collections.emptyList();
+   }
+
+   /**
+    * Perform a validation for a custom <code>reason</code> with the given <code>element</code>.
+    *
+    * <p>
+    * GLSP editors may add custom reasons for triggering a validation, other than <code>live</code> and
+    * <code>batch</code>.
+    * Validation requests that are not live or batch validations will be handled by this method.
+    * There is no need to traverse through the children in this method as {@link #validate(List, String)} will invoke
+    * this method for all children anyway.
+    * </p>
+    *
+    * @param element The element to validate.
+    * @return A list of {@link Marker}s for the validated {@link GModelElement}.
+    */
+   default List<Marker> doValidationForCustomReason(final GModelElement element, final String reason) {
       return Collections.emptyList();
    }
 

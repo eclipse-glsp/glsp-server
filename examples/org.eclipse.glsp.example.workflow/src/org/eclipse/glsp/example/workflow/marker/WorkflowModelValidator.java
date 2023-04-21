@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2022 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -39,48 +39,47 @@ public class WorkflowModelValidator implements ModelValidator {
    protected GModelState modelState;
 
    @Override
-   public List<Marker> validate(final GModelElement... elements) {
+   public List<Marker> doLiveValidation(final GModelElement element) {
       List<Marker> markers = new ArrayList<>();
-
-      for (GModelElement element : elements) {
-         if (element instanceof TaskNode) {
-            markers.addAll(validateTaskNode(modelState, element));
-         } else if (element instanceof ActivityNode) {
-            ActivityNode activityNode = (ActivityNode) element;
-            if ("decisionNode".equals(activityNode.getNodeType())) {
-               markers.addAll(validateDecisionNode(modelState, element));
-            } else if ("mergeNode".equals(activityNode.getNodeType())) {
-               markers.addAll(validateMergeNode(modelState, element));
-            }
-         }
-         if (element.getChildren() != null) {
-            markers.addAll(validate(element.getChildren().toArray(new GModelElement[element.getChildren().size()])));
+      if (element instanceof ActivityNode) {
+         ActivityNode activityNode = (ActivityNode) element;
+         if ("decisionNode".equals(activityNode.getNodeType())) {
+            markers.addAll(validateDecisionNode(element));
+         } else if ("mergeNode".equals(activityNode.getNodeType())) {
+            markers.addAll(validateMergeNode(element));
          }
       }
       return markers;
    }
 
-   private static List<Marker> validateTaskNode(final GModelState modelState, final GModelElement taskNode) {
+   @Override
+   public List<Marker> doBatchValidation(final GModelElement element) {
       List<Marker> markers = new ArrayList<>();
-      validateTaskNode_isAutomated(modelState, taskNode).ifPresent(m -> markers.add(m));
-      validateTaskNode_labelStartsUpperCase(modelState, taskNode).ifPresent(m -> markers.add(m));
+      if (element instanceof TaskNode) {
+         markers.addAll(validateTaskNode(element));
+      }
+      return markers;
+   }
+
+   private List<Marker> validateTaskNode(final GModelElement taskNode) {
+      List<Marker> markers = new ArrayList<>();
+      validateTaskNode_isAutomated(taskNode).ifPresent(m -> markers.add(m));
+      validateTaskNode_labelStartsUpperCase(taskNode).ifPresent(m -> markers.add(m));
       return markers;
    }
 
    @SuppressWarnings("checkstyle:MethodName")
-   private static Optional<Marker> validateTaskNode_isAutomated(final GModelState modelState,
-      final GModelElement element) {
+   private Optional<Marker> validateTaskNode_isAutomated(final GModelElement element) {
       TaskNode taskNode = (TaskNode) element;
       if ("automated".equals(taskNode.getTaskType())) {
-         return Optional
-            .of(new Marker("Automated task", "This is an automated task", element.getId(), MarkerKind.INFO));
+         String id = element.getId();
+         return Optional.of(new Marker("Automated task", "This is an automated task", id, MarkerKind.INFO));
       }
       return Optional.empty();
    }
 
    @SuppressWarnings("checkstyle:MethodName")
-   private static Optional<Marker> validateTaskNode_labelStartsUpperCase(final GModelState modelState,
-      final GModelElement element) {
+   private Optional<Marker> validateTaskNode_labelStartsUpperCase(final GModelElement element) {
       TaskNode taskNode = (TaskNode) element;
 
       boolean hasLowerCaseLabel = taskNode.getChildren().stream()
@@ -97,16 +96,14 @@ public class WorkflowModelValidator implements ModelValidator {
       return Optional.empty();
    }
 
-   private static List<Marker> validateDecisionNode(final GModelState modelState,
-      final GModelElement decisionNode) {
+   private List<Marker> validateDecisionNode(final GModelElement decisionNode) {
       List<Marker> markers = new ArrayList<>();
-      validateDecisionNode_hasOneIncomingEdge(modelState, decisionNode).ifPresent(m -> markers.add(m));
+      validateDecisionNode_hasOneIncomingEdge(decisionNode).ifPresent(m -> markers.add(m));
       return markers;
    }
 
    @SuppressWarnings("checkstyle:MethodName")
-   private static Optional<Marker> validateDecisionNode_hasOneIncomingEdge(final GModelState modelState,
-      final GModelElement decisionNode) {
+   private Optional<Marker> validateDecisionNode_hasOneIncomingEdge(final GModelElement decisionNode) {
       Collection<GEdge> incomingEdges = modelState.getIndex().getIncomingEdges(decisionNode);
       if (incomingEdges.size() > 1) {
          return Optional.of(new Marker("Too many incoming edges", "Decision node may only have one incoming edge.",
@@ -118,15 +115,14 @@ public class WorkflowModelValidator implements ModelValidator {
       return Optional.empty();
    }
 
-   private static List<Marker> validateMergeNode(final GModelState modelState, final GModelElement mergeNode) {
+   private List<Marker> validateMergeNode(final GModelElement mergeNode) {
       List<Marker> markers = new ArrayList<>();
-      validateMergeNode_hasOneOutgoingEdge(modelState, mergeNode).ifPresent(m -> markers.add(m));
+      validateMergeNode_hasOneOutgoingEdge(mergeNode).ifPresent(m -> markers.add(m));
       return markers;
    }
 
    @SuppressWarnings("checkstyle:MethodName")
-   private static Optional<Marker> validateMergeNode_hasOneOutgoingEdge(final GModelState modelState,
-      final GModelElement mergeNode) {
+   private Optional<Marker> validateMergeNode_hasOneOutgoingEdge(final GModelElement mergeNode) {
       Collection<GEdge> outgoingEdges = modelState.getIndex().getOutgoingEdges(mergeNode);
       if (outgoingEdges.size() > 1) {
          return Optional.of(new Marker("Too many outgoing edges", "Merge node may only have one outgoing edge.",

@@ -28,6 +28,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.server.actions.ActionMessage;
 import org.eclipse.glsp.server.actions.ActionRegistry;
+import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.session.ClientSession;
 import org.eclipse.glsp.server.session.ClientSessionManager;
 import org.eclipse.glsp.server.types.GLSPServerException;
@@ -120,6 +121,7 @@ public class DefaultGLSPServer implements GLSPServer {
          ClientSession session = sessionManager.getOrCreateClientSession(params.getClientSessionId(),
             params.getDiagramType());
          clientSessions.put(params.getClientSessionId(), session);
+         GModelState modelState = session.getInjector().getInstance(GModelState.class);
          return handleInitializeClientSessionArgs(params.getArgs());
       } catch (GLSPServerException exception) {
          throw new ResponseErrorException(

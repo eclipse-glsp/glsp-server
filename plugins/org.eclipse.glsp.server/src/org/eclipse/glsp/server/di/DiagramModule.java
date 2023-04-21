@@ -87,10 +87,14 @@ import org.eclipse.glsp.server.gmodel.GModelCutOperationHandler;
 import org.eclipse.glsp.server.gson.GraphGsonConfigurationFactory;
 import org.eclipse.glsp.server.internal.actions.DefaultActionDispatcher;
 import org.eclipse.glsp.server.internal.actions.DefaultActionHandlerRegistry;
+import org.eclipse.glsp.server.internal.command.CommandStackFactory;
+import org.eclipse.glsp.server.internal.command.CommandStackManager;
+import org.eclipse.glsp.server.internal.command.DefaultCommandStackManager;
 import org.eclipse.glsp.server.internal.diagram.DefaultServerConfigurationContribution;
 import org.eclipse.glsp.server.internal.featues.directediting.DefaultContextEditValidatorRegistry;
 import org.eclipse.glsp.server.internal.featues.navigation.DefaultNavigationTargetProviderRegistry;
 import org.eclipse.glsp.server.internal.features.contextactions.DefaultContextActionsProviderRegistry;
+import org.eclipse.glsp.server.internal.gmodel.commandstack.GModelCommandStackFactory;
 import org.eclipse.glsp.server.internal.gson.DefaultGraphGsonConfigurationFactory;
 import org.eclipse.glsp.server.internal.operations.DefaultOperationHandlerRegistry;
 import org.eclipse.glsp.server.internal.toolpalette.DefaultToolPaletteItemProvider;
@@ -210,6 +214,10 @@ public abstract class DiagramModule extends GLSPModule {
       bindOptionally(PopupModelFactory.class, bindPopupModelFactory());
       bindOptionally(LayoutEngine.class, bindLayoutEngine());
       bindOptionally(GraphExtension.class, bindGraphExtension());
+
+      // Command Stack
+      bind(CommandStackFactory.class).to(bindCommandStackFactory()).in(Singleton.class);
+      bind(CommandStackManager.class).to(bindCommandStackManager()).in(Singleton.class);
    }
 
    protected void bindDiagramType() {
@@ -370,6 +378,14 @@ public abstract class DiagramModule extends GLSPModule {
 
    protected Class<? extends GraphExtension> bindGraphExtension() {
       return null;
+   }
+
+   protected Class<? extends CommandStackFactory> bindCommandStackFactory() {
+      return GModelCommandStackFactory.class;
+   }
+
+   protected Class<? extends CommandStackManager> bindCommandStackManager() {
+      return DefaultCommandStackManager.class;
    }
 
    public abstract String getDiagramType();

@@ -24,6 +24,7 @@ import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.di.DiagramModule;
 import org.eclipse.glsp.server.features.sourcemodelwatcher.SourceModelWatcher;
 import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.utils.ClientOptionsUtil;
 import org.eclipse.glsp.server.utils.ServerMessageUtil;
 import org.eclipse.glsp.server.utils.ServerStatusUtil;
 
@@ -58,15 +59,18 @@ public class RequestModelActionHandler extends AbstractActionHandler<RequestMode
 
    @Override
    public List<Action> executeAction(final RequestModelAction action) {
-      modelState.setClientOptions(action.getOptions());
+      // only reload if not initialized
+      if (!ClientOptionsUtil.disableReloadIsTrue(action.getOptions()) || modelState.getRoot() == null) {
+         modelState.setClientOptions(action.getOptions());
 
-      notifyStartLoading();
-      sourceModelStorage.loadSourceModel(action);
-      notifyFinishedLoading();
+         notifyStartLoading();
+         sourceModelStorage.loadSourceModel(action);
+         notifyFinishedLoading();
 
-      sourceModelWatcher.ifPresent(watcher -> watcher.startWatching());
+         sourceModelWatcher.ifPresent(watcher -> watcher.startWatching());
+      }
 
-      return modelSubmissionHandler.submitModel();
+      return modelSubmissionHandler.submitModel(action.getSubclientId());
    }
 
    protected void notifyStartLoading() {

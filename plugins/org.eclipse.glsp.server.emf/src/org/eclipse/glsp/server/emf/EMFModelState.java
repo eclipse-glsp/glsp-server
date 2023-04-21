@@ -17,6 +17,7 @@ package org.eclipse.glsp.server.emf;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -24,6 +25,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GModelRoot;
+import org.eclipse.glsp.server.internal.command.CommandStackManager;
 import org.eclipse.glsp.server.model.DefaultGModelState;
 import org.eclipse.glsp.server.session.ClientSession;
 import org.eclipse.glsp.server.session.ClientSessionListener;
@@ -51,6 +53,9 @@ public class EMFModelState extends DefaultGModelState implements ClientSessionLi
    @Inject
    protected EMFIdGenerator idGenerator;
 
+   @Inject
+   protected CommandStackManager commandStackManager;
+
    protected EditingDomain editingDomain;
 
    @Override
@@ -59,9 +64,9 @@ public class EMFModelState extends DefaultGModelState implements ClientSessionLi
       this.clientSessionManager.addListener(this, this.clientId);
    }
 
-   public void setEditingDomain(final EditingDomain editingDomain) {
+   public void setEditingDomain(final EditingDomain editingDomain, final String subclientId) {
       this.editingDomain = editingDomain;
-      setCommandStack(this.editingDomain.getCommandStack());
+      commandStackManager.setCommandStack(this.editingDomain.getCommandStack(), subclientId);
    }
 
    public EditingDomain getEditingDomain() { return editingDomain; }
@@ -102,8 +107,12 @@ public class EMFModelState extends DefaultGModelState implements ClientSessionLi
          }
       }
       if (result) {
-         commandStack.flush();
-         saveIsDone();
+         commandStackManager.getAllCommandStack().forEach(commandStack -> {
+            commandStack.flush();
+            if (commandStack instanceof BasicCommandStack) {
+               ((BasicCommandStack) commandStack).saveIsDone();
+            }
+         });
       }
    }
 

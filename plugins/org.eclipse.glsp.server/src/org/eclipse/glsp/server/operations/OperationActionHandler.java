@@ -62,18 +62,18 @@ public class OperationActionHandler extends AbstractActionHandler<Operation> {
    protected List<Action> executeHandler(final Operation operation, final OperationHandler<?> handler) {
       Optional<Command> command = handler.execute(operation);
       if (command.isPresent()) {
-         exexcuteCommand(command.get());
-         return submitModel();
+         exexcuteCommand(command.get(), operation.getSubclientId());
+         return submitModel(operation.getSubclientId());
       }
       return none();
    }
 
-   protected void exexcuteCommand(final Command command) {
-      modelState.execute(command);
+   protected void exexcuteCommand(final Command command, final String subclientId) {
+      modelState.execute(command, subclientId);
    }
 
-   protected List<Action> submitModel() {
-      return modelSubmissionHandler.submitModel(SetDirtyStateAction.Reason.OPERATION);
+   protected List<Action> submitModel(final String subclientId) {
+      return modelSubmissionHandler.submitModel(SetDirtyStateAction.Reason.OPERATION, subclientId);
    }
 
    /**

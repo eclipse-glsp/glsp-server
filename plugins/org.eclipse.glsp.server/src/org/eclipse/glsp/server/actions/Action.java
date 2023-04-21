@@ -15,6 +15,8 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actions;
 
+import org.eclipse.glsp.server.internal.util.GenericsUtil;
+
 /**
  * Java-implementation of the `Action` interface. An action is a declarative description of a behavior that
  * shall be
@@ -31,12 +33,21 @@ public abstract class Action {
     */
    private final String kind;
 
-   public Action(final String kind) {
+   private String subclientId;
+
+   public Action(final String kind, final String subclientId) {
       super();
       this.kind = kind;
+      this.subclientId = subclientId;
+   }
+
+   public Action(final String kind) {
+      this(kind, null);
    }
 
    public String getKind() { return kind; }
+
+   public String getSubclientId() { return subclientId; }
 
    @Override
    public String toString() {
@@ -45,6 +56,13 @@ public abstract class Action {
       builder.append(kind);
       builder.append("]");
       return builder.toString();
+   }
+
+   public static Action addSubclientId(final Action initialAction, final Action extendedAction) {
+      if (initialAction.getSubclientId() != null) {
+         extendedAction.subclientId = initialAction.subclientId;
+      }
+      return extendedAction;
    }
 
 }

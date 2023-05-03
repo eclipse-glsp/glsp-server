@@ -7,7 +7,7 @@ import java.util.List;
 public interface CommandStackManager {
     CommandStack getOrCreateCommandStack(String subclientId);
 
-    List<CommandStack> getAllCommandStack();
+    List<CommandStack> getAllCommandStacks();
 
     void setCommandStack(CommandStack commandStack, String subclientId);
 }

@@ -112,7 +112,7 @@ public class EMFModelStateImpl extends DefaultGModelState implements EMFModelSta
          }
       }
       if (result) {
-         commandStackManager.getAllCommandStack().forEach(commandStack -> {
+         commandStackManager.getAllCommandStacks().forEach(commandStack -> {
             commandStack.flush();
             if (commandStack instanceof BasicCommandStack) {
                ((BasicCommandStack) commandStack).saveIsDone();

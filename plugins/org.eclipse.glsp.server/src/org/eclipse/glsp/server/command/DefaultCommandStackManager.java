@@ -21,7 +21,7 @@ public class DefaultCommandStackManager implements CommandStackManager {
     public CommandStack getOrCreateCommandStack(final String subclientId) {
         String subclientIdOrFallback = getSubclientIdOrFallback(subclientId);
         if (commandStackMap.containsKey(subclientIdOrFallback)) {
-            return commandStackMap.get(getSubclientIdOrFallback(subclientIdOrFallback));
+            return commandStackMap.get(subclientIdOrFallback);
         }
 
         CommandStack commandStack = factory.createCommandStack();
@@ -30,7 +30,7 @@ public class DefaultCommandStackManager implements CommandStackManager {
     }
 
     @Override
-    public List<CommandStack> getAllCommandStack() {
+    public List<CommandStack> getAllCommandStacks() {
         return new ArrayList<>(commandStackMap.values());
     }
 

@@ -24,6 +24,7 @@
   - EMFModelStateImpl and EMFNotationModelStateImpl classes have been added
   - Related Modules have been updated to inject these GModelState sub-types as a Singleton
 - [validation] Add explicit support and API for live and batch validation [#200](https://github.com/eclipse-glsp/glsp-server/pull/200)
+- [server] Default ports have changed from 5007 (and 8081 for websockets) to 0, which implies autoassignment by the OS [#198](https://github.com/eclipse-glsp/glsp-server/pull/198)
 
 ## [v1.0.0 - 30/06/2022](https://github.com/eclipse-glsp/glsp-server/releases/tag/v1.0.0)
 

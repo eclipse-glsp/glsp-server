@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021-2022 EclipseSource and others.
+ * Copyright (c) 2021-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -23,7 +23,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import javax.inject.Qualifier;
+import com.google.inject.BindingAnnotation;
 
 /**
  * Helper annotation that is used for injecting the diagram type string into classes of diagram session (client session)
@@ -38,7 +38,7 @@ import javax.inject.Qualifier;
  * </pre>
  *
  */
-@Qualifier
 @Target({ FIELD, PARAMETER, METHOD })
 @Retention(RUNTIME)
+@BindingAnnotation
 public @interface DiagramType {}

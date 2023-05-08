@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2022 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -26,6 +26,10 @@ import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.actions.SetDirtyStateAction;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
+import org.eclipse.glsp.server.features.validation.Marker;
+import org.eclipse.glsp.server.features.validation.ModelValidator;
+import org.eclipse.glsp.server.features.validation.MarkersReason;
+import org.eclipse.glsp.server.features.validation.SetMarkersAction;
 import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.layout.ServerLayoutKind;
 import org.eclipse.glsp.server.model.GModelState;
@@ -47,6 +51,9 @@ public class ModelSubmissionHandler {
 
    @Inject
    protected GModelState modelState;
+
+   @Inject
+   protected Optional<ModelValidator> validator;
 
    private final Object modelLock = new Object();
 
@@ -107,6 +114,11 @@ public class ModelSubmissionHandler {
          result.add(modelAction);
          if (!diagramConfiguration.needsClientLayout()) {
             result.add(new SetDirtyStateAction(modelState.isDirty(subclientId), reason));
+         }
+         if (validator.isPresent()) {
+            List<Marker> markers = validator.get() //
+               .validate(Arrays.asList(modelState.getRoot()), MarkersReason.LIVE);
+            result.add(new SetMarkersAction(markers, MarkersReason.LIVE));
          }
          return result;
       }

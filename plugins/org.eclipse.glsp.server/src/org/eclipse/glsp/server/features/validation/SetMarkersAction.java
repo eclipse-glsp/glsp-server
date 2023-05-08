@@ -25,18 +25,28 @@ public class SetMarkersAction extends ResponseAction {
    public static final String KIND = "setMarkers";
 
    private List<Marker> markers;
+   private String reason;
 
    public SetMarkersAction() {
       this(new ArrayList<>());
    }
 
    public SetMarkersAction(final List<Marker> markers) {
+      this(markers, MarkersReason.BATCH);
+   }
+
+   public SetMarkersAction(final List<Marker> markers, final String reason) {
       super(KIND);
       this.markers = markers;
+      this.reason = reason;
    }
 
    public List<Marker> getMarkers() { return markers; }
 
    public void setMarkers(final List<Marker> markers) { this.markers = markers; }
+
+   public String getReason() { return reason; }
+
+   public void setReason(final String reason) { this.reason = reason; }
 
 }

@@ -16,7 +16,6 @@
 package org.eclipse.glsp.server.emf;
 
 import org.eclipse.glsp.server.di.DiagramModule;
-import org.eclipse.glsp.server.model.GModelState;
 
 import com.google.inject.Singleton;
 
@@ -51,7 +50,7 @@ public abstract class EMFDiagramModule extends DiagramModule {
 
    @Override
    protected Class<? extends EMFModelState> bindGModelState() {
-      return EMFModelState.class;
+      return EMFModelStateImpl.class;
    }
 
    @Override
@@ -60,10 +59,13 @@ public abstract class EMFDiagramModule extends DiagramModule {
    }
 
    @Override
-   @SuppressWarnings("unchecked")
-   protected void configureGModelState(final Class<? extends GModelState> gmodelStateClass) {
-      super.configureGModelState(gmodelStateClass);
-      bind(EMFModelState.class).to((Class<? extends EMFModelState>) gmodelStateClass);
+   protected void configure() {
+      super.configure();
+      configureEMFModelState(bindGModelState());
+   }
+
+   protected void configureEMFModelState(final Class<? extends EMFModelState> emfStateClass) {
+      bind(EMFModelState.class).to(emfStateClass).in(Singleton.class);
    }
 
 }

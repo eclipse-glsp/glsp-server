@@ -12,20 +12,25 @@
  * https://www.gnu.org/software/classpath/license.html.
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
- ******************************************************************************/
-package org.eclipse.glsp.server.emf;
+ ********************************************************************************/
+package org.eclipse.glsp.server.features.validation;
 
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.glsp.server.model.GModelState;
+/**
+ * The default reasons for a request for markers.
+ */
+public final class MarkersReason {
 
-public interface EMFModelState extends GModelState {
-   void setEditingDomain(EditingDomain editingDomain);
+   /**
+    * Batch validation executed on demand by the client.
+    */
+   public static final String BATCH = "batch";
+   /**
+    * Live validation executed on start and after model update.
+    */
+   public static final String LIVE = "live";
 
-   EditingDomain getEditingDomain();
+   private MarkersReason() {
+      // prevent instantiation for class only holding constants.
+   }
 
-   ResourceSet getResourceSet();
-
-   @Override
-   EMFModelIndex getIndex();
 }

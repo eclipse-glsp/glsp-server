@@ -140,6 +140,7 @@
 							<artifactSet>
 								<excludes>
 									<exclude>jakarta.websocket:jakarta.websocket-api</exclude>
+									<exclude>javax.websocket:javax.websocket-api</exclude>
 									<exclude>log4j:log4j</exclude>
 								</excludes>
 							</artifactSet>
@@ -151,6 +152,7 @@
 										<exclude>META-INF/DEPENDENCIES</exclude>
 										<exclude>META-INF/ECLIPSE_*</exclude>
 										<exclude>META-INF/LICENSE*</exclude>
+										<exclude>META-INF/services/javax.servlet.ServletContainerInitializer</exclude>
 										<exclude>META-INF/services/jakarta.servlet.ServletContainerInitializer*</exclude>
 										<exclude>META-INF/services/org.eclipse.jetty.webapp.Configuration*</exclude>
 										<exclude>META-INF/services/org.eclipse.elk.core.data.ILayoutMetaDataProvider*</exclude>

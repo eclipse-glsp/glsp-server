@@ -297,11 +297,6 @@
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-source-plugin</artifactId>
 						<version>${maven.source.version}</version>
-						<configuration>
-							<argLine>
-								--illegal-access=permit
-							</argLine>
-						</configuration>
 						<executions>
 							<execution>
 								<id>attach-sources</id>
@@ -316,21 +311,11 @@
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-surefire-plugin</artifactId>
 						<version>${maven.surefire.version}</version>
-						<configuration>
-							<argLine>
-								--illegal-access=permit
-							</argLine>
-						</configuration>
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-failsafe-plugin</artifactId>
 						<version>${maven.failsafe.version}</version>
-						<configuration>
-							<argLine>
-								--illegal-access=permit
-							</argLine>
-						</configuration>
 					</plugin>
 					<!-- to disable use -Dcheckstyle.skip -->
 					<plugin>

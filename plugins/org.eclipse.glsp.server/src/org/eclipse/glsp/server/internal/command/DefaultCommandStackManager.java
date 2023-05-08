@@ -2,7 +2,7 @@ package org.eclipse.glsp.server.internal.command;
 
 import com.google.inject.Inject;
 import org.eclipse.emf.common.command.CommandStack;
-import org.eclipse.glsp.server.utils.CollaborateUtil;
+import org.eclipse.glsp.server.utils.CollaborationUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,7 +47,7 @@ public class DefaultCommandStackManager implements CommandStackManager {
         if (subclientId != null) {
             return subclientId;
         }
-        return CollaborateUtil.FALLBACK_SUBCLIENT_ID;
+        return CollaborationUtil.FALLBACK_SUBCLIENT_ID;
     }
 
 }

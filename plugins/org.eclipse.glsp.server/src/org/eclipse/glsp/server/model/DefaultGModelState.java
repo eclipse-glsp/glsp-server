@@ -32,10 +32,6 @@ import com.google.inject.Inject;
 
 public class DefaultGModelState implements GModelState {
 
-   public DefaultGModelState() {
-      System.out.println("test");
-   }
-
    @Inject
    @ClientId
    protected String clientId;

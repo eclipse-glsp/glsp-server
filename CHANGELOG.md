@@ -5,7 +5,7 @@
 ### Changes
 
 - [graph] Updated the Graph model and add Layoutable interface [#175](https://github.com/eclipse-glsp/glsp-server/pull/175) - Contributed on behalf of STMicroelectronics
-- [layout] Extend `ComputedBoundsAction` to also provide route data for client-side routed edges and store source/target point  in the `args` map [#181](https://github.com/eclipse-glsp/glsp-server/pull/181)
+- [layout] Extend `ComputedBoundsAction` to also provide route data for client-side routed edges and store source/target point in the `args` map [#181](https://github.com/eclipse-glsp/glsp-server/pull/181)
 - [websocket] Remove listing on `stdin` from `WebsocketServerLauncher` [#189](https://github.com/eclipse-glsp/glsp-server/pull/189)
 - [diagram] Fixed a bug that prevented stable ids within one session when using the `IdKeeperAdapter` [#192](https://github.com/eclipse-glsp/glsp-server/pull/192) - Contributed on behalf of STMicroelectronics
 
@@ -19,6 +19,12 @@
 - [operation] Rework `OperationHandler` to provide an optional command instead of direct execution to allow more execution control [#187](https://github.com/eclipse-glsp/glsp-server/pull/187)
   - `Abstract<XYZ>` base implementations were deprecated in favor of `GModelOperationHandler` and `EMFOperationHandler` base classes
   - Long-term deprecated and unused `Basic<XYZ>` base classes were removed
+- [modelstate] Use interface-injection for all subclasses of GModelState (EMFModelState, EMFNotationModelState)
+  - EMFModelState and EMFNotationModelState are now interfaces instead of classes
+  - EMFModelStateImpl and EMFNotationModelStateImpl classes have been added
+  - Related Modules have been updated to inject these GModelState sub-types as a Singleton
+- [validation] Add explicit support and API for live and batch validation [#200](https://github.com/eclipse-glsp/glsp-server/pull/200)
+- [server] Default ports have changed from 5007 (and 8081 for websockets) to 0, which implies autoassignment by the OS [#198](https://github.com/eclipse-glsp/glsp-server/pull/198)
 
 ## [v1.0.0 - 30/06/2022](https://github.com/eclipse-glsp/glsp-server/releases/tag/v1.0.0)
 

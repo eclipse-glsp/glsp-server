@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2022 EclipseSource and others.
+ * Copyright (c) 2022-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -45,7 +45,7 @@ public abstract class EMFNotationDiagramModule extends EMFDiagramModule {
 
    @Override
    protected Class<? extends EMFNotationModelState> bindGModelState() {
-      return EMFNotationModelState.class;
+      return EMFNotationModelStateImpl.class;
    }
 
    @Override
@@ -57,6 +57,16 @@ public abstract class EMFNotationDiagramModule extends EMFDiagramModule {
    protected void configureOperationHandlers(final MultiBinding<OperationHandler<?>> binding) {
       super.configureOperationHandlers(binding);
       binding.add(EMFChangeBoundsOperationHandler.class);
+   }
+
+   @Override
+   protected void configure() {
+      super.configure();
+      configureEMFNotationModelState(bindGModelState());
+   }
+
+   protected void configureEMFNotationModelState(final Class<? extends EMFNotationModelState> modelState) {
+      bind(EMFNotationModelState.class).to(modelState).in(Singleton.class);
    }
 
 }

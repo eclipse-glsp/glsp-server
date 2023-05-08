@@ -2,7 +2,7 @@ pipeline {
     agent any
     tools {
         maven 'apache-maven-latest'
-        jdk 'openjdk-jdk11-latest'
+        jdk 'openjdk-jdk17-latest'
     }
 
     environment {
@@ -73,6 +73,11 @@ pipeline {
                             sh 'mvn clean deploy -Pm2 -Pm2-release -Pfatjar  -B -pl "!tests,!tests/org.eclipse.glsp.server.test,!tests/org.eclipse.glsp.graph.test"'
                         }
                      }
+                }
+                stage('Trigger Java11 build') {
+                    steps {
+                        build wait: false, job: 'glsp-server-java11'
+                    }
                 }
             }
         }

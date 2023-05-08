@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: GLSP Server EMF
 Bundle-SymbolicName: org.eclipse.glsp.server.emf;singleton:=true
-Bundle-Version: 1.1.0.qualifier
+Bundle-Version: 1.1.0.RC08
 Bundle-ClassPath: .
 Bundle-Vendor: Eclipse GLSP
 Bundle-Localization: plugin

@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GModelRoot;
-import org.eclipse.glsp.server.internal.command.CommandStackManager;
+import org.eclipse.glsp.server.command.CommandStackManager;
 import org.eclipse.glsp.server.model.DefaultGModelState;
 import org.eclipse.glsp.server.session.ClientSession;
 import org.eclipse.glsp.server.session.ClientSessionListener;

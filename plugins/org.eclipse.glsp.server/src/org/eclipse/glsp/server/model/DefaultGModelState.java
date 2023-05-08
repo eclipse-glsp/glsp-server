@@ -25,7 +25,7 @@ import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.server.di.ClientId;
-import org.eclipse.glsp.server.internal.command.CommandStackManager;
+import org.eclipse.glsp.server.command.CommandStackManager;
 import org.eclipse.glsp.server.internal.gmodel.commandstack.GModelCommandStack;
 
 import com.google.inject.Inject;

@@ -1,4 +1,4 @@
-package org.eclipse.glsp.server.internal.command;
+package org.eclipse.glsp.server.command;
 
 import com.google.inject.Inject;
 import org.eclipse.emf.common.command.CommandStack;

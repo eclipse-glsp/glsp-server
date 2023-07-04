@@ -35,7 +35,7 @@ All changes on the master branch are deployed automatically to the corresponding
 
 The workflow diagram is a consistent example provided by all GLSP components.
 The example implements a simple flow chart diagram editor with different types of nodes and edges (see screenshot below).
-The example can be used to try out different GLSP features, as well as several available integrations with IDE platforms (Theia, VSCode, Eclipse, Standalone).
+The example can be used to try out different GLSP features, as well as several available integrations with IDE platforms (Theia, VS Code, Eclipse, Standalone).
 As the example is fully open source, you can also use it as a blueprint for a custom implementation of a GLSP diagram editor.
 See [our project website](https://www.eclipse.org/glsp/documentation/#workflowoverview) for an overview of the workflow example and all components implementing it.
 
@@ -46,7 +46,7 @@ https://user-images.githubusercontent.com/588090/154459938-849ca684-11b3-472c-8a
 To see the diagram in action, you need to choose and launch one diagram client, see [here for an overview of available clients](https://www.eclipse.org/glsp/examples/#workflowoverview).
 
 -   [`glsp-theia-integration`](https://github.com/eclipse-glsp/glsp-theia-integration): Diagrams clients integrated into [Theia](https://github.com/theia-ide/theia).
--   [`glsp-vscode-integration`](https://github.com/eclipse-glsp/glsp-vscode-integration): Diagram clients integrated into [VSCode](https://github.com/microsoft/vscode).
+-   [`glsp-vscode-integration`](https://github.com/eclipse-glsp/glsp-vscode-integration): Diagram clients integrated into [VS Code](https://github.com/microsoft/vscode).
 -   [`glsp-eclipse-integration`](https://github.com/eclipse-glsp/glsp-eclipse-integration): Diagram clients integrated into Eclipse IDE.
 
 Please look at the workflow example guides in the repository linked above to get more information on building and running the respecitive GLSP clients.
@@ -94,7 +94,7 @@ To run the Workflow Diagram example server standalone JAR, run this command in y
     -w,--websocket             Use websocket launcher instead of default launcher.
 ```
 
-Once the server is running, choose a diagram client integration (such as Eclipse Theia, VSCode, Eclipse, or Standalone) below.
+Once the server is running, choose a diagram client integration (such as Eclipse Theia, VS Code, Eclipse, or Standalone) below.
 
 ### Where to find the sources?
 

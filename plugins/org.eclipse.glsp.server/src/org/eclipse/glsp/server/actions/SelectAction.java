@@ -27,6 +27,7 @@ public class SelectAction extends Action {
 
    private List<String> selectedElementsIDs;
    private List<String> deselectedElementsIDs;
+   private boolean deselectAll;
 
    public SelectAction() {
       this(new ArrayList<>());
@@ -37,9 +38,19 @@ public class SelectAction extends Action {
    }
 
    public SelectAction(final List<String> selectedElementsIDs, final List<String> deselectedElementsIDs) {
+      this(selectedElementsIDs, deselectedElementsIDs, false);
+   }
+
+   public SelectAction(final List<String> selectedElementsIDs, final boolean deselectAll) {
+      this(selectedElementsIDs, new ArrayList<>(), deselectAll);
+   }
+
+   private SelectAction(final List<String> selectedElementsIDs, final List<String> deselectedElementsIDs,
+      final boolean deselectAll) {
       super(KIND);
       this.selectedElementsIDs = selectedElementsIDs;
       this.deselectedElementsIDs = deselectedElementsIDs;
+      this.deselectAll = deselectAll;
    }
 
    public List<String> getSelectedElementsIDs() { return selectedElementsIDs; }
@@ -52,6 +63,22 @@ public class SelectAction extends Action {
 
    public void setDeselectedElementsIDs(final List<String> deselectedElementsIDs) {
       this.deselectedElementsIDs = deselectedElementsIDs;
+   }
+
+   public boolean isDeselectAll() { return deselectAll; }
+
+   public void setDeselectAll(final boolean deselectAll) { this.deselectAll = deselectAll; }
+
+   public static SelectAction addSelection(final List<String> selectedElementsIDs) {
+      return new SelectAction(selectedElementsIDs, new ArrayList<>());
+   }
+
+   public static SelectAction removeSelection(final List<String> deselectedElementsIDs) {
+      return new SelectAction(new ArrayList<>(), deselectedElementsIDs);
+   }
+
+   public static SelectAction setSelection(final List<String> selectedElementsIDs) {
+      return new SelectAction(selectedElementsIDs, true);
    }
 
 }

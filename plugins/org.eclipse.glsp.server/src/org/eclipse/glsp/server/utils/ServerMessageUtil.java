@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020-2022 EclipseSource and others.
+ * Copyright (c) 2020-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -55,35 +55,6 @@ public final class ServerMessageUtil {
 
    public static ServerMessageAction error(final Exception e) {
       return error(getMessage(e), getDetails(e));
-   }
-
-   public static ServerMessageAction message(final Severity severity, final String message,
-      final int timeout) {
-      return new ServerMessageAction(severity, message, timeout);
-   }
-
-   public static ServerMessageAction info(final String message, final int timeout) {
-      return new ServerMessageAction(Severity.INFO, message, timeout);
-   }
-
-   public static ServerMessageAction warn(final String message, final int timeout) {
-      return new ServerMessageAction(Severity.WARNING, message, timeout);
-   }
-
-   public static ServerMessageAction error(final String message, final int timeout) {
-      return new ServerMessageAction(Severity.ERROR, message, timeout);
-   }
-
-   public static ServerMessageAction error(final String message, final String details, final int timeout) {
-      return new ServerMessageAction(Severity.ERROR, message, details, timeout);
-   }
-
-   public static ServerMessageAction error(final String message, final Throwable cause, final int timeout) {
-      return new ServerMessageAction(Severity.ERROR, message, getDetails(cause), timeout);
-   }
-
-   public static ServerMessageAction error(final Exception exception, final int timeout) {
-      return error(getMessage(exception), getDetails(exception), timeout);
    }
 
    public static ServerMessageAction clear() {

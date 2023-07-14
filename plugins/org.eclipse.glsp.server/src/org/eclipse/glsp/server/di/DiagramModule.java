@@ -24,6 +24,7 @@ import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.actions.ActionHandlerRegistry;
 import org.eclipse.glsp.server.actions.CenterAction;
 import org.eclipse.glsp.server.actions.ClientActionHandler;
+import org.eclipse.glsp.server.actions.EndProgressAction;
 import org.eclipse.glsp.server.actions.ExportSVGAction;
 import org.eclipse.glsp.server.actions.FitToScreenAction;
 import org.eclipse.glsp.server.actions.SaveModelActionHandler;
@@ -35,8 +36,10 @@ import org.eclipse.glsp.server.actions.SetDirtyStateAction;
 import org.eclipse.glsp.server.actions.SetEditModeAction;
 import org.eclipse.glsp.server.actions.SetEditModeActionHandler;
 import org.eclipse.glsp.server.actions.SetViewportAction;
+import org.eclipse.glsp.server.actions.StartProgressAction;
 import org.eclipse.glsp.server.actions.TriggerEdgeCreationAction;
 import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;
+import org.eclipse.glsp.server.actions.UpdateProgressAction;
 import org.eclipse.glsp.server.di.scope.DiagramGlobalScope;
 import org.eclipse.glsp.server.di.scope.DiagramGlobalSingleton;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
@@ -75,6 +78,8 @@ import org.eclipse.glsp.server.features.navigation.SetResolvedNavigationTargetAc
 import org.eclipse.glsp.server.features.popup.PopupModelFactory;
 import org.eclipse.glsp.server.features.popup.RequestPopupModelActionHandler;
 import org.eclipse.glsp.server.features.popup.SetPopupModelAction;
+import org.eclipse.glsp.server.features.progress.DefaultProgressService;
+import org.eclipse.glsp.server.features.progress.ProgressService;
 import org.eclipse.glsp.server.features.sourcemodelwatcher.SourceModelChangedAction;
 import org.eclipse.glsp.server.features.sourcemodelwatcher.SourceModelWatcher;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
@@ -150,6 +155,7 @@ import com.google.inject.multibindings.Multibinder;
  * <li>{@link NavigationTargetProviderRegistry}
  * <li>{@link ContextEditValidator} as {@link Multibinder}
  * <li>{@link ContextEditValidatorRegistry}
+ * <li>{@link ProgressService}
  * <li>{@link PopupModelFactory} as {@link Optional}
  * <li>{@link LayoutEngine} as {@link Optional}
  * <li>{@link GraphExtension} as {@link Optional}
@@ -207,6 +213,7 @@ public abstract class DiagramModule extends GLSPModule {
       bind(ContextEditValidatorRegistry.class).to(bindContextEditValidatorRegistry()).in(Singleton.class);
 
       // Misc
+      bind(ProgressService.class).to(bindProgressService()).in(Singleton.class);
       bindOptionally(PopupModelFactory.class, bindPopupModelFactory());
       bindOptionally(LayoutEngine.class, bindLayoutEngine());
       bindOptionally(GraphExtension.class, bindGraphExtension());
@@ -283,16 +290,17 @@ public abstract class DiagramModule extends GLSPModule {
 
    protected void configureClientActions(final MultiBinding<Action> binding) {
       binding.add(CenterAction.class);
-      binding.add(ExportSVGAction.class);
       binding.add(DeleteMarkersAction.class);
+      binding.add(EndProgressAction.class);
+      binding.add(ExportSVGAction.class);
       binding.add(FitToScreenAction.class);
-      binding.add(SourceModelChangedAction.class);
-      binding.add(NavigateToTargetAction.class);
       binding.add(NavigateToExternalTargetAction.class);
+      binding.add(NavigateToTargetAction.class);
       binding.add(RequestBoundsAction.class);
       binding.add(SelectAction.class);
       binding.add(SelectAllAction.class);
       binding.add(ServerMessageAction.class);
+      binding.add(ServerStatusAction.class);
       binding.add(SetBoundsAction.class);
       binding.add(SetClipboardDataAction.class);
       binding.add(SetContextActions.class);
@@ -306,10 +314,12 @@ public abstract class DiagramModule extends GLSPModule {
       binding.add(SetResolvedNavigationTargetAction.class);
       binding.add(SetTypeHintsAction.class);
       binding.add(SetViewportAction.class);
-      binding.add(ServerStatusAction.class);
-      binding.add(TriggerNodeCreationAction.class);
+      binding.add(SourceModelChangedAction.class);
+      binding.add(StartProgressAction.class);
       binding.add(TriggerEdgeCreationAction.class);
+      binding.add(TriggerNodeCreationAction.class);
       binding.add(UpdateModelAction.class);
+      binding.add(UpdateProgressAction.class);
    }
 
    protected void configureActionHandlers(final MultiBinding<ActionHandler> binding) {
@@ -358,6 +368,10 @@ public abstract class DiagramModule extends GLSPModule {
 
    protected Class<? extends ContextEditValidatorRegistry> bindContextEditValidatorRegistry() {
       return DefaultContextEditValidatorRegistry.class;
+   }
+
+   protected Class<? extends ProgressService> bindProgressService() {
+      return DefaultProgressService.class;
    }
 
    protected Class<? extends PopupModelFactory> bindPopupModelFactory() {

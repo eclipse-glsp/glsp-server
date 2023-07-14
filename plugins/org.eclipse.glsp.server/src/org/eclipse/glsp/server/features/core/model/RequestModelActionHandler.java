@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2022 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -22,9 +22,10 @@ import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.di.DiagramModule;
+import org.eclipse.glsp.server.features.progress.ProgressMonitor;
+import org.eclipse.glsp.server.features.progress.ProgressService;
 import org.eclipse.glsp.server.features.sourcemodelwatcher.SourceModelWatcher;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.utils.ServerMessageUtil;
 import org.eclipse.glsp.server.utils.ServerStatusUtil;
 
 import com.google.inject.Inject;
@@ -54,29 +55,33 @@ public class RequestModelActionHandler extends AbstractActionHandler<RequestMode
    protected ModelSubmissionHandler modelSubmissionHandler;
 
    @Inject
+   protected ProgressService progressService;
+
+   @Inject
    protected GModelState modelState;
 
    @Override
    public List<Action> executeAction(final RequestModelAction action) {
       modelState.setClientOptions(action.getOptions());
 
-      notifyStartLoading();
+      ProgressMonitor monitor = notifyStartLoading();
       sourceModelStorage.loadSourceModel(action);
-      notifyFinishedLoading();
+      notifyFinishedLoading(monitor);
 
       sourceModelWatcher.ifPresent(watcher -> watcher.startWatching());
 
       return modelSubmissionHandler.submitModel();
    }
 
-   protected void notifyStartLoading() {
-      actionDispatcher.dispatch(ServerStatusUtil.info("Model loading in progress!"));
-      actionDispatcher.dispatch(ServerMessageUtil.info("Model loading in progress!"));
+   protected ProgressMonitor notifyStartLoading() {
+      String message = "Model loading in progress";
+      actionDispatcher.dispatch(ServerStatusUtil.info(message));
+      return progressService.start(message);
    }
 
-   protected void notifyFinishedLoading() {
+   protected void notifyFinishedLoading(final ProgressMonitor monitor) {
       actionDispatcher.dispatch(ServerStatusUtil.clear());
-      actionDispatcher.dispatch(ServerMessageUtil.clear());
+      monitor.end();
    }
 
 }

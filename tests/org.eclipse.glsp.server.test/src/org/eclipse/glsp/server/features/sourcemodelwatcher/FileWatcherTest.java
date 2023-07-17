@@ -145,12 +145,12 @@ class FileWatcherTest {
    }
 
    private void assertNoNotification() {
-      assertEquals(actionDispatcher.dispatchedActions.size(), 0);
+      assertEquals(0, actionDispatcher.dispatchedActions.size());
    }
 
-   private void assertNotifications(final int size) throws InterruptedException {
-      assertEquals(actionDispatcher.dispatchedActions.size(), size);
-      for (int i = 0; i < size; i++) {
+   private void assertNotifications(final int expectedNumberOfNotifications) throws InterruptedException {
+      assertEquals(expectedNumberOfNotifications, actionDispatcher.dispatchedActions.size());
+      for (int i = 0; i < expectedNumberOfNotifications; i++) {
          assertTrue(actionDispatcher.dispatchedActions.get(i) instanceof SourceModelChangedAction);
       }
    }

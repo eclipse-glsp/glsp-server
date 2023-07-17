@@ -26,7 +26,7 @@ public interface ProgressService {
     * @param message    Optional message to be shown in addition to the title. Can be <code>null</code>.
     * @param percentage Optional initial percentage (value range: 0 to 100) of the progress reporting. <code>-1</code>
     *                      if none.
-    * @returns a monitor to update and end the progress reporting later.
+    * @return a monitor to update and end the progress reporting later.
     */
    ProgressMonitor start(String title, String message, int percentage);
 
@@ -34,7 +34,7 @@ public interface ProgressService {
     * Start a progress reporting.
     *
     * @param title The title shown in the UI for the progress reporting.
-    * @returns a monitor to update and end the progress reporting later.
+    * @return a monitor to update and end the progress reporting later.
     */
    default ProgressMonitor start(final String title) {
       return this.start(title, null, -1);
@@ -45,7 +45,7 @@ public interface ProgressService {
     *
     * @param title   The title shown in the UI for the progress reporting.
     * @param message Message to be shown in addition to the title.
-    * @returns a monitor to update and end the progress reporting later.
+    * @return a monitor to update and end the progress reporting later.
     */
    default ProgressMonitor start(final String title, final String message) {
       return this.start(title, message, -1);
@@ -56,7 +56,7 @@ public interface ProgressService {
     *
     * @param title      The title shown in the UI for the progress reporting.
     * @param percentage Initial percentage (value range: 0 to 100) of the progress reporting.
-    * @returns a monitor to update and end the progress reporting later.
+    * @return a monitor to update and end the progress reporting later.
     */
    default ProgressMonitor start(final String title, final int percentage) {
       return this.start(title, null, percentage);

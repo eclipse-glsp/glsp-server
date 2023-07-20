@@ -18,6 +18,7 @@ package org.eclipse.glsp.server.features.core.model;
 import java.util.List;
 import java.util.Optional;
 
+import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
@@ -26,6 +27,7 @@ import org.eclipse.glsp.server.features.progress.ProgressMonitor;
 import org.eclipse.glsp.server.features.progress.ProgressService;
 import org.eclipse.glsp.server.features.sourcemodelwatcher.SourceModelWatcher;
 import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.utils.ClientOptionsUtil;
 import org.eclipse.glsp.server.utils.ServerStatusUtil;
 
 import com.google.inject.Inject;
@@ -64,11 +66,28 @@ public class RequestModelActionHandler extends AbstractActionHandler<RequestMode
    public List<Action> executeAction(final RequestModelAction action) {
       modelState.setClientOptions(action.getOptions());
 
+      boolean isReconnecting = ClientOptionsUtil.isReconnecting(action.getOptions());
+
       ProgressMonitor monitor = notifyStartLoading();
-      sourceModelStorage.loadSourceModel(action);
+      if (isReconnecting) {
+         GModelRoot oldModel = modelState.getRoot();
+         if (oldModel != null) {
+            // use current modelRoot of modelState and submit
+            modelState.updateRoot(oldModel);
+            // decrease revision by one, as each submit will increase it by one;
+            // the next save would produce warning that source model was changed otherwise
+            modelState.getRoot().setRevision(oldModel.getRevision() - 1);
+         } else {
+            sourceModelStorage.loadSourceModel(action);
+         }
+      } else {
+         sourceModelStorage.loadSourceModel(action);
+      }
       notifyFinishedLoading(monitor);
 
-      sourceModelWatcher.ifPresent(watcher -> watcher.startWatching());
+      if (!isReconnecting) {
+         sourceModelWatcher.ifPresent(watcher -> watcher.startWatching());
+      }
 
       return modelSubmissionHandler.submitModel();
    }

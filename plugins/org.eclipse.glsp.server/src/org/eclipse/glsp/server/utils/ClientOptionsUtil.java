@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -25,6 +25,7 @@ import java.util.Optional;
 public final class ClientOptionsUtil {
    public static final String DIAGRAM_TYPE = "diagramType";
    public static final String SOURCE_URI = "sourceUri";
+   public static final String IS_RECONNECTING = "isReconnecting";
    private static final String FILE_PREFIX = "file://";
 
    private ClientOptionsUtil() {}
@@ -35,11 +36,14 @@ public final class ClientOptionsUtil {
 
    public static Optional<String> getDiagramType(final Map<String, String> options) {
       return MapUtil.getValue(options, DIAGRAM_TYPE);
-
    }
 
    public static Optional<File> getSourceUriAsFile(final Map<String, String> options) {
       return MapUtil.getValue(options, SOURCE_URI).map(ClientOptionsUtil::getAsFile);
+   }
+
+   public static Boolean isReconnecting(final Map<String, String> options) {
+      return MapUtil.getBoolValue(options, IS_RECONNECTING);
    }
 
    public static String adaptUri(final String uri) {

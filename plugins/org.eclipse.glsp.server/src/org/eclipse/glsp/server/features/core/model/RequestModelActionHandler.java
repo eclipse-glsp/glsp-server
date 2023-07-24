@@ -70,16 +70,7 @@ public class RequestModelActionHandler extends AbstractActionHandler<RequestMode
 
       ProgressMonitor monitor = notifyStartLoading();
       if (isReconnecting) {
-         GModelRoot oldModel = modelState.getRoot();
-         if (oldModel != null) {
-            // use current modelRoot of modelState and submit
-            modelState.updateRoot(oldModel);
-            // decrease revision by one, as each submit will increase it by one;
-            // the next save would produce warning that source model was changed otherwise
-            modelState.getRoot().setRevision(oldModel.getRevision() - 1);
-         } else {
-            sourceModelStorage.loadSourceModel(action);
-         }
+         handleReconnect(action);
       } else {
          sourceModelStorage.loadSourceModel(action);
       }
@@ -90,6 +81,17 @@ public class RequestModelActionHandler extends AbstractActionHandler<RequestMode
       }
 
       return modelSubmissionHandler.submitModel();
+   }
+
+   protected void handleReconnect(final RequestModelAction action) {
+      GModelRoot oldModel = modelState.getRoot();
+      if (oldModel != null) {
+         // decrease revision by one, as each submit will increase it by one;
+         // the next save would produce warning that source model was changed otherwise
+         modelState.getRoot().setRevision(oldModel.getRevision() - 1);
+      } else {
+         sourceModelStorage.loadSourceModel(action);
+      }
    }
 
    protected ProgressMonitor notifyStartLoading() {

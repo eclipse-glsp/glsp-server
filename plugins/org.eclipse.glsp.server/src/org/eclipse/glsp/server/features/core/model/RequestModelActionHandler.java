@@ -80,7 +80,7 @@ public class RequestModelActionHandler extends AbstractActionHandler<RequestMode
          sourceModelWatcher.ifPresent(watcher -> watcher.startWatching());
       }
 
-      return modelSubmissionHandler.submitModel();
+      return modelSubmissionHandler.submitInitialModel(action);
    }
 
    protected void handleReconnect(final RequestModelAction action) {

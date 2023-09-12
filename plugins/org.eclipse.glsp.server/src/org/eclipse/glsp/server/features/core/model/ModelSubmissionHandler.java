@@ -27,8 +27,8 @@ import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.actions.SetDirtyStateAction;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
 import org.eclipse.glsp.server.features.validation.Marker;
-import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.features.validation.MarkersReason;
+import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.features.validation.SetMarkersAction;
 import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.layout.ServerLayoutKind;
@@ -37,6 +37,15 @@ import org.eclipse.glsp.server.model.GModelState;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+/**
+ * Helper class that provides utility methods to handle model updates i.e.
+ * submit a new model to the client. In addition, to the core model update action this class
+ * also takes care of related behavior like dirty state handling, validation and client/server side layouting.
+ * Note that the submissions handler is only responsible for deriving the set of actions that comprise a model update
+ * but does not actually dispatch them. The returned actions should be either manually dispatched
+ * to the {@link ActionDispatcher}, or simply returned as the result of an
+ * {@link ActionHandler#execute(Action)} method.
+ */
 @Singleton
 public class ModelSubmissionHandler {
 
@@ -55,10 +64,36 @@ public class ModelSubmissionHandler {
    @Inject
    protected Optional<ModelValidator> validator;
 
-   private final Object modelLock = new Object();
+   protected final Object modelLock = new Object();
+   protected Optional<RequestModelAction> requestModelAction = Optional.empty();
 
    /**
-    * Returns a list of actions to update the client-side model, based on the specified <code>modelState</code>.
+    * Returns a list of actions to submit the initial revision of the client-side model, based on the injected
+    * {@link GModelState}. Typically this method is invoked by the {@link RequestModelActionHandler} when the diagram
+    * is (re)loaded.
+    * <p>
+    * These actions are not processed by this {@link ModelSubmissionHandler}, but should be either manually dispatched
+    * to the {@link ActionDispatcher}, or simply returned as the result of an
+    * {@link ActionHandler#execute(Action)} method.
+    * </p>
+    *
+    * @param requestAction The {@link RequestModelAction} that triggere the initial model update
+    * @return A list of actions to be processed in order to submit the intial model.
+    *
+    */
+   public List<Action> submitInitialModel(final RequestModelAction requestAction) {
+      /*
+       * In the default update action flow a `RequestModelAction` does not directly trigger a `SetModelAction` response
+       * (RequestModelAction (C) -> RequestBoundsAction (S) -> ComputedBoundsAction (C) -> SetModelACtion (S)
+       * Therefore we temporarily store the action later retrival
+       */
+      this.requestModelAction = Optional.of(requestAction);
+      return submitModel();
+
+   }
+
+   /**
+    * Returns a list of actions to update the client-side model, based on the injected {@link GModelState}
     * <p>
     * These actions are not processed by this {@link ModelSubmissionHandler}, but should be either manually dispatched
     * to the {@link ActionDispatcher}, or simply returned as the result of an
@@ -70,7 +105,9 @@ public class ModelSubmissionHandler {
     */
    public List<Action> submitModel(final String reason) {
       modelFactory.createGModel();
-      modelState.getRoot().setRevision(modelState.getRoot().getRevision() + 1);
+      int revision = this.requestModelAction.isPresent() ? 0 : this.modelState.getRoot().getRevision() + 1;
+      modelState.getRoot().setRevision(revision);
+
       boolean needsClientLayout = diagramConfiguration.needsClientLayout();
       if (needsClientLayout) {
          synchronized (modelLock) {
@@ -107,8 +144,10 @@ public class ModelSubmissionHandler {
       if (diagramConfiguration.getLayoutKind() == ServerLayoutKind.AUTOMATIC && layoutEngine.isPresent()) {
          layoutEngine.get().layout();
       }
-      Action modelAction = gModel.getRevision() == 0 ? new SetModelAction(gModel)
+      Action modelAction = this.requestModelAction.isPresent()
+         ? createSetModeAction(gModel)
          : new UpdateModelAction(gModel, diagramConfiguration.animatedUpdate());
+
       synchronized (modelLock) {
          List<Action> result = new ArrayList<>();
          result.add(modelAction);
@@ -126,6 +165,14 @@ public class ModelSubmissionHandler {
 
    public List<Action> submitModelDirectly() {
       return submitModelDirectly(null);
+   }
+
+   protected SetModelAction createSetModeAction(final GModelRoot newRoot) {
+      String requestId = this.requestModelAction.map(action -> action.getRequestId()).orElse("");
+      SetModelAction response = new SetModelAction(newRoot);
+      response.setResponseId(requestId);
+      this.requestModelAction = Optional.empty();
+      return response;
    }
 
    public synchronized Object getModelLock() { return modelLock; }

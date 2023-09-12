@@ -27,6 +27,7 @@ import org.eclipse.glsp.server.actions.ClientActionHandler;
 import org.eclipse.glsp.server.actions.EndProgressAction;
 import org.eclipse.glsp.server.actions.ExportSVGAction;
 import org.eclipse.glsp.server.actions.FitToScreenAction;
+import org.eclipse.glsp.server.actions.RejectAction;
 import org.eclipse.glsp.server.actions.SaveModelActionHandler;
 import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.actions.SelectAllAction;
@@ -296,6 +297,7 @@ public abstract class DiagramModule extends GLSPModule {
       binding.add(FitToScreenAction.class);
       binding.add(NavigateToExternalTargetAction.class);
       binding.add(NavigateToTargetAction.class);
+      binding.add(RejectAction.class);
       binding.add(RequestBoundsAction.class);
       binding.add(SelectAction.class);
       binding.add(SelectAllAction.class);

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019-2022 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -39,10 +39,18 @@ public class ResponseAction extends Action {
     * @return given response action with id set if applicable
     */
    public static Action respond(final Action request, final Action response) {
-      if (request instanceof RequestAction<?>) {
+      if (request instanceof RequestAction<?> && !(response instanceof RejectAction)) {
          GenericsUtil.asActualTypeArgument(request.getClass(), ResponseAction.class, response)
             .ifPresent(matchingResponse -> matchingResponse.setResponseId(((RequestAction<?>) request).getRequestId()));
       }
       return response;
+   }
+
+   public static RejectAction reject(final RequestAction<?> request, final String message) {
+      return new RejectAction(request.getRequestId(), message);
+   }
+
+   public static RejectAction reject(final RequestAction<?> request, final String message, final String detail) {
+      return new RejectAction(request.getRequestId(), message, detail);
    }
 }

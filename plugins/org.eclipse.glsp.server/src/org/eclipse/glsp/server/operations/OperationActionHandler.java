@@ -24,7 +24,7 @@ import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.SetDirtyStateAction;
 import org.eclipse.glsp.server.features.core.model.ModelSubmissionHandler;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.utils.ServerMessageUtil;
+import org.eclipse.glsp.server.utils.MessageActionUtil;
 
 import com.google.inject.Inject;
 
@@ -47,7 +47,7 @@ public class OperationActionHandler extends AbstractActionHandler<Operation> {
    @Override
    public List<Action> executeAction(final Operation operation) {
       if (modelState.isReadonly()) {
-         return listOf(ServerMessageUtil
+         return listOf(MessageActionUtil
             .warn("Server is in readonly-mode! Could not execute operation: " + operation.getKind()));
       }
       return executeOperation(operation);

@@ -15,47 +15,41 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.actions;
 
-import java.util.Optional;
-
-import org.eclipse.glsp.server.types.ServerStatus;
 import org.eclipse.glsp.server.types.Severity;
 
 /**
- * Instructs the client to show a notification message to the user.
+ * Sent by the server to the client to notify it about a server status.
  */
-public class ServerMessageAction extends Action {
+public class StatusAction extends Action {
+   public static final String KIND = "status";
+   private static final int NO_TIMEOUT = -1;
 
-   public static final String KIND = "serverMessage";
+   private int timeout;
 
    private String severity;
    private String message;
-   private String details;
 
-   public ServerMessageAction() {
+   public StatusAction() {
       super(KIND);
    }
 
-   public ServerMessageAction(final Severity severity, final String message) {
-      this(severity, message, null);
-   }
-
-   public ServerMessageAction(final ServerStatus status) {
-      this(status.getSeverity(), status.getMessage(), status.getDetails());
-   }
-
-   public ServerMessageAction(final Severity severity, final String message, final String details) {
+   public StatusAction(final Severity severity, final String message) {
       this();
       this.severity = Severity.toString(severity);
       this.message = message;
-      this.details = details;
+      this.timeout = NO_TIMEOUT;
+   }
+
+   public StatusAction(final Severity severity, final String message, final int timeout) {
+      this(severity, message);
+      this.timeout = timeout;
    }
 
    public String getSeverity() { return severity; }
 
    public String getMessage() { return message; }
 
-   public Optional<String> getDetails() { return Optional.ofNullable(details); }
+   public int getTimeout() { return timeout; }
 
-   public void setDetails(final String details) { this.details = details; }
-
+   public void setTimeout(final int timeout) { this.timeout = timeout; }
 }

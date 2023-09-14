@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2022 EclipseSource and others.
+ * Copyright (c) 2020-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -26,6 +26,7 @@ import java.util.stream.Stream;
 import org.eclipse.glsp.server.disposable.Disposable;
 import org.eclipse.glsp.server.protocol.GLSPServer;
 import org.eclipse.glsp.server.protocol.GLSPServerListener;
+import org.eclipse.glsp.server.protocol.InitializeClientSessionParameters;
 import org.eclipse.glsp.server.session.ClientSession;
 import org.eclipse.glsp.server.session.ClientSessionFactory;
 import org.eclipse.glsp.server.session.ClientSessionListener;
@@ -49,8 +50,9 @@ public class DefaultClientSessionManager extends Disposable implements ClientSes
    }
 
    @Override
-   public synchronized ClientSession getOrCreateClientSession(final String clientSessionId,
-      final String diagramType) {
+   public synchronized ClientSession getOrCreateClientSession(final InitializeClientSessionParameters params) {
+      String clientSessionId = params.getClientSessionId();
+      String diagramType = params.getDiagramType();
       ClientSession session = clientSessions.get(clientSessionId);
       if (session != null) {
          if (!session.getDiagramType().equals(diagramType)) {
@@ -62,7 +64,7 @@ public class DefaultClientSessionManager extends Disposable implements ClientSes
          return session;
       }
 
-      ClientSession newSession = sessionFactory.create(clientSessionId, diagramType);
+      ClientSession newSession = sessionFactory.create(params);
       clientSessions.put(clientSessionId, newSession);
       getListenersToNotifiy(newSession).forEach(listener -> listener.sessionCreated(newSession));
       return newSession;

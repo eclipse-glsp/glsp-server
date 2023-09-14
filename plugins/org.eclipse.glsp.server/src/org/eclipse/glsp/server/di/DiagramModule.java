@@ -22,73 +22,40 @@ import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.actions.ActionHandlerRegistry;
-import org.eclipse.glsp.server.actions.CenterAction;
-import org.eclipse.glsp.server.actions.ClientActionHandler;
-import org.eclipse.glsp.server.actions.EndProgressAction;
-import org.eclipse.glsp.server.actions.ExportSVGAction;
-import org.eclipse.glsp.server.actions.FitToScreenAction;
-import org.eclipse.glsp.server.actions.RejectAction;
 import org.eclipse.glsp.server.actions.SaveModelActionHandler;
-import org.eclipse.glsp.server.actions.SelectAction;
-import org.eclipse.glsp.server.actions.SelectAllAction;
-import org.eclipse.glsp.server.actions.ServerMessageAction;
-import org.eclipse.glsp.server.actions.ServerStatusAction;
-import org.eclipse.glsp.server.actions.SetDirtyStateAction;
-import org.eclipse.glsp.server.actions.SetEditModeAction;
 import org.eclipse.glsp.server.actions.SetEditModeActionHandler;
-import org.eclipse.glsp.server.actions.SetViewportAction;
-import org.eclipse.glsp.server.actions.StartProgressAction;
-import org.eclipse.glsp.server.actions.TriggerEdgeCreationAction;
-import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;
-import org.eclipse.glsp.server.actions.UpdateProgressAction;
 import org.eclipse.glsp.server.di.scope.DiagramGlobalScope;
 import org.eclipse.glsp.server.di.scope.DiagramGlobalSingleton;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
 import org.eclipse.glsp.server.diagram.RequestTypeHintsActionHandler;
 import org.eclipse.glsp.server.diagram.ServerConfigurationContribution;
-import org.eclipse.glsp.server.diagram.SetTypeHintsAction;
-import org.eclipse.glsp.server.features.clipboard.SetClipboardDataAction;
 import org.eclipse.glsp.server.features.commandpalette.CommandPaletteActionProvider;
 import org.eclipse.glsp.server.features.contextactions.ContextActionsProvider;
 import org.eclipse.glsp.server.features.contextactions.ContextActionsProviderRegistry;
 import org.eclipse.glsp.server.features.contextactions.RequestContextActionsHandler;
-import org.eclipse.glsp.server.features.contextactions.SetContextActions;
 import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
 import org.eclipse.glsp.server.features.core.model.ComputedBoundsActionHandler;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
-import org.eclipse.glsp.server.features.core.model.RequestBoundsAction;
 import org.eclipse.glsp.server.features.core.model.RequestModelActionHandler;
-import org.eclipse.glsp.server.features.core.model.SetBoundsAction;
-import org.eclipse.glsp.server.features.core.model.SetModelAction;
 import org.eclipse.glsp.server.features.core.model.SourceModelStorage;
-import org.eclipse.glsp.server.features.core.model.UpdateModelAction;
 import org.eclipse.glsp.server.features.directediting.ContextEditValidator;
 import org.eclipse.glsp.server.features.directediting.ContextEditValidatorRegistry;
 import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
 import org.eclipse.glsp.server.features.directediting.RequestEditValidationHandler;
-import org.eclipse.glsp.server.features.directediting.SetEditValidationResultAction;
-import org.eclipse.glsp.server.features.navigation.NavigateToExternalTargetAction;
-import org.eclipse.glsp.server.features.navigation.NavigateToTargetAction;
 import org.eclipse.glsp.server.features.navigation.NavigationTargetProvider;
 import org.eclipse.glsp.server.features.navigation.NavigationTargetProviderRegistry;
 import org.eclipse.glsp.server.features.navigation.NavigationTargetResolver;
 import org.eclipse.glsp.server.features.navigation.RequestNavigationTargetsActionHandler;
 import org.eclipse.glsp.server.features.navigation.ResolveNavigationTargetActionHandler;
-import org.eclipse.glsp.server.features.navigation.SetNavigationTargetsAction;
-import org.eclipse.glsp.server.features.navigation.SetResolvedNavigationTargetAction;
 import org.eclipse.glsp.server.features.popup.PopupModelFactory;
 import org.eclipse.glsp.server.features.popup.RequestPopupModelActionHandler;
-import org.eclipse.glsp.server.features.popup.SetPopupModelAction;
 import org.eclipse.glsp.server.features.progress.DefaultProgressService;
 import org.eclipse.glsp.server.features.progress.ProgressService;
-import org.eclipse.glsp.server.features.sourcemodelwatcher.SourceModelChangedAction;
 import org.eclipse.glsp.server.features.sourcemodelwatcher.SourceModelWatcher;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.features.undoredo.UndoRedoActionHandler;
-import org.eclipse.glsp.server.features.validation.DeleteMarkersAction;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.features.validation.RequestMarkersHandler;
-import org.eclipse.glsp.server.features.validation.SetMarkersAction;
 import org.eclipse.glsp.server.gmodel.GModelCutOperationHandler;
 import org.eclipse.glsp.server.gson.GraphGsonConfigurationFactory;
 import org.eclipse.glsp.server.internal.actions.DefaultActionDispatcher;
@@ -174,6 +141,7 @@ public abstract class DiagramModule extends GLSPModule {
       bindDiagramType();
       bindClientId();
       bindDiagramGobalScope();
+
       // Configurations
       bind(DiagramConfiguration.class).to(bindDiagramConfiguration()).in(DiagramGlobalSingleton.class);
       bind(ServerConfigurationContribution.class).to(bindServerConfigurationContribution()).in(Singleton.class);
@@ -198,7 +166,6 @@ public abstract class DiagramModule extends GLSPModule {
 
       // Action & Operation related bindings
       bind(ActionDispatcher.class).to(bindActionDispatcher()).in(Singleton.class);
-      configure(MultiBinding.create(Action.class).setAnnotationName(CLIENT_ACTIONS), this::configureClientActions);
       configure(MultiBinding.create(ActionHandler.class), this::configureActionHandlers);
       bind(ActionHandlerRegistry.class).to(bindActionHandlerRegistry());
       configure(MultiBinding.create(new TypeLiteral<OperationHandler<?>>() {}), this::configureOperationHandlers);
@@ -289,43 +256,7 @@ public abstract class DiagramModule extends GLSPModule {
       return DefaultActionDispatcher.class;
    }
 
-   protected void configureClientActions(final MultiBinding<Action> binding) {
-      binding.add(CenterAction.class);
-      binding.add(DeleteMarkersAction.class);
-      binding.add(EndProgressAction.class);
-      binding.add(ExportSVGAction.class);
-      binding.add(FitToScreenAction.class);
-      binding.add(NavigateToExternalTargetAction.class);
-      binding.add(NavigateToTargetAction.class);
-      binding.add(RejectAction.class);
-      binding.add(RequestBoundsAction.class);
-      binding.add(SelectAction.class);
-      binding.add(SelectAllAction.class);
-      binding.add(ServerMessageAction.class);
-      binding.add(ServerStatusAction.class);
-      binding.add(SetBoundsAction.class);
-      binding.add(SetClipboardDataAction.class);
-      binding.add(SetContextActions.class);
-      binding.add(SetDirtyStateAction.class);
-      binding.add(SetEditModeAction.class);
-      binding.add(SetEditValidationResultAction.class);
-      binding.add(SetMarkersAction.class);
-      binding.add(SetModelAction.class);
-      binding.add(SetNavigationTargetsAction.class);
-      binding.add(SetPopupModelAction.class);
-      binding.add(SetResolvedNavigationTargetAction.class);
-      binding.add(SetTypeHintsAction.class);
-      binding.add(SetViewportAction.class);
-      binding.add(SourceModelChangedAction.class);
-      binding.add(StartProgressAction.class);
-      binding.add(TriggerEdgeCreationAction.class);
-      binding.add(TriggerNodeCreationAction.class);
-      binding.add(UpdateModelAction.class);
-      binding.add(UpdateProgressAction.class);
-   }
-
    protected void configureActionHandlers(final MultiBinding<ActionHandler> binding) {
-      binding.add(ClientActionHandler.class);
       binding.add(DefaultActionDispatcher.class);
       binding.add(OperationActionHandler.class);
       binding.add(RequestModelActionHandler.class);

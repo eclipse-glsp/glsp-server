@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2022 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -34,6 +34,7 @@ import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.actions.ActionHandlerRegistry;
+import org.eclipse.glsp.server.actions.ClientActionForwarder;
 import org.eclipse.glsp.server.actions.ResponseAction;
 import org.eclipse.glsp.server.di.ClientId;
 import org.eclipse.glsp.server.disposable.Disposable;
@@ -63,6 +64,9 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
    @Inject
    @ClientId
    protected String clientId;
+
+   @Inject
+   protected ClientActionForwarder clientActionForwarder;
 
    protected final String name;
 
@@ -183,8 +187,9 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
    }
 
    protected List<CompletableFuture<Void>> runAction(final Action action) {
+      boolean handledOnClient = clientActionForwarder.handle(action);
       final List<ActionHandler> actionHandlers = actionHandlerRegistry.get(action);
-      if (actionHandlers.isEmpty()) {
+      if (!handledOnClient && actionHandlers.isEmpty()) {
          throw new IllegalArgumentException("No handler registered for action: " + action);
       }
 

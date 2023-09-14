@@ -21,44 +21,44 @@ import java.io.StringWriter;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.eclipse.glsp.server.actions.ServerMessageAction;
+import org.eclipse.glsp.server.actions.MessageAction;
 import org.eclipse.glsp.server.types.Severity;
 
-public final class ServerMessageUtil {
-   private static Logger LOGGER = LogManager.getLogger(ServerMessageUtil.class);
+public final class MessageActionUtil {
+   private static Logger LOGGER = LogManager.getLogger(MessageActionUtil.class);
 
-   private ServerMessageUtil() {}
+   private MessageActionUtil() {}
 
-   public static ServerMessageAction message(final Severity severity, final String message) {
-      return new ServerMessageAction(severity, message);
+   public static MessageAction message(final Severity severity, final String message) {
+      return new MessageAction(severity, message);
    }
 
-   public static ServerMessageAction info(final String message) {
-      return new ServerMessageAction(Severity.INFO, message);
+   public static MessageAction info(final String message) {
+      return new MessageAction(Severity.INFO, message);
    }
 
-   public static ServerMessageAction warn(final String message) {
-      return new ServerMessageAction(Severity.WARNING, message);
+   public static MessageAction warn(final String message) {
+      return new MessageAction(Severity.WARNING, message);
    }
 
-   public static ServerMessageAction error(final String message) {
-      return new ServerMessageAction(Severity.ERROR, message);
+   public static MessageAction error(final String message) {
+      return new MessageAction(Severity.ERROR, message);
    }
 
-   public static ServerMessageAction error(final String message, final String details) {
-      return new ServerMessageAction(Severity.ERROR, message, details);
+   public static MessageAction error(final String message, final String details) {
+      return new MessageAction(Severity.ERROR, message, details);
    }
 
-   public static ServerMessageAction error(final String message, final Throwable cause) {
-      return new ServerMessageAction(Severity.ERROR, message, getDetails(cause));
+   public static MessageAction error(final String message, final Throwable cause) {
+      return new MessageAction(Severity.ERROR, message, getDetails(cause));
    }
 
-   public static ServerMessageAction error(final Exception e) {
+   public static MessageAction error(final Exception e) {
       return error(getMessage(e), getDetails(e));
    }
 
-   public static ServerMessageAction clear() {
-      return new ServerMessageAction(Severity.NONE, "");
+   public static MessageAction clear() {
+      return new MessageAction(Severity.NONE, "");
    }
 
    private static String getDetails(final Throwable throwable) {

@@ -20,8 +20,6 @@ import static org.eclipse.glsp.server.di.ClientSessionModule.CLIENT_ACTIONS;
 import java.util.Set;
 
 import org.eclipse.glsp.server.di.ClientId;
-import org.eclipse.glsp.server.di.DiagramType;
-import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.protocol.GLSPClient;
 
 import com.google.inject.Inject;
@@ -40,15 +38,8 @@ public class ClientActionForwarder {
    protected Provider<GLSPClient> client;
 
    @Inject
-   protected GModelState modelState;
-
-   @Inject
    @ClientId
    protected String clientId;
-
-   @Inject
-   @DiagramType
-   protected String diagramType;
 
    @Inject
    @Named(CLIENT_ACTIONS)
@@ -56,12 +47,12 @@ public class ClientActionForwarder {
 
    /**
     * Processes the given action and checks wether it is a
-    * `clientAction` i.e. andaction that should be forwared to
+    * `clientAction` i.e. an action that should be forwarded to
     * the client to be handled there. If the check is successful
     * the action is wrapped in an {@link ActionMessage} and sent to the client.
     *
     * @param action The action to check and forward
-    * @return `true` if the action was forwared to the client, `false` otherwise
+    * @return `true` if the action was forwarded to the client, `false` otherwise
     */
    public boolean handle(final Action action) {
       if (shouldForwardToClient(action)) {

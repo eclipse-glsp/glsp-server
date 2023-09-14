@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2021-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,9 +15,10 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.protocol;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * POJO providing all arguments required for a
@@ -35,6 +36,12 @@ public class InitializeClientSessionParameters {
     */
    private String diagramType;
 
+   /*
+    * The set of action kinds that can be handled by the client.
+    * Used by the server to know which dispatched actions should be forwarded to the client.
+    */
+   private List<String> clientActionKinds;
+
    /**
     * Additional custom arguments.
     */
@@ -42,6 +49,22 @@ public class InitializeClientSessionParameters {
 
    public InitializeClientSessionParameters() {
       this.args = new HashMap<>();
+      this.clientActionKinds = new ArrayList<>();
+   }
+
+   public InitializeClientSessionParameters(final String clientSessionId, final String diagramType,
+      final List<String> clientActionKinds) {
+      this();
+      this.clientSessionId = clientSessionId;
+      this.diagramType = diagramType;
+      this.clientActionKinds = clientActionKinds;
+   }
+
+   public InitializeClientSessionParameters(final String clientSessionId, final String diagramType,
+      final List<String> clientActionKinds,
+      final Map<String, String> args) {
+      this(clientSessionId, diagramType, clientActionKinds);
+      this.args = args;
    }
 
    public String getClientSessionId() { return clientSessionId; }
@@ -56,12 +79,16 @@ public class InitializeClientSessionParameters {
 
    public void setArgs(final Map<String, String> args) { this.args = args; }
 
+   public List<String> getClientActionKinds() { return clientActionKinds; }
+
+   public void setClientActionKinds(final List<String> clientActionKinds) {
+      this.clientActionKinds = clientActionKinds;
+   }
+
    @Override
    public String toString() {
-      String argsString = args.entrySet().stream().map(entry -> entry.getKey() + "=" + entry.getValue())
-         .collect(Collectors.joining(";"));
       return "InitializeClientSessionParameters [clientSessionId=" + clientSessionId + ", diagramType=" + diagramType
-         + ", args={ " + argsString + " } ]";
+         + ", clientActionKinds=" + clientActionKinds + ", args=" + args + "]";
    }
 
 }

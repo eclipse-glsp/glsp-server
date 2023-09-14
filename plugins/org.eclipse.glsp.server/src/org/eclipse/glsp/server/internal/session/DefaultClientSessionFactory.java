@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2021-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -21,10 +21,11 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.glsp.server.actions.ActionDispatcher;
-import org.eclipse.glsp.server.di.ClientIdModule;
+import org.eclipse.glsp.server.di.ClientSessionModule;
 import org.eclipse.glsp.server.di.ServerModule;
 import org.eclipse.glsp.server.di.scope.DiagramGlobalScope;
 import org.eclipse.glsp.server.di.scope.DiagramGlobalScopeModule;
+import org.eclipse.glsp.server.protocol.InitializeClientSessionParameters;
 import org.eclipse.glsp.server.session.ClientSession;
 import org.eclipse.glsp.server.session.ClientSessionFactory;
 import org.eclipse.glsp.server.utils.ModuleUtil;
@@ -47,10 +48,12 @@ public class DefaultClientSessionFactory implements ClientSessionFactory {
    protected Map<String, Module> diagramModules;
 
    @Override
-   public ClientSession create(final String clientSessionId, final String diagramType) {
+   public ClientSession create(final InitializeClientSessionParameters params) {
+      String diagramType = params.getDiagramType();
+      String clientSessionId = params.getClientSessionId();
       Module diagramModule = getOrThrow(Optional.of(diagramModules.get(diagramType)),
          "Could not retrieve module configuration for diagram type: " + diagramType);
-      Module clientIdModule = new ClientIdModule(clientSessionId);
+      Module clientIdModule = new ClientSessionModule(clientSessionId, params.getClientActionKinds());
       Module diagramScopeModule = new DiagramGlobalScopeModule(diagramGlobalScope);
 
       Module clientSessionModule = ModuleUtil.mixin(diagramModule, clientIdModule, diagramScopeModule);

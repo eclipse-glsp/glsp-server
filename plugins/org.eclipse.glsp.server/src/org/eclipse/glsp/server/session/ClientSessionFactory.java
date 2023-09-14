@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2021-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -16,6 +16,7 @@
 package org.eclipse.glsp.server.session;
 
 import org.eclipse.glsp.server.actions.ActionDispatcher;
+import org.eclipse.glsp.server.protocol.InitializeClientSessionParameters;
 
 /**
  * Handles the construction of new {@link ClientSession}. A client session factory has to know
@@ -25,11 +26,10 @@ import org.eclipse.glsp.server.actions.ActionDispatcher;
 public interface ClientSessionFactory {
 
    /**
-    * Create a new {@link ClientSession} based on the given client session id and diagram type.
+    * Create a new {@link ClientSession} based on the given initalize parameters.
     *
-    * @param clientSessionId The client session id.
-    * @param diagramType     The diagram type.
+    * @param params The client session initialize parameters.
     * @return A new instance of {@link ClientSession} that correlates to the given input parameters.
     */
-   ClientSession create(String clientSessionId, String diagramType);
+   ClientSession create(InitializeClientSessionParameters params);
 }

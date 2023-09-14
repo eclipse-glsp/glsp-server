@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2021 EclipseSource and others.
+ * Copyright (c) 2020-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.glsp.server.disposable.IDisposable;
+import org.eclipse.glsp.server.protocol.InitializeClientSessionParameters;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
 /**
@@ -27,17 +28,15 @@ import org.eclipse.glsp.server.types.GLSPServerException;
 public interface ClientSessionManager extends IDisposable {
 
    /**
-    * Retries an existing (or created a new) {@link ClientSession} for the given id and diagram type.
+    * Retries an existing (or creates a new) {@link ClientSession} for the given initalize parameters.
     * If a new session has been created all {@link ClientSessionListener}s are notified via the
     * {@link ClientSessionListener#sessionCreated(ClientSession)} method.
     *
-    * @param clientSessionId The client session id (i.e. clientId).
-    * @param diagramType     The diagram type.
-    * @return The existing or newly constructed {@link ClientSession}.
+    * @param parms The initialize parameters
     *
     * @throws GLSPServerException if another session with matching client id but different diagram type already exists.
     */
-   ClientSession getOrCreateClientSession(String clientSessionId, String diagramType);
+   ClientSession getOrCreateClientSession(InitializeClientSessionParameters params);
 
    /**
     * Retrieve an existing (i.e. currently active) {@link ClientSession} for the given client session id.

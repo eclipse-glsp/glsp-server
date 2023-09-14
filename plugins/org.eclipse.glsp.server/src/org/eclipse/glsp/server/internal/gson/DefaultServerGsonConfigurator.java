@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2022 EclipseSource and others.
+ * Copyright (c) 2022-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -17,6 +17,7 @@ package org.eclipse.glsp.server.internal.gson;
 
 import static org.eclipse.glsp.server.di.ServerModule.DIAGRAM_MODULES;
 
+import java.util.Collections;
 import java.util.Map;
 
 import org.eclipse.glsp.graph.gson.EnumTypeAdapter;
@@ -25,6 +26,7 @@ import org.eclipse.glsp.server.actions.ActionRegistry;
 import org.eclipse.glsp.server.diagram.ServerConfigurationContribution;
 import org.eclipse.glsp.server.gson.ActionTypeAdapter;
 import org.eclipse.glsp.server.gson.ServerGsonConfigurator;
+import org.eclipse.glsp.server.protocol.InitializeClientSessionParameters;
 import org.eclipse.glsp.server.session.ClientSession;
 import org.eclipse.glsp.server.session.ClientSessionManager;
 
@@ -56,7 +58,9 @@ public class DefaultServerGsonConfigurator implements ServerGsonConfigurator {
       // temporary session can be disposed
       diagramModules.keySet().forEach(diagramType -> {
          String sessionId = "TempServerConfigurationSession_" + diagramType;
-         ClientSession session = sessionManager.getOrCreateClientSession(sessionId, diagramType);
+         InitializeClientSessionParameters params = new InitializeClientSessionParameters(sessionId, diagramType,
+            Collections.emptyList());
+         ClientSession session = sessionManager.getOrCreateClientSession(params);
          ServerConfigurationContribution contribution = session.getInjector()
             .getInstance(ServerConfigurationContribution.class);
          contribution.configure(actionRegistry);

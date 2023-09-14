@@ -27,16 +27,12 @@ import org.eclipse.glsp.server.internal.registry.MapRegistry;
 public class DefaultActionRegistry extends MapRegistry<String, Map<String, Class<? extends Action>>>
    implements ActionRegistry {
 
-   protected Map<String, List<String>> serverHandledActionKinds = new HashMap<>();
-
    @Override
-   public boolean register(final String diagramType, final String actionKind, final Class<? extends Action> actionClass,
-      final boolean isServerAction) {
+   public boolean register(final String diagramType, final String actionKind,
+      final Class<? extends Action> actionClass) {
       Map<String, Class<? extends Action>> actionMap = elements.computeIfAbsent(diagramType, k -> new HashMap<>());
       Class<? extends Action> existing = actionMap.putIfAbsent(actionKind, actionClass);
-      if (existing == null && isServerAction) {
-         serverHandledActionKinds.computeIfAbsent(diagramType, k -> new ArrayList<>()).add(actionKind);
-      } else if (existing != null && existing != actionClass) {
+      if (existing != null && existing != actionClass) {
          throw new IllegalArgumentException(
             String.format(
                "Conflicting registration! Another class is already registered for action kind '%s'. Conflicting classes: '%s', '%s'",
@@ -46,28 +42,25 @@ public class DefaultActionRegistry extends MapRegistry<String, Map<String, Class
    }
 
    @Override
-   public boolean register(final String diagramType, final Map<String, Class<? extends Action>> actionMap,
-      final boolean isServerAction) {
+   public boolean register(final String diagramType, final Map<String, Class<? extends Action>> actionMap) {
       return actionMap.entrySet().stream()
-         .allMatch(entry -> register(diagramType, entry.getKey(), entry.getValue(), isServerAction));
+         .allMatch(entry -> register(diagramType, entry.getKey(), entry.getValue()));
    }
 
    @Override
-   public boolean deregister(final String diagramType) {
-      boolean deregistered = super.deregister(diagramType);
-      if (deregistered) {
-         serverHandledActionKinds.remove(diagramType);
-      }
-      return deregistered;
+   public List<String> getHandledActionKinds(final String diagramType) {
+      return get(diagramType).map(map -> new ArrayList<>(map.keySet()))
+         .orElse(new ArrayList<>());
    }
 
    @Override
-   public List<String> getServerHandledAction(final String diagramType) {
-      return serverHandledActionKinds.computeIfAbsent(diagramType, k -> new ArrayList<>());
+   public Map<String, List<String>> getHandledActionKinds() {
+      Map<String, List<String>> result = new HashMap<>();
+      keys().forEach(diagramType -> {
+         result.put(diagramType, getHandledActionKinds(diagramType));
+      });
+      return result;
    }
-
-   @Override
-   public Map<String, List<String>> getServerHandledActions() { return serverHandledActionKinds; }
 
    @Override
    public Map<String, Class<? extends Action>> getAllAsMap() {

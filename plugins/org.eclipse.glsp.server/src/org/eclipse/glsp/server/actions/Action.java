@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -14,6 +14,8 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 package org.eclipse.glsp.server.actions;
+
+import org.eclipse.glsp.server.protocol.GLSPServer;
 
 /**
  * Java-implementation of the `Action` interface. An action is a declarative description of a behavior that
@@ -31,12 +33,23 @@ public abstract class Action {
     */
    private final String kind;
 
+   /**
+    * Optional boolean flag that marks actions that have
+    * been received from the client. Is set automatically by the {@link GLSPServer}
+    * for every received action.
+    */
+   private boolean receivedFromClient;
+
    public Action(final String kind) {
       super();
       this.kind = kind;
    }
 
    public String getKind() { return kind; }
+
+   public boolean isReceivedFromClient() { return receivedFromClient; }
+
+   public void setReceivedFromClient(final boolean receivedFromClient) { this.receivedFromClient = receivedFromClient; }
 
    @Override
    public String toString() {

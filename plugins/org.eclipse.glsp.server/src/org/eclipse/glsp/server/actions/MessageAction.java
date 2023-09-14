@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019-2022 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,46 +15,42 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.actions;
 
-import org.eclipse.glsp.server.types.ServerStatus;
+import java.util.Optional;
+
 import org.eclipse.glsp.server.types.Severity;
 
 /**
- * Sent by the server to the client to notify it about a server status.
+ * Instructs the client to show a notification message to the user.
  */
-public class ServerStatusAction extends Action {
-   public static final String KIND = "serverStatus";
-   private static final int NO_TIMEOUT = -1;
+public class MessageAction extends Action {
 
-   private int timeout;
+   public static final String KIND = "message";
 
    private String severity;
    private String message;
+   private String details;
 
-   public ServerStatusAction() {
+   public MessageAction() {
       super(KIND);
    }
 
-   public ServerStatusAction(final ServerStatus status) {
-      this(status.getSeverity(), status.getMessage());
+   public MessageAction(final Severity severity, final String message) {
+      this(severity, message, null);
    }
 
-   public ServerStatusAction(final Severity severity, final String message) {
+   public MessageAction(final Severity severity, final String message, final String details) {
       this();
       this.severity = Severity.toString(severity);
       this.message = message;
-      this.timeout = NO_TIMEOUT;
-   }
-
-   public ServerStatusAction(final Severity severity, final String message, final int timeout) {
-      this(severity, message);
-      this.timeout = timeout;
+      this.details = details;
    }
 
    public String getSeverity() { return severity; }
 
    public String getMessage() { return message; }
 
-   public int getTimeout() { return timeout; }
+   public Optional<String> getDetails() { return Optional.ofNullable(details); }
 
-   public void setTimeout(final int timeout) { this.timeout = timeout; }
+   public void setDetails(final String details) { this.details = details; }
+
 }

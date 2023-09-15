@@ -32,7 +32,7 @@ public interface ClientSessionManager extends IDisposable {
     * If a new session has been created all {@link ClientSessionListener}s are notified via the
     * {@link ClientSessionListener#sessionCreated(ClientSession)} method.
     *
-    * @param parms The initialize parameters
+    * @param params The initialize parameters
     *
     * @throws GLSPServerException if another session with matching client id but different diagram type already exists.
     */

@@ -22,14 +22,11 @@ import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
-import org.eclipse.glsp.server.actions.MessageAction;
-import org.eclipse.glsp.server.actions.StatusAction;
 import org.eclipse.glsp.server.di.DiagramModule;
 import org.eclipse.glsp.server.features.progress.ProgressMonitor;
 import org.eclipse.glsp.server.features.progress.ProgressService;
 import org.eclipse.glsp.server.features.sourcemodelwatcher.SourceModelWatcher;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.types.Severity;
 import org.eclipse.glsp.server.utils.ClientOptionsUtil;
 import org.eclipse.glsp.server.utils.StatusActionUtil;
 
@@ -82,8 +79,6 @@ public class RequestModelActionHandler extends AbstractActionHandler<RequestMode
       if (!isReconnecting) {
          sourceModelWatcher.ifPresent(watcher -> watcher.startWatching());
       }
-      this.actionDispatcher.dispatch(new StatusAction(Severity.WARNING, "foo"));
-      this.actionDispatcher.dispatch(new MessageAction(Severity.WARNING, "foo"));
 
       return modelSubmissionHandler.submitInitialModel(action);
    }

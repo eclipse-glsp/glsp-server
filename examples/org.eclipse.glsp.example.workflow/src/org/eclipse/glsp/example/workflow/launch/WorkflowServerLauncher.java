@@ -36,6 +36,7 @@ public final class WorkflowServerLauncher {
          ElkLayoutEngine.initialize(new LayeredMetaDataProvider());
 
          int port = parser.parsePort();
+         String host = parser.parseHostname();
          ServerModule workflowServerModule = new WorkflowServerModule()
             .configureDiagramModule(new WorkflowDiagramModule());
 
@@ -43,7 +44,7 @@ public final class WorkflowServerLauncher {
             ? new WebsocketServerLauncher(workflowServerModule, "/workflow", parser.parseWebsocketLogLevel())
             : new SocketGLSPServerLauncher(workflowServerModule);
 
-         launcher.start("localhost", port, parser);
+         launcher.start(host, port, parser);
 
       } catch (ParseException ex) {
          ex.printStackTrace();

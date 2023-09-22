@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -72,7 +72,7 @@ public class WorkflowDiagramConfiguration extends BaseDiagramConfiguration {
       nodeHints.add(new ShapeTypeHint(AUTOMATED_TASK, true, true, true, true));
       ShapeTypeHint catHint = new ShapeTypeHint(CATEGORY, true, true, true, true);
       catHint.setContainableElementTypeIds(
-         Arrays.asList(DECISION_NODE, MERGE_NODE, FORK_NODE, JOIN_NODE, AUTOMATED_TASK, MANUAL_TASK, CATEGORY));
+         Arrays.asList(TASK, ACTIVITY_NODE, CATEGORY));
       nodeHints.add(catHint);
       nodeHints.add(createDefaultShapeTypeHint(FORK_NODE));
       nodeHints.add(createDefaultShapeTypeHint(JOIN_NODE));
@@ -91,24 +91,21 @@ public class WorkflowDiagramConfiguration extends BaseDiagramConfiguration {
    @Override
    public List<EdgeTypeHint> getEdgeTypeHints() {
       List<EdgeTypeHint> edgeHints = new ArrayList<>();
-      edgeHints.add(createDefaultEdgeTypeHint(EDGE));
-      EdgeTypeHint weightedEdgeHint = super.createDefaultEdgeTypeHint(WEIGHTED_EDGE);
-      weightedEdgeHint.setSourceElementTypeIds(Arrays.asList(DECISION_NODE));
-      weightedEdgeHint.setTargetElementTypeIds(Arrays.asList(MANUAL_TASK, AUTOMATED_TASK, FORK_NODE, JOIN_NODE));
+
+      EdgeTypeHint hint = super.createDefaultEdgeTypeHint(EDGE);
+      hint.addSourceElementTypeId(TASK, ACTIVITY_NODE, CATEGORY);
+      hint.addTargetElementTypeId(TASK, ACTIVITY_NODE, CATEGORY);
+      edgeHints.add(hint);
+
+      EdgeTypeHint weightedEdgeHint = createDefaultEdgeTypeHint(WEIGHTED_EDGE);
+      weightedEdgeHint.addSourceElementTypeId(ACTIVITY_NODE);
+      weightedEdgeHint.addTargetElementTypeId(TASK, ACTIVITY_NODE);
+      weightedEdgeHint.setDynamic(true);
       edgeHints.add(weightedEdgeHint);
       return edgeHints;
    }
 
-   @Override
-   public EdgeTypeHint createDefaultEdgeTypeHint(final String elementId) {
-      EdgeTypeHint hint = super.createDefaultEdgeTypeHint(elementId);
-      hint.setSourceElementTypeIds(
-         Arrays.asList(MANUAL_TASK, AUTOMATED_TASK, DECISION_NODE, MERGE_NODE, FORK_NODE, JOIN_NODE, CATEGORY));
-      hint.setTargetElementTypeIds(
-         Arrays.asList(MANUAL_TASK, AUTOMATED_TASK, DECISION_NODE, MERGE_NODE, FORK_NODE, JOIN_NODE, CATEGORY));
-      return hint;
-   }
-
+ 
    @Override
    public ServerLayoutKind getLayoutKind() { return ServerLayoutKind.MANUAL; }
 

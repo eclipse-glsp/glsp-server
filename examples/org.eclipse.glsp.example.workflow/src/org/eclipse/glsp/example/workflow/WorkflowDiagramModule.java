@@ -38,6 +38,7 @@ import org.eclipse.glsp.example.workflow.provider.WorkflowContextMenuItemProvide
 import org.eclipse.glsp.example.workflow.taskedit.EditTaskOperationHandler;
 import org.eclipse.glsp.example.workflow.taskedit.TaskEditContextActionProvider;
 import org.eclipse.glsp.example.workflow.taskedit.TaskEditValidator;
+import org.eclipse.glsp.example.workflow.typehints.WorkflowEdgeCreationChecker;
 import org.eclipse.glsp.graph.GraphExtension;
 import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.di.MultiBinding;
@@ -54,6 +55,7 @@ import org.eclipse.glsp.server.features.navigation.NavigationTargetResolver;
 import org.eclipse.glsp.server.features.popup.PopupModelFactory;
 import org.eclipse.glsp.server.features.sourcemodelwatcher.FileWatcher;
 import org.eclipse.glsp.server.features.sourcemodelwatcher.SourceModelWatcher;
+import org.eclipse.glsp.server.features.typehints.EdegeCreationChecker;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.gmodel.GModelDiagramModule;
 import org.eclipse.glsp.server.gmodel.GModelStorage;
@@ -157,6 +159,11 @@ public class WorkflowDiagramModule extends GModelDiagramModule {
    @Override
    protected Class<? extends NavigationTargetResolver> bindNavigationTargetResolver() {
       return WorkflowNavigationTargetResolver.class;
+   }
+
+   @Override
+   protected Class<? extends EdegeCreationChecker> bindEdgeCreationChecker() {
+      return WorkflowEdgeCreationChecker.class;
    }
 
    @Override

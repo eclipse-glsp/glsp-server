@@ -13,9 +13,11 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.actions;
+package org.eclipse.glsp.server.features.progress;
 
 import java.util.Optional;
+
+import org.eclipse.glsp.server.actions.Action;
 
 /**
  * Sent by the server to the client to request presenting the progress of a long running process in the UI.

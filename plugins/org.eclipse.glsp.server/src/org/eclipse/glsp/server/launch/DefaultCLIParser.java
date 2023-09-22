@@ -27,6 +27,7 @@ import org.eclipse.glsp.server.utils.LaunchUtil.DefaultOptions;
 public class DefaultCLIParser extends CLIParser {
    public static final String OPTION_HELP = "help";
    public static final String OPTION_PORT = "port";
+   public static final String OPTION_HOST_NAME = "host";
    public static final String OPTION_CONSOLE_LOG = "consoleLog";
    public static final String OPTION_FILE_LOG = "fileLog";
    public static final String OPTION_LOG_LEVEL = "logLevel";
@@ -43,6 +44,10 @@ public class DefaultCLIParser extends CLIParser {
    public int parsePort() {
       Predicate<Integer> validator = (port) -> LaunchUtil.isValidPort(port);
       return parseIntOption(OPTION_PORT, DefaultOptions.SERVER_PORT, validator);
+   }
+
+   public String parseHostname() {
+      return parseOption(OPTION_HOST_NAME, DefaultOptions.HOST_NAME);
    }
 
    public String parseLogDir() {
@@ -68,6 +73,8 @@ public class DefaultCLIParser extends CLIParser {
    public static Options getDefaultOptions() {
       Options options = new Options();
       options.addOption("h", OPTION_HELP, false, "Display usage information about GLSPServerLauncher");
+      options.addOption("n", OPTION_HOST_NAME, true, String.format("Set server host name. [default='%s']",
+         DefaultOptions.HOST_NAME));
       options.addOption("p", OPTION_PORT, true,
          String.format("Set server port. [default='%s']", DefaultOptions.SERVER_PORT));
       options.addOption("c", OPTION_CONSOLE_LOG, true,

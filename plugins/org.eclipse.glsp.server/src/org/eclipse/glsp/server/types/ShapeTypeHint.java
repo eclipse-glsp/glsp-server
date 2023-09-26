@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019-2022 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,15 +15,24 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.types;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * {@link ElementTypeHint Element type hints} for shapes (nodes).
  */
 public class ShapeTypeHint extends ElementTypeHint {
-
+   /**
+    * Specifies whether the element can be resized.
+    */
    private boolean resizable;
+   /**
+    * Specifies whether the element can be moved to another parent.
+    */
    private boolean reparentable;
+   /**
+    * The types of elements that can be contained by this element (if any).
+    */
    private List<String> containableElementTypeIds;
 
    public ShapeTypeHint() {}
@@ -44,6 +53,7 @@ public class ShapeTypeHint extends ElementTypeHint {
       super(elementTypeId, repositionable, deletable);
       this.reparentable = reparentable;
       this.resizable = resizable;
+      this.containableElementTypeIds = new ArrayList<>();
    }
 
    public boolean isResizable() { return resizable; }

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2022 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,7 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.types;
 
-import org.eclipse.glsp.server.diagram.RequestTypeHintsAction;
+import org.eclipse.glsp.server.features.typehints.RequestTypeHintsAction;
 
 /**
  * Type hints are sent from the server to the client to provide information on which edit operations are possible for
@@ -27,9 +27,17 @@ import org.eclipse.glsp.server.diagram.RequestTypeHintsAction;
  * @see RequestTypeHintsAction
  */
 public abstract class ElementTypeHint {
-
+   /**
+    * The id of the element.
+    */
    private String elementTypeId;
+   /**
+    * Specifies whether the element can be relocated.
+    */
    private boolean repositionable;
+   /**
+    * Specifies whether the element can be deleted.
+    */
    private boolean deletable;
 
    public ElementTypeHint() {}

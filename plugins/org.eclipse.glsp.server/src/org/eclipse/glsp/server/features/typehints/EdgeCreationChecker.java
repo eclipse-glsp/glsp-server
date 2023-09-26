@@ -23,15 +23,15 @@ import org.eclipse.glsp.server.types.EdgeTypeHint;
  * {@link EdgeTypeHint}s.
  * A dynamic edge type hint is used for cases where a plain list of allowed source and target element ids is not enough
  * to determine
- * wether an edge beeing created is valid. In this cases the client will query the server to determine wether the edge
+ * wether an edge being created is valid. In this cases the client will query the server to determine wether the edge
  * is valid.
- * The `EdegeCreationChecker` then checks the given edge information and returns wether the edge beeing created is
+ * The `EdgeCreationChecker` then checks the given edge information and returns wether the edge being created is
  * valid.
  */
 public interface EdgeCreationChecker {
    /**
     * Checks wether the given source element for an edge beeing created is valid i.e. if the
-    * given source is and allowed source element for the given edge type.
+    * given source is an allowed source element for the given edge type.
     *
     * @return `true` if the edge source is valid, `false` otherwise
     */
@@ -39,7 +39,7 @@ public interface EdgeCreationChecker {
 
    /**
     * Checks wether the given information for an edge beeing created is valid i.e. if the
-    * given target is an allowed target for the given source and edge type.
+    * given target is an allowed target element for the given source and edge type.
     *
     * @return `true` if the edge target is valid, `false` otherwise
     */

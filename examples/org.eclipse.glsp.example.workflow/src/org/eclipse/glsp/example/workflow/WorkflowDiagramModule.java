@@ -55,7 +55,7 @@ import org.eclipse.glsp.server.features.navigation.NavigationTargetResolver;
 import org.eclipse.glsp.server.features.popup.PopupModelFactory;
 import org.eclipse.glsp.server.features.sourcemodelwatcher.FileWatcher;
 import org.eclipse.glsp.server.features.sourcemodelwatcher.SourceModelWatcher;
-import org.eclipse.glsp.server.features.typehints.EdegeCreationChecker;
+import org.eclipse.glsp.server.features.typehints.EdgeCreationChecker;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.gmodel.GModelDiagramModule;
 import org.eclipse.glsp.server.gmodel.GModelStorage;
@@ -162,7 +162,7 @@ public class WorkflowDiagramModule extends GModelDiagramModule {
    }
 
    @Override
-   protected Class<? extends EdegeCreationChecker> bindEdgeCreationChecker() {
+   protected Class<? extends EdgeCreationChecker> bindEdgeCreationChecker() {
       return WorkflowEdgeCreationChecker.class;
    }
 

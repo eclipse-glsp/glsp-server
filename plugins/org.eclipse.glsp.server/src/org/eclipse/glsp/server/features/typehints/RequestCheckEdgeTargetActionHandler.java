@@ -15,6 +15,8 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.features.typehints;
 
+import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -23,20 +25,22 @@ import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
 import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.google.inject.Inject;
 
 /**
  * Default handler implementation for {@link RequestCheckEdgeAction}.
- * Delegates the edge check to an {@link EdegeCreationChecker} if the given edge information is applicable
+ * Delegates the edge check to an {@link EdgeCreationChecker} if the given edge information is applicable
  * (i.e. a checker is bound,the given edge type has a dynamic type hint and source/target elemnent are present in the
  * diagram).
- * Otherwise returns `false`.
+ * Returns a valid {@link CheckEdgeResultAction} if no edge creation checker is bound or the type hint associated with
+ * the given edge information is not dynamic.
  */
 public class RequestCheckEdgeTargetActionHandler extends AbstractActionHandler<RequestCheckEdgeAction> {
 
    @Inject
-   protected Optional<EdegeCreationChecker> edgeTargetChecker;
+   protected Optional<EdgeCreationChecker> edgeTargetChecker;
 
    @Inject
    protected DiagramConfiguration diagramConfiguration;
@@ -46,29 +50,31 @@ public class RequestCheckEdgeTargetActionHandler extends AbstractActionHandler<R
 
    @Override
    protected List<Action> executeAction(final RequestCheckEdgeAction action) {
-      return List.of(new CheckEdgeTargetResultAction(validate(action), action));
-   }
-
-   protected boolean validate(final RequestCheckEdgeAction action) {
-      if (!edgeTargetChecker.isPresent()) {
-         return false;
-      }
       boolean hasDynamicHint = diagramConfiguration.getEdgeTypeHints().stream()
          .filter(hint -> hint.getElementTypeId().equals(action.getEdgeType()) && hint.isDynamic()).findAny()
          .isPresent();
-      if (!hasDynamicHint) {
-         return false;
+
+      if (!edgeTargetChecker.isPresent() || !hasDynamicHint) {
+         return listOf(new CheckEdgeResultAction(true, action));
       }
-      Optional<GModelElement> sourceElement = modelState.getIndex().get(action.getSourceElementId());
+      return listOf(new CheckEdgeResultAction(validate(action), action));
+   }
+
+   protected boolean validate(final RequestCheckEdgeAction action) {
+      GModelElement sourceElement = getOrThrow(modelState.getIndex().get(action.getSourceElementId()),
+         "Invalid `RequestCheckEdgeTargetAction`!. Could not find a source elemment with id: "
+            + action.getSourceElementId());
       Optional<GModelElement> targetElement = action.getTargetElementId()
          .flatMap(targetId -> modelState.getIndex().get(targetId));
 
-      if (sourceElement.isEmpty()) {
-         return false;
+      if (action.getTargetElementId().isPresent() && targetElement.isEmpty()) {
+         throw new GLSPServerException(
+            "Invalid `RequestCheckEdgeTargetAction`! Could not find a target element with id: "
+               + action.getTargetElementId().get());
       }
       return targetElement.isPresent()
-         ? edgeTargetChecker.get().isValidTarget(action.getEdgeType(), sourceElement.get(), targetElement.get())
-         : edgeTargetChecker.get().isValidSource(action.getEdgeType(), sourceElement.get());
+         ? edgeTargetChecker.get().isValidTarget(action.getEdgeType(), sourceElement, targetElement.get())
+         : edgeTargetChecker.get().isValidSource(action.getEdgeType(), sourceElement);
 
    }
 

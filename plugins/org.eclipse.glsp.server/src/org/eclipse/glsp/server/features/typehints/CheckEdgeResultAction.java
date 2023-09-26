@@ -24,7 +24,7 @@ import org.eclipse.glsp.server.actions.ResponseAction;
  * a boolean indicating whether the requested element is a valid target
  * for the edge being created and the context edge context information (type, source, target).
  */
-public class CheckEdgeTargetResultAction extends ResponseAction {
+public class CheckEdgeResultAction extends ResponseAction {
 
    public static final String KIND = "checkEdgeResult";
 
@@ -48,11 +48,11 @@ public class CheckEdgeTargetResultAction extends ResponseAction {
     */
    private String targetElementId;
 
-   public CheckEdgeTargetResultAction() {
+   public CheckEdgeResultAction() {
       super(KIND);
    }
 
-   public CheckEdgeTargetResultAction(final boolean isValid, final RequestCheckEdgeAction requestAction) {
+   public CheckEdgeResultAction(final boolean isValid, final RequestCheckEdgeAction requestAction) {
       super(KIND);
       this.setValid(isValid);
       this.setEdgeType(requestAction.getEdgeType());

@@ -27,10 +27,8 @@ import org.eclipse.glsp.server.types.EdgeTypeHint;
  * is valid.
  * The `EdegeCreationChecker` then checks the given edge information and returns wether the edge beeing created is
  * valid.
- * If no `EdgeTargetChecker` implementation is bound the creation of dynamic edge will always be rejected.
- *
  */
-public interface EdegeCreationChecker {
+public interface EdgeCreationChecker {
    /**
     * Checks wether the given source element for an edge beeing created is valid i.e. if the
     * given source is and allowed source element for the given edge type.

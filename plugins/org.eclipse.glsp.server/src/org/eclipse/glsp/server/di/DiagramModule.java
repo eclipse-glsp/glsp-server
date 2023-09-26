@@ -52,7 +52,7 @@ import org.eclipse.glsp.server.features.progress.DefaultProgressService;
 import org.eclipse.glsp.server.features.progress.ProgressService;
 import org.eclipse.glsp.server.features.sourcemodelwatcher.SourceModelWatcher;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
-import org.eclipse.glsp.server.features.typehints.EdegeCreationChecker;
+import org.eclipse.glsp.server.features.typehints.EdgeCreationChecker;
 import org.eclipse.glsp.server.features.typehints.RequestCheckEdgeTargetActionHandler;
 import org.eclipse.glsp.server.features.typehints.RequestTypeHintsActionHandler;
 import org.eclipse.glsp.server.features.undoredo.UndoRedoActionHandler;
@@ -129,7 +129,7 @@ import com.google.inject.multibindings.Multibinder;
  * <li>{@link PopupModelFactory} as {@link Optional}
  * <li>{@link LayoutEngine} as {@link Optional}
  * <li>{@link GraphExtension} as {@link Optional}
- * <li>{@link EdegeCreationChecker} as {@link Optional}
+ * <li>{@link EdgeCreationChecker} as {@link Optional}
  * </ul>
  *
  *
@@ -188,7 +188,7 @@ public abstract class DiagramModule extends GLSPModule {
       bindOptionally(PopupModelFactory.class, bindPopupModelFactory());
       bindOptionally(LayoutEngine.class, bindLayoutEngine());
       bindOptionally(GraphExtension.class, bindGraphExtension());
-      bindOptionally(EdegeCreationChecker.class, bindEdgeCreationChecker());
+      bindOptionally(EdgeCreationChecker.class, bindEdgeCreationChecker());
    }
 
    protected void bindDiagramType() {
@@ -324,7 +324,7 @@ public abstract class DiagramModule extends GLSPModule {
       return null;
    }
 
-   protected Class<? extends EdegeCreationChecker> bindEdgeCreationChecker() {
+   protected Class<? extends EdgeCreationChecker> bindEdgeCreationChecker() {
       return null;
    }
 

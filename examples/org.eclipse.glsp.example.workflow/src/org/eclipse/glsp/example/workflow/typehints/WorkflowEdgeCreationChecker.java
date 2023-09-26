@@ -22,9 +22,9 @@ import static org.eclipse.glsp.example.workflow.utils.ModelTypes.WEIGHTED_EDGE;
 
 import org.eclipse.glsp.example.workflow.wfgraph.TaskNode;
 import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.server.features.typehints.EdegeCreationChecker;
+import org.eclipse.glsp.server.features.typehints.EdgeCreationChecker;
 
-public class WorkflowEdgeCreationChecker implements EdegeCreationChecker {
+public class WorkflowEdgeCreationChecker implements EdgeCreationChecker {
 
    @Override
    public boolean isValidSource(final String edgeType, final GModelElement sourceElement) {

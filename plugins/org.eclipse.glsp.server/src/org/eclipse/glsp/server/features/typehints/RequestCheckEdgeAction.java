@@ -25,9 +25,9 @@ import org.eclipse.glsp.server.types.EdgeTypeHint;
  * to update creation feedback on the client side, for edges configured with a dynamic {@link EdgeTypeHint}.
  *
  * @see EdgeTypeHint#isDynamic()
- * @see CheckEdgeTargetResultAction
+ * @see CheckEdgeResultAction
  */
-public class RequestCheckEdgeAction extends RequestAction<CheckEdgeTargetResultAction> {
+public class RequestCheckEdgeAction extends RequestAction<CheckEdgeResultAction> {
 
    public static final String KIND = "requestCheckEdge";
 

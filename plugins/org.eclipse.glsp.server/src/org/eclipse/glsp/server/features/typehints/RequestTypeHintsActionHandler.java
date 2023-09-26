@@ -26,7 +26,6 @@ import com.google.inject.Inject;
 /**
  * Default handler for {@link RequestTypeHintsAction}s.
  * Queries the type hints provided by the {@link DiagramConfiguration}
- *
  */
 public class RequestTypeHintsActionHandler extends AbstractActionHandler<RequestTypeHintsAction> {
    @Inject

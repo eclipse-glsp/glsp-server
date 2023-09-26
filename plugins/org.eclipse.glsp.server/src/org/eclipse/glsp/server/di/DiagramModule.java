@@ -27,7 +27,6 @@ import org.eclipse.glsp.server.actions.SetEditModeActionHandler;
 import org.eclipse.glsp.server.di.scope.DiagramGlobalScope;
 import org.eclipse.glsp.server.di.scope.DiagramGlobalSingleton;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
-import org.eclipse.glsp.server.diagram.RequestTypeHintsActionHandler;
 import org.eclipse.glsp.server.diagram.ServerConfigurationContribution;
 import org.eclipse.glsp.server.features.commandpalette.CommandPaletteActionProvider;
 import org.eclipse.glsp.server.features.contextactions.ContextActionsProvider;
@@ -53,6 +52,9 @@ import org.eclipse.glsp.server.features.progress.DefaultProgressService;
 import org.eclipse.glsp.server.features.progress.ProgressService;
 import org.eclipse.glsp.server.features.sourcemodelwatcher.SourceModelWatcher;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
+import org.eclipse.glsp.server.features.typehints.EdgeCreationChecker;
+import org.eclipse.glsp.server.features.typehints.RequestCheckEdgeTargetActionHandler;
+import org.eclipse.glsp.server.features.typehints.RequestTypeHintsActionHandler;
 import org.eclipse.glsp.server.features.undoredo.UndoRedoActionHandler;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.features.validation.RequestMarkersHandler;
@@ -127,6 +129,7 @@ import com.google.inject.multibindings.Multibinder;
  * <li>{@link PopupModelFactory} as {@link Optional}
  * <li>{@link LayoutEngine} as {@link Optional}
  * <li>{@link GraphExtension} as {@link Optional}
+ * <li>{@link EdgeCreationChecker} as {@link Optional}
  * </ul>
  *
  *
@@ -185,6 +188,7 @@ public abstract class DiagramModule extends GLSPModule {
       bindOptionally(PopupModelFactory.class, bindPopupModelFactory());
       bindOptionally(LayoutEngine.class, bindLayoutEngine());
       bindOptionally(GraphExtension.class, bindGraphExtension());
+      bindOptionally(EdgeCreationChecker.class, bindEdgeCreationChecker());
    }
 
    protected void bindDiagramType() {
@@ -271,6 +275,7 @@ public abstract class DiagramModule extends GLSPModule {
       binding.add(ComputedBoundsActionHandler.class);
       binding.add(SaveModelActionHandler.class);
       binding.add(UndoRedoActionHandler.class);
+      binding.add(RequestCheckEdgeTargetActionHandler.class);
    }
 
    protected Class<? extends ActionHandlerRegistry> bindActionHandlerRegistry() {
@@ -316,6 +321,10 @@ public abstract class DiagramModule extends GLSPModule {
    }
 
    protected Class<? extends GraphExtension> bindGraphExtension() {
+      return null;
+   }
+
+   protected Class<? extends EdgeCreationChecker> bindEdgeCreationChecker() {
       return null;
    }
 

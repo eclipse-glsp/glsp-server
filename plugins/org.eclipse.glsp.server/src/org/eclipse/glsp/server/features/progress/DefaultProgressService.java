@@ -18,8 +18,6 @@ package org.eclipse.glsp.server.features.progress;
 import java.util.UUID;
 
 import org.eclipse.glsp.server.actions.ActionDispatcher;
-import org.eclipse.glsp.server.actions.EndProgressAction;
-import org.eclipse.glsp.server.actions.StartProgressAction;
 import org.eclipse.glsp.server.actions.UpdateProgressAction;
 
 import com.google.inject.Inject;

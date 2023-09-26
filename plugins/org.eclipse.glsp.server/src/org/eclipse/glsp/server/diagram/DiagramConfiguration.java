@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -71,7 +71,7 @@ public interface DiagramConfiguration {
    Optional<GraphExtension> getGraphExtension();
 
    default EdgeTypeHint createDefaultEdgeTypeHint(final String elementId) {
-      return new EdgeTypeHint(elementId, true, true, true, null, null);
+      return new EdgeTypeHint(elementId, true, true, true, false, null, null);
    }
 
    default ShapeTypeHint createDefaultShapeTypeHint(final String elementId) {

@@ -53,7 +53,7 @@ import org.eclipse.glsp.server.features.progress.ProgressService;
 import org.eclipse.glsp.server.features.sourcemodelwatcher.SourceModelWatcher;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.features.typehints.EdgeCreationChecker;
-import org.eclipse.glsp.server.features.typehints.RequestCheckEdgeTargetActionHandler;
+import org.eclipse.glsp.server.features.typehints.RequestCheckEdgeActionHandler;
 import org.eclipse.glsp.server.features.typehints.RequestTypeHintsActionHandler;
 import org.eclipse.glsp.server.features.undoredo.UndoRedoActionHandler;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
@@ -275,7 +275,7 @@ public abstract class DiagramModule extends GLSPModule {
       binding.add(ComputedBoundsActionHandler.class);
       binding.add(SaveModelActionHandler.class);
       binding.add(UndoRedoActionHandler.class);
-      binding.add(RequestCheckEdgeTargetActionHandler.class);
+      binding.add(RequestCheckEdgeActionHandler.class);
    }
 
    protected Class<? extends ActionHandlerRegistry> bindActionHandlerRegistry() {

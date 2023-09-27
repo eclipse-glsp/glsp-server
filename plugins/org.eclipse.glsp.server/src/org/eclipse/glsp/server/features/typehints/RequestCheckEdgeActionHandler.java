@@ -37,10 +37,10 @@ import com.google.inject.Inject;
  * Returns a valid {@link CheckEdgeResultAction} if no edge creation checker is bound or the type hint associated with
  * the given edge information is not dynamic.
  */
-public class RequestCheckEdgeTargetActionHandler extends AbstractActionHandler<RequestCheckEdgeAction> {
+public class RequestCheckEdgeActionHandler extends AbstractActionHandler<RequestCheckEdgeAction> {
 
    @Inject
-   protected Optional<EdgeCreationChecker> edgeTargetChecker;
+   protected Optional<EdgeCreationChecker> edgeCreationChecker;
 
    @Inject
    protected DiagramConfiguration diagramConfiguration;
@@ -54,7 +54,7 @@ public class RequestCheckEdgeTargetActionHandler extends AbstractActionHandler<R
          .filter(hint -> hint.getElementTypeId().equals(action.getEdgeType()) && hint.isDynamic()).findAny()
          .isPresent();
 
-      if (!edgeTargetChecker.isPresent() || !hasDynamicHint) {
+      if (!edgeCreationChecker.isPresent() || !hasDynamicHint) {
          return listOf(new CheckEdgeResultAction(true, action));
       }
       return listOf(new CheckEdgeResultAction(validate(action), action));
@@ -73,8 +73,8 @@ public class RequestCheckEdgeTargetActionHandler extends AbstractActionHandler<R
                + action.getTargetElementId().get());
       }
       return targetElement.isPresent()
-         ? edgeTargetChecker.get().isValidTarget(action.getEdgeType(), sourceElement, targetElement.get())
-         : edgeTargetChecker.get().isValidSource(action.getEdgeType(), sourceElement);
+         ? edgeCreationChecker.get().isValidTarget(action.getEdgeType(), sourceElement, targetElement.get())
+         : edgeCreationChecker.get().isValidSource(action.getEdgeType(), sourceElement);
 
    }
 

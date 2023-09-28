@@ -28,9 +28,7 @@ import org.eclipse.glsp.server.di.scope.DiagramGlobalScope;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.Provider;
-import com.google.inject.internal.SingletonScope;
 
-@SuppressWarnings("restriction")
 public class DefaultDiagramGlobalScope implements DiagramGlobalScope {
 
    private final Map<String, Map<Key<?>, Object>> diagramTypeStores = new ConcurrentHashMap<>();
@@ -39,14 +37,17 @@ public class DefaultDiagramGlobalScope implements DiagramGlobalScope {
 
    @Override
    public <T> Provider<T> scope(final Key<T> key, final Provider<T> unscoped) {
-      return () -> {
-         Optional<String> diagramType = getDiagramType(unscoped);
-         if (diagramType.isEmpty()) {
-            throw new IllegalArgumentException(
-               "Could not complete scoping operation. Diagram type could not be derived."
-                  + " Injector needs to be create with a 'GLSPDiagramModule'!");
+      return new Provider<T>() {
+         @Override
+         public T get() {
+            Optional<String> diagramType = getDiagramType(unscoped);
+            if (diagramType.isEmpty()) {
+               throw new IllegalArgumentException(
+                  "Could not complete scoping operation. Diagram type could not be derived."
+                     + " Injector needs to be create with a 'GLSPDiagramModule'!");
+            }
+            return getInstanceFromScope(diagramType.get(), key, unscoped);
          }
-         return getInstanceFromScope(diagramType.get(), key, unscoped);
       };
    }
 
@@ -72,7 +73,7 @@ public class DefaultDiagramGlobalScope implements DiagramGlobalScope {
    }
 
    /**
-    * Retrieve the injector from the provider. Looking at the implementation for {@link SingletonScope}
+    * Retrieve the injector from the provider. Looking at the implementation for SingletonScope
     * we know that this provider will always be an instance of {@code ProviderToInternalFactoryAdapter}.
     * From this we can retrieve the injector. However, {@code ProviderToInternalFactoryAdapter} is an internal class
     * which means we have to use reflection here to access the injector.

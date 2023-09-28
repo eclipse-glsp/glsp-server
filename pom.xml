@@ -238,6 +238,9 @@
 									<version>${project.version}</version>
 								</artifact>
 							</target>
+							<dependency-resolution>
+								<optionalDependencies>ignore</optionalDependencies>
+							</dependency-resolution>
 						</configuration>
 					</plugin>
 				</plugins>

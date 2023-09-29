@@ -39,9 +39,9 @@
 	<properties>
 	
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.source>11</java.source>
-		<java.target>11</java.target>
-		<project.build.java.target>11</project.build.java.target>
+		<java.source>17</java.source>
+		<java.target>17</java.target>
+		<project.build.java.target>17</project.build.java.target>
 		
 		<!-- Maven Plugin Versions: General maven plugin versions -->
 		<buildhelper.maven.version>3.3.0</buildhelper.maven.version>
@@ -383,7 +383,6 @@
 						<configuration>
 							<serverId>ossrh</serverId>
 							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-							<autoreleaseafterclose>true</autoreleaseafterclose>
 						</configuration>
 					</plugin>
 					<!-- To generate javadoc -->

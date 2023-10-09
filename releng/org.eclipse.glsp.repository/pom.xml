@@ -18,7 +18,7 @@
 				<artifactId>tycho-p2-publisher-plugin</artifactId>
 				<version>${tycho.version}</version>
 				<configuration>
-					<profiles>JavaSE-11</profiles>
+					<profiles>JavaSE-17</profiles>
 				</configuration>
 			</plugin>
 			<!-- Skip cleaning of this module otherwise the release build is not working 
@@ -95,7 +95,7 @@
 						<artifactId>tycho-eclipserun-plugin</artifactId>
 						<version>${tycho.version}</version>
 						<configuration>
-							<executionEnvironment>JavaSE-11</executionEnvironment>
+							<executionEnvironment>JavaSE-17</executionEnvironment>
 							<!-- IMPORTANT: DO NOT split the arg line -->
 							<appArgLine>-application org.eclipse.ant.core.antRunner -buildfile packaging-p2composite.ant p2.composite.add -Dsite.label=${p2.site.label} -Dproject.build.directory=${project.build.directory} -DunqualifiedVersion=${unqualifiedVersion} -DbuildQualifier=${buildQualifier} -Dsoftware.download.area=${rsync.local.dir}</appArgLine>
 							<repositories>

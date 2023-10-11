@@ -74,9 +74,9 @@ pipeline {
                         }
                      }
                 }
-                stage('Trigger Java11 build') {
+                stage('Trigger Java21 build') {
                     steps {
-                        build wait: false, job: 'glsp-server-java11'
+                        build wait: false, job: 'glsp-server-java21'
                     }
                 }
             }

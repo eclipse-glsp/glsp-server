@@ -73,23 +73,24 @@ public class GModelDeleteOperationHandler extends GModelOperationHandler<DeleteO
          return false;
       }
 
-      // Always delete the top-level node
-      GModelElement nodeToDelete = findTopLevelElement(element.get());
-      if (nodeToDelete.getParent() == null) {
+      // Always delete the top-level element
+      GModelElement elementToDelete = findTopLevelElement(element.get());
+      if (elementToDelete.getParent() == null) {
          LOGGER.warn("The requested node doesn't have a parent; it can't be deleted");
          return false; // Can't delete the root, or an element that doesn't belong to the model
       }
 
       Set<GModelElement> dependents = new LinkedHashSet<>();
-      collectDependents(dependents, nodeToDelete, modelState);
+      collectDependents(dependents, elementToDelete, modelState, false);
 
-      dependents.forEach(EcoreUtil::delete);
       allDependantsIds.addAll(dependents.stream().map(GModelElement::getId).collect(Collectors.toSet()));
+      dependents.forEach(EcoreUtil::delete);
       return true;
    }
 
    protected void collectDependents(final Set<GModelElement> dependents, final GModelElement nodeToDelete,
-      final GModelState modelState) {
+      final GModelState modelState, final boolean isChild) {
+
       if (dependents.contains(nodeToDelete)) {
          return;
       }
@@ -97,25 +98,21 @@ public class GModelDeleteOperationHandler extends GModelOperationHandler<DeleteO
       // First, children
       if (nodeToDelete.getChildren() != null) {
          for (GModelElement child : nodeToDelete.getChildren()) {
-            collectDependents(dependents, child, modelState);
+            collectDependents(dependents, child, modelState, true);
          }
       }
 
       // Then, incoming/outgoing edges for nodes
       if (nodeToDelete instanceof GNode) {
          GModelIndex index = modelState.getIndex();
-
-         // Then, incoming/outgoing links
-         for (GModelElement incoming : index.getIncomingEdges(nodeToDelete)) {
-            collectDependents(dependents, incoming, modelState);
-         }
-         for (GModelElement outgoing : index.getOutgoingEdges(nodeToDelete)) {
-            collectDependents(dependents, outgoing, modelState);
-         }
+         dependents.addAll(index.getIncomingEdges(nodeToDelete));
+         dependents.addAll(index.getOutgoingEdges(nodeToDelete));
       }
 
       // Finally, the node to delete
-      dependents.add(nodeToDelete);
+      if (!isChild) {
+         dependents.add(nodeToDelete);
+      }
    }
 
    protected GModelElement findTopLevelElement(final GModelElement element) {

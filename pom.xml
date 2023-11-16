@@ -6,7 +6,7 @@
 	<groupId>org.eclipse.glsp</groupId>
 	<artifactId>org.eclipse.glsp.parent</artifactId>
 	<description>GLSP Parent pom </description>
-	<version>2.0.0</version>
+	<version>2.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>GLSP Parent</name>
@@ -83,7 +83,7 @@
 
 		
 		<!-- Release Dependencies for M2 -->
-		<nexus.maven.version>1.6.8</nexus.maven.version>
+		<nexus.maven.version>1.6.13</nexus.maven.version>
 		<maven.gpg.version>1.6</maven.gpg.version>
 	</properties>
 

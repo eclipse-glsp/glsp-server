@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.example.workflow.handler;
 
+import java.util.HashMap;
 import java.util.Optional;
 
 import org.eclipse.glsp.example.workflow.utils.ModelTypes;
@@ -22,6 +23,7 @@ import org.eclipse.glsp.example.workflow.wfgraph.Category;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.server.actions.GhostElement;
 import org.eclipse.glsp.server.gmodel.GModelCreateNodeOperationHandler;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 
@@ -50,4 +52,8 @@ public abstract class CreateWorkflowNodeOperationHandler extends GModelCreateNod
          .filter(comp -> ModelTypes.STRUCTURE.equals(comp.getType())).findFirst();
    }
 
+   @Override
+   protected GhostElement createTriggerGhostElement(final String elementTypeId) {
+      return new GhostElement(createNode(Optional.empty(), new HashMap<>()), true);
+   }
 }

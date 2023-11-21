@@ -25,6 +25,8 @@ public class TriggerNodeCreationAction extends TriggerElementCreationAction {
 
    public static final String KIND = "triggerNodeCreation";
 
+   private GhostElement ghostElement;
+
    public TriggerNodeCreationAction() {
       this(null);
    }
@@ -33,9 +35,23 @@ public class TriggerNodeCreationAction extends TriggerElementCreationAction {
       this(elementTypeId, new HashMap<>());
    }
 
+   public TriggerNodeCreationAction(final String elementTypeId, final GhostElement ghostElement) {
+      this(elementTypeId, new HashMap<>(), ghostElement);
+   }
+
    public TriggerNodeCreationAction(final String elementTypeId,
       final Map<String, String> args) {
       super(KIND, elementTypeId, args);
    }
+
+   public TriggerNodeCreationAction(final String elementTypeId,
+      final Map<String, String> args, final GhostElement ghostElement) {
+      super(KIND, elementTypeId, args);
+      this.ghostElement = ghostElement;
+   }
+
+   public GhostElement getGhostElement() { return ghostElement; }
+
+   public void setGhostElement(final GhostElement ghostElement) { this.ghostElement = ghostElement; }
 
 }

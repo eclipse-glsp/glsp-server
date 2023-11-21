@@ -16,8 +16,14 @@
 package org.eclipse.glsp.server.emf;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.eclipse.glsp.server.actions.ActionDispatcher;
+import org.eclipse.glsp.server.actions.GhostElement;
+import org.eclipse.glsp.server.actions.TriggerElementCreationAction;
+import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;
+import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.CreateOperation;
 import org.eclipse.glsp.server.operations.CreateOperationHandler;
 
@@ -45,5 +51,28 @@ public abstract class EMFCreateOperationHandler<T extends CreateOperation>
 
    public void setHandledElementTypeIds(final List<String> handledElementTypeIds) {
       this.handledElementTypeIds = handledElementTypeIds;
+   }
+
+   @Override
+   public List<TriggerElementCreationAction> getTriggerActions() {
+      if (CreateNodeOperation.class.isAssignableFrom(getHandledOperationType())) {
+         return getHandledElementTypeIds().stream().map(this::createTriggerNodeCreationAction)
+            .collect(Collectors.toList());
+      }
+      return CreateOperationHandler.super.getTriggerActions();
+   }
+
+   protected TriggerNodeCreationAction createTriggerNodeCreationAction(final String elementTypeId) {
+      return new TriggerNodeCreationAction(elementTypeId,
+         createTriggerArgs(elementTypeId),
+         createTriggerGhostElement(elementTypeId));
+   }
+
+   protected GhostElement createTriggerGhostElement(final String elementTypeId) {
+      return null;
+   }
+
+   protected Map<String, String> createTriggerArgs(final String elementTypeId) {
+      return null;
    }
 }

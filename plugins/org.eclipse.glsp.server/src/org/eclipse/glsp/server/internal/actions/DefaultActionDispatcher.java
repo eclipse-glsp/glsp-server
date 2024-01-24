@@ -199,9 +199,9 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
             .map(response -> ResponseAction.respond(action, response))
             .collect(Collectors.toList());
          results.addAll(dispatchAll(responses));
-         if (action instanceof UpdateModelAction) {
-            results.add(dispatchPostUpdateQueue());
-         }
+      }
+      if (action instanceof UpdateModelAction) {
+         results.add(dispatchPostUpdateQueue());
       }
       return results;
    }

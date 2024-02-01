@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.actions;
 
+import org.eclipse.glsp.server.protocol.GLSPServer;
 import org.eclipse.glsp.server.internal.util.GenericsUtil;
 
 /**
@@ -33,7 +34,16 @@ public abstract class Action {
     */
    private final String kind;
 
+   /**
+    * Optional boolean flag that marks actions that have
+    * been received from the client. Is set automatically by the {@link GLSPServer}
+    * for every received action.
+    */
+   private boolean receivedFromClient;
+
    private String subclientId;
+
+   public Action(final String kind) {
 
    public Action(final String kind, final String subclientId) {
       super();
@@ -46,6 +56,10 @@ public abstract class Action {
    }
 
    public String getKind() { return kind; }
+
+   public boolean isReceivedFromClient() { return receivedFromClient; }
+
+   public void setReceivedFromClient(final boolean receivedFromClient) { this.receivedFromClient = receivedFromClient; }
 
    public String getSubclientId() { return subclientId; }
 

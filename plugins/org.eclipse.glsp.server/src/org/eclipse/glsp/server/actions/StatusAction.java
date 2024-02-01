@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019-2022 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,50 +15,33 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.actions;
 
-import java.util.Optional;
-
-import org.eclipse.glsp.server.types.ServerStatus;
 import org.eclipse.glsp.server.types.Severity;
 
 /**
- * Instructs the client to show a notification message to the user.
+ * Sent by the server to the client to notify it about a server status.
  */
-public class ServerMessageAction extends Action {
-
-   public static final String KIND = "serverMessage";
+public class StatusAction extends Action {
+   public static final String KIND = "status";
    private static final int NO_TIMEOUT = -1;
+
+   private int timeout;
 
    private String severity;
    private String message;
-   private String details;
-   private int timeout;
 
-   public ServerMessageAction() {
+   public StatusAction() {
       super(KIND);
    }
 
-   public ServerMessageAction(final Severity severity, final String message) {
-      this(severity, message, null, NO_TIMEOUT);
-   }
-
-   public ServerMessageAction(final Severity severity, final String message, final int timeout) {
-      this(severity, message, null, timeout);
-   }
-
-   public ServerMessageAction(final Severity severity, final String message, final String details) {
-      this(severity, message, details, NO_TIMEOUT);
-   }
-
-   public ServerMessageAction(final ServerStatus status) {
-      this(status.getSeverity(), status.getMessage(), status.getDetails(), NO_TIMEOUT);
-   }
-
-   public ServerMessageAction(final Severity severity, final String message, final String details,
-      final int timeout) {
+   public StatusAction(final Severity severity, final String message) {
       this();
       this.severity = Severity.toString(severity);
       this.message = message;
-      this.details = details;
+      this.timeout = NO_TIMEOUT;
+   }
+
+   public StatusAction(final Severity severity, final String message, final int timeout) {
+      this(severity, message);
       this.timeout = timeout;
    }
 
@@ -66,12 +49,7 @@ public class ServerMessageAction extends Action {
 
    public String getMessage() { return message; }
 
-   public Optional<String> getDetails() { return Optional.ofNullable(details); }
-
-   public void setDetails(final String details) { this.details = details; }
-
    public int getTimeout() { return timeout; }
 
    public void setTimeout(final int timeout) { this.timeout = timeout; }
-
 }

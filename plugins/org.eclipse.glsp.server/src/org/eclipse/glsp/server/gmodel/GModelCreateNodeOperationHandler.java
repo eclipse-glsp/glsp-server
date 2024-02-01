@@ -18,6 +18,7 @@ package org.eclipse.glsp.server.gmodel;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.graph.GModelElement;
@@ -25,7 +26,10 @@ import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
+import org.eclipse.glsp.server.actions.GhostElement;
 import org.eclipse.glsp.server.actions.SelectAction;
+import org.eclipse.glsp.server.actions.TriggerElementCreationAction;
+import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.LayoutUtil;
@@ -60,6 +64,7 @@ public abstract class GModelCreateNodeOperationHandler
       Optional<GPoint> relativeLocation = getRelativeLocation(container, absoluteLocation);
       GModelElement element = createNode(relativeLocation, operation.getArgs());
       container.getChildren().add(element);
+      actionDispatcher.dispatchAfterNextUpdate(SelectAction.addSelection(List.of(element.getId())));
       actionDispatcher.dispatchAfterNextUpdate(
               Action.addSubclientId(operation, new SelectAction()),
               Action.addSubclientId(operation, new SelectAction(List.of(element.getId())))
@@ -88,6 +93,26 @@ public abstract class GModelCreateNodeOperationHandler
     */
    protected Optional<GModelElement> getContainer(final CreateNodeOperation operation) {
       return modelState.getIndex().get(operation.getContainerId());
+   }
+
+   @Override
+   public List<TriggerElementCreationAction> getTriggerActions() {
+      return getHandledElementTypeIds().stream().map(this::createTriggerNodeCreationAction)
+         .collect(Collectors.toList());
+   }
+
+   protected TriggerNodeCreationAction createTriggerNodeCreationAction(final String elementTypeId) {
+      return new TriggerNodeCreationAction(elementTypeId,
+         createTriggerArgs(elementTypeId),
+         createTriggerGhostElement(elementTypeId));
+   }
+
+   protected GhostElement createTriggerGhostElement(final String elementTypeId) {
+      return null;
+   }
+
+   protected Map<String, String> createTriggerArgs(final String elementTypeId) {
+      return null;
    }
 
    /**

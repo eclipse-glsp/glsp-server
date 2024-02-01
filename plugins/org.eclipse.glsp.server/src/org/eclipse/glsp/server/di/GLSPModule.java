@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2021-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -29,7 +29,6 @@ import com.google.inject.multibindings.OptionalBinder;
  * Common super class for GLSP guice {@link Module}s.
  */
 public abstract class GLSPModule extends AbstractModule {
-   public static final String CLIENT_ACTIONS = "ClientActions";
 
    /**
     * Splits the configure method in two phases. The "configureBase" sub method

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,27 +13,15 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ******************************************************************************/
-package org.eclipse.glsp.server.types;
+package org.eclipse.glsp.server.features.typehints;
 
-public class ServerStatus {
-   private final Severity severity;
-   private final String message;
-   private String details;
+import org.eclipse.glsp.server.actions.RequestAction;
 
-   public ServerStatus(final Severity severity, final String message) {
-      super();
-      this.severity = severity;
-      this.message = message;
+public class RequestTypeHintsAction extends RequestAction<SetTypeHintsAction> {
+
+   public static final String KIND = "requestTypeHints";
+
+   public RequestTypeHintsAction() {
+      super(KIND);
    }
-
-   public ServerStatus(final Severity severity, final String message, final String details) {
-      this(severity, message);
-      this.details = details;
-   }
-
-   public String getMessage() { return message; }
-
-   public Severity getSeverity() { return severity; }
-
-   public String getDetails() { return details; }
 }

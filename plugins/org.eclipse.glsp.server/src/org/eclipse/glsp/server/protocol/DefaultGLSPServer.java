@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2022 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,7 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.protocol;
 
-import static org.eclipse.glsp.server.utils.ServerMessageUtil.error;
+import static org.eclipse.glsp.server.utils.MessageActionUtil.error;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -26,6 +26,7 @@ import java.util.function.Function;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionMessage;
 import org.eclipse.glsp.server.actions.ActionRegistry;
 import org.eclipse.glsp.server.session.ClientSession;
@@ -81,7 +82,7 @@ public class DefaultGLSPServer implements GLSPServer {
       this.applicationId = params.getApplicationId();
 
       InitializeResult result = new InitializeResult(PROTOCOL_VERSION);
-      actionRegistry.getServerHandledActions()
+      actionRegistry.getHandledActionKinds()
          .forEach((diagramType, serverHandledActions) -> result.addServerActions(diagramType, serverHandledActions));
 
       initialized = handleIntializeArgs(result, params.getArgs());
@@ -103,6 +104,7 @@ public class DefaultGLSPServer implements GLSPServer {
       return CompletableFuture.completedFuture(result);
    }
 
+   @SuppressWarnings("deprecation")
    protected void validateServerInitialized() {
       if (!isInitialized()) {
          throw new ResponseErrorException(new ResponseError(ResponseErrorCode.serverNotInitialized,
@@ -117,8 +119,7 @@ public class DefaultGLSPServer implements GLSPServer {
       validateServerInitialized();
 
       try {
-         ClientSession session = sessionManager.getOrCreateClientSession(params.getClientSessionId(),
-            params.getDiagramType());
+         ClientSession session = sessionManager.getOrCreateClientSession(params);
          clientSessions.put(params.getClientSessionId(), session);
          return handleInitializeClientSessionArgs(params.getArgs());
       } catch (GLSPServerException exception) {
@@ -174,7 +175,9 @@ public class DefaultGLSPServer implements GLSPServer {
       };
 
       try {
-         clientSessions.get(clientSessionId).getActionDispatcher().dispatch(message.getAction())
+         Action action = message.getAction();
+         action.setReceivedFromClient(true);
+         clientSessions.get(clientSessionId).getActionDispatcher().dispatch(action)
             .exceptionally(errorHandler);
       } catch (RuntimeException e) {
          errorHandler.apply(e);

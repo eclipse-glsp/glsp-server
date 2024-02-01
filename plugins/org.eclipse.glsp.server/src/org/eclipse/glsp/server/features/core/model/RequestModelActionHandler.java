@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2022 EclipseSource and others.
+ * Copyright (c) 2019-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -18,12 +18,17 @@ package org.eclipse.glsp.server.features.core.model;
 import java.util.List;
 import java.util.Optional;
 
+import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.di.DiagramModule;
+import org.eclipse.glsp.server.features.progress.ProgressMonitor;
+import org.eclipse.glsp.server.features.progress.ProgressService;
 import org.eclipse.glsp.server.features.sourcemodelwatcher.SourceModelWatcher;
 import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.utils.ClientOptionsUtil;
+import org.eclipse.glsp.server.utils.StatusActionUtil;
 import org.eclipse.glsp.server.utils.ClientOptionsUtil;
 import org.eclipse.glsp.server.utils.ServerMessageUtil;
 import org.eclipse.glsp.server.utils.ServerStatusUtil;
@@ -55,6 +60,9 @@ public class RequestModelActionHandler extends AbstractActionHandler<RequestMode
    protected ModelSubmissionHandler modelSubmissionHandler;
 
    @Inject
+   protected ProgressService progressService;
+
+   @Inject
    protected GModelState modelState;
 
    @Override
@@ -63,24 +71,44 @@ public class RequestModelActionHandler extends AbstractActionHandler<RequestMode
       if (!ClientOptionsUtil.disableReloadIsTrue(action.getOptions()) || modelState.getRoot() == null) {
          modelState.setClientOptions(action.getOptions());
 
-         notifyStartLoading();
-         sourceModelStorage.loadSourceModel(action);
-         notifyFinishedLoading();
+         boolean isReconnecting = ClientOptionsUtil.isReconnecting(action.getOptions());
 
-         sourceModelWatcher.ifPresent(watcher -> watcher.startWatching());
+         ProgressMonitor monitor = notifyStartLoading();
+         if (isReconnecting) {
+            handleReconnect(action);
+         } else {
+            sourceModelStorage.loadSourceModel(action);
+         }
+         notifyFinishedLoading(monitor);
+
+         if (!isReconnecting) {
+            sourceModelWatcher.ifPresent(watcher -> watcher.startWatching());
+         }
       }
 
-      return modelSubmissionHandler.submitModel(action.getSubclientId());
+      return modelSubmissionHandler.submitInitialModel(action);
    }
 
-   protected void notifyStartLoading() {
-      actionDispatcher.dispatch(ServerStatusUtil.info("Model loading in progress!"));
-      actionDispatcher.dispatch(ServerMessageUtil.info("Model loading in progress!"));
+   protected void handleReconnect(final RequestModelAction action) {
+      GModelRoot oldModel = modelState.getRoot();
+      if (oldModel != null) {
+         // decrease revision by one, as each submit will increase it by one;
+         // the next save would produce warning that source model was changed otherwise
+         modelState.getRoot().setRevision(oldModel.getRevision() - 1);
+      } else {
+         sourceModelStorage.loadSourceModel(action);
+      }
    }
 
-   protected void notifyFinishedLoading() {
-      actionDispatcher.dispatch(ServerStatusUtil.clear());
-      actionDispatcher.dispatch(ServerMessageUtil.clear());
+   protected ProgressMonitor notifyStartLoading() {
+      String message = "Model loading in progress";
+      actionDispatcher.dispatch(StatusActionUtil.info(message));
+      return progressService.start(message);
+   }
+
+   protected void notifyFinishedLoading(final ProgressMonitor monitor) {
+      actionDispatcher.dispatch(StatusActionUtil.clear());
+      monitor.end();
    }
 
 }

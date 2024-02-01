@@ -16,7 +16,6 @@
 package org.eclipse.glsp.server.actions;
 
 import org.eclipse.glsp.server.protocol.GLSPServer;
-import org.eclipse.glsp.server.internal.util.GenericsUtil;
 
 /**
  * Java-implementation of the `Action` interface. An action is a declarative description of a behavior that
@@ -41,9 +40,11 @@ public abstract class Action {
     */
    private boolean receivedFromClient;
 
+   /**
+    * Unique identifier specifying the initiator of the action in a collaboration session.
+    * This value is initialized on the initating client.
+    */
    private String subclientId;
-
-   public Action(final String kind) {
 
    public Action(final String kind, final String subclientId) {
       super();

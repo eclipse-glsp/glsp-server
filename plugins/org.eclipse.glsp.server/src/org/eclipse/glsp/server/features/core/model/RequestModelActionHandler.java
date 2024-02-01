@@ -29,9 +29,6 @@ import org.eclipse.glsp.server.features.sourcemodelwatcher.SourceModelWatcher;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.ClientOptionsUtil;
 import org.eclipse.glsp.server.utils.StatusActionUtil;
-import org.eclipse.glsp.server.utils.ClientOptionsUtil;
-import org.eclipse.glsp.server.utils.ServerMessageUtil;
-import org.eclipse.glsp.server.utils.ServerStatusUtil;
 
 import com.google.inject.Inject;
 

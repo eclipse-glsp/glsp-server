@@ -2,17 +2,17 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: GLSP Server
 Bundle-SymbolicName: org.eclipse.glsp.server
-Bundle-Version: 1.1.0.qualifier
+Bundle-Version: 2.1.0
 Bundle-Vendor: Eclipse GLSP
 Automatic-Module-Name: org.eclipse.glsp.server
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Require-Bundle: org.eclipse.emf.ecore.change;bundle-version="2.14.0",
  com.google.gson;bundle-version="2.8.7",
  org.eclipse.lsp4j;bundle-version="0.11.0",
  org.eclipse.lsp4j.jsonrpc;bundle-version="0.11.0",
  org.apache.commons.cli;bundle-version="1.4.0";visibility:=reexport,
- com.google.inject;bundle-version="5.0.1";visibility:=reexport,
- org.eclipse.glsp.graph;bundle-version="[1.0.0,2.0.0)";visibility:=reexport
+ com.google.inject;bundle-version="[5.0.1,8.0.0)";visibility:=reexport,
+ org.eclipse.glsp.graph;bundle-version="[2.0.0,3.0.0)";visibility:=reexport
 Export-Package: org.eclipse.glsp.server.actions,
  org.eclipse.glsp.server.di,
  org.eclipse.glsp.server.di.scope,
@@ -26,8 +26,10 @@ Export-Package: org.eclipse.glsp.server.actions,
  org.eclipse.glsp.server.features.directediting,
  org.eclipse.glsp.server.features.navigation,
  org.eclipse.glsp.server.features.popup,
+ org.eclipse.glsp.server.features.progress,
  org.eclipse.glsp.server.features.sourcemodelwatcher,
  org.eclipse.glsp.server.features.toolpalette,
+ org.eclipse.glsp.server.features.typehints,
  org.eclipse.glsp.server.features.undoredo,
  org.eclipse.glsp.server.features.validation,
  org.eclipse.glsp.server.gmodel,
@@ -56,7 +58,8 @@ Export-Package: org.eclipse.glsp.server.actions,
  org.eclipse.glsp.server.session,
  org.eclipse.glsp.server.types,
  org.eclipse.glsp.server.utils
-Import-Package: javax.inject;version="1.0.0",
+Import-Package: jakarta.inject;resolution:=optional,
+ javax.inject;version="1.0.0",
  org.apache.logging.log4j;version="2.17.1",
  org.apache.logging.log4j.core;version="2.17.1",
  org.apache.logging.log4j.core.appender;version="2.17.1",

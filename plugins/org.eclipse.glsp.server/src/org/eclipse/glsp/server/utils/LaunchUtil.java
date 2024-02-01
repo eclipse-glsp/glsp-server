@@ -49,6 +49,7 @@ public final class LaunchUtil {
 
    public static final class DefaultOptions {
       public static final int SERVER_PORT = 0;
+      public static final String HOST_NAME = "127.0.0.1";
       public static final Level LOG_LEVEL = Level.INFO;
       public static final String LOG_DIR = new File("./logs/").getAbsolutePath();
       public static final boolean CONSOLE_LOG_ENABLED = true;

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2022 EclipseSource and others.
+ * Copyright (c) 2020-2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -38,6 +38,7 @@ import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.disposable.Disposable;
 import org.eclipse.glsp.server.model.DefaultGModelState;
 import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.protocol.InitializeClientSessionParameters;
 import org.eclipse.glsp.server.session.ClientSession;
 import org.eclipse.glsp.server.session.ClientSessionListener;
 import org.eclipse.glsp.server.session.ClientSessionManager;
@@ -145,12 +146,12 @@ class FileWatcherTest {
    }
 
    private void assertNoNotification() {
-      assertEquals(actionDispatcher.dispatchedActions.size(), 0);
+      assertEquals(0, actionDispatcher.dispatchedActions.size());
    }
 
-   private void assertNotifications(final int size) throws InterruptedException {
-      assertEquals(actionDispatcher.dispatchedActions.size(), size);
-      for (int i = 0; i < size; i++) {
+   private void assertNotifications(final int expectedNumberOfNotifications) throws InterruptedException {
+      assertEquals(expectedNumberOfNotifications, actionDispatcher.dispatchedActions.size());
+      for (int i = 0; i < expectedNumberOfNotifications; i++) {
          assertTrue(actionDispatcher.dispatchedActions.get(i) instanceof SourceModelChangedAction);
       }
    }
@@ -215,7 +216,7 @@ class FileWatcherTest {
       public boolean isDisposed() { return false; }
 
       @Override
-      public ClientSession getOrCreateClientSession(final String clientSessionId, final String diagramType) {
+      public ClientSession getOrCreateClientSession(final InitializeClientSessionParameters params) {
          return null;
       }
 

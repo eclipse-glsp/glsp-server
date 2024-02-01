@@ -7,7 +7,14 @@
 - [graph] Updated the Graph model and add Layoutable interface [#175](https://github.com/eclipse-glsp/glsp-server/pull/175) - Contributed on behalf of STMicroelectronics
 - [layout] Extend `ComputedBoundsAction` to also provide route data for client-side routed edges and store source/target point in the `args` map [#181](https://github.com/eclipse-glsp/glsp-server/pull/181)
 - [websocket] Remove listing on `stdin` from `WebsocketServerLauncher` [#189](https://github.com/eclipse-glsp/glsp-server/pull/189)
-- [diagram] Fixed a bug that prevented stable ids within one session when using the `IdKeeperAdapter` [#192](https://github.com/eclipse-glsp/glsp-server/pull/192) - Contributed on behalf of STMicroelectronics
+- [diagram] Fix a bug that prevented stable ids within one session when using the `IdKeeperAdapter` [#192](https://github.com/eclipse-glsp/glsp-server/pull/192) - Contributed on behalf of STMicroelectronics
+- [API] Introduce `deselectAll` flag for `SelectAction`s [#204](https://github.com/eclipse-glsp/glsp-server/pull/204)
+- [API] Add support for progress reporting [#205](https://github.com/eclipse-glsp/glsp-server/pull/205)
+- [diagram] Add support for handling reconnection requests to RequestModelActionHandler [#208](https://github.com/eclipse-glsp/glsp-server/pull/208)
+- [diagram] Add support for dynamic edge type hints [#210](https://github.com/eclipse-glsp/glsp-server/pull/210)
+  - Provide EdgeCreationChecker API. Adopters can implement this to handle dynamic edge creation validation requests.
+- [launch] Add `hostname` arg to `CLIParser` [#214](https://github.com/eclipse-glsp/glsp-server/pull/214)
+- [deps] Remove upper bounds version constraints for Guice and Guava [#216](https://github.com/eclipse-glsp/glsp-server/pull/216)
 
 ### Breaking Changes
 
@@ -19,12 +26,20 @@
 - [operation] Rework `OperationHandler` to provide an optional command instead of direct execution to allow more execution control [#187](https://github.com/eclipse-glsp/glsp-server/pull/187)
   - `Abstract<XYZ>` base implementations were deprecated in favor of `GModelOperationHandler` and `EMFOperationHandler` base classes
   - Long-term deprecated and unused `Basic<XYZ>` base classes were removed
-- [modelstate] Use interface-injection for all subclasses of GModelState (EMFModelState, EMFNotationModelState)
-  - EMFModelState and EMFNotationModelState are now interfaces instead of classes
-  - EMFModelStateImpl and EMFNotationModelStateImpl classes have been added
-  - Related Modules have been updated to inject these GModelState sub-types as a Singleton
+- [modelstate] Use interface-injection for all subclasses of GModelState (EMFModelState, EMFNotationModelState) [#199](https://github.com/eclipse-glsp/glsp-server/pull/199)
+  - `EMFModelState` and `EMFNotationModelState` are now interfaces instead of classes
+  - Add `EMFModelStateImpl` and `EMFNotationModelStateImpl` classes
+  - Update related modules to inject these GModelState sub-types as a Singleton
 - [validation] Add explicit support and API for live and batch validation [#200](https://github.com/eclipse-glsp/glsp-server/pull/200)
-- [server] Default ports have changed from 5007 (and 8081 for websockets) to 0, which implies autoassignment by the OS [#198](https://github.com/eclipse-glsp/glsp-server/pull/198)
+- [server] Change default ports from 5007 (and 8081 for websockets) to 0, which implies autoassignment by the OS [#198](https://github.com/eclipse-glsp/glsp-server/pull/198)
+- [API] Remove deprecated `GConstants.STACK` constant [#209](https://github.com/eclipse-glsp/glsp-server/pull/209)
+- [API] Revise model loading and client action handling [#211](https://github.com/eclipse-glsp/glsp-server/pull/211) 
+  - Refactor `ModelSubmissionHandler` to enable handling of `RequestModelAction` as proper request action
+    - Introduce a `submitInitialModel` method that is called by the `RequestModelActionHandler`
+  - Remove `configureClientActions` from `DiagramModule` as client actions are now implicitly configured via `InitializeClientSession` request
+  - Remove `ClientActionHandler` and replace with `ClientActionForwarder`
+  - Rename `ServerStatusAction` -> `StatusAction` and `ServerMessageAction` -> `MessageAction`
+- [deps] Set Java compliance level to Java 17 as Java 11 is now EOL [#217](https://github.com/eclipse-glsp/glsp-server/pull/217)
 
 ## [v1.0.0 - 30/06/2022](https://github.com/eclipse-glsp/glsp-server/releases/tag/v1.0.0)
 

@@ -64,7 +64,7 @@ public abstract class GModelElementBuilder<T extends GModelElement, E extends GM
       return self();
    }
 
-   public E addAll(final List<GModelElement> children) {
+   public E addAll(final List<? extends GModelElement> children) {
       this.children.addAll(children);
       return self();
    }

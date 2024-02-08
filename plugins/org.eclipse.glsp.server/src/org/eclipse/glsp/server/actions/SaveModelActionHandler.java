@@ -45,11 +45,11 @@ public class SaveModelActionHandler extends AbstractActionHandler<SaveModelActio
       modelSourceWatcher.ifPresent(watcher -> watcher.pauseWatching());
       try {
          sourceModelStorage.saveSourceModel(action);
-         modelState.saveIsDone();
+         modelState.saveIsDone(action.getSubclientId());
       } finally {
          modelSourceWatcher.ifPresent(watcher -> watcher.continueWatching());
       }
-      return listOf(new SetDirtyStateAction(modelState.isDirty(), SetDirtyStateAction.Reason.SAVE));
+      return listOf(new SetDirtyStateAction(modelState.isDirty(action.getSubclientId()), SetDirtyStateAction.Reason.SAVE));
    }
 
 }

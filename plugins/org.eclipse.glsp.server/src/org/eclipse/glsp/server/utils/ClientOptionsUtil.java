@@ -28,6 +28,8 @@ public final class ClientOptionsUtil {
    public static final String IS_RECONNECTING = "isReconnecting";
    private static final String FILE_PREFIX = "file://";
 
+   private static final String DISABLE_RELOAD = "disableReload";
+
    private ClientOptionsUtil() {}
 
    public static Optional<String> getSourceUri(final Map<String, String> options) {
@@ -36,6 +38,15 @@ public final class ClientOptionsUtil {
 
    public static Optional<String> getDiagramType(final Map<String, String> options) {
       return MapUtil.getValue(options, DIAGRAM_TYPE);
+   }
+
+   public static Optional<Boolean> getDisableReload(final Map<String, String> options) {
+      return MapUtil.getValue(options, DISABLE_RELOAD).map(Boolean::valueOf);
+   }
+
+   public static Boolean disableReloadIsTrue(final Map<String, String> options) {
+      Optional<Boolean> disableReload = getDisableReload(options);
+      return disableReload.isPresent() && disableReload.get();
    }
 
    public static Optional<File> getSourceUriAsFile(final Map<String, String> options) {

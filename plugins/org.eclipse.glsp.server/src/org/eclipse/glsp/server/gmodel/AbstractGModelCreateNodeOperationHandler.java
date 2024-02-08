@@ -22,6 +22,7 @@ import java.util.Optional;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.AbstractCreateOperationHandler;
@@ -59,7 +60,10 @@ public abstract class AbstractGModelCreateNodeOperationHandler
          .map(location -> LayoutUtil.getRelativeLocation(location, container));
       GModelElement element = createNode(relativeLocation, operation.getArgs());
       container.getChildren().add(element);
-      actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(element.getId())));
+      actionDispatcher.dispatchAfterNextUpdate(
+              Action.addSubclientId(operation, new SelectAction()),
+              Action.addSubclientId(operation, new SelectAction(List.of(element.getId())))
+      );
    }
 
    /**

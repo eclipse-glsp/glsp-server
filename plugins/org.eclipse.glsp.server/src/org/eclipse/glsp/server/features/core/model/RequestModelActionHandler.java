@@ -64,20 +64,23 @@ public class RequestModelActionHandler extends AbstractActionHandler<RequestMode
 
    @Override
    public List<Action> executeAction(final RequestModelAction action) {
-      modelState.setClientOptions(action.getOptions());
+      // only reload if not initialized
+      if (!ClientOptionsUtil.disableReloadIsTrue(action.getOptions()) || modelState.getRoot() == null) {
+         modelState.setClientOptions(action.getOptions());
 
-      boolean isReconnecting = ClientOptionsUtil.isReconnecting(action.getOptions());
+         boolean isReconnecting = ClientOptionsUtil.isReconnecting(action.getOptions());
 
-      ProgressMonitor monitor = notifyStartLoading();
-      if (isReconnecting) {
-         handleReconnect(action);
-      } else {
-         sourceModelStorage.loadSourceModel(action);
-      }
-      notifyFinishedLoading(monitor);
+         ProgressMonitor monitor = notifyStartLoading();
+         if (isReconnecting) {
+            handleReconnect(action);
+         } else {
+            sourceModelStorage.loadSourceModel(action);
+         }
+         notifyFinishedLoading(monitor);
 
-      if (!isReconnecting) {
-         sourceModelWatcher.ifPresent(watcher -> watcher.startWatching());
+         if (!isReconnecting) {
+            sourceModelWatcher.ifPresent(watcher -> watcher.startWatching());
+         }
       }
 
       return modelSubmissionHandler.submitInitialModel(action);

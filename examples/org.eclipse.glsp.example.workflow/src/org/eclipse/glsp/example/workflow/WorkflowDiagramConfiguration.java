@@ -56,7 +56,7 @@ public class WorkflowDiagramConfiguration extends BaseDiagramConfiguration {
       mappings.put(LABEL_TEXT, GraphPackage.Literals.GLABEL);
       mappings.put(COMP_HEADER, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(LABEL_ICON, GraphPackage.Literals.GLABEL);
-      mappings.put(WEIGHTED_EDGE, GraphPackage.Literals.GEDGE);
+      mappings.put(WEIGHTED_EDGE, WfgraphPackage.Literals.WEIGHTED_EDGE);
       mappings.put(ICON, WfgraphPackage.Literals.ICON);
       mappings.put(ACTIVITY_NODE, WfgraphPackage.Literals.ACTIVITY_NODE);
       mappings.put(TASK, WfgraphPackage.Literals.TASK_NODE);
@@ -105,7 +105,6 @@ public class WorkflowDiagramConfiguration extends BaseDiagramConfiguration {
       return edgeHints;
    }
 
- 
    @Override
    public ServerLayoutKind getLayoutKind() { return ServerLayoutKind.MANUAL; }
 

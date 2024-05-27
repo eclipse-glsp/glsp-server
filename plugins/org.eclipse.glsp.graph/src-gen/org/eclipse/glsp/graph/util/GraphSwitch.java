@@ -101,6 +101,8 @@ public class GraphSwitch<T> extends Switch<T> {
             if (result == null)
                result = caseGLayoutable(gShapeElement);
             if (result == null)
+               result = caseGResizable(gShapeElement);
+            if (result == null)
                result = caseGArgumentable(gShapeElement);
             if (result == null)
                result = defaultCase(theEObject);
@@ -150,6 +152,8 @@ public class GraphSwitch<T> extends Switch<T> {
             if (result == null)
                result = caseGLayoutable(gNode);
             if (result == null)
+               result = caseGResizable(gNode);
+            if (result == null)
                result = caseGArgumentable(gNode);
             if (result == null)
                result = defaultCase(theEObject);
@@ -180,6 +184,8 @@ public class GraphSwitch<T> extends Switch<T> {
             if (result == null)
                result = caseGLayoutable(gCompartment);
             if (result == null)
+               result = caseGResizable(gCompartment);
+            if (result == null)
                result = caseGArgumentable(gCompartment);
             if (result == null)
                result = defaultCase(theEObject);
@@ -201,6 +207,8 @@ public class GraphSwitch<T> extends Switch<T> {
             if (result == null)
                result = caseGLayoutable(gLabel);
             if (result == null)
+               result = caseGResizable(gLabel);
+            if (result == null)
                result = caseGArgumentable(gLabel);
             if (result == null)
                result = defaultCase(theEObject);
@@ -217,6 +225,8 @@ public class GraphSwitch<T> extends Switch<T> {
                result = caseGBoundsAware(gIssueMarker);
             if (result == null)
                result = caseGLayoutable(gIssueMarker);
+            if (result == null)
+               result = caseGResizable(gIssueMarker);
             if (result == null)
                result = caseGArgumentable(gIssueMarker);
             if (result == null)
@@ -235,6 +245,8 @@ public class GraphSwitch<T> extends Switch<T> {
             if (result == null)
                result = caseGLayoutable(gPort);
             if (result == null)
+               result = caseGResizable(gPort);
+            if (result == null)
                result = caseGArgumentable(gPort);
             if (result == null)
                result = defaultCase(theEObject);
@@ -251,6 +263,8 @@ public class GraphSwitch<T> extends Switch<T> {
                result = caseGBoundsAware(gButton);
             if (result == null)
                result = caseGLayoutable(gButton);
+            if (result == null)
+               result = caseGResizable(gButton);
             if (result == null)
                result = caseGArgumentable(gButton);
             if (result == null)
@@ -379,6 +393,13 @@ public class GraphSwitch<T> extends Switch<T> {
          case GraphPackage.GLAYOUTABLE: {
             GLayoutable gLayoutable = (GLayoutable) theEObject;
             T result = caseGLayoutable(gLayoutable);
+            if (result == null)
+               result = defaultCase(theEObject);
+            return result;
+         }
+         case GraphPackage.GRESIZABLE: {
+            GResizable gResizable = (GResizable) theEObject;
+            T result = caseGResizable(gResizable);
             if (result == null)
                result = defaultCase(theEObject);
             return result;
@@ -775,6 +796,21 @@ public class GraphSwitch<T> extends Switch<T> {
     * @generated
     */
    public T caseGLayoutable(GLayoutable object) {
+      return null;
+   }
+
+   /**
+    * Returns the result of interpreting the object as an instance of '<em>GResizable</em>'.
+    * <!-- begin-user-doc -->
+    * This implementation returns null;
+    * returning a non-null result will terminate the switch.
+    * <!-- end-user-doc -->
+    * @param object the target of the switch.
+    * @return the result of interpreting the object as an instance of '<em>GResizable</em>'.
+    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+    * @generated
+    */
+   public T caseGResizable(GResizable object) {
       return null;
    }
 

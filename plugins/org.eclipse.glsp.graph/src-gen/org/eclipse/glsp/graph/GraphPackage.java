@@ -300,13 +300,22 @@ public interface GraphPackage extends EPackage {
    int GSHAPE_ELEMENT__LAYOUT_OPTIONS = GMODEL_ELEMENT_FEATURE_COUNT + 2;
 
    /**
+    * The feature id for the '<em><b>Resize Locations</b></em>' attribute list.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GSHAPE_ELEMENT__RESIZE_LOCATIONS = GMODEL_ELEMENT_FEATURE_COUNT + 3;
+
+   /**
     * The number of structural features of the '<em>GShape Element</em>' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int GSHAPE_ELEMENT_FEATURE_COUNT = GMODEL_ELEMENT_FEATURE_COUNT + 3;
+   int GSHAPE_ELEMENT_FEATURE_COUNT = GMODEL_ELEMENT_FEATURE_COUNT + 4;
 
    /**
     * The number of operations of the '<em>GShape Element</em>' class.
@@ -663,6 +672,15 @@ public interface GraphPackage extends EPackage {
    int GNODE__LAYOUT_OPTIONS = GSHAPE_ELEMENT__LAYOUT_OPTIONS;
 
    /**
+    * The feature id for the '<em><b>Resize Locations</b></em>' attribute list.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GNODE__RESIZE_LOCATIONS = GSHAPE_ELEMENT__RESIZE_LOCATIONS;
+
+   /**
     * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -944,6 +962,15 @@ public interface GraphPackage extends EPackage {
    int GCOMPARTMENT__LAYOUT_OPTIONS = GSHAPE_ELEMENT__LAYOUT_OPTIONS;
 
    /**
+    * The feature id for the '<em><b>Resize Locations</b></em>' attribute list.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GCOMPARTMENT__RESIZE_LOCATIONS = GSHAPE_ELEMENT__RESIZE_LOCATIONS;
+
+   /**
     * The feature id for the '<em><b>Layout</b></em>' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -1126,13 +1153,22 @@ public interface GraphPackage extends EPackage {
    int GLABEL__LAYOUT_OPTIONS = GALIGNABLE_FEATURE_COUNT + 10;
 
    /**
+    * The feature id for the '<em><b>Resize Locations</b></em>' attribute list.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GLABEL__RESIZE_LOCATIONS = GALIGNABLE_FEATURE_COUNT + 11;
+
+   /**
     * The feature id for the '<em><b>Text</b></em>' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int GLABEL__TEXT = GALIGNABLE_FEATURE_COUNT + 11;
+   int GLABEL__TEXT = GALIGNABLE_FEATURE_COUNT + 12;
 
    /**
     * The number of structural features of the '<em>GLabel</em>' class.
@@ -1141,7 +1177,7 @@ public interface GraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GLABEL_FEATURE_COUNT = GALIGNABLE_FEATURE_COUNT + 12;
+   int GLABEL_FEATURE_COUNT = GALIGNABLE_FEATURE_COUNT + 13;
 
    /**
     * The number of operations of the '<em>GLabel</em>' class.
@@ -1251,6 +1287,15 @@ public interface GraphPackage extends EPackage {
     * @ordered
     */
    int GISSUE_MARKER__LAYOUT_OPTIONS = GSHAPE_ELEMENT__LAYOUT_OPTIONS;
+
+   /**
+    * The feature id for the '<em><b>Resize Locations</b></em>' attribute list.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GISSUE_MARKER__RESIZE_LOCATIONS = GSHAPE_ELEMENT__RESIZE_LOCATIONS;
 
    /**
     * The feature id for the '<em><b>Issues</b></em>' containment reference list.
@@ -1380,6 +1425,15 @@ public interface GraphPackage extends EPackage {
    int GPORT__LAYOUT_OPTIONS = GSHAPE_ELEMENT__LAYOUT_OPTIONS;
 
    /**
+    * The feature id for the '<em><b>Resize Locations</b></em>' attribute list.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GPORT__RESIZE_LOCATIONS = GSHAPE_ELEMENT__RESIZE_LOCATIONS;
+
+   /**
     * The number of structural features of the '<em>GPort</em>' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -1496,6 +1550,15 @@ public interface GraphPackage extends EPackage {
     * @ordered
     */
    int GBUTTON__LAYOUT_OPTIONS = GSHAPE_ELEMENT__LAYOUT_OPTIONS;
+
+   /**
+    * The feature id for the '<em><b>Resize Locations</b></em>' attribute list.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GBUTTON__RESIZE_LOCATIONS = GSHAPE_ELEMENT__RESIZE_LOCATIONS;
 
    /**
     * The feature id for the '<em><b>Enabled</b></em>' attribute.
@@ -2339,6 +2402,43 @@ public interface GraphPackage extends EPackage {
    int STRING_TO_OBJECT_MAP_ENTRY_OPERATION_COUNT = 0;
 
    /**
+    * The meta object id for the '{@link org.eclipse.glsp.graph.impl.GResizableImpl <em>GResizable</em>}' class.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see org.eclipse.glsp.graph.impl.GResizableImpl
+    * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGResizable()
+    * @generated
+    */
+   int GRESIZABLE = 26;
+
+   /**
+    * The feature id for the '<em><b>Resize Locations</b></em>' attribute list.
+    * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GRESIZABLE__RESIZE_LOCATIONS = 0;
+
+   /**
+    * The number of structural features of the '<em>GResizable</em>' class.
+    * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GRESIZABLE_FEATURE_COUNT = 1;
+
+   /**
+    * The number of operations of the '<em>GResizable</em>' class.
+    * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GRESIZABLE_OPERATION_COUNT = 0;
+
+   /**
     * The meta object id for the '{@link org.eclipse.glsp.graph.GSeverity <em>GSeverity</em>}' enum.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -2346,7 +2446,7 @@ public interface GraphPackage extends EPackage {
     * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGSeverity()
     * @generated
     */
-   int GSEVERITY = 26;
+   int GSEVERITY = 27;
 
    /**
     * Returns the meta object for class '{@link org.eclipse.glsp.graph.GModelElement <em>GModel Element</em>}'.
@@ -3073,6 +3173,27 @@ public interface GraphPackage extends EPackage {
    EReference getGLayoutable_LayoutOptions();
 
    /**
+    * Returns the meta object for class '{@link org.eclipse.glsp.graph.GResizable <em>GResizable</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for class '<em>GResizable</em>'.
+    * @see org.eclipse.glsp.graph.GResizable
+    * @generated
+    */
+   EClass getGResizable();
+
+   /**
+    * Returns the meta object for the attribute list '{@link org.eclipse.glsp.graph.GResizable#getResizeLocations <em>Resize Locations</em>}'.
+    * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+    * @return the meta object for the attribute list '<em>Resize Locations</em>'.
+    * @see org.eclipse.glsp.graph.GResizable#getResizeLocations()
+    * @see #getGResizable()
+    * @generated
+    */
+   EAttribute getGResizable_ResizeLocations();
+
+   /**
     * Returns the meta object for enum '{@link org.eclipse.glsp.graph.GSeverity <em>GSeverity</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -3696,10 +3817,28 @@ public interface GraphPackage extends EPackage {
       /**
        * The meta object literal for the '<em><b>Layout Options</b></em>' map feature.
        * <!-- begin-user-doc -->
-      	 * <!-- end-user-doc -->
+       * <!-- end-user-doc -->
        * @generated
        */
       EReference GLAYOUTABLE__LAYOUT_OPTIONS = eINSTANCE.getGLayoutable_LayoutOptions();
+
+      /**
+       * The meta object literal for the '{@link org.eclipse.glsp.graph.impl.GResizableImpl <em>GResizable</em>}' class.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @see org.eclipse.glsp.graph.impl.GResizableImpl
+       * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGResizable()
+       * @generated
+       */
+      EClass GRESIZABLE = eINSTANCE.getGResizable();
+
+      /**
+       * The meta object literal for the '<em><b>Resize Locations</b></em>' attribute list feature.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      EAttribute GRESIZABLE__RESIZE_LOCATIONS = eINSTANCE.getGResizable_ResizeLocations();
 
       /**
        * The meta object literal for the '{@link org.eclipse.glsp.graph.GSeverity <em>GSeverity</em>}' enum.

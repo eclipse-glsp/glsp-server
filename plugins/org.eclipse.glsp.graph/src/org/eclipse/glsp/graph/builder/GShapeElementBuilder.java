@@ -15,6 +15,8 @@
  ********************************************************************************/
 package org.eclipse.glsp.graph.builder;
 
+import java.util.List;
+
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.GShapeElement;
@@ -25,6 +27,7 @@ public abstract class GShapeElementBuilder<T extends GShapeElement, E extends GS
 
    protected GDimension size;
    protected GPoint position;
+   protected List<String> resizeLocations;
 
    public GShapeElementBuilder(String type) {
       super(type);
@@ -48,11 +51,19 @@ public abstract class GShapeElementBuilder<T extends GShapeElement, E extends GS
       return position(GraphUtil.point(x, y));
    }
 
+   public E resizeLocations(String... locations) {
+      this.resizeLocations = List.of(locations);
+      return self();
+   }
+
    @Override
    protected void setProperties(T element) {
       super.setProperties(element);
       element.setSize(size);
       element.setPosition(position);
+      if (this.resizeLocations != null) {
+         element.getResizeLocations().addAll(this.resizeLocations);
+      }
    }
 
 }

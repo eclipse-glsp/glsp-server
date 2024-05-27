@@ -15,7 +15,14 @@
  ********************************************************************************/
 package org.eclipse.glsp.example.workflow.handler;
 
+import java.util.Map;
+import java.util.Optional;
+
 import org.eclipse.glsp.example.workflow.utils.ModelTypes;
+import org.eclipse.glsp.example.workflow.utils.WorkflowBuilder.ActivityNodeBuilder;
+import org.eclipse.glsp.graph.GNode;
+import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.graph.GResizeLocation;
 
 public class CreateMergeNodeHandler extends CreateActivityNodeHandler {
 
@@ -23,4 +30,12 @@ public class CreateMergeNodeHandler extends CreateActivityNodeHandler {
       super(ModelTypes.MERGE_NODE, "Merge Node");
    }
 
+   @Override
+   protected GNode createNode(final Optional<GPoint> point, final Map<String, String> args) {
+      String nodeType = ModelTypes.toNodeType(getElementTypeId());
+      return new ActivityNodeBuilder(getElementTypeId(), nodeType) //
+         .position(point.orElse(null)) //
+         .resizeLocations(GResizeLocation.CROSS) //
+         .build();
+   }
 }

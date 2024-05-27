@@ -216,6 +216,15 @@ public interface GraphFactory extends EFactory {
    GLayoutable createGLayoutable();
 
    /**
+    * Returns a new object of class '<em>GResizable</em>'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return a new object of class '<em>GResizable</em>'.
+    * @generated
+    */
+   GResizable createGResizable();
+
+   /**
     * Returns the package supported by this factory.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->

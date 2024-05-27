@@ -45,6 +45,7 @@ import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GLayoutable;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.graph.GResizable;
 import org.eclipse.glsp.graph.GShapeElement;
 import org.eclipse.glsp.graph.GraphPackage;
 
@@ -67,6 +68,7 @@ import org.eclipse.glsp.graph.GraphPackage;
  *   <li>{@link org.eclipse.glsp.graph.impl.GLabelImpl#getPosition <em>Position</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GLabelImpl#getSize <em>Size</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GLabelImpl#getLayoutOptions <em>Layout Options</em>}</li>
+ *   <li>{@link org.eclipse.glsp.graph.impl.GLabelImpl#getResizeLocations <em>Resize Locations</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GLabelImpl#getText <em>Text</em>}</li>
  * </ul>
  *
@@ -202,6 +204,16 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
     * @ordered
     */
    protected EMap<String, Object> layoutOptions;
+
+   /**
+    * The cached value of the '{@link #getResizeLocations() <em>Resize Locations</em>}' attribute list.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #getResizeLocations()
+    * @generated
+    * @ordered
+    */
+   protected EList<String> resizeLocations;
 
    /**
     * The default value of the '{@link #getText() <em>Text</em>}' attribute.
@@ -561,6 +573,19 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
     * @generated
     */
    @Override
+   public EList<String> getResizeLocations() {
+      if (resizeLocations == null) {
+         resizeLocations = new EDataTypeUniqueEList<String>(String.class, this, GraphPackage.GLABEL__RESIZE_LOCATIONS);
+      }
+      return resizeLocations;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
    public String getText() { return text; }
 
    /**
@@ -672,6 +697,8 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
                return getLayoutOptions();
             else
                return getLayoutOptions().map();
+         case GraphPackage.GLABEL__RESIZE_LOCATIONS:
+            return getResizeLocations();
          case GraphPackage.GLABEL__TEXT:
             return getText();
       }
@@ -722,6 +749,10 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
          case GraphPackage.GLABEL__LAYOUT_OPTIONS:
             ((EStructuralFeature.Setting) getLayoutOptions()).set(newValue);
             return;
+         case GraphPackage.GLABEL__RESIZE_LOCATIONS:
+            getResizeLocations().clear();
+            getResizeLocations().addAll((Collection<? extends String>) newValue);
+            return;
          case GraphPackage.GLABEL__TEXT:
             setText((String) newValue);
             return;
@@ -770,6 +801,9 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
          case GraphPackage.GLABEL__LAYOUT_OPTIONS:
             getLayoutOptions().clear();
             return;
+         case GraphPackage.GLABEL__RESIZE_LOCATIONS:
+            getResizeLocations().clear();
+            return;
          case GraphPackage.GLABEL__TEXT:
             setText(TEXT_EDEFAULT);
             return;
@@ -807,6 +841,8 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
             return size != null;
          case GraphPackage.GLABEL__LAYOUT_OPTIONS:
             return layoutOptions != null && !layoutOptions.isEmpty();
+         case GraphPackage.GLABEL__RESIZE_LOCATIONS:
+            return resizeLocations != null && !resizeLocations.isEmpty();
          case GraphPackage.GLABEL__TEXT:
             return TEXT_EDEFAULT == null ? text != null : !TEXT_EDEFAULT.equals(text);
       }
@@ -868,6 +904,14 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
          switch (derivedFeatureID) {
             case GraphPackage.GLABEL__LAYOUT_OPTIONS:
                return GraphPackage.GLAYOUTABLE__LAYOUT_OPTIONS;
+            default:
+               return -1;
+         }
+      }
+      if (baseClass == GResizable.class) {
+         switch (derivedFeatureID) {
+            case GraphPackage.GLABEL__RESIZE_LOCATIONS:
+               return GraphPackage.GRESIZABLE__RESIZE_LOCATIONS;
             default:
                return -1;
          }
@@ -940,6 +984,14 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
                return -1;
          }
       }
+      if (baseClass == GResizable.class) {
+         switch (baseFeatureID) {
+            case GraphPackage.GRESIZABLE__RESIZE_LOCATIONS:
+               return GraphPackage.GLABEL__RESIZE_LOCATIONS;
+            default:
+               return -1;
+         }
+      }
       if (baseClass == GShapeElement.class) {
          switch (baseFeatureID) {
             default:
@@ -968,6 +1020,8 @@ public class GLabelImpl extends GAlignableImpl implements GLabel {
       result.append(trace);
       result.append(", type: ");
       result.append(type);
+      result.append(", resizeLocations: ");
+      result.append(resizeLocations);
       result.append(", text: ");
       result.append(text);
       result.append(')');

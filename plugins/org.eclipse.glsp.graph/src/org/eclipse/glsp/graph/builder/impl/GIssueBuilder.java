@@ -21,10 +21,14 @@ import org.eclipse.glsp.graph.GraphFactory;
 import org.eclipse.glsp.graph.builder.GBuilder;
 
 public class GIssueBuilder extends GBuilder<GIssue> {
-   private GSeverity severity;
+   private String severity;
    private String message;
 
    public GIssueBuilder severity(GSeverity severity) {
+      return this.severity(severity.getLiteral());
+   }
+
+   public GIssueBuilder severity(String severity) {
       this.severity = severity;
       return this;
    }

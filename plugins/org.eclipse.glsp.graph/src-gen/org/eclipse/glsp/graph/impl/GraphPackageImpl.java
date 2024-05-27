@@ -49,6 +49,7 @@ import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.GPort;
 import org.eclipse.glsp.graph.GPreRenderedElement;
+import org.eclipse.glsp.graph.GResizable;
 import org.eclipse.glsp.graph.GSeverity;
 import org.eclipse.glsp.graph.GShapeElement;
 import org.eclipse.glsp.graph.GShapePreRenderedElement;
@@ -243,6 +244,13 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
     * @generated
     */
    private EClass gLayoutableEClass = null;
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   private EClass gResizableEClass = null;
 
    /**
     * <!-- begin-user-doc -->
@@ -901,6 +909,24 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
     * @generated
     */
    @Override
+   public EClass getGResizable() { return gResizableEClass; }
+
+   /**
+    * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
+   public EAttribute getGResizable_ResizeLocations() {
+      return (EAttribute) gResizableEClass.getEStructuralFeatures().get(0);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
    public EEnum getGSeverity() { return gSeverityEEnum; }
 
    /**
@@ -1025,6 +1051,9 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
       gLayoutableEClass = createEClass(GLAYOUTABLE);
       createEReference(gLayoutableEClass, GLAYOUTABLE__LAYOUT_OPTIONS);
 
+      gResizableEClass = createEClass(GRESIZABLE);
+      createEAttribute(gResizableEClass, GRESIZABLE__RESIZE_LOCATIONS);
+
       // Create enums
       gSeverityEEnum = createEEnum(GSEVERITY);
    }
@@ -1062,6 +1091,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
       gShapeElementEClass.getESuperTypes().add(this.getGModelElement());
       gShapeElementEClass.getESuperTypes().add(this.getGBoundsAware());
       gShapeElementEClass.getESuperTypes().add(this.getGLayoutable());
+      gShapeElementEClass.getESuperTypes().add(this.getGResizable());
       gGraphEClass.getESuperTypes().add(this.getGModelRoot());
       gGraphEClass.getESuperTypes().add(this.getGBoundsAware());
       gGraphEClass.getESuperTypes().add(this.getGLayoutable());
@@ -1223,8 +1253,8 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
          !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
       initEClass(gIssueEClass, GIssue.class, "GIssue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-      initEAttribute(getGIssue_Severity(), this.getGSeverity(), "severity", "info", 1, 1, GIssue.class, !IS_TRANSIENT,
-         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+      initEAttribute(getGIssue_Severity(), ecorePackage.getEString(), "severity", "info", 1, 1, GIssue.class,
+         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
       initEAttribute(getGIssue_Message(), ecorePackage.getEString(), "message", null, 0, 1, GIssue.class, !IS_TRANSIENT,
          !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1255,6 +1285,12 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
       initEReference(getGLayoutable_LayoutOptions(), this.getStringToObjectMapEntry(), null, "layoutOptions", null, 0,
          -1, GLayoutable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
          !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+      initEClass(gResizableEClass, GResizable.class, "GResizable", !IS_ABSTRACT, !IS_INTERFACE,
+         IS_GENERATED_INSTANCE_CLASS);
+      initEAttribute(getGResizable_ResizeLocations(), ecorePackage.getEString(), "resizeLocations", null, 0, -1,
+         GResizable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+         IS_ORDERED);
 
       // Initialize enums and add enum literals
       initEEnum(gSeverityEEnum, GSeverity.class, "GSeverity");

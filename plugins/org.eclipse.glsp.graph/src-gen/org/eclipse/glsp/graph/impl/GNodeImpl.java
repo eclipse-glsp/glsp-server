@@ -45,6 +45,7 @@ import org.eclipse.glsp.graph.GLayouting;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.graph.GResizable;
 import org.eclipse.glsp.graph.GraphPackage;
 
 /**
@@ -64,6 +65,7 @@ import org.eclipse.glsp.graph.GraphPackage;
  *   <li>{@link org.eclipse.glsp.graph.impl.GNodeImpl#getPosition <em>Position</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GNodeImpl#getSize <em>Size</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GNodeImpl#getLayoutOptions <em>Layout Options</em>}</li>
+ *   <li>{@link org.eclipse.glsp.graph.impl.GNodeImpl#getResizeLocations <em>Resize Locations</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GNodeImpl#getEdgePlacement <em>Edge Placement</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GNodeImpl#getLayout <em>Layout</em>}</li>
  * </ul>
@@ -180,6 +182,16 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
     * @ordered
     */
    protected EMap<String, Object> layoutOptions;
+
+   /**
+    * The cached value of the '{@link #getResizeLocations() <em>Resize Locations</em>}' attribute list.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #getResizeLocations()
+    * @generated
+    * @ordered
+    */
+   protected EList<String> resizeLocations;
 
    /**
     * The cached value of the '{@link #getEdgePlacement() <em>Edge Placement</em>}' containment reference.
@@ -554,6 +566,19 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
     * <!-- end-user-doc -->
     * @generated
     */
+   @Override
+   public EList<String> getResizeLocations() {
+      if (resizeLocations == null) {
+         resizeLocations = new EDataTypeUniqueEList<String>(String.class, this, GraphPackage.GNODE__RESIZE_LOCATIONS);
+      }
+      return resizeLocations;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
    @SuppressWarnings("unchecked")
    @Override
    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -636,6 +661,8 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
                return getLayoutOptions();
             else
                return getLayoutOptions().map();
+         case GraphPackage.GNODE__RESIZE_LOCATIONS:
+            return getResizeLocations();
          case GraphPackage.GNODE__EDGE_PLACEMENT:
             return getEdgePlacement();
          case GraphPackage.GNODE__LAYOUT:
@@ -682,6 +709,10 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
          case GraphPackage.GNODE__LAYOUT_OPTIONS:
             ((EStructuralFeature.Setting) getLayoutOptions()).set(newValue);
             return;
+         case GraphPackage.GNODE__RESIZE_LOCATIONS:
+            getResizeLocations().clear();
+            getResizeLocations().addAll((Collection<? extends String>) newValue);
+            return;
          case GraphPackage.GNODE__EDGE_PLACEMENT:
             setEdgePlacement((GEdgePlacement) newValue);
             return;
@@ -727,6 +758,9 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
          case GraphPackage.GNODE__LAYOUT_OPTIONS:
             getLayoutOptions().clear();
             return;
+         case GraphPackage.GNODE__RESIZE_LOCATIONS:
+            getResizeLocations().clear();
+            return;
          case GraphPackage.GNODE__EDGE_PLACEMENT:
             setEdgePlacement((GEdgePlacement) null);
             return;
@@ -763,6 +797,8 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
             return size != null;
          case GraphPackage.GNODE__LAYOUT_OPTIONS:
             return layoutOptions != null && !layoutOptions.isEmpty();
+         case GraphPackage.GNODE__RESIZE_LOCATIONS:
+            return resizeLocations != null && !resizeLocations.isEmpty();
          case GraphPackage.GNODE__EDGE_PLACEMENT:
             return edgePlacement != null;
          case GraphPackage.GNODE__LAYOUT:
@@ -792,6 +828,14 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
          switch (derivedFeatureID) {
             case GraphPackage.GNODE__LAYOUT_OPTIONS:
                return GraphPackage.GLAYOUTABLE__LAYOUT_OPTIONS;
+            default:
+               return -1;
+         }
+      }
+      if (baseClass == GResizable.class) {
+         switch (derivedFeatureID) {
+            case GraphPackage.GNODE__RESIZE_LOCATIONS:
+               return GraphPackage.GRESIZABLE__RESIZE_LOCATIONS;
             default:
                return -1;
          }
@@ -840,6 +884,14 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
                return -1;
          }
       }
+      if (baseClass == GResizable.class) {
+         switch (baseFeatureID) {
+            case GraphPackage.GRESIZABLE__RESIZE_LOCATIONS:
+               return GraphPackage.GNODE__RESIZE_LOCATIONS;
+            default:
+               return -1;
+         }
+      }
       if (baseClass == GEdgeLayoutable.class) {
          switch (baseFeatureID) {
             case GraphPackage.GEDGE_LAYOUTABLE__EDGE_PLACEMENT:
@@ -878,6 +930,8 @@ public class GNodeImpl extends GArgumentableImpl implements GNode {
       result.append(trace);
       result.append(", type: ");
       result.append(type);
+      result.append(", resizeLocations: ");
+      result.append(resizeLocations);
       result.append(", layout: ");
       result.append(layout);
       result.append(')');

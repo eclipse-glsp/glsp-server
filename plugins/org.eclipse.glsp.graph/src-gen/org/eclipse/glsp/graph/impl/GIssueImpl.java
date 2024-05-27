@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.glsp.graph.GIssue;
-import org.eclipse.glsp.graph.GSeverity;
 import org.eclipse.glsp.graph.GraphPackage;
 
 /**
@@ -50,7 +49,7 @@ public class GIssueImpl extends MinimalEObjectImpl.Container implements GIssue {
     * @generated
     * @ordered
     */
-   protected static final GSeverity SEVERITY_EDEFAULT = GSeverity.INFO;
+   protected static final String SEVERITY_EDEFAULT = "info";
 
    /**
     * The cached value of the '{@link #getSeverity() <em>Severity</em>}' attribute.
@@ -60,7 +59,7 @@ public class GIssueImpl extends MinimalEObjectImpl.Container implements GIssue {
     * @generated
     * @ordered
     */
-   protected GSeverity severity = SEVERITY_EDEFAULT;
+   protected String severity = SEVERITY_EDEFAULT;
 
    /**
     * The default value of the '{@link #getMessage() <em>Message</em>}' attribute.
@@ -107,7 +106,7 @@ public class GIssueImpl extends MinimalEObjectImpl.Container implements GIssue {
     * @generated
     */
    @Override
-   public GSeverity getSeverity() { return severity; }
+   public String getSeverity() { return severity; }
 
    /**
     * <!-- begin-user-doc -->
@@ -115,9 +114,9 @@ public class GIssueImpl extends MinimalEObjectImpl.Container implements GIssue {
     * @generated
     */
    @Override
-   public void setSeverity(GSeverity newSeverity) {
-      GSeverity oldSeverity = severity;
-      severity = newSeverity == null ? SEVERITY_EDEFAULT : newSeverity;
+   public void setSeverity(String newSeverity) {
+      String oldSeverity = severity;
+      severity = newSeverity;
       if (eNotificationRequired())
          eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.GISSUE__SEVERITY, oldSeverity, severity));
    }
@@ -168,7 +167,7 @@ public class GIssueImpl extends MinimalEObjectImpl.Container implements GIssue {
    public void eSet(int featureID, Object newValue) {
       switch (featureID) {
          case GraphPackage.GISSUE__SEVERITY:
-            setSeverity((GSeverity) newValue);
+            setSeverity((String) newValue);
             return;
          case GraphPackage.GISSUE__MESSAGE:
             setMessage((String) newValue);
@@ -204,7 +203,7 @@ public class GIssueImpl extends MinimalEObjectImpl.Container implements GIssue {
    public boolean eIsSet(int featureID) {
       switch (featureID) {
          case GraphPackage.GISSUE__SEVERITY:
-            return severity != SEVERITY_EDEFAULT;
+            return SEVERITY_EDEFAULT == null ? severity != null : !SEVERITY_EDEFAULT.equals(severity);
          case GraphPackage.GISSUE__MESSAGE:
             return MESSAGE_EDEFAULT == null ? message != null : !MESSAGE_EDEFAULT.equals(message);
       }

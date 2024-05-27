@@ -42,6 +42,7 @@ import org.eclipse.glsp.graph.GLayoutable;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.GPort;
+import org.eclipse.glsp.graph.GResizable;
 import org.eclipse.glsp.graph.GraphPackage;
 
 /**
@@ -61,6 +62,7 @@ import org.eclipse.glsp.graph.GraphPackage;
  *   <li>{@link org.eclipse.glsp.graph.impl.GPortImpl#getPosition <em>Position</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GPortImpl#getSize <em>Size</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GPortImpl#getLayoutOptions <em>Layout Options</em>}</li>
+ *   <li>{@link org.eclipse.glsp.graph.impl.GPortImpl#getResizeLocations <em>Resize Locations</em>}</li>
  * </ul>
  *
  * @generated
@@ -175,6 +177,16 @@ public class GPortImpl extends GArgumentableImpl implements GPort {
     * @ordered
     */
    protected EMap<String, Object> layoutOptions;
+
+   /**
+    * The cached value of the '{@link #getResizeLocations() <em>Resize Locations</em>}' attribute list.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #getResizeLocations()
+    * @generated
+    * @ordered
+    */
+   protected EList<String> resizeLocations;
 
    /**
     * <!-- begin-user-doc -->
@@ -448,6 +460,19 @@ public class GPortImpl extends GArgumentableImpl implements GPort {
     * <!-- end-user-doc -->
     * @generated
     */
+   @Override
+   public EList<String> getResizeLocations() {
+      if (resizeLocations == null) {
+         resizeLocations = new EDataTypeUniqueEList<String>(String.class, this, GraphPackage.GPORT__RESIZE_LOCATIONS);
+      }
+      return resizeLocations;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
    @SuppressWarnings("unchecked")
    @Override
    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -528,6 +553,8 @@ public class GPortImpl extends GArgumentableImpl implements GPort {
                return getLayoutOptions();
             else
                return getLayoutOptions().map();
+         case GraphPackage.GPORT__RESIZE_LOCATIONS:
+            return getResizeLocations();
       }
       return super.eGet(featureID, resolve, coreType);
    }
@@ -570,6 +597,10 @@ public class GPortImpl extends GArgumentableImpl implements GPort {
          case GraphPackage.GPORT__LAYOUT_OPTIONS:
             ((EStructuralFeature.Setting) getLayoutOptions()).set(newValue);
             return;
+         case GraphPackage.GPORT__RESIZE_LOCATIONS:
+            getResizeLocations().clear();
+            getResizeLocations().addAll((Collection<? extends String>) newValue);
+            return;
       }
       super.eSet(featureID, newValue);
    }
@@ -609,6 +640,9 @@ public class GPortImpl extends GArgumentableImpl implements GPort {
          case GraphPackage.GPORT__LAYOUT_OPTIONS:
             getLayoutOptions().clear();
             return;
+         case GraphPackage.GPORT__RESIZE_LOCATIONS:
+            getResizeLocations().clear();
+            return;
       }
       super.eUnset(featureID);
    }
@@ -639,6 +673,8 @@ public class GPortImpl extends GArgumentableImpl implements GPort {
             return size != null;
          case GraphPackage.GPORT__LAYOUT_OPTIONS:
             return layoutOptions != null && !layoutOptions.isEmpty();
+         case GraphPackage.GPORT__RESIZE_LOCATIONS:
+            return resizeLocations != null && !resizeLocations.isEmpty();
       }
       return super.eIsSet(featureID);
    }
@@ -664,6 +700,14 @@ public class GPortImpl extends GArgumentableImpl implements GPort {
          switch (derivedFeatureID) {
             case GraphPackage.GPORT__LAYOUT_OPTIONS:
                return GraphPackage.GLAYOUTABLE__LAYOUT_OPTIONS;
+            default:
+               return -1;
+         }
+      }
+      if (baseClass == GResizable.class) {
+         switch (derivedFeatureID) {
+            case GraphPackage.GPORT__RESIZE_LOCATIONS:
+               return GraphPackage.GRESIZABLE__RESIZE_LOCATIONS;
             default:
                return -1;
          }
@@ -696,6 +740,14 @@ public class GPortImpl extends GArgumentableImpl implements GPort {
                return -1;
          }
       }
+      if (baseClass == GResizable.class) {
+         switch (baseFeatureID) {
+            case GraphPackage.GRESIZABLE__RESIZE_LOCATIONS:
+               return GraphPackage.GPORT__RESIZE_LOCATIONS;
+            default:
+               return -1;
+         }
+      }
       return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
    }
 
@@ -718,6 +770,8 @@ public class GPortImpl extends GArgumentableImpl implements GPort {
       result.append(trace);
       result.append(", type: ");
       result.append(type);
+      result.append(", resizeLocations: ");
+      result.append(resizeLocations);
       result.append(')');
       return result.toString();
    }

@@ -39,28 +39,25 @@ public interface GIssue extends EObject {
    /**
     * Returns the value of the '<em><b>Severity</b></em>' attribute.
     * The default value is <code>"info"</code>.
-    * The literals are from the enumeration {@link org.eclipse.glsp.graph.GSeverity}.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @return the value of the '<em>Severity</em>' attribute.
-    * @see org.eclipse.glsp.graph.GSeverity
-    * @see #setSeverity(GSeverity)
+    * @see #setSeverity(String)
     * @see org.eclipse.glsp.graph.GraphPackage#getGIssue_Severity()
     * @model default="info" required="true"
     * @generated
     */
-   GSeverity getSeverity();
+   String getSeverity();
 
    /**
     * Sets the value of the '{@link org.eclipse.glsp.graph.GIssue#getSeverity <em>Severity</em>}' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @param value the new value of the '<em>Severity</em>' attribute.
-    * @see org.eclipse.glsp.graph.GSeverity
     * @see #getSeverity()
     * @generated
     */
-   void setSeverity(GSeverity value);
+   void setSeverity(String value);
 
    /**
     * Returns the value of the '<em><b>Message</b></em>' attribute.

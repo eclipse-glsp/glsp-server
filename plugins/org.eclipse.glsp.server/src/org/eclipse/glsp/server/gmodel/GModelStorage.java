@@ -52,7 +52,7 @@ import com.google.inject.Inject;
 public class GModelStorage implements SourceModelStorage {
 
    private static Logger LOGGER = LogManager.getLogger(GModelStorage.class);
-   private static String EMPTY_ROOT_ID = "glsp-graph";
+   public static final String EMPTY_ROOT_ID = "glsp-graph";
 
    @Inject
    protected GModelState modelState;

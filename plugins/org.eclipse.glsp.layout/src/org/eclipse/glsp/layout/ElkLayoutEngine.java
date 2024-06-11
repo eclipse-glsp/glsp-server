@@ -87,7 +87,7 @@ public class ElkLayoutEngine implements LayoutEngine {
    @Inject
    protected GModelState modelState;
 
-   private IGraphLayoutEngine engine = new RecursiveGraphLayoutEngine();
+   protected IGraphLayoutEngine engine = new RecursiveGraphLayoutEngine();
 
    protected final ElkGraphFactory factory = ElkGraphFactory.eINSTANCE;
 

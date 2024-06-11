@@ -234,7 +234,7 @@ public abstract class DiagramModule extends GLSPModule {
       return null;
    }
 
-   private Class<? extends GraphGsonConfigurationFactory> bindGraphGsonConfiguratorFactory() {
+   protected Class<? extends GraphGsonConfigurationFactory> bindGraphGsonConfiguratorFactory() {
       return DefaultGraphGsonConfigurationFactory.class;
    }
 

@@ -37,7 +37,7 @@ import com.google.common.collect.Maps;
  */
 public class GLSPLayoutConfigurator extends LayoutConfigurator {
 
-   private static Pattern ID_REPLACE_PATTERN = Pattern.compile("\\W|^\\d");
+   public static final Pattern ID_REPLACE_PATTERN = Pattern.compile("\\W|^\\d");
 
    public static String toElkId(final String gmodelId) {
       if (gmodelId == null || gmodelId.isEmpty()) {
@@ -46,8 +46,8 @@ public class GLSPLayoutConfigurator extends LayoutConfigurator {
       return ID_REPLACE_PATTERN.matcher(gmodelId).replaceAll("_");
    }
 
-   private final Map<String, MapPropertyHolder> idOptionMap = Maps.newHashMap();
-   private final Map<String, MapPropertyHolder> typeOptionMap = Maps.newHashMap();
+   protected final Map<String, MapPropertyHolder> idOptionMap = Maps.newHashMap();
+   protected final Map<String, MapPropertyHolder> typeOptionMap = Maps.newHashMap();
 
    /*
     * Configure layout options for the model element with the given id.

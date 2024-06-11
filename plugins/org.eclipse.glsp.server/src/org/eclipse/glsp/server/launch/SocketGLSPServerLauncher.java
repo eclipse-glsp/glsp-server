@@ -48,9 +48,9 @@ public class SocketGLSPServerLauncher extends GLSPServerLauncher {
    public static final String START_UP_COMPLETE_MSG = "[GLSP-Server]:Startup completed. Accepting requests on port:";
    private static Logger LOGGER = LogManager.getLogger(SocketGLSPServerLauncher.class);
 
-   private ExecutorService threadPool;
-   private AsynchronousServerSocketChannel serverSocket;
-   private CompletableFuture<Void> onShutdown;
+   protected ExecutorService threadPool;
+   protected AsynchronousServerSocketChannel serverSocket;
+   protected CompletableFuture<Void> onShutdown;
 
    public SocketGLSPServerLauncher(final ServerModule serverModule, final Module... additionalModules) {
       super(serverModule, additionalModules);

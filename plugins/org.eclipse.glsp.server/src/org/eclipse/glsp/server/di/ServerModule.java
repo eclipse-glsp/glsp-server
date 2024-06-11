@@ -69,7 +69,7 @@ import com.google.inject.name.Names;
  */
 public class ServerModule extends GLSPModule {
    public static final String DIAGRAM_MODULES = "Diagram_Modules";
-   private final Map<String, Module> diagramModules = new HashMap<>();
+   protected final Map<String, Module> diagramModules = new HashMap<>();
 
    /**
     * Configure a new {@link DiagramModule} for this server. A diagram module represents the base configuration artifact

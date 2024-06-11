@@ -26,7 +26,7 @@ public final class ClientOptionsUtil {
    public static final String DIAGRAM_TYPE = "diagramType";
    public static final String SOURCE_URI = "sourceUri";
    public static final String IS_RECONNECTING = "isReconnecting";
-   private static final String FILE_PREFIX = "file://";
+   public static final String FILE_PREFIX = "file://";
 
    private static final String DISABLE_RELOAD = "disableReload";
 

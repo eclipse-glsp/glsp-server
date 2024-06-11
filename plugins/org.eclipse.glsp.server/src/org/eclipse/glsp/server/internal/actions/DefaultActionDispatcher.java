@@ -38,6 +38,7 @@ import org.eclipse.glsp.server.actions.ClientActionForwarder;
 import org.eclipse.glsp.server.actions.ResponseAction;
 import org.eclipse.glsp.server.di.ClientId;
 import org.eclipse.glsp.server.disposable.Disposable;
+import org.eclipse.glsp.server.features.core.model.SetModelAction;
 import org.eclipse.glsp.server.features.core.model.UpdateModelAction;
 import org.eclipse.glsp.server.protocol.GLSPClient;
 import org.eclipse.glsp.server.utils.FutureUtil;
@@ -200,7 +201,7 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
             .collect(Collectors.toList());
          results.addAll(dispatchAll(responses));
       }
-      if (action instanceof UpdateModelAction) {
+      if (action instanceof UpdateModelAction || action instanceof SetModelAction) {
          results.add(dispatchPostUpdateQueue());
       }
       return results;

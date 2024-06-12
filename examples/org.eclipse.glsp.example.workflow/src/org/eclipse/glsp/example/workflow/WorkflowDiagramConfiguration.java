@@ -68,14 +68,18 @@ public class WorkflowDiagramConfiguration extends BaseDiagramConfiguration {
    @Override
    public List<ShapeTypeHint> getShapeTypeHints() {
       List<ShapeTypeHint> nodeHints = new ArrayList<>();
-      nodeHints.add(new ShapeTypeHint(MANUAL_TASK, true, true, true, true));
-      nodeHints.add(new ShapeTypeHint(AUTOMATED_TASK, true, true, true, true));
-      ShapeTypeHint catHint = new ShapeTypeHint(CATEGORY, true, true, true, true);
+      nodeHints.add(createDefaultShapeTypeHint(MANUAL_TASK));
+      nodeHints.add(createDefaultShapeTypeHint(AUTOMATED_TASK));
+      ShapeTypeHint catHint = createDefaultShapeTypeHint(CATEGORY);
       catHint.setContainableElementTypeIds(
          Arrays.asList(TASK, ACTIVITY_NODE, CATEGORY));
       nodeHints.add(catHint);
-      nodeHints.add(createDefaultShapeTypeHint(FORK_NODE));
-      nodeHints.add(createDefaultShapeTypeHint(JOIN_NODE));
+      ShapeTypeHint forkHint = createDefaultShapeTypeHint(FORK_NODE);
+      forkHint.setResizable(false);
+      nodeHints.add(forkHint);
+      ShapeTypeHint joinHint = createDefaultShapeTypeHint(JOIN_NODE);
+      joinHint.setResizable(false);
+      nodeHints.add(joinHint);
       nodeHints.add(createDefaultShapeTypeHint(DECISION_NODE));
       nodeHints.add(createDefaultShapeTypeHint(MERGE_NODE));
       return nodeHints;

@@ -69,7 +69,7 @@ public class ValidationStatus {
       return new ValidationStatus(Severity.ERROR, message, throwable);
    }
 
-   private static ResponseError toError(final Throwable throwable) {
+   public static ResponseError toError(final Throwable throwable) {
       return throwable == null ? null : RemoteEndpoint.DEFAULT_EXCEPTION_HANDLER.apply(throwable);
    }
 }

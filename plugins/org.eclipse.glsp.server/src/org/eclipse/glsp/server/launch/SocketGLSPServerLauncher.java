@@ -46,7 +46,7 @@ import com.google.inject.Module;
 
 public class SocketGLSPServerLauncher extends GLSPServerLauncher {
    public static final String START_UP_COMPLETE_MSG = "[GLSP-Server]:Startup completed. Accepting requests on port:";
-   private static Logger LOGGER = LogManager.getLogger(SocketGLSPServerLauncher.class);
+   protected static Logger LOGGER = LogManager.getLogger(SocketGLSPServerLauncher.class);
 
    protected ExecutorService threadPool;
    protected AsynchronousServerSocketChannel serverSocket;

@@ -29,7 +29,7 @@ import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 public class UndoRedoActionHandler implements ActionHandler {
-   private static final Logger LOGGER = LogManager.getLogger(UndoRedoActionHandler.class);
+   protected static final Logger LOGGER = LogManager.getLogger(UndoRedoActionHandler.class);
 
    @Inject
    protected ModelSubmissionHandler modelSubmissionHandler;

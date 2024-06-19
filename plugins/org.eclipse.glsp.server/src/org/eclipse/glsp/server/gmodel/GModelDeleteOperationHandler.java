@@ -38,7 +38,7 @@ import org.eclipse.glsp.server.operations.GModelOperationHandler;
  * Applies {@link DeleteOperation} directly to the GModel.
  */
 public class GModelDeleteOperationHandler extends GModelOperationHandler<DeleteOperation> {
-   private static Logger LOGGER = LogManager.getLogger(GModelDeleteOperationHandler.class);
+   protected static Logger LOGGER = LogManager.getLogger(GModelDeleteOperationHandler.class);
    protected Set<String> allDependantsIds;
 
    @Override

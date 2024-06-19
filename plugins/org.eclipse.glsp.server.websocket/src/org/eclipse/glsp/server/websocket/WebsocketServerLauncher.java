@@ -33,7 +33,7 @@ import com.google.inject.Module;
 
 public class WebsocketServerLauncher extends GLSPServerLauncher {
    public static final String START_UP_COMPLETE_MSG = "[GLSP-Server]:Startup completed. Accepting requests on port:";
-   private static Logger LOGGER = LogManager.getLogger(WebsocketServerLauncher.class);
+   protected static Logger LOGGER = LogManager.getLogger(WebsocketServerLauncher.class);
    protected Server server;
    protected final String endpointPath;
    protected final Level websocketLogLevel;

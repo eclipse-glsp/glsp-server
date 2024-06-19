@@ -31,7 +31,7 @@ import com.google.inject.Inject;
 
 public class RequestMarkersHandler extends AbstractActionHandler<RequestMarkersAction> {
 
-   private static final Logger LOGGER = LogManager.getLogger(RequestMarkersHandler.class);
+   protected static final Logger LOGGER = LogManager.getLogger(RequestMarkersHandler.class);
 
    @Inject
    protected Optional<ModelValidator> validator;

@@ -42,7 +42,7 @@ import com.google.inject.Inject;
  */
 public class EMFSourceModelStorage implements SourceModelStorage {
 
-   private static Logger LOGGER = LogManager.getLogger(EMFSourceModelStorage.class.getSimpleName());
+   protected static Logger LOGGER = LogManager.getLogger(EMFSourceModelStorage.class.getSimpleName());
 
    @Inject
    protected EMFModelState modelState;

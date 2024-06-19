@@ -24,7 +24,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 public class JsonOpenerOptions {
-   private static final Logger LOGGER = LogManager.getLogger(JsonOpenerOptions.class);
+   protected static final Logger LOGGER = LogManager.getLogger(JsonOpenerOptions.class);
 
    private TextSelection selection;
 

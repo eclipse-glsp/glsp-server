@@ -27,7 +27,7 @@ import com.google.inject.Inject;
 
 public class RequestEditValidationHandler extends AbstractActionHandler<RequestEditValidationAction> {
 
-   private static Logger LOGGER = LogManager.getLogger(RequestEditValidationHandler.class);
+   protected static Logger LOGGER = LogManager.getLogger(RequestEditValidationHandler.class);
 
    @Inject
    protected ContextEditValidatorRegistry contextEditValidatorRegistry;

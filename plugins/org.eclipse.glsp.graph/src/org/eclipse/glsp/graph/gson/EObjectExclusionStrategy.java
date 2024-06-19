@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2023 EclipseSource and others.
+ * Copyright (c) 2019-2024 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -57,15 +57,15 @@ public class EObjectExclusionStrategy implements ExclusionStrategy {
       return new EObjectExclusionStrategy().shouldSkipField(attributes);
    }
 
-   private static boolean isInnerClass(final Class<?> clazz) {
+   protected static boolean isInnerClass(final Class<?> clazz) {
       return clazz.isMemberClass() && !isStatic(clazz);
    }
 
-   private static boolean isStatic(final Class<?> clazz) {
+   protected static boolean isStatic(final Class<?> clazz) {
       return (clazz.getModifiers() & Modifier.STATIC) != 0;
    }
 
-   private static boolean isAnonymousOrNonStaticLocal(final Class<?> clazz) {
+   protected static boolean isAnonymousOrNonStaticLocal(final Class<?> clazz) {
       return !Enum.class.isAssignableFrom(clazz) && !isStatic(clazz)
          && (clazz.isAnonymousClass() || clazz.isLocalClass());
    }

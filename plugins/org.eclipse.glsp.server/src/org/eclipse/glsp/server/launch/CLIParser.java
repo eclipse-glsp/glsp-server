@@ -26,7 +26,7 @@ import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.server.utils.LaunchUtil;
 
 public abstract class CLIParser {
-   private static final Logger LOGGER = LogManager.getLogger(CLIParser.class);
+   protected static final Logger LOGGER = LogManager.getLogger(CLIParser.class);
    protected static final String INVALID_ARGUMENT_MESSAGE = "%s' is not a valid argument for option '--%s'! The default value '%s' is used.";
 
    protected final CommandLine cmd;

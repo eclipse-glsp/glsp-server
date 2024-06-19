@@ -25,7 +25,7 @@ import org.eclipse.glsp.server.actions.MessageAction;
 import org.eclipse.glsp.server.types.Severity;
 
 public final class MessageActionUtil {
-   private static Logger LOGGER = LogManager.getLogger(MessageActionUtil.class);
+   protected static Logger LOGGER = LogManager.getLogger(MessageActionUtil.class);
 
    private MessageActionUtil() {}
 
@@ -61,7 +61,7 @@ public final class MessageActionUtil {
       return new MessageAction(Severity.NONE, "");
    }
 
-   private static String getDetails(final Throwable throwable) {
+   public static String getDetails(final Throwable throwable) {
       if (throwable == null) {
          return null;
       }
@@ -82,7 +82,7 @@ public final class MessageActionUtil {
       return result.toString();
    }
 
-   private static String getMessage(final Exception e) {
+   public static String getMessage(final Exception e) {
       if (e == null) {
          return "<no-message>";
       }

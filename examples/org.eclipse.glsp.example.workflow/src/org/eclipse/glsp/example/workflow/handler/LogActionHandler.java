@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2022 EclipseSource and others.
+ * Copyright (c) 2020-2024 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -27,7 +27,7 @@ import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.types.Severity;
 
 public class LogActionHandler extends AbstractActionHandler<LogAction> {
-   private static Logger LOGGER = LogManager.getLogger(LogActionHandler.class);
+   protected static Logger LOGGER = LogManager.getLogger(LogActionHandler.class);
 
    @Override
    protected List<Action> executeAction(final LogAction action) {
@@ -35,7 +35,7 @@ public class LogActionHandler extends AbstractActionHandler<LogAction> {
       return Collections.emptyList();
    }
 
-   private static Level toLevel(final Severity severity) {
+   public static Level toLevel(final Severity severity) {
       return Level.toLevel(severity.toString(), Level.DEBUG);
    }
 

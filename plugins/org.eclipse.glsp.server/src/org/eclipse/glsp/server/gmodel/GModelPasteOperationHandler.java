@@ -50,7 +50,7 @@ import com.google.inject.Inject;
  */
 public class GModelPasteOperationHandler extends GModelOperationHandler<PasteOperation> {
 
-   private static final int DEFAULT_OFFSET = 20;
+   protected static final int DEFAULT_OFFSET = 20;
 
    protected final Gson gson;
 

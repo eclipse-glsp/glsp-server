@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2019-2024 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -49,9 +49,9 @@ import com.google.common.base.Preconditions;
  */
 public class GModelIndexImpl extends ECrossReferenceAdapter implements GModelIndex {
 
-   private final Map<String, GModelElement> idToElement = new HashMap<>();
-   private final Map<EClass, Set<GModelElement>> typeToElements = new HashMap<>();
-   private final GModelElement root;
+   protected final Map<String, GModelElement> idToElement = new HashMap<>();
+   protected final Map<EClass, Set<GModelElement>> typeToElements = new HashMap<>();
+   protected final GModelElement root;
 
    public GModelIndexImpl(final EObject target) {
       Preconditions.checkArgument(target instanceof GModelElement);

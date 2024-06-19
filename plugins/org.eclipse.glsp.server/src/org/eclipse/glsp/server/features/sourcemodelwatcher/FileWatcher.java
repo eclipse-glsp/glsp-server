@@ -144,14 +144,14 @@ public class FileWatcher implements ClientSessionListener, SourceModelWatcher {
       actionDispatcher.dispatch(new SourceModelChangedAction(clientNotification.modelSourceName));
    }
 
-   class FileWatchWorker extends Thread {
+   protected class FileWatchWorker extends Thread {
 
-      private boolean stopped;
-      private boolean paused;
+      protected boolean stopped;
+      protected boolean paused;
 
-      private final String clientId;
-      private final Path filePath;
-      private WatchKey key;
+      protected final String clientId;
+      protected final Path filePath;
+      protected WatchKey key;
 
       FileWatchWorker(final String clientId, final Path filePath) {
          super();
@@ -180,7 +180,7 @@ public class FileWatcher implements ClientSessionListener, SourceModelWatcher {
          }
       }
 
-      private void pollEventsAndNotifyClient(final Path directory)
+      protected void pollEventsAndNotifyClient(final Path directory)
          throws IOException {
          for (final WatchEvent<?> event : key.pollEvents()) {
             if (!paused && !stopped && Files.isSameFile(directory.resolve((Path) event.context()), filePath)) {
@@ -209,8 +209,8 @@ public class FileWatcher implements ClientSessionListener, SourceModelWatcher {
 
    protected class ClientNotification {
 
-      private final String clientId;
-      private final String modelSourceName;
+      protected final String clientId;
+      protected final String modelSourceName;
 
       ClientNotification(final String clientId, final String modelSourceName) {
          super();
@@ -242,7 +242,7 @@ public class FileWatcher implements ClientSessionListener, SourceModelWatcher {
          return Objects.equals(clientId, other.clientId) && Objects.equals(modelSourceName, other.modelSourceName);
       }
 
-      private FileWatcher getEnclosingInstance() { return FileWatcher.this; }
+      protected FileWatcher getEnclosingInstance() { return FileWatcher.this; }
 
    }
 

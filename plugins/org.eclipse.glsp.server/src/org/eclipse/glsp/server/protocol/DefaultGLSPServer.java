@@ -39,7 +39,7 @@ import org.eclipse.lsp4j.jsonrpc.messages.ResponseErrorCode;
 import com.google.inject.Inject;
 
 public class DefaultGLSPServer implements GLSPServer {
-   private static Logger LOGGER = LogManager.getLogger(DefaultGLSPServer.class);
+   protected static Logger LOGGER = LogManager.getLogger(DefaultGLSPServer.class);
    public static final String PROTOCOL_VERSION = "1.0.0";
 
    @Inject

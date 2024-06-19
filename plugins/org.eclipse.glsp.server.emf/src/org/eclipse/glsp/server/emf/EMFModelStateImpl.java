@@ -47,7 +47,7 @@ import com.google.inject.Singleton;
 @Singleton
 public class EMFModelStateImpl extends DefaultGModelState implements EMFModelState, ClientSessionListener {
 
-   private static Logger LOGGER = LogManager.getLogger(EMFModelStateImpl.class.getSimpleName());
+   protected static Logger LOGGER = LogManager.getLogger(EMFModelStateImpl.class.getSimpleName());
 
    @Inject
    protected ClientSessionManager clientSessionManager;

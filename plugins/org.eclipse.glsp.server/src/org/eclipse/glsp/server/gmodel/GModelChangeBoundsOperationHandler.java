@@ -39,7 +39,7 @@ import org.eclipse.glsp.server.types.ElementAndBounds;
  */
 public class GModelChangeBoundsOperationHandler extends GModelOperationHandler<ChangeBoundsOperation> {
 
-   private static Logger LOGGER = LogManager.getLogger(GModelChangeBoundsOperationHandler.class);
+   protected static Logger LOGGER = LogManager.getLogger(GModelChangeBoundsOperationHandler.class);
 
    @Override
    public Optional<Command> createCommand(final ChangeBoundsOperation operation) {

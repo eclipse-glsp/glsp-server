@@ -63,7 +63,7 @@ public class GModelRecordingCommand extends AbstractCommand {
       applyChanges();
    }
 
-   private void applyChanges() {
+   protected void applyChanges() {
       GModelChangeRecorder recorder = new GModelChangeRecorder(modelRoot).beginRecording();
       try {
          change.apply();

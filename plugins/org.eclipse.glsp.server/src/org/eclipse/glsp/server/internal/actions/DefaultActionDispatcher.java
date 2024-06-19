@@ -55,7 +55,7 @@ import com.google.inject.Provider;
  */
 public class DefaultActionDispatcher extends Disposable implements ActionDispatcher, ActionHandler {
 
-   private static final Logger LOGGER = LogManager.getLogger(DefaultActionDispatcher.class);
+   protected static final Logger LOGGER = LogManager.getLogger(DefaultActionDispatcher.class);
 
    private static final AtomicInteger COUNT = new AtomicInteger(0);
 
@@ -156,7 +156,7 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
       }
    }
 
-   private void runThread() {
+   protected void runThread() {
       while (true) {
          try {
             handleNextAction();
@@ -169,7 +169,7 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
       LOGGER.info("Terminating DefaultActionDispatcher");
    }
 
-   private void handleNextAction()
+   protected void handleNextAction()
       throws InterruptedException {
       final Action action = actionsQueue.take();
       if (action != null) {

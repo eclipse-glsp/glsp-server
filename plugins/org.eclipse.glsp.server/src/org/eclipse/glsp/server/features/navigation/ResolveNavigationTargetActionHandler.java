@@ -27,7 +27,7 @@ import com.google.inject.Inject;
 
 public class ResolveNavigationTargetActionHandler extends AbstractActionHandler<ResolveNavigationTargetAction> {
 
-   private static final Logger LOGGER = LogManager.getLogger(ResolveNavigationTargetActionHandler.class);
+   protected static final Logger LOGGER = LogManager.getLogger(ResolveNavigationTargetActionHandler.class);
 
    @Inject
    protected Optional<NavigationTargetResolver> navigationTargetResolver;

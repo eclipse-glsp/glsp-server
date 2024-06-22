@@ -1,6 +1,19 @@
 # Eclipse GLSP Server Changelog
 
-## v2.0.0 - upcoming
+## v2.2.0 - active
+
+### Changes
+
+- [model] Allow definition of resize handle locations for `GShapeElements` [#231](https://github.com/eclipse-glsp/glsp-server/pull/231)
+- [api] Improve extensibility of `DefaultActionDispatcher` [#235](https://github.com/eclipse-glsp/glsp-server/pull/235)- Contributed on behalf of Axon Ivy AG
+
+## [v2.1.0 -  24/01/2024](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.1.0)
+
+### Changes
+
+- [diagram] Add support for rendering ghost/template elements during node creation [#221](https://github.com/eclipse-glsp/glsp-server/pull/221)
+
+## [v2.0.0 - 16/11/2023](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.0.0)
 
 ### Changes
 

@@ -20,6 +20,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.glsp.example.workflow.wfgraph.TaskNode;
+import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.server.features.navigation.NavigationTarget;
 import org.eclipse.glsp.server.features.navigation.NavigationTargetResolution;
 import org.eclipse.glsp.server.features.navigation.NavigationTargetResolver;
@@ -36,7 +37,8 @@ public class WorkflowNavigationTargetResolver implements NavigationTargetResolve
       if (navigationTarget.getArgs().containsKey("name")) {
          String name = navigationTarget.getArgs().get("name");
          Set<TaskNode> taskNodes = modelState.getIndex().findAll(modelState.getRoot(), TaskNode.class);
-         Optional<TaskNode> element = taskNodes.stream().filter(node -> name.equals(node.getName())).findFirst();
+         Optional<TaskNode> element = taskNodes.stream().filter(node -> node.getChildren().stream()
+            .anyMatch(child -> child instanceof GLabel && ((GLabel) child).getText().equals("Push"))).findFirst();
          if (element.isPresent()) {
             return new NavigationTargetResolution(Arrays.asList(element.get().getId()));
          }

@@ -47,6 +47,7 @@ import org.eclipse.glsp.server.features.commandpalette.CommandPaletteActionProvi
 import org.eclipse.glsp.server.features.contextactions.ContextActionsProvider;
 import org.eclipse.glsp.server.features.contextactions.RequestContextActionsHandler;
 import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
+import org.eclipse.glsp.server.features.core.model.GModelFactory;
 import org.eclipse.glsp.server.features.core.model.SourceModelStorage;
 import org.eclipse.glsp.server.features.directediting.ContextEditValidator;
 import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
@@ -58,8 +59,8 @@ import org.eclipse.glsp.server.features.sourcemodelwatcher.SourceModelWatcher;
 import org.eclipse.glsp.server.features.typehints.EdgeCreationChecker;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.gmodel.GModelDiagramModule;
-import org.eclipse.glsp.server.gmodel.GModelStorage;
 import org.eclipse.glsp.server.layout.LayoutEngine;
+import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.OperationHandler;
 
 public class WorkflowDiagramModule extends GModelDiagramModule {
@@ -71,7 +72,17 @@ public class WorkflowDiagramModule extends GModelDiagramModule {
 
    @Override
    protected Class<? extends SourceModelStorage> bindSourceModelStorage() {
-      return GModelStorage.class;
+      return WorkflowModelStorage.class;
+   }
+
+   @Override
+   protected Class<? extends GModelState> bindGModelState() {
+      return WorkflowModelState.class;
+   }
+
+   @Override
+   protected Class<? extends GModelFactory> bindGModelFactory() {
+      return WorkflowModelFactory.class;
    }
 
    @Override

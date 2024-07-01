@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: GLSP Server Websocket
 Bundle-SymbolicName: org.eclipse.glsp.server.websocket
-Bundle-Version: 2.1.0
+Bundle-Version: 2.2.0.qualifier
 Bundle-Vendor: Eclipse GLSP
 Automatic-Module-Name: com.eclipsesource.glps.server.websocket
 Bundle-RequiredExecutionEnvironment: JavaSE-17

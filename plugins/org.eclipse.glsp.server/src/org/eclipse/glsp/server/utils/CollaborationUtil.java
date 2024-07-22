@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2023 EclipseSource and others.
+ * Copyright (c) 2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -12,20 +12,10 @@
  * https://www.gnu.org/software/classpath/license.html.
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
- ******************************************************************************/
-package org.eclipse.glsp.server.emf;
+ ********************************************************************************/
 
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.glsp.server.model.GModelState;
+package org.eclipse.glsp.server.utils;
 
-public interface EMFModelState extends GModelState {
-   void setEditingDomain(EditingDomain editingDomain, String subclientId);
-
-   EditingDomain getEditingDomain();
-
-   ResourceSet getResourceSet();
-
-   @Override
-   EMFModelIndex getIndex();
+public class CollaborationUtil {
+    public static final String FALLBACK_SUBCLIENT_ID = "FALLBACK_SUBCLIENT_ID";
 }

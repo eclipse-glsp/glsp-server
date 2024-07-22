@@ -25,6 +25,7 @@ import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.server.di.ClientId;
+import org.eclipse.glsp.server.command.CommandStackManager;
 import org.eclipse.glsp.server.internal.gmodel.commandstack.GModelCommandStack;
 
 import com.google.inject.Inject;
@@ -37,16 +38,18 @@ public class DefaultGModelState implements GModelState {
    @ClientId
    protected String clientId;
 
+   @Inject
+   protected CommandStackManager commandStackManager;
+
    protected Map<String, String> options;
    protected final Map<String, Object> properties = new HashMap<>();
    protected GModelRoot currentModel;
-   protected CommandStack commandStack;
    protected String editMode;
    protected GModelIndex index = GModelIndex.empty();
 
    @Inject
    public void init() {
-      setCommandStack(new GModelCommandStack());
+      commandStackManager.setCommandStack(new GModelCommandStack(), null);
    }
 
    @Override
@@ -73,13 +76,6 @@ public class DefaultGModelState implements GModelState {
 
    protected void setRoot(final GModelRoot newRoot) { this.currentModel = newRoot; }
 
-   protected void setCommandStack(final CommandStack commandStack) {
-      if (this.commandStack != null) {
-         this.commandStack.flush();
-      }
-      this.commandStack = commandStack;
-   }
-
    @Override
    public void setClientOptions(final Map<String, String> options) { this.options = options; }
 
@@ -87,43 +83,50 @@ public class DefaultGModelState implements GModelState {
    public GModelIndex getIndex() { return index; }
 
    @Override
-   public void execute(final Command command) {
+   public void execute(final Command command, String subclientId) {
+      CommandStack commandStack = commandStackManager.getOrCreateCommandStack(subclientId);
       if (commandStack != null) {
          commandStack.execute(command);
       }
    }
 
    @Override
-   public boolean canUndo() {
+   public boolean canUndo(final String subclientId) {
+      CommandStack commandStack = commandStackManager.getOrCreateCommandStack(subclientId);
       return commandStack != null && commandStack.canUndo();
    }
 
    @Override
-   public boolean canRedo() {
+   public boolean canRedo(final String subclientId) {
+      CommandStack commandStack = commandStackManager.getOrCreateCommandStack(subclientId);
       return commandStack != null && commandStack.canRedo();
    }
 
    @Override
-   public void undo() {
+   public void undo(final String subclientId) {
+      CommandStack commandStack = commandStackManager.getOrCreateCommandStack(subclientId);
       if (commandStack != null) {
          commandStack.undo();
       }
    }
 
    @Override
-   public void redo() {
+   public void redo(final String subclientId) {
+      CommandStack commandStack = commandStackManager.getOrCreateCommandStack(subclientId);
       if (commandStack != null) {
          commandStack.redo();
       }
    }
 
    @Override
-   public boolean isDirty() {
+   public boolean isDirty(final String subclientId) {
+      CommandStack commandStack = commandStackManager.getOrCreateCommandStack(subclientId);
       return commandStack instanceof BasicCommandStack && ((BasicCommandStack) commandStack).isSaveNeeded();
    }
 
    @Override
-   public void saveIsDone() {
+   public void saveIsDone(final String subclientId) {
+      CommandStack commandStack = commandStackManager.getOrCreateCommandStack(subclientId);
       if (commandStack instanceof BasicCommandStack) {
          ((BasicCommandStack) commandStack).saveIsDone();
       }

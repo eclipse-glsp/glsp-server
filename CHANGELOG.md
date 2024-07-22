@@ -1,9 +1,10 @@
 # Eclipse GLSP Server Changelog
 
-## v2.2.0 - active
+## [v2.2.1 - 22/07/2024](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.2.1)
 
 ### Changes
 
+- [build] Restrict log4j version to 2.19.0 <= x <= 2.23.1 for maven [#230](https://github.com/eclipse-glsp/glsp-server/pull/230)
 - [model] Allow definition of resize handle locations for `GShapeElements` [#231](https://github.com/eclipse-glsp/glsp-server/pull/231)
 - [api] Improve extensibility of `DefaultActionDispatcher` [#235](https://github.com/eclipse-glsp/glsp-server/pull/235)- Contributed on behalf of Axon Ivy AG
 

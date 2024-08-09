@@ -44,4 +44,6 @@ public interface GModelState extends ModelState<GModelRoot> {
     * @param command The {@link Command} to be executed.
     */
    void execute(Command command);
+
+   void setParticipationID(String id);
 }

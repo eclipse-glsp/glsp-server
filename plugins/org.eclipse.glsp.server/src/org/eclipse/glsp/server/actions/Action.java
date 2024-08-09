@@ -40,9 +40,20 @@ public abstract class Action {
     */
    private boolean receivedFromClient;
 
-   public Action(final String kind) {
+   /**
+    * Unique identifier specifying the initiator of the action in a collaboration session.
+    * This value is initialized on the initating client.
+    */
+   private String subclientId;
+
+   public Action(final String kind, final String subclientId) {
       super();
       this.kind = kind;
+      this.subclientId = subclientId;
+   }
+
+   public Action(final String kind) {
+      this(kind, null);
    }
 
    public String getKind() { return kind; }
@@ -51,6 +62,8 @@ public abstract class Action {
 
    public void setReceivedFromClient(final boolean receivedFromClient) { this.receivedFromClient = receivedFromClient; }
 
+   public String getSubclientId() { return subclientId; }
+
    @Override
    public String toString() {
       StringBuilder builder = new StringBuilder();
@@ -58,6 +71,13 @@ public abstract class Action {
       builder.append(kind);
       builder.append("]");
       return builder.toString();
+   }
+
+   public static Action addSubclientId(final Action initialAction, final Action extendedAction) {
+      if (initialAction.getSubclientId() != null) {
+         extendedAction.subclientId = initialAction.subclientId;
+      }
+      return extendedAction;
    }
 
 }

@@ -40,6 +40,7 @@ import org.eclipse.glsp.server.di.ClientId;
 import org.eclipse.glsp.server.disposable.Disposable;
 import org.eclipse.glsp.server.features.core.model.SetModelAction;
 import org.eclipse.glsp.server.features.core.model.UpdateModelAction;
+import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.protocol.GLSPClient;
 import org.eclipse.glsp.server.utils.FutureUtil;
 
@@ -85,6 +86,10 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
    // any action until it's ready anyway.
    @Inject
    protected Provider<GLSPClient> client;
+
+   // use modelstate here to set subclient id
+   @Inject
+   protected GModelState modelState;
 
    public DefaultActionDispatcher() {
       this.initialize();
@@ -206,10 +211,13 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
          throw new IllegalArgumentException("No handler registered for action: " + action);
       }
 
+      this.modelState.setParticipationID(action.getSubclientId());
+
       List<CompletableFuture<Void>> results = new ArrayList<>();
       for (final ActionHandler actionHandler : actionHandlers) {
          final List<Action> responses = actionHandler.execute(action).stream()
             .map(response -> ResponseAction.respond(action, response))
+            .map(response -> Action.addSubclientId(action, response))
             .collect(Collectors.toList());
          results.addAll(dispatchAll(responses));
       }

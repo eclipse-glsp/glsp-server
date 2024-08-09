@@ -103,7 +103,7 @@ public class ModelSubmissionHandler {
     * @param reason The optional reason that caused the model update.
     * @return A list of actions to be processed in order to submit the model.
     */
-   public List<Action> submitModel(final String reason, final String subclientId) {
+   public List<Action> submitModel(final String reason) {
       modelFactory.createGModel();
       int revision = this.requestModelAction.isPresent() ? 0 : this.modelState.getRoot().getRevision() + 1;
       modelState.getRoot().setRevision(revision);
@@ -112,14 +112,14 @@ public class ModelSubmissionHandler {
       if (needsClientLayout) {
          synchronized (modelLock) {
             return Arrays.asList(new RequestBoundsAction(modelState.getRoot()),
-               new SetDirtyStateAction(modelState.isDirty(subclientId), reason));
+               new SetDirtyStateAction(modelState.isDirty(), reason));
          }
       }
-      return submitModelDirectly(reason, subclientId);
+      return submitModelDirectly(reason);
    }
 
-   public List<Action> submitModel(final String subclientId) {
-      return submitModel(null, subclientId);
+   public List<Action> submitModel() {
+      return submitModel(null);
    }
 
    /**
@@ -139,7 +139,7 @@ public class ModelSubmissionHandler {
     * @param reason The optional reason that caused the model update.
     * @return A list of actions to be processed in order to submit the model.
     */
-   public List<Action> submitModelDirectly(final String reason, final String subclientId) {
+   public List<Action> submitModelDirectly(final String reason) {
       GModelRoot gModel = modelState.getRoot();
       if (diagramConfiguration.getLayoutKind() == ServerLayoutKind.AUTOMATIC && layoutEngine.isPresent()) {
          layoutEngine.get().layout();
@@ -152,7 +152,7 @@ public class ModelSubmissionHandler {
          List<Action> result = new ArrayList<>();
          result.add(modelAction);
          if (!diagramConfiguration.needsClientLayout()) {
-            result.add(new SetDirtyStateAction(modelState.isDirty(subclientId), reason));
+            result.add(new SetDirtyStateAction(modelState.isDirty(), reason));
          }
          if (validator.isPresent()) {
             List<Marker> markers = validator.get() //
@@ -163,8 +163,8 @@ public class ModelSubmissionHandler {
       }
    }
 
-   public List<Action> submitModelDirectly(final String subclientId) {
-      return submitModelDirectly(null, subclientId);
+   public List<Action> submitModelDirectly() {
+      return submitModelDirectly(null);
    }
 
    protected SetModelAction createSetModeAction(final GModelRoot newRoot) {

@@ -36,12 +36,14 @@ public interface GModelState extends ModelState<GModelRoot> {
    /**
     * Called after a save has been successfully performed.
     */
-   void saveIsDone(String subclientId);
+   void saveIsDone();
 
    /**
     * Uses its {@link BasicCommandStack} to execute a given {@link Command}.
     *
     * @param command The {@link Command} to be executed.
     */
-   void execute(Command command, String subclientId);
+   void execute(Command command);
+
+   void setParticipationID(String id);
 }

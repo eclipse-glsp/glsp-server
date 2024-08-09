@@ -34,15 +34,15 @@ interface ModelState<T> {
 
    void updateRoot(T newRoot);
 
-   boolean canUndo(String subclientId);
+   boolean canUndo();
 
-   boolean canRedo(String subclientId);
+   boolean canRedo();
 
-   void undo(String subclientId);
+   void undo();
 
-   void redo(String subclientId);
+   void redo();
 
-   boolean isDirty(String subclientId);
+   boolean isDirty();
 
    String getEditMode();
 

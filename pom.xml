@@ -44,24 +44,23 @@
 		<project.build.java.target>17</project.build.java.target>
 
 		<!-- Maven Plugin Versions: General maven plugin versions -->
-		<buildhelper.maven.version>3.3.0</buildhelper.maven.version>
-		<codehaus.mojo.maven.version>3.2.0</codehaus.mojo.maven.version>
+		<buildhelper.maven.version>3.6.0</buildhelper.maven.version>
 		<emfcloud.checkstyle.version>0.1.0-SNAPSHOT</emfcloud.checkstyle.version>
-		<maven.antrun.version>3.0.0</maven.antrun.version>
-		<maven.checkstyle.version>3.1.1</maven.checkstyle.version>
-		<maven.clean.version>3.1.0</maven.clean.version>
-		<maven.compiler.version>3.8.1</maven.compiler.version>
-		<maven.dependency.version>3.2.0</maven.dependency.version>
-		<maven.deploy.version>3.0.0-M1</maven.deploy.version>
-		<maven.failsafe.version>3.0.0-M5</maven.failsafe.version>
-		<maven.javadoc.version>3.3.1</maven.javadoc.version>
-		<maven.resources.version>3.2.0</maven.resources.version>
-		<maven.shade.version>3.2.4</maven.shade.version>
-		<maven.source.version>3.2.0</maven.source.version>
-		<maven.surefire.version>3.0.0-M5</maven.surefire.version>
-		<puppycrawl.checkstyle.version>8.44</puppycrawl.checkstyle.version>
-		<tycho.version>2.7.5</tycho.version>
-		<versions.maven.version>2.7</versions.maven.version>
+		<maven.antrun.version>3.1.0</maven.antrun.version>
+		<maven.checkstyle.version>3.4.0</maven.checkstyle.version>
+		<maven.clean.version>3.4.0</maven.clean.version>
+		<maven.compiler.version>3.11.0</maven.compiler.version>
+		<maven.dependency.version>3.7.1</maven.dependency.version>
+		<maven.deploy.version>3.1.2</maven.deploy.version>
+		<maven.failsafe.version>3.3.1</maven.failsafe.version>
+		<maven.javadoc.version>3.8.0</maven.javadoc.version>
+		<maven.resources.version>3.3.1</maven.resources.version>
+		<maven.shade.version>3.6.0</maven.shade.version>
+		<maven.source.version>3.3.1</maven.source.version>
+		<maven.surefire.version>3.3.1</maven.surefire.version>
+		<puppycrawl.checkstyle.version>10.17.0</puppycrawl.checkstyle.version>
+		<tycho.version>4.0.8</tycho.version>
+		<versions.maven.version>2.17.1</versions.maven.version>
 
 		<!-- Dependency Versions: Version of dependencies provided by the target 
 			platform in ,2. We try to match the p2-version if possible. -->
@@ -212,6 +211,7 @@
 						<groupId>org.eclipse.tycho</groupId>
 						<artifactId>target-platform-configuration</artifactId>
 						<configuration>
+							<pomDependencies>wrapAsBundle</pomDependencies>
 							<targetDefinitionIncludeSource>honor</targetDefinitionIncludeSource>
 							<environments>
 								<environment>

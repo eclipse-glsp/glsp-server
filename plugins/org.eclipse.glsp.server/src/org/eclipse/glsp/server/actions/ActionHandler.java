@@ -16,8 +16,6 @@
 package org.eclipse.glsp.server.actions;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,7 +64,7 @@ public interface ActionHandler {
     * @return The given action objects as list.
     */
    default List<Action> listOf(final Action... action) {
-      return Arrays.asList(action);
+      return new ArrayList<>(List.of(action));
    }
 
    /**
@@ -87,7 +85,7 @@ public interface ActionHandler {
     * @return An empty action list.
     */
    default List<Action> none() {
-      return Collections.emptyList();
+      return new ArrayList<>();
    }
 
    /**

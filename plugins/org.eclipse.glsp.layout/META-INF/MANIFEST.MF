@@ -8,6 +8,5 @@ Automatic-Module-Name: org.eclipse.glsp.layout
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Require-Bundle: org.eclipse.glsp.server;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.elk.core;bundle-version="0.8.1",
- org.eclipse.elk.graph;bundle-version="0.8.1",
- com.google.guava;bundle-version="[30.1.0,33.0.0)"
+ org.eclipse.elk.graph;bundle-version="0.8.1"
 Export-Package: org.eclipse.glsp.layout

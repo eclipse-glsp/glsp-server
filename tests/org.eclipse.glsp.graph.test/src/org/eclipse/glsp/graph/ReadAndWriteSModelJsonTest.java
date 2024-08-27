@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
@@ -31,7 +32,6 @@ import org.eclipse.glsp.graph.gson.GraphGsonConfigurator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -113,7 +113,7 @@ public class ReadAndWriteSModelJsonTest {
       edge.setSourceId(node1.getId());
       edge.setTargetId(node2.getId());
 
-      graph.getChildren().addAll(Lists.newArrayList(node1, node2, edge));
+      graph.getChildren().addAll(List.of(node1, node2, edge));
 
       JsonObject jsonGraph = writeToJson(graph).getAsJsonObject();
       assertEquals("graphId", jsonGraph.get("id").getAsString());

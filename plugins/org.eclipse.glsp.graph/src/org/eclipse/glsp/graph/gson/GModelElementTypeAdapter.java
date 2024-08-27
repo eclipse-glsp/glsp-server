@@ -18,6 +18,7 @@ package org.eclipse.glsp.graph.gson;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -33,7 +34,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.glsp.graph.GModelElement;
 
-import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.TypeAdapter;
@@ -92,7 +92,7 @@ public class GModelElementTypeAdapter extends PropertyBasedTypeAdapter<GModelEle
    protected Optional<EClass> findEClassForType(final String type) {
       EClass eClass = typeMap.get(type);
       if (eClass == null) {
-         List<String> subtypes = Lists.newArrayList(type.split(delimiter));
+         List<String> subtypes = new ArrayList<>(List.of(type.split(delimiter)));
          while (eClass == null && !subtypes.isEmpty()) {
             subtypes.remove(subtypes.size() - 1);
             eClass = typeMap.get(String.join(delimiter, subtypes));

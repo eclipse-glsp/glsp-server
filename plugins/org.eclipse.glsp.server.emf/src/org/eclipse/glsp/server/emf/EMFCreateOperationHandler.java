@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.emf;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,7 +28,6 @@ import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.CreateOperation;
 import org.eclipse.glsp.server.operations.CreateOperationHandler;
 
-import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 public abstract class EMFCreateOperationHandler<T extends CreateOperation>
@@ -39,7 +39,7 @@ public abstract class EMFCreateOperationHandler<T extends CreateOperation>
    protected List<String> handledElementTypeIds;
 
    public EMFCreateOperationHandler(final String... elementTypeIds) {
-      this(Lists.newArrayList(elementTypeIds));
+      this(new ArrayList<>(List.of(elementTypeIds)));
    }
 
    public EMFCreateOperationHandler(final List<String> handledElementTypeIds) {

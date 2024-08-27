@@ -33,7 +33,6 @@ import org.eclipse.glsp.server.session.ClientSessionFactory;
 import org.eclipse.glsp.server.session.ClientSessionManager;
 import org.eclipse.glsp.server.utils.ModuleUtil;
 
-import com.google.common.base.Preconditions;
 import com.google.inject.Module;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
@@ -87,8 +86,10 @@ public class ServerModule extends GLSPModule {
     */
    public ServerModule configureDiagramModule(final DiagramModule diagramModule, final Module... mixinModules) {
       String diagramType = diagramModule.getDiagramType();
-      Preconditions.checkState(!diagramModules.containsKey(diagramType),
-         "A module configuration is already present for diagram type: " + diagramType);
+      if (!diagramModules.containsKey(diagramType)) {
+         throw new IllegalArgumentException(
+            "A module configuration is already present for diagram type: " + diagramType);
+      }
 
       Module combinedModule = ModuleUtil.mixin(diagramModule, mixinModules);
       diagramModules.put(diagramType, combinedModule);

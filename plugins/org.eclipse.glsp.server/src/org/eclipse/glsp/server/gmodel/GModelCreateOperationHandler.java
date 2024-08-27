@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.gmodel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.glsp.server.actions.ActionDispatcher;
@@ -23,7 +24,6 @@ import org.eclipse.glsp.server.operations.CreateOperation;
 import org.eclipse.glsp.server.operations.CreateOperationHandler;
 import org.eclipse.glsp.server.operations.GModelOperationHandler;
 
-import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 /**
@@ -38,7 +38,7 @@ public abstract class GModelCreateOperationHandler<T extends CreateOperation>
    protected List<String> handledElementTypeIds;
 
    public GModelCreateOperationHandler(final String... elementTypeIds) {
-      this(Lists.newArrayList(elementTypeIds));
+      this(new ArrayList<>(List.of(elementTypeIds)));
    }
 
    public GModelCreateOperationHandler(final List<String> handledElementTypeIds) {

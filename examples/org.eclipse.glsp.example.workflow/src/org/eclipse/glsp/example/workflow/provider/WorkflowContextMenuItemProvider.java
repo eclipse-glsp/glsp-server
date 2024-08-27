@@ -18,6 +18,7 @@ package org.eclipse.glsp.example.workflow.provider;
 import static org.eclipse.glsp.example.workflow.utils.ModelTypes.AUTOMATED_TASK;
 import static org.eclipse.glsp.example.workflow.utils.ModelTypes.MANUAL_TASK;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -30,7 +31,6 @@ import org.eclipse.glsp.server.features.contextmenu.MenuItem;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 
-import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 public class WorkflowContextMenuItemProvider implements ContextMenuItemProvider {
@@ -50,7 +50,7 @@ public class WorkflowContextMenuItemProvider implements ContextMenuItemProvider 
       MenuItem newManTask = new MenuItem("newManualTask", "Manual Task",
          Arrays.asList(new CreateNodeOperation(MANUAL_TASK, snappedPosition)), true);
       MenuItem newChildMenu = new MenuItem("new", "New", Arrays.asList(newAutTask, newManTask), "add", "0_new");
-      return Lists.newArrayList(newChildMenu);
+      return new ArrayList<>(List.of(newChildMenu));
    }
 
 }

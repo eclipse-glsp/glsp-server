@@ -21,9 +21,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.impl.GModelIndexImpl;
 import org.eclipse.glsp.graph.util.RootAdapterUtil;
-
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
+import org.eclipse.glsp.server.utils.BiIndex;
 
 /**
  * Is used to index all child elements of an arbitrary EMF source model.
@@ -33,11 +31,11 @@ public class EMFModelIndex extends GModelIndexImpl {
 
    protected EMFIdGenerator idGenerator;
 
-   protected BiMap<String, EObject> eObjectIndex;
+   protected BiIndex<String, EObject> eObjectIndex;
 
    protected EMFModelIndex(final EObject target, final EMFIdGenerator idGenerator) {
       super(target);
-      this.eObjectIndex = HashBiMap.create();
+      this.eObjectIndex = new BiIndex<>();
       this.idGenerator = idGenerator;
    }
 

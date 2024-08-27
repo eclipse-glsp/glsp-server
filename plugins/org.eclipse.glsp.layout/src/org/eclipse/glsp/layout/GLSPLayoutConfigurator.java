@@ -16,6 +16,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.layout;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -23,8 +24,6 @@ import org.eclipse.elk.core.LayoutConfigurator;
 import org.eclipse.elk.graph.ElkGraphElement;
 import org.eclipse.elk.graph.properties.IPropertyHolder;
 import org.eclipse.elk.graph.properties.MapPropertyHolder;
-
-import com.google.common.collect.Maps;
 
 /**
  * Note: adaptation of org.eclipse.sprotty.layout.SprottyLayoutConfigurator
@@ -46,8 +45,8 @@ public class GLSPLayoutConfigurator extends LayoutConfigurator {
       return ID_REPLACE_PATTERN.matcher(gmodelId).replaceAll("_");
    }
 
-   protected final Map<String, MapPropertyHolder> idOptionMap = Maps.newHashMap();
-   protected final Map<String, MapPropertyHolder> typeOptionMap = Maps.newHashMap();
+   protected final Map<String, MapPropertyHolder> idOptionMap = new HashMap<>();
+   protected final Map<String, MapPropertyHolder> typeOptionMap = new HashMap<>();
 
    /*
     * Configure layout options for the model element with the given id.

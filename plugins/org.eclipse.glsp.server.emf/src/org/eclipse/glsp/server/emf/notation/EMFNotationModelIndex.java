@@ -30,9 +30,7 @@ import org.eclipse.glsp.server.emf.model.notation.NotationElement;
 import org.eclipse.glsp.server.emf.model.notation.NotationFactory;
 import org.eclipse.glsp.server.emf.model.notation.SemanticElementReference;
 import org.eclipse.glsp.server.emf.notation.util.NotationUtil;
-
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
+import org.eclipse.glsp.server.utils.BiIndex;
 
 /**
  * Is used to index all child elements of a semantic and notation model.
@@ -41,12 +39,12 @@ import com.google.common.collect.HashBiMap;
 public class EMFNotationModelIndex extends EMFModelIndex {
    protected static Logger LOGGER = LogManager.getLogger(EMFNotationModelIndex.class);
 
-   protected BiMap<EObject, NotationElement> notationIndex;
+   protected BiIndex<EObject, NotationElement> notationIndex;
    protected final EMFSemanticIdConverter idConverter;
 
    protected EMFNotationModelIndex(final EObject target, final EMFSemanticIdConverter idConverter) {
       super(target, idConverter);
-      this.notationIndex = HashBiMap.create();
+      this.notationIndex = new BiIndex<>();
       this.idConverter = idConverter;
    }
 
@@ -100,7 +98,7 @@ public class EMFNotationModelIndex extends EMFModelIndex {
       if (!NotationUtil.isUnresolved(notationElement)) {
          EObject semanticElement = notationElement.getSemanticElement().getResolvedSemanticElement();
          notationIndex.put(semanticElement, notationElement);
-         eObjectIndex.inverse().putIfAbsent(semanticElement, getOrCreateId(semanticElement));
+         eObjectIndex.putIfAbsent(getOrCreateId(semanticElement), semanticElement);
       }
    }
 

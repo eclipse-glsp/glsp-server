@@ -9,7 +9,6 @@ location "http://download.eclipse.org/releases/2022-12" {
 	org.apache.commons.cli [1.4.0,2.0.0)
 	com.google.gson[2.8.7,3.0.0)
 	com.google.inject [5.0.1,5.0.2)
-	com.google.guava [30.1.0,31.0.0)
 }
 
 location "https://download.eclipse.org/tools/orbit/downloads/drops/R20221123021534/repository/" {

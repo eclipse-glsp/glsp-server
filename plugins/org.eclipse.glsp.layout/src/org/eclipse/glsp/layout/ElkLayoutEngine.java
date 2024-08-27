@@ -20,6 +20,8 @@ import static org.eclipse.glsp.graph.util.GraphUtil.dimension;
 import static org.eclipse.glsp.graph.util.GraphUtil.point;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +64,6 @@ import org.eclipse.glsp.graph.GraphFactory;
 import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.model.GModelState;
 
-import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 
 /**
@@ -271,7 +272,12 @@ public class ElkLayoutEngine implements LayoutEngine {
     * Resolve cross-references in the ELK graph.
     */
    protected void resolveReferences(final LayoutContext context) {
-      Map<String, ElkConnectableShape> id2NodeMap = Maps.newHashMapWithExpectedSize(context.shapeMap.size());
+      // Per default a map will resize when 75% of its capacticy is filled. By dividing the expected size with the load
+      // factor
+      // we can create a map with enough capacity to avoid resizing
+      int initialCapactiy = (int) Math.ceil(context.shapeMap.size() / 0.75);
+      Map<String, ElkConnectableShape> id2NodeMap = new HashMap<>(initialCapactiy);
+
       for (Map.Entry<GModelElement, ElkShape> entry : context.shapeMap.entrySet()) {
          String id = entry.getKey().getId();
          if (id != null && entry.getValue() instanceof ElkConnectableShape) {
@@ -604,9 +610,9 @@ public class ElkLayoutEngine implements LayoutEngine {
    protected static class LayoutContext {
       public GGraph ggraph;
       public ElkNode elkGraph;
-      public final Map<GModelElement, GModelElement> parentMap = Maps.newHashMap();
-      public final Map<GModelElement, ElkShape> shapeMap = Maps.newLinkedHashMap();
-      public final Map<GEdge, ElkEdge> edgeMap = Maps.newLinkedHashMap();
+      public final Map<GModelElement, GModelElement> parentMap = new HashMap<>();
+      public final Map<GModelElement, ElkShape> shapeMap = new LinkedHashMap<>();
+      public final Map<GEdge, ElkEdge> edgeMap = new LinkedHashMap<>();
    }
 
 }

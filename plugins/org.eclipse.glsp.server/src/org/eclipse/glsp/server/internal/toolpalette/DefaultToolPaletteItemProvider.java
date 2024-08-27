@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.internal.toolpalette;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,6 @@ import org.eclipse.glsp.server.operations.CreateOperation;
 import org.eclipse.glsp.server.operations.CreateOperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
 
-import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 public class DefaultToolPaletteItemProvider implements ToolPaletteItemProvider {
@@ -49,9 +49,9 @@ public class DefaultToolPaletteItemProvider implements ToolPaletteItemProvider {
       counter = 0;
       List<PaletteItem> nodes = createPaletteItems(handlers, CreateNodeOperation.class);
       List<PaletteItem> edges = createPaletteItems(handlers, CreateEdgeOperation.class);
-      return Lists.newArrayList(
+      return new ArrayList<>(List.of(
          PaletteItem.createPaletteGroup("node-group", "Nodes", nodes, "symbol-property", "A"),
-         PaletteItem.createPaletteGroup("edge-group", "Edges", edges, "symbol-property", "B"));
+         PaletteItem.createPaletteGroup("edge-group", "Edges", edges, "symbol-property", "B")));
 
    }
 

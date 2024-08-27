@@ -15,9 +15,8 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operations;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import com.google.common.collect.Lists;
 
 public class CompoundOperation extends Operation {
 
@@ -27,7 +26,7 @@ public class CompoundOperation extends Operation {
 
    public CompoundOperation() {
       super(KIND);
-      operationList = Lists.newArrayList();
+      operationList = new ArrayList<>();
    }
 
    public List<? extends Operation> getOperationList() { return operationList; }

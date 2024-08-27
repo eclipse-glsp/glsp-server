@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.features.undoredo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -25,7 +26,6 @@ import org.eclipse.glsp.server.actions.SetDirtyStateAction;
 import org.eclipse.glsp.server.features.core.model.ModelSubmissionHandler;
 import org.eclipse.glsp.server.model.GModelState;
 
-import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 public class UndoRedoActionHandler implements ActionHandler {
@@ -52,6 +52,6 @@ public class UndoRedoActionHandler implements ActionHandler {
 
    @Override
    public List<Class<? extends Action>> getHandledActionTypes() {
-      return Lists.newArrayList(UndoAction.class, RedoAction.class);
+      return new ArrayList<>(List.of(UndoAction.class, RedoAction.class));
    }
 }

@@ -9,7 +9,6 @@ location "http://download.eclipse.org/releases/2023-09" {
 	org.apache.commons.cli [1.4.0,2.0.0)
 	com.google.gson[2.8.7,3.0.0)
 	com.google.inject [7.0.0,8.0.0)
-	com.google.guava [32.0.0,33.0.0)
 	jakarta.inject.jakarta.inject-api [2.0.1,3.0.0)
 }
 

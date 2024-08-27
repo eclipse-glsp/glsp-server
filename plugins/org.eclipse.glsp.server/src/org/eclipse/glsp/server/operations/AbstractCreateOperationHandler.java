@@ -15,11 +15,10 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operations;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.glsp.server.gmodel.GModelCreateOperationHandler;
-
-import com.google.common.collect.Lists;
 
 /**
  * @deprecated Use {@link GModelCreateOperationHandler}
@@ -31,7 +30,7 @@ public abstract class AbstractCreateOperationHandler<T extends CreateOperation> 
    protected List<String> handledElementTypeIds;
 
    public AbstractCreateOperationHandler(final String... elementTypeIds) {
-      this(Lists.newArrayList(elementTypeIds));
+      this(new ArrayList<>(List.of(elementTypeIds)));
    }
 
    public AbstractCreateOperationHandler(final List<String> handledElementTypeIds) {

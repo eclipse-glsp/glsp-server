@@ -18,7 +18,10 @@ package org.eclipse.glsp.example.workflow.provider;
 import static org.eclipse.glsp.graph.DefaultTypes.EDGE;
 import static org.eclipse.glsp.graph.util.GraphUtil.point;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -38,8 +41,6 @@ import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.DeleteOperation;
 import org.eclipse.glsp.server.types.EditorContext;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 
 public class WorkflowCommandPaletteActionProvider implements CommandPaletteActionProvider {
@@ -50,7 +51,7 @@ public class WorkflowCommandPaletteActionProvider implements CommandPaletteActio
    @Override
    @SuppressWarnings("checkstyle:CyclomaticComplexity")
    public List<LabeledAction> getActions(final EditorContext editorContext) {
-      List<LabeledAction> actions = Lists.newArrayList();
+      List<LabeledAction> actions = new ArrayList<>();
       if (modelState.isReadonly()) {
          return actions;
       }
@@ -60,20 +61,22 @@ public class WorkflowCommandPaletteActionProvider implements CommandPaletteActio
       Set<GModelElement> selectedElements = index.getAll(selectedIds);
 
       // Create node actions are always possible
-      actions.addAll(Sets.newHashSet(
-         new LabeledAction("Create Automated Task", Lists.newArrayList(
+      actions.addAll(new HashSet<>(Set.of(
+         new LabeledAction("Create Automated Task", new ArrayList<>(List.of(
             new CreateNodeOperation(ModelTypes.AUTOMATED_TASK,
-               lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
+               lastMousePosition.orElse(point(0, 0)), "fa-plus-square")))),
          new LabeledAction("Create Manual Task",
-            Lists.newArrayList(new CreateNodeOperation(ModelTypes.MANUAL_TASK, lastMousePosition.orElse(point(0, 0)),
-               "fa-plus-square"))),
+            new ArrayList<>(
+               List.of(new CreateNodeOperation(ModelTypes.MANUAL_TASK, lastMousePosition.orElse(point(0, 0)),
+                  "fa-plus-square")))),
          new LabeledAction("Create Merge Node",
-            Lists.newArrayList(new CreateNodeOperation(ModelTypes.MERGE_NODE, lastMousePosition.orElse(point(0, 0)),
-               "fa-plus-square"))),
-         new LabeledAction("Create Decision Node", Lists.newArrayList(new CreateNodeOperation(
-            ModelTypes.DECISION_NODE, lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
-         new LabeledAction("Create Category", Lists.newArrayList(new CreateNodeOperation(
-            ModelTypes.CATEGORY, lastMousePosition.orElse(point(0, 0)), "fa-plus-square")))));
+            new ArrayList<>(
+               List.of(new CreateNodeOperation(ModelTypes.MERGE_NODE, lastMousePosition.orElse(point(0, 0)),
+                  "fa-plus-square")))),
+         new LabeledAction("Create Decision Node", new ArrayList<>(List.of(new CreateNodeOperation(
+            ModelTypes.DECISION_NODE, lastMousePosition.orElse(point(0, 0)), "fa-plus-square")))),
+         new LabeledAction("Create Category", new ArrayList<>(List.of(new CreateNodeOperation(
+            ModelTypes.CATEGORY, lastMousePosition.orElse(point(0, 0)), "fa-plus-square")))))));
 
       // Create edge actions between two nodes
       if (selectedElements.size() == 1) {
@@ -96,17 +99,19 @@ public class WorkflowCommandPaletteActionProvider implements CommandPaletteActio
       // Delete action
       if (selectedElements.size() == 1) {
          actions
-            .add(new LabeledAction("Delete", Lists.newArrayList(new DeleteOperation(selectedIds)), "fa-minus-square"));
+            .add(new LabeledAction("Delete", new ArrayList<>(List.of(new DeleteOperation(selectedIds))),
+               "fa-minus-square"));
       } else if (selectedElements.size() > 1) {
          actions.add(
-            new LabeledAction("Delete All", Lists.newArrayList(new DeleteOperation(selectedIds)), "fa-minus-square"));
+            new LabeledAction("Delete All", new ArrayList<>(List.of(new DeleteOperation(selectedIds))),
+               "fa-minus-square"));
       }
 
       return actions;
    }
 
    private Set<LabeledAction> createEdgeActions(final GNode source, final Set<? extends GNode> targets) {
-      Set<LabeledAction> actions = Sets.newLinkedHashSet();
+      Set<LabeledAction> actions = new LinkedHashSet<>();
       // add first all edge, then all weighted edge actions to keep a nice order
       targets.forEach(node -> actions.add(createEdgeAction("Create Edge to " + getLabel(node), source, node)));
       targets.forEach(node -> actions
@@ -115,13 +120,13 @@ public class WorkflowCommandPaletteActionProvider implements CommandPaletteActio
    }
 
    private LabeledAction createWeightedEdgeAction(final String label, final GNode source, final GNode node) {
-      return new LabeledAction(label, Lists.newArrayList(
-         new CreateEdgeOperation(ModelTypes.WEIGHTED_EDGE, source.getId(), node.getId())), "fa-plus-square");
+      return new LabeledAction(label, new ArrayList<>(List.of(
+         new CreateEdgeOperation(ModelTypes.WEIGHTED_EDGE, source.getId(), node.getId()))), "fa-plus-square");
    }
 
    private LabeledAction createEdgeAction(final String label, final GNode source, final GNode node) {
-      return new LabeledAction(label, Lists.newArrayList(
-         new CreateEdgeOperation(EDGE, source.getId(), node.getId())), "fa-plus-square");
+      return new LabeledAction(label, new ArrayList<>(List.of(
+         new CreateEdgeOperation(EDGE, source.getId(), node.getId()))), "fa-plus-square");
    }
 
    private String getLabel(final GNode node) {

@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.example.workflow.taskedit;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +27,6 @@ import org.eclipse.glsp.server.features.directediting.LabeledAction;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.types.EditorContext;
 
-import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 public class TaskEditContextActionProvider implements ContextActionsProvider {
@@ -51,18 +51,20 @@ public class TaskEditContextActionProvider implements ContextActionsProvider {
       }
       if (text.startsWith(TYPE_PREFIX)) {
          String id = taskNode.get().getId();
-         return Lists.newArrayList(
-            new LabeledAction("type:automated", Lists.newArrayList(new EditTaskOperation(id, "taskType", "automated"))),
-            new LabeledAction("type:manual", Lists.newArrayList(new EditTaskOperation(id, "taskType", "manual"))));
+         return new ArrayList<>(List.of(
+            new LabeledAction("type:automated",
+               new ArrayList<>(List.of(new EditTaskOperation(id, "taskType", "automated")))),
+            new LabeledAction("type:manual",
+               new ArrayList<>(List.of(new EditTaskOperation(id, "taskType", "manual"))))));
       }
       if (text.startsWith(DURATION_PREFIX)) {
          return Collections.emptyList();
       }
       String taskType = taskNode.get().getType().substring(TASK_PREFIX.length());
       int duration = taskNode.get().getDuration();
-      return Lists.newArrayList(
+      return new ArrayList<>(List.of(
          new SetAutoCompleteValueAction("type:", "", TYPE_PREFIX + taskType),
-         new SetAutoCompleteValueAction("duration:", "", DURATION_PREFIX + duration));
+         new SetAutoCompleteValueAction("duration:", "", DURATION_PREFIX + duration)));
    }
 
 }

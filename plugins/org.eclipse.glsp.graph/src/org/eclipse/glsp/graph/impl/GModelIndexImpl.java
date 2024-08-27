@@ -40,8 +40,6 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GModelRoot;
 
-import com.google.common.base.Preconditions;
-
 /**
  * Default implementation of {@link GModelIndex}. Registers itself as adapter of the {@link GModelRoot}
  * to receive change notifications. This enables auto updating of the internal index if a child elements is
@@ -54,7 +52,9 @@ public class GModelIndexImpl extends ECrossReferenceAdapter implements GModelInd
    protected final GModelElement root;
 
    public GModelIndexImpl(final EObject target) {
-      Preconditions.checkArgument(target instanceof GModelElement);
+      if (!(target instanceof GModelElement)) {
+         throw new IllegalArgumentException();
+      }
       this.root = (GModelElement) target;
       addIfGModelElement(target);
    }

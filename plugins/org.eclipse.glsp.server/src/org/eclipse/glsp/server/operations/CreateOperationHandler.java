@@ -15,14 +15,13 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.operations;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.eclipse.glsp.server.actions.TriggerEdgeCreationAction;
 import org.eclipse.glsp.server.actions.TriggerElementCreationAction;
 import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;
-
-import com.google.common.collect.Lists;
 
 /**
  * A special {@link OperationHandler} that is responsible for the handling of {@link CreateOperation}s. Depending on its
@@ -41,7 +40,7 @@ public interface CreateOperationHandler<O extends CreateOperation> extends Opera
       } else if (CreateEdgeOperation.class.isAssignableFrom(getHandledOperationType())) {
          return getHandledElementTypeIds().stream().map(TriggerEdgeCreationAction::new).collect(Collectors.toList());
       }
-      return Lists.newArrayList();
+      return new ArrayList<>();
    }
 
    /**

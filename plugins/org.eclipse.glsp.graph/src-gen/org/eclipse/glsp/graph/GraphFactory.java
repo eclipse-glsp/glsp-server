@@ -225,6 +225,15 @@ public interface GraphFactory extends EFactory {
    GResizable createGResizable();
 
    /**
+    * Returns a new object of class '<em>GForeign Object Element</em>'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return a new object of class '<em>GForeign Object Element</em>'.
+    * @generated
+    */
+   GForeignObjectElement createGForeignObjectElement();
+
+   /**
     * Returns the package supported by this factory.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->

@@ -116,6 +116,8 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
             return createGLayoutable();
          case GraphPackage.GRESIZABLE:
             return createGResizable();
+         case GraphPackage.GFOREIGN_OBJECT_ELEMENT:
+            return createGForeignObjectElement();
          default:
             throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
       }
@@ -390,6 +392,17 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
    public GResizable createGResizable() {
       GResizableImpl gResizable = new GResizableImpl();
       return gResizable;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
+   public GForeignObjectElement createGForeignObjectElement() {
+      GForeignObjectElementImpl gForeignObjectElement = new GForeignObjectElementImpl();
+      return gForeignObjectElement;
    }
 
    /**

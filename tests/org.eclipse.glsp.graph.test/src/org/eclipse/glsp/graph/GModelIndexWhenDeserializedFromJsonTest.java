@@ -22,6 +22,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collection;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.graph.gson.GraphGsonConfigurator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -103,6 +104,34 @@ public class GModelIndexWhenDeserializedFromJsonTest {
       assertEquals(1, incomingEdgesOfNode2.size());
       assertEquals(0, outgoingEdgesOfNode2.size());
       assertTrue(incomingEdgesOfNode2.contains(edge));
+   }
+
+   @Test
+   void testGetAllSvgDefaulTypes() throws IOException {
+      GGraph graph = loadResource("graphWithAllDefaultTypes.graph");
+      EList<GModelElement> children = graph.getChildren();
+      assertType(children.get(0), GEdge.class, DefaultTypes.EDGE);
+      assertType(children.get(1), GNode.class, DefaultTypes.NODE);
+      assertType(children.get(2), GNode.class, DefaultTypes.NODE_CIRCLE);
+      assertType(children.get(3), GNode.class, DefaultTypes.NODE_RECTANGLE);
+      assertType(children.get(4), GNode.class, DefaultTypes.NODE_DIAMOND);
+      assertType(children.get(5), GButton.class, DefaultTypes.BUTTON);
+      assertType(children.get(6), GButton.class, DefaultTypes.EXPAND_BUTTON);
+      assertType(children.get(7), GPreRenderedElement.class, DefaultTypes.PRE_RENDERED);
+      assertType(children.get(8), GShapePreRenderedElement.class, DefaultTypes.SHAPE_PRE_RENDERED);
+      assertType(children.get(9), GForeignObjectElement.class, DefaultTypes.FOREIGN_OBJECT);
+      EList<GModelElement> nodeChidlren = children.get(1).getChildren();
+      assertType(nodeChidlren.get(0), GCompartment.class, DefaultTypes.COMPARTMENT_HEADER);
+      assertType(nodeChidlren.get(1), GCompartment.class, DefaultTypes.COMPARTMENT);
+      assertType(nodeChidlren.get(2), GLabel.class, DefaultTypes.LABEL);
+      assertType(nodeChidlren.get(3), GPort.class, DefaultTypes.PORT);
+
+   }
+
+   private <T extends GModelElement> void assertType(final GModelElement element, final Class<T> clazz,
+      final String type) {
+      assertTrue(clazz.isInstance(element));
+      assertTrue(element.getType().equals(type));
    }
 
    private GGraph loadResource(final String file) throws IOException {

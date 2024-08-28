@@ -218,6 +218,11 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
       }
 
       @Override
+      public Adapter caseGForeignObjectElement(GForeignObjectElement object) {
+         return createGForeignObjectElementAdapter();
+      }
+
+      @Override
       public Adapter defaultCase(EObject object) {
          return createEObjectAdapter();
       }
@@ -611,6 +616,20 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
     * @generated
     */
    public Adapter createGResizableAdapter() {
+      return null;
+   }
+
+   /**
+    * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GForeignObjectElement <em>GForeign Object Element</em>}'.
+    * <!-- begin-user-doc -->
+    * This default implementation returns null so that we can easily ignore cases;
+    * it's useful to ignore a case when inheritance will catch all the cases anyway.
+    * <!-- end-user-doc -->
+    * @return the new adapter.
+    * @see org.eclipse.glsp.graph.GForeignObjectElement
+    * @generated
+    */
+   public Adapter createGForeignObjectElementAdapter() {
       return null;
    }
 

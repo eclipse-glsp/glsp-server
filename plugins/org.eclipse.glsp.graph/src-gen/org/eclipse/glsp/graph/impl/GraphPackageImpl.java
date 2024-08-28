@@ -36,6 +36,7 @@ import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GEdgeLayoutable;
 import org.eclipse.glsp.graph.GEdgePlacement;
+import org.eclipse.glsp.graph.GForeignObjectElement;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GHtmlRoot;
 import org.eclipse.glsp.graph.GIssue;
@@ -251,6 +252,13 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
     * @generated
     */
    private EClass gResizableEClass = null;
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   private EClass gForeignObjectElementEClass = null;
 
    /**
     * <!-- begin-user-doc -->
@@ -927,6 +935,24 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
     * @generated
     */
    @Override
+   public EClass getGForeignObjectElement() { return gForeignObjectElementEClass; }
+
+   /**
+    * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
+   public EAttribute getGForeignObjectElement_Namespace() {
+      return (EAttribute) gForeignObjectElementEClass.getEStructuralFeatures().get(0);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
    public EEnum getGSeverity() { return gSeverityEEnum; }
 
    /**
@@ -1054,6 +1080,9 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
       gResizableEClass = createEClass(GRESIZABLE);
       createEAttribute(gResizableEClass, GRESIZABLE__RESIZE_LOCATIONS);
 
+      gForeignObjectElementEClass = createEClass(GFOREIGN_OBJECT_ELEMENT);
+      createEAttribute(gForeignObjectElementEClass, GFOREIGN_OBJECT_ELEMENT__NAMESPACE);
+
       // Create enums
       gSeverityEEnum = createEEnum(GSEVERITY);
    }
@@ -1113,6 +1142,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
       gPreRenderedElementEClass.getESuperTypes().add(this.getGModelElement());
       gShapePreRenderedElementEClass.getESuperTypes().add(this.getGPreRenderedElement());
       gShapePreRenderedElementEClass.getESuperTypes().add(this.getGBoundsAware());
+      gForeignObjectElementEClass.getESuperTypes().add(this.getGShapePreRenderedElement());
 
       // Initialize classes, features, and operations; add parameters
       initEClass(gModelElementEClass, GModelElement.class, "GModelElement", IS_ABSTRACT, IS_INTERFACE,
@@ -1291,6 +1321,12 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
       initEAttribute(getGResizable_ResizeLocations(), ecorePackage.getEString(), "resizeLocations", null, 0, -1,
          GResizable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
          IS_ORDERED);
+
+      initEClass(gForeignObjectElementEClass, GForeignObjectElement.class, "GForeignObjectElement", !IS_ABSTRACT,
+         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+      initEAttribute(getGForeignObjectElement_Namespace(), ecorePackage.getEString(), "namespace", null, 0, 1,
+         GForeignObjectElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+         !IS_DERIVED, IS_ORDERED);
 
       // Initialize enums and add enum literals
       initEEnum(gSeverityEEnum, GSeverity.class, "GSeverity");

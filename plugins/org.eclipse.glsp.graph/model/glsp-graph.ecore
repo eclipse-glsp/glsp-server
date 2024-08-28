@@ -136,4 +136,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="resizeLocations" upperBound="-1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GForeignObjectElement" eSuperTypes="#//GShapePreRenderedElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="namespace" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
 </ecore:EPackage>

@@ -1,0 +1,122 @@
+{
+  "revision": 0,
+  "type": "graph",
+  "id": "graphId",
+  "children": [
+    {
+      "id": "edge12",
+      "type": "edge",
+      "sourceId": "node1",
+      "targetId": "node2"
+    },
+    {
+      "id": "node1",
+      "type": "node",
+      "position": {
+        "x": 10.0,
+        "y": 20.0
+      },
+      "children": [
+        {
+          "id": "header",
+          "type": "comp:header",
+          "position": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "compartment",
+          "type": "comp",
+          "position": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "label",
+          "type": "label",
+          "text": "someLabel",
+          "position": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "port",
+          "type": "port",
+          "position": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "node2",
+      "type": "node:circle",
+      "position": {
+        "x": 30.0,
+        "y": 40.0
+      }
+    },
+    {
+      "id": "node3",
+      "type": "node:rectangle",
+      "position": {
+        "x": 30.0,
+        "y": 40.0
+      }
+    },
+    {
+      "id": "node3",
+      "type": "node:diamond",
+      "position": {
+        "x": 30.0,
+        "y": 40.0
+      }
+    },
+    {
+      "id": "button1",
+      "type": "button",
+      "enabled": true,
+      "position": {
+        "x": 30.0,
+        "y": 40.0
+      }
+    },
+    {
+      "id": "button2",
+      "type": "button:expand",
+      "enabled": false,
+      "position": {
+        "x": 30.0,
+        "y": 40.0
+      }
+    },
+    {
+      "id": "prerendered",
+      "type": "pre-rendered",
+      "code": "<div>some html</div>"
+    },
+    {
+      "id": "shapePrerendered",
+      "type": "shape-pre-rendered",
+      "position": {
+        "x": 30.0,
+        "y": 40.0
+      },
+      "code": "<rect></rect>"
+    },
+    {
+      "id": "foreignObject",
+      "type": "foreign-object",
+      "code": "<div>hello</div>",
+      "position": {
+        "x": 30.0,
+        "y": 40.0
+      },
+      "namespace": "http://www.w3.org/1999/xhtml"
+    }
+  ]
+}

@@ -2439,6 +2439,133 @@ public interface GraphPackage extends EPackage {
    int GRESIZABLE_OPERATION_COUNT = 0;
 
    /**
+    * The meta object id for the '{@link org.eclipse.glsp.graph.impl.GForeignObjectElementImpl <em>GForeign Object Element</em>}' class.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see org.eclipse.glsp.graph.impl.GForeignObjectElementImpl
+    * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGForeignObjectElement()
+    * @generated
+    */
+   int GFOREIGN_OBJECT_ELEMENT = 27;
+
+   /**
+    * The feature id for the '<em><b>Args</b></em>' map.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GFOREIGN_OBJECT_ELEMENT__ARGS = GSHAPE_PRE_RENDERED_ELEMENT__ARGS;
+
+   /**
+   	 * The feature id for the '<em><b>Id</b></em>' attribute.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @generated
+   	 * @ordered
+   	 */
+   int GFOREIGN_OBJECT_ELEMENT__ID = GSHAPE_PRE_RENDERED_ELEMENT__ID;
+
+   /**
+   	 * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @generated
+   	 * @ordered
+   	 */
+   int GFOREIGN_OBJECT_ELEMENT__CSS_CLASSES = GSHAPE_PRE_RENDERED_ELEMENT__CSS_CLASSES;
+
+   /**
+   	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @generated
+   	 * @ordered
+   	 */
+   int GFOREIGN_OBJECT_ELEMENT__CHILDREN = GSHAPE_PRE_RENDERED_ELEMENT__CHILDREN;
+
+   /**
+   	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @generated
+   	 * @ordered
+   	 */
+   int GFOREIGN_OBJECT_ELEMENT__PARENT = GSHAPE_PRE_RENDERED_ELEMENT__PARENT;
+
+   /**
+   	 * The feature id for the '<em><b>Trace</b></em>' attribute.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @generated
+   	 * @ordered
+   	 */
+   int GFOREIGN_OBJECT_ELEMENT__TRACE = GSHAPE_PRE_RENDERED_ELEMENT__TRACE;
+
+   /**
+   	 * The feature id for the '<em><b>Type</b></em>' attribute.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @generated
+   	 * @ordered
+   	 */
+   int GFOREIGN_OBJECT_ELEMENT__TYPE = GSHAPE_PRE_RENDERED_ELEMENT__TYPE;
+
+   /**
+   	 * The feature id for the '<em><b>Code</b></em>' attribute.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @generated
+   	 * @ordered
+   	 */
+   int GFOREIGN_OBJECT_ELEMENT__CODE = GSHAPE_PRE_RENDERED_ELEMENT__CODE;
+
+   /**
+   	 * The feature id for the '<em><b>Position</b></em>' containment reference.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @generated
+   	 * @ordered
+   	 */
+   int GFOREIGN_OBJECT_ELEMENT__POSITION = GSHAPE_PRE_RENDERED_ELEMENT__POSITION;
+
+   /**
+   	 * The feature id for the '<em><b>Size</b></em>' containment reference.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @generated
+   	 * @ordered
+   	 */
+   int GFOREIGN_OBJECT_ELEMENT__SIZE = GSHAPE_PRE_RENDERED_ELEMENT__SIZE;
+
+   /**
+   	 * The feature id for the '<em><b>Namespace</b></em>' attribute.
+   	 * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+   	 * @generated
+   	 * @ordered
+   	 */
+   int GFOREIGN_OBJECT_ELEMENT__NAMESPACE = GSHAPE_PRE_RENDERED_ELEMENT_FEATURE_COUNT + 0;
+
+   /**
+    * The number of structural features of the '<em>GForeign Object Element</em>' class.
+    * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GFOREIGN_OBJECT_ELEMENT_FEATURE_COUNT = GSHAPE_PRE_RENDERED_ELEMENT_FEATURE_COUNT + 1;
+
+   /**
+    * The number of operations of the '<em>GForeign Object Element</em>' class.
+    * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GFOREIGN_OBJECT_ELEMENT_OPERATION_COUNT = GSHAPE_PRE_RENDERED_ELEMENT_OPERATION_COUNT + 0;
+
+   /**
     * The meta object id for the '{@link org.eclipse.glsp.graph.GSeverity <em>GSeverity</em>}' enum.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -2446,7 +2573,7 @@ public interface GraphPackage extends EPackage {
     * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGSeverity()
     * @generated
     */
-   int GSEVERITY = 27;
+   int GSEVERITY = 28;
 
    /**
     * Returns the meta object for class '{@link org.eclipse.glsp.graph.GModelElement <em>GModel Element</em>}'.
@@ -3194,6 +3321,27 @@ public interface GraphPackage extends EPackage {
    EAttribute getGResizable_ResizeLocations();
 
    /**
+    * Returns the meta object for class '{@link org.eclipse.glsp.graph.GForeignObjectElement <em>GForeign Object Element</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for class '<em>GForeign Object Element</em>'.
+    * @see org.eclipse.glsp.graph.GForeignObjectElement
+    * @generated
+    */
+   EClass getGForeignObjectElement();
+
+   /**
+    * Returns the meta object for the attribute '{@link org.eclipse.glsp.graph.GForeignObjectElement#getNamespace <em>Namespace</em>}'.
+    * <!-- begin-user-doc -->
+   	 * <!-- end-user-doc -->
+    * @return the meta object for the attribute '<em>Namespace</em>'.
+    * @see org.eclipse.glsp.graph.GForeignObjectElement#getNamespace()
+    * @see #getGForeignObjectElement()
+    * @generated
+    */
+   EAttribute getGForeignObjectElement_Namespace();
+
+   /**
     * Returns the meta object for enum '{@link org.eclipse.glsp.graph.GSeverity <em>GSeverity</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -3839,6 +3987,24 @@ public interface GraphPackage extends EPackage {
        * @generated
        */
       EAttribute GRESIZABLE__RESIZE_LOCATIONS = eINSTANCE.getGResizable_ResizeLocations();
+
+      /**
+       * The meta object literal for the '{@link org.eclipse.glsp.graph.impl.GForeignObjectElementImpl <em>GForeign Object Element</em>}' class.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @see org.eclipse.glsp.graph.impl.GForeignObjectElementImpl
+       * @see org.eclipse.glsp.graph.impl.GraphPackageImpl#getGForeignObjectElement()
+       * @generated
+       */
+      EClass GFOREIGN_OBJECT_ELEMENT = eINSTANCE.getGForeignObjectElement();
+
+      /**
+       * The meta object literal for the '<em><b>Namespace</b></em>' attribute feature.
+       * <!-- begin-user-doc -->
+      	 * <!-- end-user-doc -->
+       * @generated
+       */
+      EAttribute GFOREIGN_OBJECT_ELEMENT__NAMESPACE = eINSTANCE.getGForeignObjectElement_Namespace();
 
       /**
        * The meta object literal for the '{@link org.eclipse.glsp.graph.GSeverity <em>GSeverity</em>}' enum.

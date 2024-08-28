@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2022 EclipseSource and others.
+ * Copyright (c) 2024 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,32 +13,27 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.graph.builder.impl;
+package org.eclipse.glsp.graph.builder;
 
-import org.eclipse.glsp.graph.DefaultTypes;
-import org.eclipse.glsp.graph.GShapePreRenderedElement;
-import org.eclipse.glsp.graph.GraphFactory;
-import org.eclipse.glsp.graph.builder.AbstractGShapePrenderedElementBuilder;
+import org.eclipse.glsp.graph.GForeignObjectElement;
 
-public class GShapePrerenderedElementBuilder
-   extends AbstractGShapePrenderedElementBuilder<GShapePreRenderedElement, GShapePrerenderedElementBuilder> {
+public abstract class AbstractGForeignObjectBuilder<T extends GForeignObjectElement, E extends AbstractGForeignObjectBuilder<T, E>>
+   extends AbstractGShapePrenderedElementBuilder<T, E> {
+   protected String namespace;
 
-   public GShapePrerenderedElementBuilder() {
-      this(DefaultTypes.SHAPE_PRE_RENDERED);
-   }
-
-   public GShapePrerenderedElementBuilder(final String type) {
+   public AbstractGForeignObjectBuilder(final String type) {
       super(type);
    }
 
-   @Override
-   protected GShapePreRenderedElement instantiate() {
-      return GraphFactory.eINSTANCE.createGShapePreRenderedElement();
+   public E namespace(final String namespace) {
+      this.namespace = namespace;
+      return self();
    }
 
    @Override
-   protected GShapePrerenderedElementBuilder self() {
-      return this;
+   protected void setProperties(final T element) {
+      super.setProperties(element);
+      element.setNamespace(namespace);
    }
 
 }

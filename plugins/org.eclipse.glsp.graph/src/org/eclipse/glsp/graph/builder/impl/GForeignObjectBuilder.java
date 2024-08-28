@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2022 EclipseSource and others.
+ * Copyright (c) 2024 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -16,28 +16,27 @@
 package org.eclipse.glsp.graph.builder.impl;
 
 import org.eclipse.glsp.graph.DefaultTypes;
-import org.eclipse.glsp.graph.GShapePreRenderedElement;
+import org.eclipse.glsp.graph.GForeignObjectElement;
 import org.eclipse.glsp.graph.GraphFactory;
-import org.eclipse.glsp.graph.builder.AbstractGShapePrenderedElementBuilder;
+import org.eclipse.glsp.graph.builder.AbstractGForeignObjectBuilder;
 
-public class GShapePrerenderedElementBuilder
-   extends AbstractGShapePrenderedElementBuilder<GShapePreRenderedElement, GShapePrerenderedElementBuilder> {
+public class GForeignObjectBuilder extends AbstractGForeignObjectBuilder<GForeignObjectElement, GForeignObjectBuilder> {
 
-   public GShapePrerenderedElementBuilder() {
-      this(DefaultTypes.SHAPE_PRE_RENDERED);
+   public GForeignObjectBuilder() {
+      this(DefaultTypes.FOREIGN_OBJECT);
    }
 
-   public GShapePrerenderedElementBuilder(final String type) {
+   public GForeignObjectBuilder(final String type) {
       super(type);
    }
 
    @Override
-   protected GShapePreRenderedElement instantiate() {
-      return GraphFactory.eINSTANCE.createGShapePreRenderedElement();
+   protected GForeignObjectElement instantiate() {
+      return GraphFactory.eINSTANCE.createGForeignObjectElement();
    }
 
    @Override
-   protected GShapePrerenderedElementBuilder self() {
+   protected GForeignObjectBuilder self() {
       return this;
    }
 

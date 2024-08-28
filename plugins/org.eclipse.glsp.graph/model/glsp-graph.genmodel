@@ -108,5 +108,8 @@
     <genClasses ecoreClass="glsp-graph.ecore#//GResizable">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GResizable/resizeLocations"/>
     </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GForeignObjectElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GForeignObjectElement/namespace"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

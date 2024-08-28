@@ -33,21 +33,22 @@ public final class DefaultTypes {
    public static final String COMPARTMENT_HEADER = "comp:header";
    public static final String BUTTON = "button";
    public static final String EXPAND_BUTTON = "button:expand";
-   public static final String ISSUE_MARKER = "marker";
 
    // shapes
    public static final String NODE_CIRCLE = "node:circle";
    public static final String NODE_RECTANGLE = "node:rectangle";
    public static final String NODE_DIAMOND = "node:diamond";
+   public static final String FOREIGN_OBJECT = "foreign-object";
+   public static final String PRE_RENDERED = "pre-rendered";
+   public static final String SHAPE_PRE_RENDERED = "shape-pre-rendered";
+
+   public static final String HTML = "html";
 
    // types present on the client
    public static final String ROUTING_POINT = "routing-point";
    public static final String VOLATILE_ROUTING_POINT = "volatile-routing-point";
-   public static final String HTML = "html";
-   public static final String FOREIGN_OBJECT = "foreign-object";
-   public static final String PRE_RENDERED = "pre-rendered";
-   public static final String SHAPE_PRE_RENDERED = "shape-pre-rendered";
    public static final String SVG = "svg";
+   public static final String ISSUE_MARKER = "marker";
 
    public static Map<String, EClass> getDefaultTypeMappings() {
       Map<String, EClass> mapping = new HashMap<>();
@@ -57,14 +58,13 @@ public final class DefaultTypes {
       mapping.put(PORT, GraphPackage.Literals.GPORT);
       mapping.put(LABEL, GraphPackage.Literals.GLABEL);
       mapping.put(COMPARTMENT, GraphPackage.Literals.GCOMPARTMENT);
-      mapping.put(COMPARTMENT_HEADER, GraphPackage.Literals.GCOMPARTMENT);
       mapping.put(BUTTON, GraphPackage.Literals.GBUTTON);
-      mapping.put(EXPAND_BUTTON, GraphPackage.Literals.GBUTTON);
       mapping.put(ISSUE_MARKER, GraphPackage.Literals.GISSUE_MARKER);
 
-      mapping.put(NODE_CIRCLE, GraphPackage.Literals.GNODE);
-      mapping.put(NODE_RECTANGLE, GraphPackage.Literals.GNODE);
-      mapping.put(NODE_DIAMOND, GraphPackage.Literals.GNODE);
+      mapping.put(HTML, GraphPackage.Literals.GHTML_ROOT);
+      mapping.put(PRE_RENDERED, GraphPackage.Literals.GPRE_RENDERED_ELEMENT);
+      mapping.put(SHAPE_PRE_RENDERED, GraphPackage.Literals.GSHAPE_PRE_RENDERED_ELEMENT);
+      mapping.put(FOREIGN_OBJECT, GraphPackage.Literals.GFOREIGN_OBJECT_ELEMENT);
       return mapping;
    }
 }

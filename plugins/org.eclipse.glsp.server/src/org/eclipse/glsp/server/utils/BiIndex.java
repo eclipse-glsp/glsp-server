@@ -32,10 +32,16 @@ public class BiIndex<K, V> {
    protected Map<K, V> map = new HashMap<>();
    protected Map<V, K> inverseMap = new HashMap<>();
 
+   /**
+    * Returns an unmodifiable map of the currently indexed key-value pairs.
+    */
    public Map<K, V> map() {
       return Map.copyOf(map);
    }
 
+   /**
+    * Returns an unmodifiable inversed map (value to key) of the currently indexed key-value pairs.
+    */
    public Map<V, K> inverseMap() {
       return Map.copyOf(inverseMap);
    }

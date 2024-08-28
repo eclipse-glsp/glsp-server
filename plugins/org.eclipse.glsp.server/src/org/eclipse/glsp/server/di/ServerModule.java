@@ -86,7 +86,7 @@ public class ServerModule extends GLSPModule {
     */
    public ServerModule configureDiagramModule(final DiagramModule diagramModule, final Module... mixinModules) {
       String diagramType = diagramModule.getDiagramType();
-      if (!diagramModules.containsKey(diagramType)) {
+      if (diagramModules.containsKey(diagramType)) {
          throw new IllegalArgumentException(
             "A module configuration is already present for diagram type: " + diagramType);
       }

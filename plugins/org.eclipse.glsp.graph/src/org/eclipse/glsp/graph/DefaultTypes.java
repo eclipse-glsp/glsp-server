@@ -24,31 +24,37 @@ public final class DefaultTypes {
 
    private DefaultTypes() {}
 
-   public static final String GRAPH = "graph";
-   public static final String NODE = "node";
-   public static final String EDGE = "edge";
-   public static final String PORT = "port";
-   public static final String LABEL = "label";
-   public static final String COMPARTMENT = "comp";
-   public static final String COMPARTMENT_HEADER = "comp:header";
-   public static final String BUTTON = "button";
-   public static final String EXPAND_BUTTON = "button:expand";
+   // HTML elements
+   public static final String HTML = "html";
 
-   // shapes
-   public static final String NODE_CIRCLE = "node:circle";
-   public static final String NODE_RECTANGLE = "node:rectangle";
-   public static final String NODE_DIAMOND = "node:diamond";
+   // Generic types
    public static final String FOREIGN_OBJECT = "foreign-object";
    public static final String PRE_RENDERED = "pre-rendered";
    public static final String SHAPE_PRE_RENDERED = "shape-pre-rendered";
 
-   public static final String HTML = "html";
-
-   // types present on the client
-   public static final String ROUTING_POINT = "routing-point";
-   public static final String VOLATILE_ROUTING_POINT = "volatile-routing-point";
+   // Svg Elements
    public static final String SVG = "svg";
-   public static final String ISSUE_MARKER = "marker";
+
+   // Graph Types
+   public static final String GRAPH = "graph";
+   public static final String NODE = "node";
+   public static final String COMPARTMENT = "comp";
+   public static final String COMPARTMENT_HEADER = "comp:header";
+   public static final String EDGE = "edge";
+   public static final String PORT = "port";
+   public static final String ROUTING_POINT = "routing-point"; // client-side only type by default
+   public static final String VOLATILE_ROUTING_POINT = "volatile-routing-point"; // client-side only type by default
+   public static final String LABEL = "label";
+
+   // UI elements
+   public static final String BUTTON = "button";
+   public static final String EXPAND_BUTTON = "button:expand";
+   public static final String ISSUE_MARKER = "marker"; // client-side only type by default
+
+   // Shapes
+   public static final String NODE_CIRCLE = "node:circle";
+   public static final String NODE_RECTANGLE = "node:rectangle";
+   public static final String NODE_DIAMOND = "node:diamond";
 
    public static Map<String, EClass> getDefaultTypeMappings() {
       Map<String, EClass> mapping = new HashMap<>();

@@ -125,7 +125,6 @@ public class GModelIndexWhenDeserializedFromJsonTest {
       assertType(nodeChidlren.get(1), GCompartment.class, DefaultTypes.COMPARTMENT);
       assertType(nodeChidlren.get(2), GLabel.class, DefaultTypes.LABEL);
       assertType(nodeChidlren.get(3), GPort.class, DefaultTypes.PORT);
-
    }
 
    private <T extends GModelElement> void assertType(final GModelElement element, final Class<T> clazz,

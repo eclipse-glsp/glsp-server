@@ -273,8 +273,7 @@ public class ElkLayoutEngine implements LayoutEngine {
     */
    protected void resolveReferences(final LayoutContext context) {
       // Per default a map will resize when 75% of its capacticy is filled. By dividing the expected size with the load
-      // factor
-      // we can create a map with enough capacity to avoid resizing
+      // factor we can create a map with enough capacity to avoid resizing
       int initialCapactiy = (int) Math.ceil(context.shapeMap.size() / 0.75);
       Map<String, ElkConnectableShape> id2NodeMap = new HashMap<>(initialCapactiy);
 

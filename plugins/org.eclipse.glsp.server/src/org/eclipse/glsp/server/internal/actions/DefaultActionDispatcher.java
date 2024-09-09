@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.ActionHandler;
@@ -46,6 +47,7 @@ import org.eclipse.glsp.server.utils.FutureUtil;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
+
 /**
  * <p>
  * An ActionDispatcher that executes all handlers in the same thread. The dispatcher's
@@ -53,7 +55,7 @@ import com.google.inject.Provider;
  * the server.
  * </p>
  */
-public class DefaultActionDispatcher extends Disposable implements ActionDispatcher, ActionHandler {
+public class DefaultActionDispatcher extends Disposable implements ActionDispatcher {
 
    protected static final Logger LOGGER = LogManager.getLogger(DefaultActionDispatcher.class);
 
@@ -246,20 +248,19 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
       }
    }
 
-   @Override
-   public List<Class<? extends Action>> getHandledActionTypes() { return List.of(JoinAction.class); }
-
-   @Override
-   public List<Action> execute(final Action action) {
-      return none();
-   }
-
    /**
     * An internal action class that is used to define a join-point within the queue of all pending actions.
     */
    public static class JoinAction extends Action {
       public JoinAction() {
          super("internal.join");
+      }
+   }
+
+   public static class JoinActionHandler extends AbstractActionHandler<JoinAction> {
+      @Override
+      protected List<Action> executeAction(final JoinAction actualAction) {
+         return none();
       }
    }
 }

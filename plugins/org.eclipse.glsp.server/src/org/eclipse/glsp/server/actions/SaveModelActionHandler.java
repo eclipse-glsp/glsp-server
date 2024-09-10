@@ -49,7 +49,8 @@ public class SaveModelActionHandler extends AbstractActionHandler<SaveModelActio
       } finally {
          modelSourceWatcher.ifPresent(watcher -> watcher.continueWatching());
       }
-      return listOf(new SetDirtyStateAction(modelState.isDirty(), SetDirtyStateAction.Reason.SAVE));
+      return listOf(
+         new SetDirtyStateAction(modelState.isDirty(), SetDirtyStateAction.Reason.SAVE));
    }
 
 }

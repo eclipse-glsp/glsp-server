@@ -261,7 +261,7 @@ public abstract class DiagramModule extends GLSPModule {
    }
 
    protected void configureActionHandlers(final MultiBinding<ActionHandler> binding) {
-      binding.add(DefaultActionDispatcher.class);
+      binding.add(DefaultActionDispatcher.JoinActionHandler.class);
       binding.add(OperationActionHandler.class);
       binding.add(RequestModelActionHandler.class);
       binding.add(RequestPopupModelActionHandler.class);

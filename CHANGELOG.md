@@ -4,6 +4,8 @@
 
 ### Changes
 
+- [API] Fix: do not bind the DefaultActionDispatcher as ActionHandler, so it can be correctly disposed and the thread is closed at the end of a session [#246](https://github.com/eclipse-glsp/glsp-server/pull/246) - Contributed on behalf of Axon Ivy AG
+
 ### Potentially Breaking Changes
 
 ## [v2.2.1 - 22/07/2024](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.2.1)

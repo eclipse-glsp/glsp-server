@@ -212,6 +212,7 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
       for (final ActionHandler actionHandler : actionHandlers) {
          final List<Action> responses = actionHandler.execute(action).stream()
             .map(response -> ResponseAction.respond(action, response))
+            .map(response -> Action.addSubclientId(action, response))
             .collect(Collectors.toList());
          results.addAll(dispatchAll(responses));
       }

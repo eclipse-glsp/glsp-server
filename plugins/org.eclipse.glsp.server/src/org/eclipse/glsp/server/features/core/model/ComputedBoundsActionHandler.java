@@ -45,7 +45,7 @@ public class ComputedBoundsActionHandler extends AbstractActionHandler<ComputedB
          if (model != null && action.getRevision().isPresent()
             && action.getRevision().get().doubleValue() == model.getRevision()) {
             LayoutUtil.applyBounds(model, action, modelState);
-            return submissionHandler.submitModelDirectly();
+            return submissionHandler.submitModelDirectly(action.getSubclientId());
          }
       }
       return none();

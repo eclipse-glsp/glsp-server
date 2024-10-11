@@ -43,7 +43,7 @@ import org.eclipse.glsp.server.launch.DefaultCLIParser;
 
 @SuppressWarnings("rawtypes")
 public final class LaunchUtil {
-   private static Logger LOGGER = LogManager.getLogger(LaunchUtil.class);
+   protected static Logger LOGGER = LogManager.getLogger(LaunchUtil.class);
 
    private LaunchUtil() {}
 

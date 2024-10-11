@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2023 EclipseSource and others.
+ * Copyright (c) 2019-2024 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -38,6 +38,7 @@ import org.eclipse.glsp.server.actions.ClientActionForwarder;
 import org.eclipse.glsp.server.actions.ResponseAction;
 import org.eclipse.glsp.server.di.ClientId;
 import org.eclipse.glsp.server.disposable.Disposable;
+import org.eclipse.glsp.server.features.core.model.SetModelAction;
 import org.eclipse.glsp.server.features.core.model.UpdateModelAction;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.protocol.GLSPClient;
@@ -55,7 +56,7 @@ import com.google.inject.Provider;
  */
 public class DefaultActionDispatcher extends Disposable implements ActionDispatcher, ActionHandler {
 
-   private static final Logger LOGGER = LogManager.getLogger(DefaultActionDispatcher.class);
+   protected static final Logger LOGGER = LogManager.getLogger(DefaultActionDispatcher.class);
 
    private static final AtomicInteger COUNT = new AtomicInteger(0);
 
@@ -69,9 +70,9 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
    @Inject
    protected ClientActionForwarder clientActionForwarder;
 
-   protected final String name;
+   protected String name;
 
-   protected final Thread thread;
+   protected Thread thread;
 
    protected final BlockingQueue<Action> actionsQueue = new ArrayBlockingQueue<>(100, true);
 
@@ -91,11 +92,23 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
    protected GModelState modelState;
 
    public DefaultActionDispatcher() {
+      this.initialize();
+   }
+
+   protected void initialize() {
       this.name = getClass().getSimpleName() + " " + COUNT.incrementAndGet();
-      this.thread = new Thread(this::runThread);
-      this.thread.setName(this.name);
-      this.thread.setDaemon(true);
-      this.thread.start();
+      this.thread = this.createThread();
+      this.initializeThread(thread, name);
+      thread.start();
+   }
+
+   protected Thread createThread() {
+      return new Thread(this::runThread);
+   }
+
+   protected void initializeThread(final Thread thread, final String name) {
+      thread.setName(name);
+      thread.setDaemon(true);
    }
 
    @Override
@@ -148,7 +161,7 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
       }
    }
 
-   private void runThread() {
+   protected void runThread() {
       while (true) {
          try {
             handleNextAction();
@@ -161,7 +174,7 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
       LOGGER.info("Terminating DefaultActionDispatcher");
    }
 
-   private void handleNextAction()
+   protected void handleNextAction()
       throws InterruptedException {
       final Action action = actionsQueue.take();
       if (action != null) {
@@ -208,7 +221,7 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
             .collect(Collectors.toList());
          results.addAll(dispatchAll(responses));
       }
-      if (action instanceof UpdateModelAction) {
+      if (action instanceof UpdateModelAction || action instanceof SetModelAction) {
          results.add(dispatchPostUpdateQueue());
       }
       return results;

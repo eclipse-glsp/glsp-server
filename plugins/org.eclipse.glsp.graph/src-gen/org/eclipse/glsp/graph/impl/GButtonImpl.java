@@ -42,6 +42,7 @@ import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GLayoutable;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.graph.GResizable;
 import org.eclipse.glsp.graph.GraphPackage;
 
 /**
@@ -61,6 +62,7 @@ import org.eclipse.glsp.graph.GraphPackage;
  *   <li>{@link org.eclipse.glsp.graph.impl.GButtonImpl#getPosition <em>Position</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GButtonImpl#getSize <em>Size</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GButtonImpl#getLayoutOptions <em>Layout Options</em>}</li>
+ *   <li>{@link org.eclipse.glsp.graph.impl.GButtonImpl#getResizeLocations <em>Resize Locations</em>}</li>
  *   <li>{@link org.eclipse.glsp.graph.impl.GButtonImpl#isEnabled <em>Enabled</em>}</li>
  * </ul>
  *
@@ -176,6 +178,16 @@ public class GButtonImpl extends GArgumentableImpl implements GButton {
     * @ordered
     */
    protected EMap<String, Object> layoutOptions;
+
+   /**
+    * The cached value of the '{@link #getResizeLocations() <em>Resize Locations</em>}' attribute list.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #getResizeLocations()
+    * @generated
+    * @ordered
+    */
+   protected EList<String> resizeLocations;
 
    /**
     * The default value of the '{@link #isEnabled() <em>Enabled</em>}' attribute.
@@ -471,6 +483,19 @@ public class GButtonImpl extends GArgumentableImpl implements GButton {
     * @generated
     */
    @Override
+   public EList<String> getResizeLocations() {
+      if (resizeLocations == null) {
+         resizeLocations = new EDataTypeUniqueEList<String>(String.class, this, GraphPackage.GBUTTON__RESIZE_LOCATIONS);
+      }
+      return resizeLocations;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
    public boolean isEnabled() { return enabled; }
 
    /**
@@ -571,6 +596,8 @@ public class GButtonImpl extends GArgumentableImpl implements GButton {
                return getLayoutOptions();
             else
                return getLayoutOptions().map();
+         case GraphPackage.GBUTTON__RESIZE_LOCATIONS:
+            return getResizeLocations();
          case GraphPackage.GBUTTON__ENABLED:
             return isEnabled();
       }
@@ -615,6 +642,10 @@ public class GButtonImpl extends GArgumentableImpl implements GButton {
          case GraphPackage.GBUTTON__LAYOUT_OPTIONS:
             ((EStructuralFeature.Setting) getLayoutOptions()).set(newValue);
             return;
+         case GraphPackage.GBUTTON__RESIZE_LOCATIONS:
+            getResizeLocations().clear();
+            getResizeLocations().addAll((Collection<? extends String>) newValue);
+            return;
          case GraphPackage.GBUTTON__ENABLED:
             setEnabled((Boolean) newValue);
             return;
@@ -657,6 +688,9 @@ public class GButtonImpl extends GArgumentableImpl implements GButton {
          case GraphPackage.GBUTTON__LAYOUT_OPTIONS:
             getLayoutOptions().clear();
             return;
+         case GraphPackage.GBUTTON__RESIZE_LOCATIONS:
+            getResizeLocations().clear();
+            return;
          case GraphPackage.GBUTTON__ENABLED:
             setEnabled(ENABLED_EDEFAULT);
             return;
@@ -690,6 +724,8 @@ public class GButtonImpl extends GArgumentableImpl implements GButton {
             return size != null;
          case GraphPackage.GBUTTON__LAYOUT_OPTIONS:
             return layoutOptions != null && !layoutOptions.isEmpty();
+         case GraphPackage.GBUTTON__RESIZE_LOCATIONS:
+            return resizeLocations != null && !resizeLocations.isEmpty();
          case GraphPackage.GBUTTON__ENABLED:
             return enabled != ENABLED_EDEFAULT;
       }
@@ -717,6 +753,14 @@ public class GButtonImpl extends GArgumentableImpl implements GButton {
          switch (derivedFeatureID) {
             case GraphPackage.GBUTTON__LAYOUT_OPTIONS:
                return GraphPackage.GLAYOUTABLE__LAYOUT_OPTIONS;
+            default:
+               return -1;
+         }
+      }
+      if (baseClass == GResizable.class) {
+         switch (derivedFeatureID) {
+            case GraphPackage.GBUTTON__RESIZE_LOCATIONS:
+               return GraphPackage.GRESIZABLE__RESIZE_LOCATIONS;
             default:
                return -1;
          }
@@ -749,6 +793,14 @@ public class GButtonImpl extends GArgumentableImpl implements GButton {
                return -1;
          }
       }
+      if (baseClass == GResizable.class) {
+         switch (baseFeatureID) {
+            case GraphPackage.GRESIZABLE__RESIZE_LOCATIONS:
+               return GraphPackage.GBUTTON__RESIZE_LOCATIONS;
+            default:
+               return -1;
+         }
+      }
       return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
    }
 
@@ -771,6 +823,8 @@ public class GButtonImpl extends GArgumentableImpl implements GButton {
       result.append(trace);
       result.append(", type: ");
       result.append(type);
+      result.append(", resizeLocations: ");
+      result.append(resizeLocations);
       result.append(", enabled: ");
       result.append(enabled);
       result.append(')');

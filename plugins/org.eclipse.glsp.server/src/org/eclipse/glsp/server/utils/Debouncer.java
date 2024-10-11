@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2020-2024 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -26,11 +26,11 @@ import java.util.function.Consumer;
 import org.eclipse.glsp.server.disposable.IDisposable;
 
 public class Debouncer<T> implements Consumer<T>, IDisposable {
-   private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-   private final Map<T, ScheduledFuture<?>> scheduledExecutions = new ConcurrentHashMap<>();
-   private final Consumer<T> consumer;
-   private final long delay;
-   private final TimeUnit timeUnit;
+   protected final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+   protected final Map<T, ScheduledFuture<?>> scheduledExecutions = new ConcurrentHashMap<>();
+   protected final Consumer<T> consumer;
+   protected final long delay;
+   protected final TimeUnit timeUnit;
 
    public Debouncer(final Consumer<T> consumer, final long delay, final TimeUnit timeUnit) {
       this.consumer = consumer;
@@ -43,7 +43,7 @@ public class Debouncer<T> implements Consumer<T>, IDisposable {
       scheduledExecutions.compute(argument, this::scheduleExecution);
    }
 
-   private ScheduledFuture<?> scheduleExecution(final T argument, final ScheduledFuture<?> previousExecution) {
+   protected ScheduledFuture<?> scheduleExecution(final T argument, final ScheduledFuture<?> previousExecution) {
       if (previousExecution != null) {
          previousExecution.cancel(true);
       }
@@ -52,7 +52,7 @@ public class Debouncer<T> implements Consumer<T>, IDisposable {
          : null;
    }
 
-   private void execute(final T argument) {
+   protected void execute(final T argument) {
       scheduledExecutions.remove(argument);
       consumer.accept(argument);
    }

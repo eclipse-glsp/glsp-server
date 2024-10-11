@@ -21,7 +21,7 @@ import org.eclipse.emf.common.command.BasicCommandStack;
 
 public class GModelCommandStack extends BasicCommandStack {
 
-   private static Logger LOGGER = LogManager.getLogger(GModelCommandStack.class);
+   protected static Logger LOGGER = LogManager.getLogger(GModelCommandStack.class);
 
    @Override
    protected void handleError(final Exception exception) {

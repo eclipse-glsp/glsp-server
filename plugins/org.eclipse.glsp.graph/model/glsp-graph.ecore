@@ -15,7 +15,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GShapeElement" abstract="true" interface="true"
-      eSuperTypes="#//GModelElement #//GBoundsAware #//GLayoutable"/>
+      eSuperTypes="#//GModelElement #//GBoundsAware #//GLayoutable #//GResizable"/>
   <eClassifiers xsi:type="ecore:EClass" name="GGraph" eSuperTypes="#//GModelRoot #//GBoundsAware #//GLayoutable"/>
   <eClassifiers xsi:type="ecore:EClass" name="GModelRoot" eSuperTypes="#//GModelElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="canvasBounds" eType="#//GBounds"
@@ -108,7 +108,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GIssue">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="severity" lowerBound="1"
-        eType="#//GSeverity" defaultValueLiteral="info"/>
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="info"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="message" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="GSeverity">
@@ -131,5 +131,9 @@
   <eClassifiers xsi:type="ecore:EClass" name="GLayoutable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="layoutOptions" upperBound="-1"
         eType="#//StringToObjectMapEntry" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GResizable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="resizeLocations" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

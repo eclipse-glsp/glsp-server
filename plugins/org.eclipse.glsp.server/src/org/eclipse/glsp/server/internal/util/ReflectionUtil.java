@@ -26,7 +26,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public final class ReflectionUtil {
-   private static Logger LOGGER = LogManager.getLogger(ReflectionUtil.class);
+   protected static Logger LOGGER = LogManager.getLogger(ReflectionUtil.class);
 
    private ReflectionUtil() {}
 

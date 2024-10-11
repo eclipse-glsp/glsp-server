@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2024 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -35,7 +35,7 @@ import com.google.gson.stream.JsonWriter;
  */
 public class EMapTypeAdapter<T> extends TypeAdapter<EMap<?, ?>> {
 
-   private final Gson gson;
+   protected final Gson gson;
 
    public static class Factory implements TypeAdapterFactory {
 

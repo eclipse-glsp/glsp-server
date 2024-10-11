@@ -32,8 +32,8 @@ import com.google.inject.Module;
 
 public abstract class GLSPServerLauncher {
 
-   private static Logger LOGGER = LogManager.getLogger(GLSPServerLauncher.class);
-   private final List<Module> modules;
+   protected static Logger LOGGER = LogManager.getLogger(GLSPServerLauncher.class);
+   protected final List<Module> modules;
 
    public GLSPServerLauncher(final ServerModule serverModule, final Module... additionalModules) {
       modules = new ArrayList<>();

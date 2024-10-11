@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2021 EclipseSource and others.
+ * Copyright (c) 2020-2024 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -37,7 +37,7 @@ public class WorkflowRequestContextActionsHandler extends RequestContextActionsH
       return actions;
    }
 
-   private LogAction createLogAction(final RequestContextActions request, final SetContextActions response) {
+   protected LogAction createLogAction(final RequestContextActions request, final SetContextActions response) {
       return new LogAction(Severity.OK,
          "create " + response.getActions().size() + " server actions for " + request.getContextId() + ".");
    }

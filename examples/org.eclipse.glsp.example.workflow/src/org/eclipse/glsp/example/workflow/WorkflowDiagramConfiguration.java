@@ -56,7 +56,7 @@ public class WorkflowDiagramConfiguration extends BaseDiagramConfiguration {
       mappings.put(LABEL_TEXT, GraphPackage.Literals.GLABEL);
       mappings.put(COMP_HEADER, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(LABEL_ICON, GraphPackage.Literals.GLABEL);
-      mappings.put(WEIGHTED_EDGE, GraphPackage.Literals.GEDGE);
+      mappings.put(WEIGHTED_EDGE, WfgraphPackage.Literals.WEIGHTED_EDGE);
       mappings.put(ICON, WfgraphPackage.Literals.ICON);
       mappings.put(ACTIVITY_NODE, WfgraphPackage.Literals.ACTIVITY_NODE);
       mappings.put(TASK, WfgraphPackage.Literals.TASK_NODE);
@@ -68,14 +68,18 @@ public class WorkflowDiagramConfiguration extends BaseDiagramConfiguration {
    @Override
    public List<ShapeTypeHint> getShapeTypeHints() {
       List<ShapeTypeHint> nodeHints = new ArrayList<>();
-      nodeHints.add(new ShapeTypeHint(MANUAL_TASK, true, true, true, true));
-      nodeHints.add(new ShapeTypeHint(AUTOMATED_TASK, true, true, true, true));
-      ShapeTypeHint catHint = new ShapeTypeHint(CATEGORY, true, true, true, true);
+      nodeHints.add(createDefaultShapeTypeHint(MANUAL_TASK));
+      nodeHints.add(createDefaultShapeTypeHint(AUTOMATED_TASK));
+      ShapeTypeHint catHint = createDefaultShapeTypeHint(CATEGORY);
       catHint.setContainableElementTypeIds(
          Arrays.asList(TASK, ACTIVITY_NODE, CATEGORY));
       nodeHints.add(catHint);
-      nodeHints.add(createDefaultShapeTypeHint(FORK_NODE));
-      nodeHints.add(createDefaultShapeTypeHint(JOIN_NODE));
+      ShapeTypeHint forkHint = createDefaultShapeTypeHint(FORK_NODE);
+      forkHint.setResizable(false);
+      nodeHints.add(forkHint);
+      ShapeTypeHint joinHint = createDefaultShapeTypeHint(JOIN_NODE);
+      joinHint.setResizable(false);
+      nodeHints.add(joinHint);
       nodeHints.add(createDefaultShapeTypeHint(DECISION_NODE));
       nodeHints.add(createDefaultShapeTypeHint(MERGE_NODE));
       return nodeHints;
@@ -105,7 +109,6 @@ public class WorkflowDiagramConfiguration extends BaseDiagramConfiguration {
       return edgeHints;
    }
 
- 
    @Override
    public ServerLayoutKind getLayoutKind() { return ServerLayoutKind.MANUAL; }
 

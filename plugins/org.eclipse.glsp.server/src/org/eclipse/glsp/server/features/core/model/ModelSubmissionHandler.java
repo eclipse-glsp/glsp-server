@@ -15,6 +15,8 @@
  ********************************************************************************/
 package org.eclipse.glsp.server.features.core.model;
 
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +35,8 @@ import org.eclipse.glsp.server.features.validation.SetMarkersAction;
 import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.layout.ServerLayoutKind;
 import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.utils.Debouncer;
+import org.eclipse.glsp.server.utils.StatusActionUtil;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -62,7 +66,15 @@ public class ModelSubmissionHandler {
    protected GModelState modelState;
 
    @Inject
+   protected ActionDispatcher actionDispatcher;
+
+   @Inject
    protected Optional<ModelValidator> validator;
+
+   protected Debouncer<ModelValidator> liveValidationDebouncer;
+
+   // we use a very slight delay by default to avoid sending very short status messages for very fast validations
+   protected long liveValidationDelay = 100;
 
    protected final Object modelLock = new Object();
    protected Optional<RequestModelAction> requestModelAction = Optional.empty();
@@ -155,12 +167,36 @@ public class ModelSubmissionHandler {
             result.add(new SetDirtyStateAction(modelState.isDirty(), reason));
          }
          if (validator.isPresent()) {
-            List<Marker> markers = validator.get() //
-               .validate(Arrays.asList(modelState.getRoot()), MarkersReason.LIVE);
-            result.add(new SetMarkersAction(markers, MarkersReason.LIVE));
+            result.addAll(validateModel(validator.get()));
          }
          return result;
       }
+   }
+
+   protected List<Action> validateModel(final ModelValidator validator) {
+      scheduleLiveValidation(validator);
+      // we are using async live validation so there no actions to return for the model submission
+      return List.of();
+   }
+
+   protected void scheduleLiveValidation(final ModelValidator validator) {
+      if (liveValidationDebouncer == null) {
+         liveValidationDebouncer = new Debouncer<>(this::performLiveValidation, getLiveValidationDelay(), MILLISECONDS);
+      }
+      liveValidationDebouncer.accept(validator);
+   }
+
+   public long getLiveValidationDelay() { return this.liveValidationDelay; }
+
+   public void setLiveValidationDelay(final long liveValidationDelay) {
+      this.liveValidationDelay = liveValidationDelay;
+   }
+
+   protected void performLiveValidation(final ModelValidator validator) {
+      actionDispatcher.dispatch(StatusActionUtil.info("Validate Model..."));
+      List<Marker> markers = validator.validate(Arrays.asList(modelState.getRoot()), MarkersReason.LIVE);
+      SetMarkersAction markerAction = new SetMarkersAction(markers, MarkersReason.LIVE);
+      actionDispatcher.dispatchAll(List.of(markerAction, StatusActionUtil.clear()));
    }
 
    public List<Action> submitModelDirectly() {

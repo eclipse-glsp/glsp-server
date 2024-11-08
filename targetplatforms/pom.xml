@@ -17,7 +17,7 @@
 		<tycho-version>2.7.5</tycho-version>
 		<tycho-extras-version>2.7.5</tycho-extras-version>
 		<targetPlatform.application.name>org.eclipse.cbi.targetplatform.tpd.converter</targetPlatform.application.name>
-		<targetPlatform.application.args>r2020-06.tpd</targetPlatform.application.args>
+		<targetPlatform.application.args>r2024-09.tpd</targetPlatform.application.args>
 	</properties>
 
 	<build>
@@ -29,9 +29,9 @@
 				<configuration>
 					<repositories>
 						<repository>
-							<id>2020-06</id>
+							<id>2024-09</id>
 							<layout>p2</layout>
-							<url>https://download.eclipse.org/releases/2020-06</url>
+							<url>https://download.eclipse.org/releases/2024-09</url>
 						</repository>
 						<repository>
 							<id>tpd</id>

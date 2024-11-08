@@ -15,9 +15,9 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.websocket;
 
-import javax.websocket.Endpoint;
-
 import com.google.inject.AbstractModule;
+
+import jakarta.websocket.Endpoint;
 
 public class WebsocketModule extends AbstractModule {
 

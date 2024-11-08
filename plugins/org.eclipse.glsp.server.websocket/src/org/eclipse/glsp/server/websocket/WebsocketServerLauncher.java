@@ -17,19 +17,19 @@ package org.eclipse.glsp.server.websocket;
 
 import java.net.InetSocketAddress;
 
-import javax.websocket.server.ServerEndpointConfig;
-
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.config.Configurator;
 import org.eclipse.glsp.server.di.ServerModule;
 import org.eclipse.glsp.server.launch.GLSPServerLauncher;
+import org.eclipse.jetty.ee10.servlet.ServletContextHandler;
+import org.eclipse.jetty.ee10.websocket.jakarta.server.config.JakartaWebSocketServletContainerInitializer;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.websocket.javax.server.config.JavaxWebSocketServletContainerInitializer;
 
 import com.google.inject.Module;
+
+import jakarta.websocket.server.ServerEndpointConfig;
 
 public class WebsocketServerLauncher extends GLSPServerLauncher {
    public static final String START_UP_COMPLETE_MSG = "[GLSP-Server]:Startup completed. Accepting requests on port:";
@@ -68,12 +68,14 @@ public class WebsocketServerLauncher extends GLSPServerLauncher {
 
          // Configure web socket
 
-         JavaxWebSocketServletContainerInitializer.configure(webAppContext, (servletContext, wsContainer) -> {
+         JakartaWebSocketServletContainerInitializer.configure(webAppContext, (servletContext, wsContainer) -> {
             ServerEndpointConfig.Builder builder = ServerEndpointConfig.Builder.create(GLSPServerEndpoint.class,
                "/" + endpointPath);
             builder.configurator(new GLSPConfigurator(this::createInjector));
-            wsContainer.setDefaultMaxSessionIdleTimeout(-1);
-            wsContainer.addEndpoint(builder.build());
+            ServerEndpointConfig endPointConfig = builder.build();
+
+            // wsContainer.setDefaultMaxSessionIdleTimeout(-1);
+            wsContainer.addEndpoint(endPointConfig);
          });
 
          server.setHandler(webAppContext);

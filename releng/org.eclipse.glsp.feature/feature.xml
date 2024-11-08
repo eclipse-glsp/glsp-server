@@ -314,29 +314,23 @@ version(s), and exceptions or additional permissions here}.&quot;
    <requires>
       <import plugin="org.eclipse.emf.ecore.change" version="2.14.0" match="greaterOrEqual"/>
       <import plugin="com.google.gson" version="2.8.7" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.lsp4j" version="0.11.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.lsp4j.jsonrpc" version="0.11.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.lsp4j" version="0.23.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.lsp4j.jsonrpc" version="0.23.1" match="greaterOrEqual"/>
       <import plugin="org.apache.commons.cli" version="1.4.0" match="greaterOrEqual"/>
       <import plugin="com.google.inject" version="5.0.1" match="greaterOrEqual"/>
-      <import plugin="javax.inject"/>
       <import plugin="org.apache.logging.log4j.api"/>
       <import plugin="org.apache.logging.log4j.core"/>
       <import plugin="org.eclipse.emf.common" version="2.23.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.emf.ecore" version="2.25.0" match="greaterOrEqual"/>
+      <import plugin="jakarta.inject.jakarta.inject-api"/>
    </requires>
 
    <plugin
          id="org.eclipse.glsp.server"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.eclipse.glsp.graph"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
 </feature>

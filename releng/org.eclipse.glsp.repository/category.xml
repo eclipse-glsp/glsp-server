@@ -42,9 +42,6 @@
    <bundle id="slf4j.api">
       <category name="org.eclipse.glsp.dependencies"/>
    </bundle>
-   <bundle id="javax.websocket">
-      <category name="org.eclipse.glsp.dependencies"/>
-   </bundle>
    <bundle id="org.apache.aries.spifly.dynamic.bundle">
       <category name="org.eclipse.glsp.dependencies"/>
    </bundle>

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
+   <stats location="https://download.eclipse.org/stats/">
+      <feature url="features/org.eclipse.glsp.feature_2.3.0.qualifier.jar" id="org.eclipse.glsp.feature" version="2.3.0.qualifier"/>
+   </stats>
    <feature id="org.eclipse.glsp.feature">
       <category name="org.eclipse.glsp"/>
    </feature>
@@ -36,28 +39,13 @@
    <bundle id="org.apache.logging.log4j.core">
       <category name="org.eclipse.glsp.dependencies"/>
    </bundle>
-   <bundle id="org.apache.logging.log4j.slf4j2-impl">
+   <bundle id="org.apache.logging.log4j.slf4j2.impl">
       <category name="org.eclipse.glsp.dependencies"/>
    </bundle>
-   <bundle id="slf4j.api">
+   <bundle id="org.apache.logging.log4j.1.2.api">
       <category name="org.eclipse.glsp.dependencies"/>
    </bundle>
-   <bundle id="org.apache.aries.spifly.dynamic.bundle">
-      <category name="org.eclipse.glsp.dependencies"/>
-   </bundle>
-   <bundle id="org.objectweb.asm">
-      <category name="org.eclipse.glsp.dependencies"/>
-   </bundle>
-   <bundle id="org.objectweb.asm.commons">
-      <category name="org.eclipse.glsp.dependencies"/>
-   </bundle>
-   <bundle id="org.objectweb.asm.tree">
-      <category name="org.eclipse.glsp.dependencies"/>
-   </bundle>
-   <bundle id="org.objectweb.asm.tree.analysis">
-      <category name="org.eclipse.glsp.dependencies"/>
-   </bundle>
-   <bundle id="org.objectweb.asm.util">
+   <bundle id="org.apache.logging.log4j.to.slf4j">
       <category name="org.eclipse.glsp.dependencies"/>
    </bundle>
    <category-def name="org.eclipse.glsp" label="Eclipse GLSP"/>
@@ -67,6 +55,7 @@
       </description>
    </category-def>
    <category-def name="org.eclipse.glsp.dependencies" label="External Dependencies"/>
-   <repository-reference location="mvn:org.eclipse.jetty:jetty-p2:10.0.13:zip:p2site" enabled="true" />
-   <repository-reference location="https://download.eclipse.org/elk/updates/releases/0.8.1/" enabled="true" />
+   <repository-reference location="https://download.eclipse.org/elk/updates/releases/0.9.1/" name="ELK 0.9.1" enabled="true" />
+   <repository-reference location="https://download.eclipse.org/tools/orbit/simrel/maven-jetty/release/12.0.12" name="Orbit- Jetty 12.0.12" enabled="true" />
+   <repository-reference location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2024-09" name="Orbit- Aggreation 24-09" enabled="true" />
 </site>

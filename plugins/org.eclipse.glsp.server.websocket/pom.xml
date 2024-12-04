@@ -48,13 +48,13 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.jetty.websocket</groupId>
-			<artifactId>websocket-javax-server</artifactId>
+			<groupId>org.eclipse.jetty.ee10.websocket</groupId>
+			<artifactId>jetty-ee10-websocket-jakarta-server</artifactId>
 			<version>${jetty.websocket.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.lsp4j</groupId>
-			<artifactId>org.eclipse.lsp4j.websocket</artifactId>
+			<artifactId>org.eclipse.lsp4j.websocket.jakarta</artifactId>
 			<version>${lsp4j.version}</version>
 		</dependency>
 	</dependencies>

@@ -139,7 +139,6 @@
 							</transformers>
 							<artifactSet>
 								<excludes>
-									<exclude>jakarta.websocket:jakarta.websocket-api</exclude>
 									<exclude>log4j:log4j</exclude>
 								</excludes>
 							</artifactSet>

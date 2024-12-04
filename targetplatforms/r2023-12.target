@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="2024-09 - Default" sequenceNumber="1733275570">
+<target name="2023-12 - Minimum Baseline" sequenceNumber="1733276282">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="org.eclipse.emf.sdk.feature.group" version="2.39.0.v20240731-0952"/>
-      <unit id="org.eclipse.lsp4j" version="0.23.1.v20240521-1815"/>
-      <unit id="org.eclipse.lsp4j.websocket.jakarta" version="0.23.1.v20240521-1815"/>
-      <unit id="org.apache.commons.cli" version="1.9.0"/>
-      <unit id="com.google.gson" version="2.11.0"/>
-      <repository location="http://download.eclipse.org/releases/2024-09"/>
+      <unit id="org.eclipse.emf.sdk.feature.group" version="2.36.0.v20231107-0612"/>
+      <unit id="org.eclipse.lsp4j" version="0.21.1.v20230829-0012"/>
+      <unit id="org.eclipse.lsp4j.websocket.jakarta" version="0.21.1.v20230829-0012"/>
+      <unit id="org.apache.commons.cli" version="1.6.0"/>
+      <unit id="com.google.gson" version="2.10.1.v20230109-0753"/>
+      <repository location="http://download.eclipse.org/releases/2023-12"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.junit" version="4.13.2.v20230809-1000"/>
-      <unit id="junit-jupiter-api" version="5.11.0"/>
-      <unit id="slf4j.api" version="2.0.16"/>
+      <unit id="junit-jupiter-api" version="5.10.1"/>
       <unit id="jakarta.inject.jakarta.inject-api" version="2.0.1"/>
-      <repository location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2024-09"/>
+      <unit id="jakarta.servlet-api" version="4.0.0"/>
+      <unit id="jakarta.websocket-api" version="2.1.1"/>
+      <repository location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2023-12"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.elk.core" version="0.0.0"/>
@@ -26,10 +27,10 @@
       <repository location="http://download.eclipse.org/elk/updates/releases/0.9.1/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="org.eclipse.jetty.ee10.websocket.jakarta.server" version="12.0.12"/>
-      <unit id="org.eclipse.jetty.ee10.websocket.server" version="12.0.12"/>
-      <unit id="org.eclipse.jetty.websocket.api" version="12.0.12"/>
-      <repository location="https://download.eclipse.org/tools/orbit/simrel/maven-jetty/release/12.0.12"/>
+      <unit id="org.eclipse.jetty.ee10.websocket.jakarta.server" version="0.0.0"/>
+      <unit id="org.eclipse.jetty.ee10.websocket.server" version="0.0.0"/>
+      <unit id="org.eclipse.jetty.websocket.api" version="0.0.0"/>
+      <repository location="https://download.eclipse.org/tools/orbit/simrel/maven-jetty/release/12.0.3"/>
     </location>
     <location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="false" missingManifest="generate" type="Maven" label="log4j">
       <dependencies>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="2023-12 - Minimum Baseline" sequenceNumber="1733276282">
+<target name="2023-12 - Minimum Baseline" sequenceNumber="1733479657">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.emf.sdk.feature.group" version="2.36.0.v20231107-0612"/>
@@ -24,7 +24,7 @@
       <unit id="org.eclipse.elk.graph" version="0.0.0"/>
       <unit id="org.eclipse.elk.graph.text" version="0.0.0"/>
       <unit id="org.eclipse.elk.alg.layered" version="0.0.0"/>
-      <repository location="http://download.eclipse.org/elk/updates/releases/0.9.1/"/>
+      <repository location="http://download.eclipse.org/elk/updates/releases/0.8.1/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.jetty.ee10.websocket.jakarta.server" version="0.0.0"/>

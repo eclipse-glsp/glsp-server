@@ -18,7 +18,7 @@ location "https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2023
 	jakarta.websocket-api
 }
 
-location "http://download.eclipse.org/elk/updates/releases/0.9.1/" {
+location "http://download.eclipse.org/elk/updates/releases/0.8.1/" {
 	org.eclipse.elk.core lazy
 	org.eclipse.elk.graph lazy
 	org.eclipse.elk.graph.text lazy 

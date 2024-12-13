@@ -65,11 +65,9 @@ public abstract class GModelCreateNodeOperationHandler
       GModelElement element = createNode(relativeLocation, operation.getArgs());
       container.getChildren().add(element);
       actionDispatcher.dispatchAfterNextUpdate(
-              Action.addSubclientId(
-                      operation,
-                      SelectAction.addSelection(List.of(element.getId()))
-              )
-      );
+         Action.addSubclientId(
+            operation,
+            SelectAction.addSelection(List.of(element.getId()))));
    }
 
    protected Optional<GPoint> getLocation(final CreateNodeOperation operation) {

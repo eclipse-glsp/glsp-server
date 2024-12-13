@@ -17,5 +17,10 @@
 package org.eclipse.glsp.server.utils;
 
 public class CollaborationUtil {
-    public static final String FALLBACK_SUBCLIENT_ID = "FALLBACK_SUBCLIENT_ID";
+
+   private CollaborationUtil() {
+
+   }
+
+   public static final String FALLBACK_SUBCLIENT_ID = "FALLBACK_SUBCLIENT_ID";
 }

@@ -61,9 +61,8 @@ public abstract class AbstractGModelCreateNodeOperationHandler
       GModelElement element = createNode(relativeLocation, operation.getArgs());
       container.getChildren().add(element);
       actionDispatcher.dispatchAfterNextUpdate(
-              Action.addSubclientId(operation, new SelectAction()),
-              Action.addSubclientId(operation, new SelectAction(List.of(element.getId())))
-      );
+         Action.addSubclientId(operation, new SelectAction()),
+         Action.addSubclientId(operation, new SelectAction(List.of(element.getId()))));
    }
 
    /**

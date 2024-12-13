@@ -67,9 +67,9 @@ public class EMFModelStateImpl extends DefaultGModelState implements EMFModelSta
    }
 
    @Override
-   public void setEditingDomain(final EditingDomain editingDomain, final String subclientId) {
+   public void setEditingDomain(final EditingDomain editingDomain) {
       this.editingDomain = editingDomain;
-      commandStackManager.setCommandStack(this.editingDomain.getCommandStack(), subclientId);
+      commandStackManager.setCommandStack(this.editingDomain.getCommandStack(), this.participationId);
    }
 
    @Override

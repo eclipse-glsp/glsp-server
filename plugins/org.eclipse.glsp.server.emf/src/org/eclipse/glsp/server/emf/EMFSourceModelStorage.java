@@ -56,17 +56,17 @@ public class EMFSourceModelStorage implements SourceModelStorage {
          .orElseThrow(() -> new GLSPServerException("No source URI given to load model!"));
       URI resourceURI = URI.createFileURI(sourceURI);
 
-      EditingDomain editingDomain = getOrCreateEditingDomain(action.getSubclientId());
+      EditingDomain editingDomain = getOrCreateEditingDomain();
       doLoadSourceModel(editingDomain.getResourceSet(), resourceURI, action);
    }
 
-   protected EditingDomain getOrCreateEditingDomain(final String subclientId) {
+   protected EditingDomain getOrCreateEditingDomain() {
       if (modelState.getEditingDomain() != null) {
          return modelState.getEditingDomain();
       }
       EditingDomain editingDomain = editingDomainFactory.createEditingDomain();
       setupResourceSet(editingDomain.getResourceSet());
-      modelState.setEditingDomain(editingDomain, subclientId);
+      modelState.setEditingDomain(editingDomain);
       return editingDomain;
    }
 

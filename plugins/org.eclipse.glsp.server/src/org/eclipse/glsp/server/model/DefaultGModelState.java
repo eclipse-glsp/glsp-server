@@ -160,4 +160,10 @@ public class DefaultGModelState implements GModelState {
       this.participationId = id;
 
    }
+
+   @Override
+   public String getParticipationID() {
+      return this.participationId;
+
+   }
 }

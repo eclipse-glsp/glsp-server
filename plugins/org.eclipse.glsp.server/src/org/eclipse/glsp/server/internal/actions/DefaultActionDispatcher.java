@@ -75,7 +75,7 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
 
    protected final BlockingQueue<Action> actionsQueue = new ArrayBlockingQueue<>(100, true);
 
-   protected List<Action> postUpdateQueue = new ArrayList<>();
+   protected Map<String, List<Action>> postUpdateMap = new HashMap();
 
    // Results will be placed in the map when the action dispatcher receives a new action (From arbitrary threads),
    // and will be removed from the dispatcher's thread.
@@ -116,7 +116,21 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
 
    @Override
    public void dispatchAfterNextUpdate(final Action... actions) {
-      postUpdateQueue.addAll(Arrays.asList(actions));
+
+      this.addActionsToPostUpdateQueue(this.modelState.getParticipationID(), actions);
+
+   }
+
+   private void addActionsToPostUpdateQueue(final String participantId, final Action... actions) {
+
+      List<Action> actionsForParticipant = this.postUpdateMap.get(participantId);
+      if (actionsForParticipant == null) {
+         actionsForParticipant = new ArrayList();
+      }
+
+      actionsForParticipant.addAll(Arrays.asList(actions));
+      this.postUpdateMap.put(participantId, actionsForParticipant);
+
    }
 
    protected void addToQueue(final Action action) {
@@ -215,10 +229,23 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
    }
 
    protected CompletableFuture<Void> dispatchPostUpdateQueue() {
-      ArrayList<Action> toDispatch = new ArrayList<>(postUpdateQueue);
-      postUpdateQueue.clear();
+      List<Action> toDispatch = this.getListToDispatchForParticipant();
       dispatchAll(toDispatch);
+      this.clearPostUpdateMapForParticipant();
+
       return CompletableFuture.completedFuture(null);
+   }
+
+   private List<Action> getListToDispatchForParticipant() {
+      List<Action> toDispatch = this.postUpdateMap.get(this.modelState.getParticipationID());
+      if (toDispatch == null) {
+         return new ArrayList();
+      }
+      return toDispatch;
+   }
+
+   private void clearPostUpdateMapForParticipant() {
+      this.postUpdateMap.remove(this.modelState.getParticipationID());
    }
 
    protected final void checkThread() {

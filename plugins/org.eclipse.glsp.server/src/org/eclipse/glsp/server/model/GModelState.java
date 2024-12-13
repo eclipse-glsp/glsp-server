@@ -46,4 +46,6 @@ public interface GModelState extends ModelState<GModelRoot> {
    void execute(Command command);
 
    void setParticipationID(String id);
+
+   String getParticipationID();
 }

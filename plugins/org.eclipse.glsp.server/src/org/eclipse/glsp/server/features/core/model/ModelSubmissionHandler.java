@@ -88,7 +88,7 @@ public class ModelSubmissionHandler {
        * Therefore we temporarily store the action later retrival
        */
       this.requestModelAction = Optional.of(requestAction);
-      return submitModel(requestAction.getSubclientId());
+      return submitModel();
 
    }
 

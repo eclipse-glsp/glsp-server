@@ -20,7 +20,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.server.model.GModelState;
 
 public interface EMFModelState extends GModelState {
-   void setEditingDomain(EditingDomain editingDomain, String subclientId);
+   void setEditingDomain(EditingDomain editingDomain);
 
    EditingDomain getEditingDomain();
 

@@ -16,6 +16,7 @@
 package org.eclipse.glsp.server.actions;
 
 import org.eclipse.glsp.server.protocol.GLSPServer;
+import org.eclipse.glsp.server.utils.CollaborationUtil;
 
 /**
  * Java-implementation of the `Action` interface. An action is a declarative description of a behavior that
@@ -62,7 +63,9 @@ public abstract class Action {
 
    public void setReceivedFromClient(final boolean receivedFromClient) { this.receivedFromClient = receivedFromClient; }
 
-   public String getSubclientId() { return subclientId; }
+   public String getSubclientId() {
+      return this.subclientId == null ? CollaborationUtil.FALLBACK_SUBCLIENT_ID : this.subclientId;
+   }
 
    @Override
    public String toString() {

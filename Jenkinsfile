@@ -52,7 +52,7 @@ pipeline {
         }
 
         stage('Deploy (master only)') {
-            when { branch 'master' }
+            when { branch 'test-release-fix' }
             stages {
                 stage('Deploy P2') {
                     steps {

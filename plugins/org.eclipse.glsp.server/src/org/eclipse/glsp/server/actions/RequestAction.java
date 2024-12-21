@@ -21,10 +21,15 @@ package org.eclipse.glsp.server.actions;
  * @param <RESPONSE> The type of the {@link ResponseAction}.
  */
 public abstract class RequestAction<RESPONSE extends ResponseAction> extends Action {
-   private String requestId;
+   private final String requestId;
 
    public RequestAction(final String kind) {
+      this(kind, "");
+   }
+
+   public RequestAction(final String kind, final String requestId) {
       super(kind);
+      this.requestId = requestId;
    }
 
    public String getRequestId() { return requestId; }

@@ -25,6 +25,7 @@ public class ResponseAction extends Action {
 
    public ResponseAction(final String kind) {
       super(kind);
+      responseId = "";
    }
 
    public String getResponseId() { return responseId; }

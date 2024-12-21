@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2024 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -26,30 +26,30 @@ import org.eclipse.glsp.graph.GModelListener;
 
 public class GModelChangeNotifierImpl extends EContentAdapter implements GModelChangeNotifier {
 
-   private List<GModelListener> listeners = new CopyOnWriteArrayList<>();
+   protected List<GModelListener> listeners = new CopyOnWriteArrayList<>();
 
-   public GModelChangeNotifierImpl(EObject target) {
+   public GModelChangeNotifierImpl(final EObject target) {
       target.eAdapters().add(this);
    }
 
    @Override
-   public void notifyChanged(Notification notification) {
+   public void notifyChanged(final Notification notification) {
       super.notifyChanged(notification);
       listeners.forEach(listener -> listener.notifyChanged(notification));
    }
 
    @Override
-   public void addListener(GModelListener listener) {
+   public void addListener(final GModelListener listener) {
       listeners.add(listener);
    }
 
    @Override
-   public void removeListener(GModelListener listener) {
+   public void removeListener(final GModelListener listener) {
       listeners.remove(listener);
    }
 
    @Override
-   public boolean isAdapterForType(Object type) {
+   public boolean isAdapterForType(final Object type) {
       return GModelChangeNotifierImpl.class.equals(type);
    }
 

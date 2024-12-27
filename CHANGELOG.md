@@ -1,12 +1,23 @@
 # Eclipse GLSP Server Changelog
 
-## v2.3.0 - active
+## [v2.3.0 - 27/12/2024](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.3.0)
 
 ### Changes
 
 - [API] Fix: do not bind the DefaultActionDispatcher as ActionHandler, so it can be correctly disposed and the thread is closed at the end of a session [#246](https://github.com/eclipse-glsp/glsp-server/pull/246) - Contributed on behalf of Axon Ivy AG
+- [API] Align default type configuration with client side [#245](https://github.com/eclipse-glsp/glsp-server/pull/245)
+  - Introduce `GForeignObjectElement` and corresponding builder
+  - Update default type mapping configuration to match the configuration on client side
+- Introduce async live model validation behavior [#247](https://github.com/eclipse-glsp/glsp-server/pull/247)
 
 ### Potentially Breaking Changes
+
+- [deps] Remove dependency to Google Guava [#244](https://github.com/eclipse-glsp/glsp-server/pull/244)
+  - The core framework no longer depends on any Guava components.
+  - Introduced custom `BiIndex` class to replace usage of Guava's `BiMap`
+  - Adopters that want that still depend  on Guava code have to ensure that the dependency is available as it is no longer shipped with GLSP
+- [deps] Update dependencies to Jakarta namespace and Eclipse 2024-x [#249](https://github.com/eclipse-glsp/glsp-server/pull/249)
+  - This includes a switch to Jetty 12.x, and the Jakarta variant of LSP4j Websocket. For adopters that still rely on the javax namespace and [alternative release](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.3.0.javax) is provided
 
 ## [v2.2.1 - 22/07/2024](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.2.1)
 

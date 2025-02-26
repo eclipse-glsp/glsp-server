@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2025 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -24,7 +24,7 @@ public final class GraphUtil {
 
    private GraphUtil() {}
 
-   public static GBounds bounds(double x, double y, double width, double height) {
+   public static GBounds bounds(final double x, final double y, final double width, final double height) {
       GBounds bounds = GraphFactory.eINSTANCE.createGBounds();
       bounds.setX(x);
       bounds.setY(y);
@@ -33,29 +33,48 @@ public final class GraphUtil {
       return bounds;
    }
 
-   public static GBounds copy(GBounds toCopy) {
+   public static GBounds copy(final GBounds toCopy) {
       return bounds(toCopy.getX(), toCopy.getY(), toCopy.getWidth(), toCopy.getHeight());
    }
 
-   public static GPoint point(double x, double y) {
+   public static GPoint point(final double x, final double y) {
       GPoint point = GraphFactory.eINSTANCE.createGPoint();
       point.setX(x);
       point.setY(y);
       return point;
    }
 
-   public static GPoint copy(GPoint toCopy) {
+   public static GPoint copy(final GPoint toCopy) {
       return point(toCopy.getX(), toCopy.getY());
    }
 
-   public static GDimension dimension(double width, double height) {
+   public static int compare(final GPoint left, final GPoint right) {
+      int xCompare = Double.compare(left.getX(), right.getX());
+      return xCompare != 0 ? xCompare : Double.compare(left.getY(), right.getY());
+   }
+
+   public static boolean equals(final GPoint left, final GPoint right) {
+      return compare(left, right) == 0;
+   }
+
+   public static GDimension dimension(final double width, final double height) {
       GDimension dimension = GraphFactory.eINSTANCE.createGDimension();
       dimension.setWidth(width);
       dimension.setHeight(height);
       return dimension;
    }
 
-   public static GDimension copy(GDimension toCopy) {
+   public static GDimension copy(final GDimension toCopy) {
       return dimension(toCopy.getWidth(), toCopy.getHeight());
    }
+
+   public static int compare(final GDimension left, final GDimension right) {
+      int widthCompare = Double.compare(left.getWidth(), right.getWidth());
+      return widthCompare != 0 ? widthCompare : Double.compare(left.getHeight(), right.getHeight());
+   }
+
+   public static boolean equals(final GDimension left, final GDimension right) {
+      return compare(left, right) == 0;
+   }
+
 }

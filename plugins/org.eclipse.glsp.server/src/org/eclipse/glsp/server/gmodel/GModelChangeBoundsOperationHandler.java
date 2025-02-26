@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2023 EclipseSource and others.
+ * Copyright (c) 2019-2025 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -17,11 +17,13 @@ package org.eclipse.glsp.server.gmodel;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.glsp.graph.GBoundsAware;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
@@ -43,7 +45,20 @@ public class GModelChangeBoundsOperationHandler extends GModelOperationHandler<C
 
    @Override
    public Optional<Command> createCommand(final ChangeBoundsOperation operation) {
-      return commandOf(() -> executeChangeBounds(operation));
+      List<ElementAndBounds> changedElementAndBounds = operation.getNewBounds().stream().filter(this::hasChanged)
+         .toList();
+      return changedElementAndBounds.isEmpty()
+         ? doNothing()
+         : commandOf(() -> executeChangeBounds(new ChangeBoundsOperation(changedElementAndBounds)));
+   }
+
+   protected boolean hasChanged(final ElementAndBounds elementAndBounds) {
+      Optional<GModelElement> element = this.modelState.getIndex().get(elementAndBounds.getElementId());
+      if (element.isEmpty() || !(element.get() instanceof GBoundsAware boundsAware)) {
+         return true;
+      }
+      return !GraphUtil.equals(boundsAware.getSize(), elementAndBounds.getNewSize()) ||
+         !GraphUtil.equals(boundsAware.getPosition(), elementAndBounds.getNewPosition());
    }
 
    protected void executeChangeBounds(final ChangeBoundsOperation operation) {

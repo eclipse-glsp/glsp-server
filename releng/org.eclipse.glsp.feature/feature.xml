@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.glsp.feature"
       label="GLSP SDK (Core)"
-      version="2.4.0"
+      version="2.5.0.SNAPSHOT"
       provider-name="Eclipse GLSP">
 
    <description url="http://www.example.com/description">

@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.eclipse.glsp</groupId>
 		<artifactId>org.eclipse.glsp.parent</artifactId>
-		<version>2.3.0</version>
+		<version>2.4.0</version>
 		<relativePath>../../pom.xml</relativePath>
 	</parent>
 

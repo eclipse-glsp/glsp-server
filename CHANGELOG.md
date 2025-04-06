@@ -1,5 +1,11 @@
 # Eclipse GLSP Server Changelog
 
+## [v2.4.0 - 04/04/2025](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.4.0)
+
+### Changes
+
+- [operation] Avoid unnecessary model changes after empty operations [#253](https://github.com/eclipse-glsp/glsp-server/pull/253)
+
 ## [v2.3.0 - 27/12/2024](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.3.0)
 
 ### Changes

@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.glsp.feature"
       label="GLSP SDK"
-      version="2.3.0.javax"
+      version="2.4.0.javax"
       provider-name="Eclipse GLSP">
 
    <description url="http://www.example.com/description">

@@ -528,8 +528,10 @@ public class ElkLayoutEngine implements LayoutEngine {
                   for (GModelElement sParent : sParents) {
                      if (sParent instanceof GBoundsAware) {
                         GPoint position = ((GBoundsAware) sParent).getPosition();
-                        x -= position.getX();
-                        y -= position.getY();
+                        if (position != null) {
+                           x -= position.getX();
+                           y -= position.getY();
+                        }
                      }
                   }
                }

@@ -26,6 +26,13 @@ import org.eclipse.glsp.server.actions.Action;
  */
 public abstract class Operation extends Action {
 
+   /**
+    * Read only discriminatory property needed to
+    * distinguish between operations and other action types on the client side.
+    */
+   @SuppressWarnings("checkstyle:visibilitymodifier")
+   final boolean isOperation = true;
+
    public Operation(final String operationKind) {
       super(operationKind);
    }

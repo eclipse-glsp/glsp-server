@@ -154,7 +154,7 @@ public class ModelSubmissionHandler {
    public List<Action> submitModelDirectly(final String reason) {
       GModelRoot gModel = modelState.getRoot();
       if (diagramConfiguration.getLayoutKind() == ServerLayoutKind.AUTOMATIC && layoutEngine.isPresent()) {
-         layoutEngine.get().layout();
+         layoutEngine.get().layout(Optional.empty());
       }
       Action modelAction = this.requestModelAction.isPresent()
          ? createSetModeAction(gModel)

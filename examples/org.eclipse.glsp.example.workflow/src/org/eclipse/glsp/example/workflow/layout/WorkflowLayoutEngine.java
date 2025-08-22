@@ -15,6 +15,8 @@
  ********************************************************************************/
 package org.eclipse.glsp.example.workflow.layout;
 
+import java.util.Optional;
+
 import org.eclipse.elk.alg.layered.options.FixedAlignment;
 import org.eclipse.elk.alg.layered.options.LayeredOptions;
 import org.eclipse.glsp.graph.GEdge;
@@ -22,6 +24,7 @@ import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.layout.ElkLayoutEngine;
 import org.eclipse.glsp.layout.GLSPLayoutConfigurator;
 import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.operations.LayoutOperation;
 
 import com.google.inject.Inject;
 
@@ -31,7 +34,7 @@ public class WorkflowLayoutEngine extends ElkLayoutEngine {
    protected GModelState modelState;
 
    @Override
-   public void layout() {
+   public void layout(final Optional<LayoutOperation> operation) {
       if (modelState.getRoot() instanceof GGraph) {
          GLSPLayoutConfigurator configurator = new GLSPLayoutConfigurator();
          configurator.configureByType("graph")

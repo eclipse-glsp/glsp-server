@@ -42,7 +42,9 @@ public class LayoutOperationHandler extends BasicOperationHandler<LayoutOperatio
    public Optional<Command> createCommand(final LayoutOperation operation) {
       return layoutEngine.isEmpty() || diagramConfiguration.getLayoutKind() != ServerLayoutKind.MANUAL
          ? doNothing()
-         : Optional.of(new GModelRecordingCommand(modelState.getRoot(), getLabel(), () -> layoutEngine.get().layout()));
+         : Optional.of(
+            new GModelRecordingCommand(modelState.getRoot(), getLabel(),
+               () -> layoutEngine.get().layout(Optional.of(operation))));
    }
 
 }

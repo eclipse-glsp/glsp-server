@@ -57,7 +57,7 @@
 		<maven.resources.version>3.3.1</maven.resources.version>
 		<maven.shade.version>3.6.0</maven.shade.version>
 		<maven.source.version>3.3.1</maven.source.version>
-		<maven.surefire.version>3.3.1</maven.surefire.version>
+		<maven.surefire.version>3.5.3</maven.surefire.version>
 		<tycho.version>4.0.8</tycho.version>
 		<versions.maven.version>2.17.1</versions.maven.version>
 
@@ -79,15 +79,21 @@
 
 
 		<!-- Release Dependencies for M2 -->
-		<nexus.maven.version>1.6.13</nexus.maven.version>
+		<central.publishing.version>0.8.0</central.publishing.version>
 		<maven.gpg.version>1.6</maven.gpg.version>
 	</properties>
 
 	<pluginRepositories>
 		<pluginRepository>
-			<id>sonatype</id>
-			<name>Sonatype</name>
-			<url>https://oss.sonatype.org/content/groups/public</url>
+			<name>Central Portal Snapshots</name>
+			<id>central-portal-snapshots</id>
+			<url>https://central.sonatype.com/repository/maven-snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
 
@@ -278,13 +284,6 @@
 				</dependency>
 			</dependencies>
 
-			<pluginRepositories>
-				<pluginRepository>
-					<id>sonatype</id>
-					<name>Sonatype</name>
-					<url>https://oss.sonatype.org/content/groups/public</url>
-				</pluginRepository>
-			</pluginRepositories>
 
 			<build>
 				<plugins>
@@ -360,22 +359,24 @@
 
 			<distributionManagement>
 				<snapshotRepository>
-					<id>ossrh</id>
-					<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+					<id>central</id>
+					<url>https://central.sonatype.com/repository/maven-snapshots/</url>
 				</snapshotRepository>
 			</distributionManagement>
 			<build>
 				<plugins>
 					<!-- To release to Sonatype/Maven central -->
 					<plugin>
-						<groupId>org.sonatype.plugins</groupId>
-						<artifactId>nexus-staging-maven-plugin</artifactId>
-						<version>${nexus.maven.version}</version>
+						<groupId>org.sonatype.central</groupId>
+						<artifactId>central-publishing-maven-plugin</artifactId>
+						<version>${central.publishing.version}</version>
 						<extensions>true</extensions>
-						<configuration>
-							<serverId>ossrh</serverId>
-							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-						</configuration>
+						 <configuration>
+				             <publishingServerId>central</publishingServerId>
+				             <autoPublish>true</autoPublish>
+				             <waitUntil>published</waitUntil>
+				             <centralSnapshotsUrl>https://central.sonatype.com/repository/maven-snapshots/</centralSnapshotsUrl>
+  					    </configuration>
 					</plugin>
 					<!-- To generate javadoc -->
 

@@ -17,12 +17,20 @@ package org.eclipse.glsp.server.operations;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import org.eclipse.glsp.graph.GBounds;
+import org.eclipse.glsp.server.types.Viewport;
 
 public class LayoutOperation extends Operation {
 
    public static final String KIND = "layout";
 
    private List<String> elementIds;
+
+   private Optional<GBounds> canvasBounds;
+
+   private Optional<Viewport> viewport;
 
    public LayoutOperation() {
       this(new ArrayList<>());
@@ -33,8 +41,22 @@ public class LayoutOperation extends Operation {
       this.elementIds = elementIds;
    }
 
+   public LayoutOperation(final List<String> elementIds, final GBounds canvasBounds, final Viewport viewport) {
+      this(elementIds);
+      this.canvasBounds = Optional.ofNullable(canvasBounds);
+      this.viewport = Optional.ofNullable(viewport);
+   }
+
    public List<String> getElementIds() { return elementIds; }
 
    public void setElementIds(final List<String> elementIds) { this.elementIds = elementIds; }
+
+   public Optional<GBounds> getCanvasBounds() { return canvasBounds; }
+
+   public void setCanvasBounds(final GBounds canvasBounds) { this.canvasBounds = Optional.ofNullable(canvasBounds); }
+
+   public Optional<Viewport> getViewport() { return viewport; }
+
+   public void setViewport(final Viewport viewport) { this.viewport = Optional.ofNullable(viewport); }
 
 }

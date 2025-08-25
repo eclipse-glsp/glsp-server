@@ -15,12 +15,18 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.layout;
 
+import java.util.Optional;
+
+import org.eclipse.glsp.server.operations.LayoutOperation;
+
 /**
  * A layout engine is able to compute layout information for a model.
  */
 public interface LayoutEngine {
    /**
     * Compute a layout for the model state and modify the model accordingly.
+    *
+    * @param layoutOperation The optional operation that triggered this layout.
     */
-   void layout();
+   void layout(Optional<LayoutOperation> layoutOperation);
 }

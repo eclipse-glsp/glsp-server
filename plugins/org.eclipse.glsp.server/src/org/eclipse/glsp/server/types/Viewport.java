@@ -36,9 +36,19 @@ public class Viewport {
 
    public double getZoom() { return zoom; }
 
+   @Override
+   public String toString() {
+      StringBuilder result = new StringBuilder(getClass().getSimpleName());
+      result.append(" [scroll: ");
+      result.append(scroll);
+      result.append(", zoom: ");
+      result.append(zoom);
+      result.append(']');
+      return result.toString();
+   }
+
    @SuppressWarnings("checkstyle:VisibilityModifier")
    class Point {
-
       final double x;
       final double y;
 
@@ -46,6 +56,17 @@ public class Viewport {
          super();
          this.x = x;
          this.y = y;
+      }
+
+      @Override
+      public String toString() {
+         StringBuilder result = new StringBuilder(getClass().getSimpleName());
+         result.append(" [x: ");
+         result.append(x);
+         result.append(", y: ");
+         result.append(y);
+         result.append(']');
+         return result.toString();
       }
 
    }

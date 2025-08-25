@@ -25,6 +25,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.eclipse.elk.core.IGraphLayoutEngine;
 import org.eclipse.elk.core.RecursiveGraphLayoutEngine;
@@ -63,6 +64,7 @@ import org.eclipse.glsp.graph.GPort;
 import org.eclipse.glsp.graph.GraphFactory;
 import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.operations.LayoutOperation;
 
 import com.google.inject.Inject;
 
@@ -100,7 +102,7 @@ public class ElkLayoutEngine implements LayoutEngine {
     * for your model using a {@link SprottyLayoutConfigurator}.
     */
    @Override
-   public void layout() {
+   public void layout(final Optional<LayoutOperation> operation) {
       if (modelState.getRoot() instanceof GGraph) {
          layout((GGraph) modelState.getRoot(), null);
       }

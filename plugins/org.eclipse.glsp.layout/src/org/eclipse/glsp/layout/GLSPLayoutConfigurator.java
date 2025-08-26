@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2018 TypeFox and others.
+ * Copyright (c) 2018-2024 TypeFox and others.
  * (c) 2019 EclipseSource (adaptation for GModel)
  *
  * This program and the accompanying materials are made available under the

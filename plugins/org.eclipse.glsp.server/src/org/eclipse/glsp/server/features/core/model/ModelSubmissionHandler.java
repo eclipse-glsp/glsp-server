@@ -138,7 +138,7 @@ public class ModelSubmissionHandler {
     * Returns a list of actions to directly update the client-side model without any server- or client-side layouting.
     * <p>
     * Typically {@link ActionHandler action handlers} don't invoke this method but use
-    * {@link #submitModel(String)}
+    * {@link #submitModel(String, String)}
     * instead, as this is only used to eventually submit the model on the client directly after all layouting is already
     * performed before. The only foreseen caller of this method is {@link ComputedBoundsActionHandler}.
     * </p>

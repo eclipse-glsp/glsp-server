@@ -4,6 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.glsp.example</groupId>
 	<artifactId>org.eclipse.glsp.example.workflow</artifactId>
+	<name>GLSP Workflow Example</name>
 	<description>GLSP Workflow Server</description>
 	<packaging>${package-type}</packaging>
 	<parent>

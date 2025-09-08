@@ -4,6 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>org.eclipse.glsp.graph</artifactId>
+	<name>GLSP Graph</name>
 	<packaging>${package-type}</packaging>
 	<parent>
 		<groupId>org.eclipse.glsp</groupId>

@@ -4,6 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>org.eclipse.glsp.server.emf</artifactId>
+	<name>GLSP Server EMF</name>
 	<description>GLSP Server EMF</description>
 	<packaging>${package-type}</packaging>
 	<parent>

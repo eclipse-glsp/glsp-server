@@ -1,10 +1,12 @@
 # Eclipse GLSP Server Changelog
 
-## v2.5.0 - active
+## [v2.5.0 - 07/09/2025](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.5.0)
 
 ### Changes
 
-### Potentially Breaking Changes
+- [api] Add missing `isOperation` discriminator to `Operation` [#256](https://github.com/eclipse-glsp/glsp-server/pull/256)
+- [layout] Guard `ElkLayoutEngine` against potential null access [#257](https://github.com/eclipse-glsp/glsp-server/pull/257)
+- [api] Add layout operation as optional parameter to `LayoutEngine.layout` [#259](https://github.com/eclipse-glsp/glsp-server/pull/259)
 
 ## [v2.4.0 - 04/04/2025](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.4.0)
 

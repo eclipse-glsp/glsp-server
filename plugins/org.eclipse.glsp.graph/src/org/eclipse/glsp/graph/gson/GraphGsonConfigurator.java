@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
@@ -29,6 +31,7 @@ import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GraphPackage;
 
 import com.google.gson.GsonBuilder;
+import com.google.gson.InstanceCreator;
 
 public class GraphGsonConfigurator {
 
@@ -58,6 +61,7 @@ public class GraphGsonConfigurator {
    public GsonBuilder configureGsonBuilder(final GsonBuilder gsonBuilder) {
       gsonBuilder.registerTypeAdapterFactory(new EMapTypeAdapter.Factory());
       gsonBuilder.registerTypeAdapterFactory(new GModelElementTypeAdapter.Factory(DEFAULT_TYPE_ATT, typeMap));
+      gsonBuilder.registerTypeAdapter(EList.class, (InstanceCreator<EList<?>>) type -> new BasicEList<>());
       configureClassesOfPackages(gsonBuilder);
       gsonBuilder.addSerializationExclusionStrategy(new EObjectExclusionStrategy());
       return gsonBuilder;

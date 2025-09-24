@@ -9,9 +9,7 @@ Execute `mvn clean verify -Pm2` (for maven) or `mvn clean verify -Pp2` (for p2).
 The nightly builds are available as maven repository or p2 update site.
 
 ### Maven Repositories 
-
-- *Snapshots:* <https://oss.sonatype.org/content/repositories/snapshots/org/eclipse/glsp/>
-- *Releases/Release Candiates:* <https://oss.sonatype.org/content/groups/public/org/eclipse/glsp/> (also mirrored to the [maven central repository](https://search.maven.org/search?q=org.eclipse.glsp))
+- *Releases/Release Candiates:* <https://repo1.maven.org/maven2/org/eclipse/glsp/> (or [maven central repository](https://search.maven.org/search?q=org.eclipse.glsp))
 
 ### P2 Update Sites 
 

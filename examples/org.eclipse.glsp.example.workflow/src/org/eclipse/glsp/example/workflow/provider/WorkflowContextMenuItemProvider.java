@@ -42,7 +42,7 @@ public class WorkflowContextMenuItemProvider implements ContextMenuItemProvider 
       final Map<String, String> args) {
       SetEditModeAction editModeAction = new SetEditModeAction(
          modelState.isReadonly() ? SetEditModeAction.EDIT_MODE_EDITABLE : SetEditModeAction.EDIT_MODE_READONLY);
-      MenuItem editModeMenu = new MenuItem("editMode", "Edit Mode", Arrays.asList(editModeAction), true);
+      MenuItem editModeMenu = new MenuItem("editMode", "Readonly Mode", Arrays.asList(editModeAction), true);
       editModeMenu.setToggled(modelState.isReadonly());
 
       if (modelState.isReadonly()) {

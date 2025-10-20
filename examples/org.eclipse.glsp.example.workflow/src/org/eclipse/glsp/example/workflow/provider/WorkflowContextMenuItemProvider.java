@@ -18,14 +18,13 @@ package org.eclipse.glsp.example.workflow.provider;
 import static org.eclipse.glsp.example.workflow.utils.ModelTypes.AUTOMATED_TASK;
 import static org.eclipse.glsp.example.workflow.utils.ModelTypes.MANUAL_TASK;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.glsp.example.workflow.handler.GridSnapper;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.server.actions.SetEditModeAction;
 import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
 import org.eclipse.glsp.server.features.contextmenu.MenuItem;
 import org.eclipse.glsp.server.model.GModelState;
@@ -41,16 +40,24 @@ public class WorkflowContextMenuItemProvider implements ContextMenuItemProvider 
    @Override
    public List<MenuItem> getItems(final List<String> selectedElementIds, final GPoint position,
       final Map<String, String> args) {
+      SetEditModeAction editModeAction = new SetEditModeAction(
+         modelState.isReadonly() ? SetEditModeAction.EDIT_MODE_EDITABLE : SetEditModeAction.EDIT_MODE_READONLY);
+      MenuItem editModeMenu = new MenuItem("editMode", "Readonly Mode", Arrays.asList(editModeAction), true);
+      editModeMenu.setToggled(modelState.isReadonly());
+
       if (modelState.isReadonly()) {
-         return Collections.emptyList();
+         return Arrays.asList(editModeMenu);
       }
+
       GPoint snappedPosition = GridSnapper.snap(position);
       MenuItem newAutTask = new MenuItem("newAutoTask", "Automated Task",
          Arrays.asList(new CreateNodeOperation(AUTOMATED_TASK, snappedPosition)), true);
       MenuItem newManTask = new MenuItem("newManualTask", "Manual Task",
          Arrays.asList(new CreateNodeOperation(MANUAL_TASK, snappedPosition)), true);
-      MenuItem newChildMenu = new MenuItem("new", "New", Arrays.asList(newAutTask, newManTask), "add", "0_new");
-      return new ArrayList<>(List.of(newChildMenu));
+      MenuItem hiddenItem = new MenuItem("hiddenItem", "Should be hidden", Arrays.asList(), false);
+      MenuItem newChildMenu = new MenuItem("new", "New", Arrays.asList(newAutTask, newManTask, hiddenItem), "add",
+         "0_new");
+      return Arrays.asList(newChildMenu, editModeMenu);
    }
 
 }

@@ -29,6 +29,7 @@ public class MenuItem extends LabeledAction {
    private final List<MenuItem> children;
    private boolean isEnabled;
    private boolean isToggled;
+   private boolean isVisible;
 
    public MenuItem(final String id, final String label, final List<Action> actions, final boolean isEnabled) {
       this(id, label, actions, isEnabled, null);
@@ -41,7 +42,7 @@ public class MenuItem extends LabeledAction {
 
    public MenuItem(final String id, final String label, final List<Action> actions, final boolean isEnabled,
       final String icon, final String sortString) {
-      this(id, label, actions, icon, sortString, null, null, isEnabled, false, Collections.emptyList());
+      this(id, label, actions, icon, sortString, null, null, isEnabled, isEnabled, false, Collections.emptyList());
    }
 
    public MenuItem(final String id, final String label, final List<MenuItem> children) {
@@ -54,13 +55,14 @@ public class MenuItem extends LabeledAction {
 
    public MenuItem(final String id, final String label, final List<MenuItem> children, final String group,
       final String sortString) {
-      this(id, label, Collections.emptyList(), null, sortString, group, null, true, false, children);
+      this(id, label, Collections.emptyList(), null, sortString, group, null, true, true, false, children);
    }
 
    @SuppressWarnings("checkstyle:ParameterNumber")
    public MenuItem(final String id, final String label, final List<Action> actions, final String icon,
       final String sortString, final String group,
-      final String parentId, final boolean isEnabled, final boolean isToggled, final List<MenuItem> children) {
+      final String parentId, final boolean isEnabled, final boolean isVisible, final boolean isToggled,
+      final List<MenuItem> children) {
       super(label, actions, icon);
       this.id = id;
       this.sortString = sortString;
@@ -68,6 +70,7 @@ public class MenuItem extends LabeledAction {
       this.group = group;
       this.parentId = parentId;
       this.isEnabled = isEnabled;
+      this.isVisible = isVisible;
       this.isToggled = isToggled;
    }
 
@@ -92,4 +95,9 @@ public class MenuItem extends LabeledAction {
    public String getSortString() { return sortString; }
 
    public List<MenuItem> getChildren() { return children; }
+
+   public boolean isVisible() { return isVisible; }
+
+   public void setVisible(final boolean isVisible) { this.isVisible = isVisible; }
+
 }

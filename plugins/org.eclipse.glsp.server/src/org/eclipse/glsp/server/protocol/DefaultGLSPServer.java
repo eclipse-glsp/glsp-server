@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2024 EclipseSource and others.
+ * Copyright (c) 2019-2025 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -30,6 +30,7 @@ import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionMessage;
 import org.eclipse.glsp.server.actions.ActionRegistry;
 import org.eclipse.glsp.server.session.ClientSession;
+import org.eclipse.glsp.server.session.ClientSessionListener;
 import org.eclipse.glsp.server.session.ClientSessionManager;
 import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.lsp4j.jsonrpc.ResponseErrorException;
@@ -38,7 +39,7 @@ import org.eclipse.lsp4j.jsonrpc.messages.ResponseErrorCode;
 
 import com.google.inject.Inject;
 
-public class DefaultGLSPServer implements GLSPServer {
+public class DefaultGLSPServer implements GLSPServer, ClientSessionListener {
    protected static Logger LOGGER = LogManager.getLogger(DefaultGLSPServer.class);
    public static final String PROTOCOL_VERSION = "1.0.0";
 
@@ -60,6 +61,11 @@ public class DefaultGLSPServer implements GLSPServer {
       initialized = new CompletableFuture<>();
       serverConnectionListeners = new LinkedHashSet<>();
       clientSessions = new HashMap<>();
+   }
+
+   @Inject()
+   public void setup() {
+      sessionManager.addListener(this);
    }
 
    @Override
@@ -208,5 +214,10 @@ public class DefaultGLSPServer implements GLSPServer {
    @Override
    public boolean remove(final GLSPServerListener listener) {
       return serverConnectionListeners.remove(listener);
+   }
+
+   @Override
+   public void sessionDisposed(final ClientSession clientSession) {
+      clientSessions.remove(clientSession.getId());
    }
 }

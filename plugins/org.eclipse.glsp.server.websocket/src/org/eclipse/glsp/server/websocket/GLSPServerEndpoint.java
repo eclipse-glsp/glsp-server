@@ -65,8 +65,12 @@ public class GLSPServerEndpoint extends WebSocketEndpoint<GLSPClient> {
 
    @Override
    public void onOpen(final Session session, final EndpointConfig config) {
-      session.setMaxTextMessageBufferSize(MAX_TEXT_MESSAGE_BUFFER_SIZE);
+      configureSession(session);
       super.onOpen(session, config);
+   }
+
+   protected void configureSession(final Session session) {
+      session.setMaxTextMessageBufferSize(MAX_TEXT_MESSAGE_BUFFER_SIZE);
    }
 
    @Override

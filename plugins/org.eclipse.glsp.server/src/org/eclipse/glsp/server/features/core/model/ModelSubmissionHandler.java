@@ -35,6 +35,7 @@ import org.eclipse.glsp.server.features.validation.SetMarkersAction;
 import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.layout.ServerLayoutKind;
 import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.operations.LayoutOperation;
 import org.eclipse.glsp.server.utils.Debouncer;
 import org.eclipse.glsp.server.utils.StatusActionUtil;
 
@@ -89,15 +90,15 @@ public class ModelSubmissionHandler {
     * {@link ActionHandler#execute(Action)} method.
     * </p>
     *
-    * @param requestAction The {@link RequestModelAction} that triggere the initial model update
-    * @return A list of actions to be processed in order to submit the intial model.
+    * @param requestAction The {@link RequestModelAction} that triggers the initial model update
+    * @return A list of actions to be processed in order to submit the initial model.
     *
     */
    public List<Action> submitInitialModel(final RequestModelAction requestAction) {
       /*
        * In the default update action flow a `RequestModelAction` does not directly trigger a `SetModelAction` response
        * (RequestModelAction (C) -> RequestBoundsAction (S) -> ComputedBoundsAction (C) -> SetModelACtion (S)
-       * Therefore we temporarily store the action later retrival
+       * Therefore we temporarily store the action later retrieval
        */
       this.requestModelAction = Optional.of(requestAction);
       return submitModel();
@@ -113,9 +114,10 @@ public class ModelSubmissionHandler {
     * </p>
     *
     * @param reason The optional reason that caused the model update.
+    * @param layout The optional layout operation that carries the information for auto-layout.
     * @return A list of actions to be processed in order to submit the model.
     */
-   public List<Action> submitModel(final String reason) {
+   public List<Action> submitModel(final String reason, final LayoutOperation layout) {
       modelFactory.createGModel();
       int revision = this.requestModelAction.isPresent() ? 0 : this.modelState.getRoot().getRevision() + 1;
       modelState.getRoot().setRevision(revision);
@@ -127,7 +129,11 @@ public class ModelSubmissionHandler {
                new SetDirtyStateAction(modelState.isDirty(), reason));
          }
       }
-      return submitModelDirectly(reason);
+      return submitModelDirectly(reason, layout);
+   }
+
+   public List<Action> submitModel(final String reason) {
+      return this.submitModel(reason, null);
    }
 
    public List<Action> submitModel() {
@@ -149,12 +155,13 @@ public class ModelSubmissionHandler {
     * </p>
     *
     * @param reason The optional reason that caused the model update.
+    * @param layout The optional layout operation that carries the information for auto-layout.
     * @return A list of actions to be processed in order to submit the model.
     */
-   public List<Action> submitModelDirectly(final String reason) {
+   public List<Action> submitModelDirectly(final String reason, final LayoutOperation layout) {
       GModelRoot gModel = modelState.getRoot();
       if (diagramConfiguration.getLayoutKind() == ServerLayoutKind.AUTOMATIC && layoutEngine.isPresent()) {
-         layoutEngine.get().layout(Optional.empty());
+         layoutEngine.get().layout(Optional.ofNullable(layout));
       }
       Action modelAction = this.requestModelAction.isPresent()
          ? createSetModeAction(gModel)
@@ -171,6 +178,14 @@ public class ModelSubmissionHandler {
          }
          return result;
       }
+   }
+
+   public List<Action> submitModelDirectly(final String reason) {
+      return this.submitModelDirectly(null, null);
+   }
+
+   public List<Action> submitModelDirectly() {
+      return this.submitModelDirectly(null);
    }
 
    protected List<Action> validateModel(final ModelValidator validator) {
@@ -197,10 +212,6 @@ public class ModelSubmissionHandler {
       List<Marker> markers = validator.validate(Arrays.asList(modelState.getRoot()), MarkersReason.LIVE);
       SetMarkersAction markerAction = new SetMarkersAction(markers, MarkersReason.LIVE);
       actionDispatcher.dispatchAll(List.of(markerAction, StatusActionUtil.clear()));
-   }
-
-   public List<Action> submitModelDirectly() {
-      return submitModelDirectly(null);
    }
 
    protected SetModelAction createSetModeAction(final GModelRoot newRoot) {

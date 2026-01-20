@@ -19,10 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.eclipse.glsp.graph.GBounds;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.types.ElementAndAlignment;
 import org.eclipse.glsp.server.types.ElementAndBounds;
 import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
+import org.eclipse.glsp.server.types.Viewport;
 
 public class ComputedBoundsAction extends Action {
 
@@ -31,6 +33,8 @@ public class ComputedBoundsAction extends Action {
    private List<ElementAndBounds> bounds;
    private List<ElementAndAlignment> alignments;
    private List<ElementAndRoutingPoints> routes;
+   private GBounds canvasBounds;
+   private Viewport viewport;
    private int revision;
 
    public ComputedBoundsAction() {
@@ -41,12 +45,20 @@ public class ComputedBoundsAction extends Action {
    }
 
    public ComputedBoundsAction(final List<ElementAndBounds> bounds, final List<ElementAndAlignment> alignments,
-      final List<ElementAndRoutingPoints> route, final int revision) {
+      final List<ElementAndRoutingPoints> routes, final int revision) {
       super(KIND);
       this.bounds = bounds;
       this.alignments = alignments;
-      this.routes = route;
+      this.routes = routes;
       this.revision = revision;
+   }
+
+   public ComputedBoundsAction(final List<ElementAndBounds> bounds, final List<ElementAndAlignment> alignments,
+      final List<ElementAndRoutingPoints> routes, final int revision, final GBounds canvasBounds,
+      final Viewport viewport) {
+      this(bounds, alignments, routes, revision);
+      this.canvasBounds = canvasBounds;
+      this.viewport = viewport;
    }
 
    public List<ElementAndBounds> getBounds() { return bounds; }
@@ -64,5 +76,13 @@ public class ComputedBoundsAction extends Action {
    public Optional<Integer> getRevision() { return Optional.ofNullable(revision); }
 
    public void setRevision(final int revision) { this.revision = revision; }
+
+   public Optional<GBounds> getCanvasBounds() { return Optional.ofNullable(canvasBounds); }
+
+   public void setCanvasBounds(final GBounds canvasBounds) { this.canvasBounds = canvasBounds; }
+
+   public Optional<Viewport> getViewport() { return Optional.ofNullable(viewport); }
+
+   public void setViewport(final Viewport viewport) { this.viewport = viewport; }
 
 }

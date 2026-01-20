@@ -74,9 +74,9 @@ pipeline {
                         }
                      }
                 }
-                stage('Trigger Java21 build') {
+                stage('Trigger Java25 build') {
                     steps {
-                        build wait: false, job: 'glsp-server-java21'
+                        build wait: false, job: 'glsp-server-java25'
                     }
                 }
             }

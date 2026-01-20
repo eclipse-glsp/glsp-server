@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2024 EclipseSource and others.
+ * Copyright (c) 2022-2026 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,24 +15,18 @@
  ********************************************************************************/
 package org.eclipse.glsp.graph.builder;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.GShapeElement;
+import org.eclipse.glsp.graph.GShapePreRenderedElement;
 import org.eclipse.glsp.graph.util.GraphUtil;
 
-public abstract class GShapeElementBuilder<T extends GShapeElement, E extends GShapeElementBuilder<T, E>>
-   extends GModelElementBuilder<T, E> {
+public abstract class AbstractGShapePreRenderedElementBuilder<T extends GShapePreRenderedElement, E extends AbstractGShapePreRenderedElementBuilder<T, E>>
+   extends AbstractGPreRenderedElementBuilder<T, E> {
 
    protected GDimension size;
    protected GPoint position;
-   protected List<String> resizeLocations;
-   protected Map<String, Object> layoutOptions;
 
-   public GShapeElementBuilder(final String type) {
+   public AbstractGShapePreRenderedElementBuilder(final String type) {
       super(type);
    }
 
@@ -54,35 +48,11 @@ public abstract class GShapeElementBuilder<T extends GShapeElement, E extends GS
       return position(GraphUtil.point(x, y));
    }
 
-   public E resizeLocations(final String... locations) {
-      this.resizeLocations = List.of(locations);
-      return self();
-   }
-
-   public E layoutOptions(final Map<String, Object> layoutOptions) {
-      addLayoutOptions(layoutOptions);
-      return self();
-   }
-
-   public E addLayoutOptions(final Map<String, Object> layoutOptions) {
-      if (this.layoutOptions == null) {
-         this.layoutOptions = new LinkedHashMap<>();
-      }
-      this.layoutOptions.putAll(layoutOptions);
-      return self();
-   }
-
    @Override
    protected void setProperties(final T element) {
       super.setProperties(element);
       element.setSize(size);
       element.setPosition(position);
-      if (this.resizeLocations != null) {
-         element.getResizeLocations().addAll(this.resizeLocations);
-      }
-      if (this.layoutOptions != null) {
-         element.getLayoutOptions().putAll(this.layoutOptions);
-      }
    }
 
 }

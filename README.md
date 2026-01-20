@@ -4,7 +4,8 @@ Contains the code for the Java-based framework to create [GLSP](https://github.c
 
 ## Building
 
-The GLSP server bundles are built with Java 17 or higher and maven.
+The GLSP server bundles are built with Java 21 or higher and maven.
+Java 21 is only required for building, the minimum runtime Java version for the GLSP bundles is Java 17.
 Execute `mvn clean verify -Pm2` (for maven) or `mvn clean verify -Pp2` (for p2).
 The nightly builds are available as maven repository or p2 update site.
 

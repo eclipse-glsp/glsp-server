@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
    <stats location="https://download.eclipse.org/stats/">
-      <feature url="features/org.eclipse.glsp.feature_2.3.0.qualifier.jar" id="org.eclipse.glsp.feature" version="2.3.0.qualifier"/>
+      <feature url="features/org.eclipse.glsp.feature_2.6.0.qualifier.jar" id="org.eclipse.glsp.feature" version="2.6.0.qualifier"/>
    </stats>
    <feature id="org.eclipse.glsp.feature">
       <category name="org.eclipse.glsp"/>
@@ -55,7 +55,7 @@
       </description>
    </category-def>
    <category-def name="org.eclipse.glsp.dependencies" label="External Dependencies"/>
-   <repository-reference location="https://download.eclipse.org/elk/updates/releases/0.9.1/" name="ELK 0.9.1" enabled="true" />
-   <repository-reference location="https://download.eclipse.org/tools/orbit/simrel/maven-jetty/release/12.0.12" name="Orbit- Jetty 12.0.12" enabled="true" />
-   <repository-reference location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2024-09" name="Orbit- Aggreation 24-09" enabled="true" />
+   <repository-reference location="https://download.eclipse.org/tools/orbit/simrel/maven-jetty/release/12.1.4" name="Orbit- Jetty 12.1.4" enabled="true" />
+   <repository-reference location="https://download.eclipse.org/elk/updates/releases/0.11.0/" name="ELK 0.11.0" enabled="true" />
+   <repository-reference location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2025-12" name="Orbit- Aggreation 25-12" enabled="true" />
 </site>

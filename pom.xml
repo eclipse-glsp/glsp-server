@@ -66,7 +66,7 @@
 			platform in ,2. We try to match the p2-version if possible. -->
 		<apache.logging.log4j.version>[2.19.0,2.24.2]</apache.logging.log4j.version>
 		<commons.cli.version>[1.4,)</commons.cli.version>
-		<elk.version>0.8.1</elk.version>
+		<elk.version>0.11.0</elk.version>
 		<emf.common.version>[2.29.0,)</emf.common.version>
 		<emf.ecore.change.version>[2.14.0,)</emf.ecore.change.version>
 		<emf.ecore.edit.version>[2.14.0,)</emf.ecore.edit.version>
@@ -76,7 +76,7 @@
 		<google.gson.version>[2.10.1,)</google.gson.version>
 		<junit.jupiter.engine.version>[5.7.1,6.0.0)</junit.jupiter.engine.version>
 		<lsp4j.version>[0.21.0,)</lsp4j.version>
-		<jetty.websocket.version>[12.0.3,)</jetty.websocket.version>
+		<jetty.websocket.version>[12.1.4,)</jetty.websocket.version>
 
 
 		<!-- Release Dependencies for M2 -->
@@ -123,7 +123,7 @@
 
 			<properties>
 				<!-- Maven Plugin Versions: General maven plugin versions -->
-				<p2.target>r2024-09</p2.target>
+				<p2.target>r2025-12</p2.target>
 			</properties>
 
 			<modules>
@@ -410,6 +410,7 @@
 						<configuration>
 
 							<source>${java.source}</source>
+							<sourcepath>${project.basedir}/src:${project.basedir}/src-gen</sourcepath>
 							<detectJavaApiLink>false</detectJavaApiLink>
 							<tags>
 								<tag>

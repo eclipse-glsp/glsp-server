@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2022 EclipseSource and others.
+ * Copyright (c) 2022-2026 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,44 +15,17 @@
  ********************************************************************************/
 package org.eclipse.glsp.graph.builder;
 
-import org.eclipse.glsp.graph.GDimension;
-import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.GShapePreRenderedElement;
-import org.eclipse.glsp.graph.util.GraphUtil;
 
+/**
+ * @deprecated Use {@link AbstractGShapePreRenderedElementBuilder} instead.
+ */
+@Deprecated
 public abstract class AbstractGShapePrenderedElementBuilder<T extends GShapePreRenderedElement, E extends AbstractGShapePrenderedElementBuilder<T, E>>
-   extends AbstractGPreRenderedElementBuilder<T, E> {
-
-   protected GDimension size;
-   protected GPoint position;
+   extends AbstractGShapePreRenderedElementBuilder<T, E> {
 
    public AbstractGShapePrenderedElementBuilder(final String type) {
       super(type);
-   }
-
-   public E size(final GDimension size) {
-      this.size = size;
-      return self();
-   }
-
-   public E size(final double width, final double height) {
-      return size(GraphUtil.dimension(width, height));
-   }
-
-   public E position(final GPoint position) {
-      this.position = position;
-      return self();
-   }
-
-   public E position(final double x, final double y) {
-      return position(GraphUtil.point(x, y));
-   }
-
-   @Override
-   protected void setProperties(final T element) {
-      super.setProperties(element);
-      element.setSize(size);
-      element.setPosition(position);
    }
 
 }

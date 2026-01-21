@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2024 EclipseSource and others.
+ * Copyright (c) 2019-2026 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -16,27 +16,10 @@
 package org.eclipse.glsp.graph.builder.impl;
 
 import org.eclipse.glsp.graph.GIssue;
-import org.eclipse.glsp.graph.GSeverity;
 import org.eclipse.glsp.graph.GraphFactory;
-import org.eclipse.glsp.graph.builder.GBuilder;
+import org.eclipse.glsp.graph.builder.AbstractGIssueBuilder;
 
-public class GIssueBuilder extends GBuilder<GIssue> {
-   private String severity;
-   private String message;
-
-   public GIssueBuilder severity(GSeverity severity) {
-      return this.severity(severity.getLiteral());
-   }
-
-   public GIssueBuilder severity(String severity) {
-      this.severity = severity;
-      return this;
-   }
-
-   public GIssueBuilder message(String message) {
-      this.message = message;
-      return this;
-   }
+public class GIssueBuilder extends AbstractGIssueBuilder<GIssue, GIssueBuilder> {
 
    @Override
    protected GIssue instantiate() {
@@ -44,9 +27,8 @@ public class GIssueBuilder extends GBuilder<GIssue> {
    }
 
    @Override
-   protected void setProperties(GIssue issue) {
-      issue.setMessage(message);
-      issue.setSeverity(severity);
+   protected GIssueBuilder self() {
+      return this;
    }
 
 }

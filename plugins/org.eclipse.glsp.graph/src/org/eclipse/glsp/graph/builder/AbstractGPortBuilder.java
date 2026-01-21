@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2026 EclipseSource and others.
+ * Copyright (c) 2026 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,31 +13,24 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.graph.builder.impl;
+package org.eclipse.glsp.graph.builder;
 
-import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GPort;
-import org.eclipse.glsp.graph.GraphFactory;
-import org.eclipse.glsp.graph.builder.AbstractGPortBuilder;
 
-public class GPortBuilder extends AbstractGPortBuilder<GPort, GPortBuilder> {
+/**
+ * Abstract builder for {@link GPort} elements.
+ * <p>
+ * This builder exists for subclassing consistency with other element builders.
+ * GPort has no additional properties beyond GShapeElement.
+ *
+ * @param <T> the type of GPort being built
+ * @param <E> the type of the builder itself (for fluent API)
+ */
+public abstract class AbstractGPortBuilder<T extends GPort, E extends AbstractGPortBuilder<T, E>>
+   extends GShapeElementBuilder<T, E> {
 
-   public GPortBuilder() {
-      this(DefaultTypes.PORT);
-   }
-
-   public GPortBuilder(final String type) {
+   public AbstractGPortBuilder(final String type) {
       super(type);
-   }
-
-   @Override
-   protected GPort instantiate() {
-      return GraphFactory.eINSTANCE.createGPort();
-   }
-
-   @Override
-   protected GPortBuilder self() {
-      return this;
    }
 
 }

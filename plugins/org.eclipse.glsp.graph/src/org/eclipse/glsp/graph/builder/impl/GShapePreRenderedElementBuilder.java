@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2026 EclipseSource and others.
+ * Copyright (c) 2022-2026 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -16,27 +16,28 @@
 package org.eclipse.glsp.graph.builder.impl;
 
 import org.eclipse.glsp.graph.DefaultTypes;
-import org.eclipse.glsp.graph.GPort;
+import org.eclipse.glsp.graph.GShapePreRenderedElement;
 import org.eclipse.glsp.graph.GraphFactory;
-import org.eclipse.glsp.graph.builder.AbstractGPortBuilder;
+import org.eclipse.glsp.graph.builder.AbstractGShapePreRenderedElementBuilder;
 
-public class GPortBuilder extends AbstractGPortBuilder<GPort, GPortBuilder> {
+public class GShapePreRenderedElementBuilder
+   extends AbstractGShapePreRenderedElementBuilder<GShapePreRenderedElement, GShapePreRenderedElementBuilder> {
 
-   public GPortBuilder() {
-      this(DefaultTypes.PORT);
+   public GShapePreRenderedElementBuilder() {
+      this(DefaultTypes.SHAPE_PRE_RENDERED);
    }
 
-   public GPortBuilder(final String type) {
+   public GShapePreRenderedElementBuilder(final String type) {
       super(type);
    }
 
    @Override
-   protected GPort instantiate() {
-      return GraphFactory.eINSTANCE.createGPort();
+   protected GShapePreRenderedElement instantiate() {
+      return GraphFactory.eINSTANCE.createGShapePreRenderedElement();
    }
 
    @Override
-   protected GPortBuilder self() {
+   protected GShapePreRenderedElementBuilder self() {
       return this;
    }
 

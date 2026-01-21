@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2022-2024 EclipseSource and others.
+ * Copyright (c) 2022-2026 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,30 +15,18 @@
  ********************************************************************************/
 package org.eclipse.glsp.graph.builder.impl;
 
-import org.eclipse.glsp.graph.DefaultTypes;
-import org.eclipse.glsp.graph.GShapePreRenderedElement;
-import org.eclipse.glsp.graph.GraphFactory;
-import org.eclipse.glsp.graph.builder.AbstractGShapePrenderedElementBuilder;
-
-public class GShapePrerenderedElementBuilder
-   extends AbstractGShapePrenderedElementBuilder<GShapePreRenderedElement, GShapePrerenderedElementBuilder> {
+/**
+ * @deprecated Use {@link GShapePreRenderedElementBuilder} instead.
+ */
+@Deprecated
+public class GShapePrerenderedElementBuilder extends GShapePreRenderedElementBuilder {
 
    public GShapePrerenderedElementBuilder() {
-      this(DefaultTypes.SHAPE_PRE_RENDERED);
+      super();
    }
 
    public GShapePrerenderedElementBuilder(final String type) {
       super(type);
-   }
-
-   @Override
-   protected GShapePreRenderedElement instantiate() {
-      return GraphFactory.eINSTANCE.createGShapePreRenderedElement();
-   }
-
-   @Override
-   protected GShapePrerenderedElementBuilder self() {
-      return this;
    }
 
 }

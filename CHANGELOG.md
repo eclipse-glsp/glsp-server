@@ -4,7 +4,19 @@
 
 ### Changes
 
+- [api] Adjust to new `MenuItem` API [#265](https://github.com/eclipse-glsp/glsp-server/pull/265)
+- [server] Ensure proper session cleanup on dispsoe [#267](https://github.com/eclipse-glsp/glsp-server/pull/267)
+- [build] Enable OSGI metadata bundling for maven artifacts [#268](https://github.com/eclipse-glsp/glsp-server/pull/268)
+- [websocket] Enable easier configuration of WS buffer size [#269](https://github.com/eclipse-glsp/glsp-server/pull/269)\
+- [websocket] Update to Jetty 12.1.4 [#271](https://github.com/eclipse-glsp/glsp-server/pull/271)
+- [api] Extend `ModelSubmissionHandler` with optional layout information [#273](https://github.com/eclipse-glsp/glsp-server/pull/273)
+- [model] Improve `GModelBuilder` API [#274](https://github.com/eclipse-glsp/glsp-server/pull/274)
+- [api] Add missing options to `GLayoutOptions` [#275](https://github.com/eclipse-glsp/glsp-server/pull/275)
+
 ### Potentially Breaking Changes
+
+- [build] Switch default target platform to Eclipse 2025-12
+  - Requires Java 21 during build time
 
 ## [v2.5.0 - 07/09/2025](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.5.0)
 

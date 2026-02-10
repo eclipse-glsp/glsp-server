@@ -38,6 +38,8 @@ public class GLayoutOptions extends LinkedHashMap<String, Object> {
    public static final String KEY_MIN_HEIGHT = "minHeight";
    public static final String KEY_PREF_WIDTH = "prefWidth";
    public static final String KEY_PREF_HEIGHT = "prefHeight";
+   public static final String KEY_H_GRAB = "hGrab";
+   public static final String KEY_V_GRAB = "vGrab";
 
    public GLayoutOptions() {}
 
@@ -146,6 +148,20 @@ public class GLayoutOptions extends LinkedHashMap<String, Object> {
    }
 
    public Double getPrefHeight() { return getDouble(KEY_PREF_HEIGHT); }
+
+   public GLayoutOptions vGrab(final Number vGap) {
+      putOrRemove(KEY_V_GRAB, vGap);
+      return this;
+   }
+
+   public String getVGrab() { return getString(KEY_V_GRAB); }
+
+   public GLayoutOptions hGrab(final Number hGap) {
+      putOrRemove(KEY_H_GRAB, hGap);
+      return this;
+   }
+
+   public String getHGrab() { return getString(KEY_H_GRAB); }
 
    protected void putOrRemove(final String key, final Object value) {
       if (value != null) {

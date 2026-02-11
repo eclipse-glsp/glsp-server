@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="2025-12 - Default" sequenceNumber="1768796629">
+<target name="2025-12 - Default" sequenceNumber="1770803437">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.emf.sdk.feature.group" version="2.44.0.v20251106-1447"/>
@@ -26,9 +26,9 @@
       <repository location="https://download.eclipse.org/elk/updates/releases/0.11.0/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="org.eclipse.jetty.ee10.websocket.jakarta.server" version="0.0.0"/>
-      <unit id="org.eclipse.jetty.ee10.websocket.server" version="0.0.0"/>
-      <unit id="org.eclipse.jetty.websocket.api" version="0.0.0"/>
+      <unit id="org.eclipse.jetty.ee10.websocket.jakarta.server" version="12.1.4"/>
+      <unit id="org.eclipse.jetty.ee10.websocket.server" version="12.1.4"/>
+      <unit id="org.eclipse.jetty.websocket.api" version="12.1.4"/>
       <repository location="https://download.eclipse.org/tools/orbit/simrel/maven-jetty/release/12.1.4"/>
     </location>
     <location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="false" missingManifest="generate" type="Maven" label="log4j">

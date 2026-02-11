@@ -15,8 +15,9 @@
 
 ### Potentially Breaking Changes
 
-- [build] Switch default target platform to Eclipse 2025-12
+- [build] Switch default target platform to Eclipse 2025-12  [#271](https://github.com/eclipse-glsp/glsp-server/pull/271)
   - Requires Java 21 during build time
+- [build] Restrict ls4pj to < 1.0.0. [#277](https://github.com/eclipse-glsp/glsp-server/pull/277)
 
 ## [v2.5.0 - 07/09/2025](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.5.0)
 

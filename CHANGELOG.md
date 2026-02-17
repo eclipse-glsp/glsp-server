@@ -1,5 +1,32 @@
 # Eclipse GLSP Server Changelog
 
+## [v2.6.0javax  - 11/02/2026](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.6.0javax )
+
+### Changes
+
+- [api] Adjust to new `MenuItem` API [#265](https://github.com/eclipse-glsp/glsp-server/pull/265)
+- [server] Ensure proper session cleanup on dispose [#267](https://github.com/eclipse-glsp/glsp-server/pull/267)
+- [build] Enable OSGI metadata bundling for maven artifacts [#268](https://github.com/eclipse-glsp/glsp-server/pull/268)
+- [websocket] Enable easier configuration of WS buffer size [#269](https://github.com/eclipse-glsp/glsp-server/pull/269)\
+- [api] Extend `ModelSubmissionHandler` with optional layout information [#273](https://github.com/eclipse-glsp/glsp-server/pull/273)
+- [model] Improve `GModelBuilder` API [#274](https://github.com/eclipse-glsp/glsp-server/pull/274)
+- [api] Add missing options to `GLayoutOptions` [#275](https://github.com/eclipse-glsp/glsp-server/pull/275)
+
+## [v2.5.0javax  - 07/09/2025](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.5.0javax )
+
+### Changes
+
+- [api] Add missing `isOperation` discriminator to `Operation` [#256](https://github.com/eclipse-glsp/glsp-server/pull/256)
+- [layout] Guard `ElkLayoutEngine` against potential null access [#257](https://github.com/eclipse-glsp/glsp-server/pull/257)
+- [api] Add layout operation as optional parameter to `LayoutEngine.layout` [#259](https://github.com/eclipse-glsp/glsp-server/pull/259)
+
+## [v2.4.0.javax - 04/04/2025](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.4.0.javax)
+
+### Changes
+
+- [operation] Avoid unnecessary model changes after empty operations [#253](https://github.com/eclipse-glsp/glsp-server/pull/253)
+
+
 ## [v2.3.0.javax - 27/12/2024](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.3.0.javax)
 
 Note: This release is a parallel release of the [2.3.0](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.3.0) release that does not contains

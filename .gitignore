@@ -1,3 +1,9 @@
 target/
 .m2
 .tycho-consumer-pom.xml
+
+# Agent specific files
+.claude/plans
+.claude/settings.local.json
+CLAUDE.local.md
+.reviews

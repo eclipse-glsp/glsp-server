@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019-2024 EclipseSource and others.
+ * Copyright (c) 2019-2026 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -21,7 +21,8 @@ package org.eclipse.glsp.server.actions;
  * @param <RESPONSE> The type of the {@link ResponseAction}.
  */
 public abstract class RequestAction<RESPONSE extends ResponseAction> extends Action {
-   private final String requestId;
+   private String requestId;
+   private Long timeout;
 
    public RequestAction(final String kind) {
       this(kind, "");
@@ -33,4 +34,13 @@ public abstract class RequestAction<RESPONSE extends ResponseAction> extends Act
    }
 
    public String getRequestId() { return requestId; }
+
+   public void setRequestId(final String requestId) { this.requestId = requestId; }
+
+   /**
+    * Maximum wait time in milliseconds for a response, or {@code null} for no timeout.
+    */
+   public Long getTimeout() { return timeout; }
+
+   public void setTimeout(final Long timeout) { this.timeout = timeout; }
 }

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2024 EclipseSource and others.
+ * Copyright (c) 2019-2026 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -24,7 +24,12 @@ import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -36,17 +41,17 @@ import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.actions.ActionHandlerRegistry;
 import org.eclipse.glsp.server.actions.ClientActionForwarder;
+import org.eclipse.glsp.server.actions.RejectAction;
+import org.eclipse.glsp.server.actions.RequestAction;
 import org.eclipse.glsp.server.actions.ResponseAction;
 import org.eclipse.glsp.server.di.ClientId;
 import org.eclipse.glsp.server.disposable.Disposable;
 import org.eclipse.glsp.server.features.core.model.SetModelAction;
 import org.eclipse.glsp.server.features.core.model.UpdateModelAction;
-import org.eclipse.glsp.server.protocol.GLSPClient;
+import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.glsp.server.utils.FutureUtil;
 
 import com.google.inject.Inject;
-import com.google.inject.Provider;
-
 
 /**
  * <p>
@@ -58,6 +63,8 @@ import com.google.inject.Provider;
 public class DefaultActionDispatcher extends Disposable implements ActionDispatcher {
 
    protected static final Logger LOGGER = LogManager.getLogger(DefaultActionDispatcher.class);
+
+   protected static final long STALE_TIMEOUT_GRACE_MS = 30_000L;
 
    private static final AtomicInteger COUNT = new AtomicInteger(0);
 
@@ -77,16 +84,26 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
 
    protected final BlockingQueue<Action> actionsQueue = new ArrayBlockingQueue<>(100, true);
 
-   protected List<Action> postUpdateQueue = new ArrayList<>();
+   // Guarded by postUpdateLock: written from any thread that drains a response.
+   protected final List<Action> postUpdateQueue = new ArrayList<>();
+   protected final Object postUpdateLock = new Object();
 
    // Results will be placed in the map when the action dispatcher receives a new action (From arbitrary threads),
    // and will be removed from the dispatcher's thread.
    protected final Map<Action, CompletableFuture<Void>> results = Collections.synchronizedMap(new HashMap<>());
 
-   // Use a provider, as the GLSPClient is probably not created yet. We won't receive
-   // any action until it's ready anyway.
-   @Inject
-   protected Provider<GLSPClient> client;
+   // Pending server-initiated requests awaiting a matching response. Keyed by requestId.
+   // Accessed from multiple threads (dispatcher thread, JSON-RPC thread, scheduler thread).
+   protected final Map<String, CompletableFuture<? extends ResponseAction>> pendingRequests
+      = new ConcurrentHashMap<>();
+
+   // Active timeout markers per requestId. After the timeout fires the entry is kept briefly as
+   // a stale marker to filter late responses, then cleaned up after STALE_TIMEOUT_GRACE_MS.
+   protected final Map<String, ScheduledFuture<?>> requestTimeouts = new ConcurrentHashMap<>();
+
+   protected final AtomicInteger nextRequestId = new AtomicInteger(1);
+
+   protected ScheduledExecutorService scheduler;
 
    public DefaultActionDispatcher() {
       this.initialize();
@@ -94,13 +111,35 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
 
    protected void initialize() {
       this.name = getClass().getSimpleName() + " " + COUNT.incrementAndGet();
+      this.scheduler = this.createScheduler();
       this.thread = this.createThread();
       this.initializeThread(thread, name);
       thread.start();
    }
 
+   protected String generateRequestId() {
+      return "server_" + clientId + "_" + nextRequestId.getAndIncrement();
+   }
+
+   /**
+    * Grace period in milliseconds during which a stale-timeout marker is retained after a
+    * request times out, so that a slightly late response can still be filtered. Override to
+    * tune; subclasses (notably tests) should keep this short.
+    */
+   protected long getStaleTimeoutGraceMs() {
+      return STALE_TIMEOUT_GRACE_MS;
+   }
+
    protected Thread createThread() {
       return new Thread(this::runThread);
+   }
+
+   protected ScheduledExecutorService createScheduler() {
+      return Executors.newSingleThreadScheduledExecutor(runnable -> {
+         Thread schedulerThread = new Thread(runnable);
+         initializeThread(schedulerThread, name + "-scheduler");
+         return schedulerThread;
+      });
    }
 
    protected void initializeThread(final Thread thread, final String name) {
@@ -110,7 +149,10 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
 
    @Override
    public CompletableFuture<Void> dispatch(final Action action) {
-
+      // Intercept first to avoid deadlock: a handler may be awaiting this response.
+      if (interceptPendingResponse(action)) {
+         return CompletableFuture.completedFuture(null);
+      }
       CompletableFuture<Void> result = new CompletableFuture<>();
       results.put(action, result);
       if (thread == Thread.currentThread()) {
@@ -125,8 +167,89 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
    }
 
    @Override
+   public <RES extends ResponseAction> CompletableFuture<RES> request(final RequestAction<RES> action) {
+      return doRequest(action, null, true);
+   }
+
+   @Override
+   public <RES extends ResponseAction> CompletableFuture<RES> requestUntil(final RequestAction<RES> action,
+      final long timeoutMs, final boolean rejectOnTimeout) {
+      return doRequest(action, timeoutMs >= 0 ? timeoutMs : null, rejectOnTimeout);
+   }
+
+   /**
+    * A handler that calls {@code .get()} or {@code .join()} on the returned future from the
+    * dispatcher thread blocks that thread until the response arrives, holding the action queue
+    * during the wait. This is intentional: the queue's purpose is to serialize handler
+    * execution. Use {@link #requestUntil(RequestAction, long, boolean) requestUntil} with a
+    * positive timeout to bound the wait when the responding side may not reply.
+    *
+    * @param timeoutMs Maximum wait time in milliseconds, or {@code null} to wait indefinitely.
+    */
+   protected <RES extends ResponseAction> CompletableFuture<RES> doRequest(final RequestAction<RES> action,
+      final Long timeoutMs, final boolean rejectOnTimeout) {
+      if (action.getRequestId() == null || action.getRequestId().isEmpty()) {
+         action.setRequestId(generateRequestId());
+      }
+      action.setTimeout(timeoutMs);
+
+      final String requestId = action.getRequestId();
+      final CompletableFuture<RES> deferred = new CompletableFuture<>();
+      pendingRequests.put(requestId, deferred);
+
+      if (timeoutMs != null) {
+         scheduleRequestTimeout(requestId, action.getKind(), timeoutMs, rejectOnTimeout, deferred);
+      }
+
+      // dispatch() routes correctly: external callers queue, dispatcher-thread callers run inline.
+      // The matching response resolves the deferred via interceptPendingResponse().
+      dispatch(action).exceptionally(error -> {
+         failPendingRequest(requestId, error, deferred);
+         return null;
+      });
+
+      return deferred;
+   }
+
+   protected <RES extends ResponseAction> void scheduleRequestTimeout(final String requestId, final String kind,
+      final long timeoutMs, final boolean rejectOnTimeout, final CompletableFuture<RES> deferred) {
+      ScheduledFuture<?> timeout = scheduler.schedule(() -> {
+         if (pendingRequests.remove(requestId) == null) {
+            return;
+         }
+         // Keep the requestTimeouts entry briefly as a stale marker so a late response can be
+         // filtered, then drop it after a grace period to avoid leaking markers for requests
+         // whose late responses never arrive.
+         scheduler.schedule(() -> requestTimeouts.remove(requestId),
+            getStaleTimeoutGraceMs(), TimeUnit.MILLISECONDS);
+         String message = String.format("Request '%s' (%s) timed out after %dms", requestId, kind, timeoutMs);
+         if (rejectOnTimeout) {
+            deferred.completeExceptionally(new TimeoutException(message));
+         } else {
+            LOGGER.info(message);
+            deferred.complete(null);
+         }
+      }, timeoutMs, TimeUnit.MILLISECONDS);
+      requestTimeouts.put(requestId, timeout);
+   }
+
+   protected void failPendingRequest(final String requestId, final Throwable error,
+      final CompletableFuture<?> deferred) {
+      if (pendingRequests.remove(requestId) == null) {
+         return;
+      }
+      ScheduledFuture<?> pendingTimeout = requestTimeouts.remove(requestId);
+      if (pendingTimeout != null) {
+         pendingTimeout.cancel(false);
+      }
+      deferred.completeExceptionally(error);
+   }
+
+   @Override
    public void dispatchAfterNextUpdate(final Action... actions) {
-      postUpdateQueue.addAll(Arrays.asList(actions));
+      synchronized (postUpdateLock) {
+         postUpdateQueue.addAll(Arrays.asList(actions));
+      }
    }
 
    protected void addToQueue(final Action action) {
@@ -222,10 +345,20 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
    }
 
    protected CompletableFuture<Void> dispatchPostUpdateQueue() {
-      ArrayList<Action> toDispatch = new ArrayList<>(postUpdateQueue);
-      postUpdateQueue.clear();
+      List<Action> toDispatch = drainPostUpdateQueue();
       dispatchAll(toDispatch);
       return CompletableFuture.completedFuture(null);
+   }
+
+   protected List<Action> drainPostUpdateQueue() {
+      synchronized (postUpdateLock) {
+         if (postUpdateQueue.isEmpty()) {
+            return Collections.emptyList();
+         }
+         List<Action> drained = new ArrayList<>(postUpdateQueue);
+         postUpdateQueue.clear();
+         return drained;
+      }
    }
 
    protected final void checkThread() {
@@ -235,6 +368,92 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
       }
    }
 
+   /**
+    * Checks whether the given action is a response matching a pending {@link #request} or
+    * {@link #requestUntil} call. If matched, completes (or fails) the corresponding future and
+    * returns {@code true} so the caller can short-circuit normal dispatch.
+    *
+    * <p>
+    * For responses with a populated {@code responseId} but no matching pending request, checks
+    * for a stale timeout marker (timed-out request) and clears the {@code responseId} so the
+    * action is not forwarded by {@link ClientActionForwarder}. If no stale marker exists the
+    * {@code responseId} is left intact for normal forwarding.
+    * </p>
+    */
+   protected boolean interceptPendingResponse(final Action action) {
+      if (!(action instanceof ResponseAction response)) {
+         return false;
+      }
+      String responseId = response.getResponseId();
+      if (responseId == null || responseId.isEmpty()) {
+         return false;
+      }
+      CompletableFuture<? extends ResponseAction> deferred = pendingRequests.remove(responseId);
+      if (deferred != null) {
+         return resolvePendingResponse(deferred, response);
+      }
+      clearStaleMarker(responseId, response);
+      return false;
+   }
+
+   @SuppressWarnings({ "unchecked", "rawtypes" })
+   protected boolean resolvePendingResponse(final CompletableFuture<? extends ResponseAction> deferred,
+      final ResponseAction response) {
+      ScheduledFuture<?> timeout = requestTimeouts.remove(response.getResponseId());
+      if (timeout != null) {
+         timeout.cancel(false);
+      }
+      // Intercepted responses skip handleAction, so drain post-update actions here when the
+      // response is a SetModel. RejectAction does not trigger a drain; pending post-update
+      // actions stay queued until the next successful update.
+      List<Action> postUpdateActions = drainPostUpdateForResponse(response);
+      if (response instanceof RejectAction reject) {
+         String message = reject.getMessage()
+            + reject.getDetail().map(detail -> ": " + detail).orElse("");
+         deferred.completeExceptionally(new GLSPServerException(message));
+      } else {
+         ((CompletableFuture) deferred).complete(response);
+      }
+      if (!postUpdateActions.isEmpty()) {
+         dispatchPostUpdateAfterResponse(postUpdateActions);
+      }
+      return true;
+   }
+
+   protected List<Action> drainPostUpdateForResponse(final ResponseAction response) {
+      if (!(response instanceof SetModelAction)) {
+         return Collections.emptyList();
+      }
+      return drainPostUpdateQueue();
+   }
+
+   /** Fire-and-forget: failures here should not block the request resolution. */
+   protected void dispatchPostUpdateAfterResponse(final List<Action> actions) {
+      List<CompletableFuture<Void>> futures = dispatchAll(actions);
+      if (futures.isEmpty()) {
+         return;
+      }
+      CompletableFuture.allOf(futures.toArray(new CompletableFuture<?>[0]))
+         .exceptionally(ex -> {
+            LOGGER.error("Failed to dispatch post-update actions", ex);
+            return null;
+         });
+   }
+
+   /**
+    * Late response for a timed-out request: clear {@code responseId} so
+    * {@link ClientActionForwarder} does not re-emit it to the client.
+    */
+   protected void clearStaleMarker(final String responseId, final ResponseAction response) {
+      ScheduledFuture<?> staleTimeout = requestTimeouts.remove(responseId);
+      if (staleTimeout == null) {
+         return;
+      }
+      staleTimeout.cancel(false);
+      LOGGER.debug(String.format("Late response for timed-out request '%s', dispatching as normal action", responseId));
+      response.setResponseId("");
+   }
+
    protected void executeAllPendingActions() {
       // block until all pending actions have been executed
       dispatch(new JoinAction()).join();
@@ -242,7 +461,27 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
 
    @Override
    public void doDispose() {
-      executeAllPendingActions();
+      // Cancel pending requests first so any awaiting handler unblocks.
+      pendingRequests.forEach((id, deferred) -> deferred.completeExceptionally(
+         new IllegalStateException("Request '" + id + "' cancelled: dispatcher disposed")));
+      pendingRequests.clear();
+      requestTimeouts.values().forEach(timeout -> timeout.cancel(false));
+      requestTimeouts.clear();
+      if (scheduler != null) {
+         scheduler.shutdownNow();
+      }
+      // Reject queued actions: no further processing should happen after dispose.
+      List<Action> remaining = new ArrayList<>();
+      actionsQueue.drainTo(remaining);
+      remaining.forEach(action -> {
+         CompletableFuture<Void> result = results.remove(action);
+         if (result != null) {
+            result.completeExceptionally(new IllegalStateException("ActionDispatcher disposed"));
+         }
+      });
+      synchronized (postUpdateLock) {
+         postUpdateQueue.clear();
+      }
       if (thread.isAlive()) {
          thread.interrupt();
       }

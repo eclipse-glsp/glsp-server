@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2023 EclipseSource and others.
+ * Copyright (c) 2020-2026 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -67,7 +67,7 @@ public class ClientActionForwarder {
       if (action.isReceivedFromClient()) {
          return false;
       }
-      return (clientActionKinds.contains(action.getKind()) || action instanceof ResponseAction);
+      return clientActionKinds.contains(action.getKind()) || ResponseAction.hasValidResponseId(action);
    }
 
 }

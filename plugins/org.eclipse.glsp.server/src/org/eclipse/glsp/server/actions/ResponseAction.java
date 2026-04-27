@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019-2024 EclipseSource and others.
+ * Copyright (c) 2019-2026 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -31,6 +31,21 @@ public class ResponseAction extends Action {
    public String getResponseId() { return responseId; }
 
    public void setResponseId(final String responseId) { this.responseId = responseId; }
+
+   /**
+    * Returns {@code true} if the given action is a {@link ResponseAction} with a non-empty
+    * {@link ResponseAction#responseId responseId}.
+    *
+    * @param action the action to test
+    * @return {@code true} if the action is a {@link ResponseAction} with a valid responseId
+    */
+   public static boolean hasValidResponseId(final Action action) {
+      if (!(action instanceof ResponseAction response)) {
+         return false;
+      }
+      String responseId = response.getResponseId();
+      return responseId != null && !responseId.isEmpty();
+   }
 
    /**
     * Transfers the {@link ResponseAction#responseId id} from request to response if applicable.

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2025 EclipseSource and others.
+ * Copyright (c) 2019-2026 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -20,15 +20,21 @@ import static org.eclipse.glsp.server.utils.MessageActionUtil.error;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import java.util.function.Function;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.server.actions.Action;
+import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.ActionMessage;
 import org.eclipse.glsp.server.actions.ActionRegistry;
+import org.eclipse.glsp.server.actions.RejectAction;
+import org.eclipse.glsp.server.actions.RequestAction;
+import org.eclipse.glsp.server.actions.ResponseAction;
 import org.eclipse.glsp.server.session.ClientSession;
 import org.eclipse.glsp.server.session.ClientSessionListener;
 import org.eclipse.glsp.server.session.ClientSessionManager;
@@ -182,11 +188,52 @@ public class DefaultGLSPServer implements GLSPServer, ClientSessionListener {
       try {
          Action action = message.getAction();
          action.setReceivedFromClient(true);
-         clientSessions.get(clientSessionId).getActionDispatcher().dispatch(action)
-            .exceptionally(errorHandler);
+         ActionDispatcher dispatcher = clientSessions.get(clientSessionId).getActionDispatcher();
+         if (action instanceof RequestAction<?>) {
+            handleClientRequest(clientSessionId, (RequestAction<?>) action, dispatcher);
+         } else {
+            dispatcher.dispatch(action).exceptionally(errorHandler);
+         }
       } catch (RuntimeException e) {
          errorHandler.apply(e);
       }
+   }
+
+   /**
+    * Dispatches an inbound client request through the {@link ActionDispatcher}, awaits the
+    * response, and sends it back to the client. Failures are translated to a {@link RejectAction}.
+    */
+   @SuppressWarnings("checkstyle:IllegalCatch")
+   protected void handleClientRequest(final String clientSessionId, final RequestAction<?> action,
+      final ActionDispatcher dispatcher) {
+      Optional<Long> timeout = action.getTimeout();
+      CompletableFuture<? extends ResponseAction> future = timeout.isPresent()
+         ? dispatcher.requestUntil(action, timeout.get(), true)
+         : dispatcher.request(action);
+      future.thenAccept(response -> {
+         if (response != null) {
+            sendResponseToClient(clientSessionId, response);
+         }
+      }).exceptionally(error -> {
+         Throwable cause = error instanceof CompletionException && error.getCause() != null
+            ? error.getCause() : error;
+         String detail = cause != null ? cause.toString() : null;
+         LOGGER.error(String.format("Failed to handle request '%s' (%s): %s",
+            action.getKind(), action.getRequestId(), detail));
+         try {
+            RejectAction reject = new RejectAction(action.getRequestId(),
+               String.format("Failed to handle request '%s' (%s)", action.getKind(), action.getRequestId()),
+               detail);
+            sendResponseToClient(clientSessionId, reject);
+         } catch (Throwable sendError) {
+            LOGGER.error("Failed to send rejection for request '" + action.getRequestId() + "'", sendError);
+         }
+         return null;
+      });
+   }
+
+   protected void sendResponseToClient(final String clientSessionId, final ResponseAction response) {
+      getClient().process(new ActionMessage(clientSessionId, response));
    }
 
    public boolean isInitialized() { return initialized.isDone(); }

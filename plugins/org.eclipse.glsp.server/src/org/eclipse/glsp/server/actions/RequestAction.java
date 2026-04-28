@@ -15,6 +15,9 @@
  ******************************************************************************/
 package org.eclipse.glsp.server.actions;
 
+import java.util.Optional;
+import java.util.function.Supplier;
+
 /**
  * An action that expects a response.
  *
@@ -35,12 +38,24 @@ public abstract class RequestAction<RESPONSE extends ResponseAction> extends Act
 
    public String getRequestId() { return requestId; }
 
-   public void setRequestId(final String requestId) { this.requestId = requestId; }
+   /**
+    * Assigns a request id supplied by {@code idGenerator} to the given action if no id has been
+    * set yet. No-op if a non-empty id is already present, so an id assigned at construction is
+    * preserved.
+    *
+    * @param action      the request action to stamp
+    * @param idGenerator supplier invoked only when an id needs to be assigned
+    */
+   public static void ensureRequestId(final RequestAction<?> action, final Supplier<String> idGenerator) {
+      if (action.requestId == null || action.requestId.isEmpty()) {
+         action.requestId = idGenerator.get();
+      }
+   }
 
    /**
-    * Maximum wait time in milliseconds for a response, or {@code null} for no timeout.
+    * Maximum wait time in milliseconds for a response, or {@link Optional#empty()} for no timeout.
     */
-   public Long getTimeout() { return timeout; }
+   public Optional<Long> getTimeout() { return Optional.ofNullable(timeout); }
 
    public void setTimeout(final Long timeout) { this.timeout = timeout; }
 }

@@ -20,6 +20,7 @@ import static org.eclipse.glsp.server.utils.MessageActionUtil.error;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
@@ -205,9 +206,9 @@ public class DefaultGLSPServer implements GLSPServer, ClientSessionListener {
    @SuppressWarnings("checkstyle:IllegalCatch")
    protected void handleClientRequest(final String clientSessionId, final RequestAction<?> action,
       final ActionDispatcher dispatcher) {
-      Long timeout = action.getTimeout();
-      CompletableFuture<? extends ResponseAction> future = timeout != null
-         ? dispatcher.requestUntil(action, timeout, true)
+      Optional<Long> timeout = action.getTimeout();
+      CompletableFuture<? extends ResponseAction> future = timeout.isPresent()
+         ? dispatcher.requestUntil(action, timeout.get(), true)
          : dispatcher.request(action);
       future.thenAccept(response -> {
          if (response != null) {

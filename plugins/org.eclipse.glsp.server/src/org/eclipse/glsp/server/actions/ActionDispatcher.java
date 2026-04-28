@@ -109,8 +109,7 @@ public interface ActionDispatcher extends IDisposable {
     * @return The matching response, or {@code null} on soft timeout.
     */
    default <RES extends ResponseAction> CompletableFuture<RES> requestUntil(final RequestAction<RES> action) {
-      Long configured = action.getTimeout();
-      long effective = configured != null ? configured : DEFAULT_REQUEST_TIMEOUT_MS;
+      long effective = action.getTimeout().orElse(DEFAULT_REQUEST_TIMEOUT_MS);
       return requestUntil(action, effective, false);
    }
 

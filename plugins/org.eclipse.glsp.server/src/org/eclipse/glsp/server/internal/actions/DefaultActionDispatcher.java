@@ -188,9 +188,7 @@ public class DefaultActionDispatcher extends Disposable implements ActionDispatc
     */
    protected <RES extends ResponseAction> CompletableFuture<RES> doRequest(final RequestAction<RES> action,
       final Long timeoutMs, final boolean rejectOnTimeout) {
-      if (action.getRequestId() == null || action.getRequestId().isEmpty()) {
-         action.setRequestId(generateRequestId());
-      }
+      RequestAction.ensureRequestId(action, this::generateRequestId);
       action.setTimeout(timeoutMs);
 
       final String requestId = action.getRequestId();

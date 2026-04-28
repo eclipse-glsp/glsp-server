@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
@@ -111,7 +112,7 @@ class DefaultActionDispatcherTest {
 
       dispatcher.requestUntil(request, 1234L, false);
 
-      assertEquals(1234L, request.getTimeout());
+      assertEquals(Optional.of(1234L), request.getTimeout());
    }
 
    // -----------------------------------------------------------------------
@@ -166,6 +167,8 @@ class DefaultActionDispatcherTest {
    void reentrantRequestFromHandlerCorrelatesResponse() throws Exception {
       AtomicReference<TestResponse> innerResponse = new AtomicReference<>();
       AtomicReference<Throwable> innerError = new AtomicReference<>();
+      AtomicReference<String> innerRequestId = new AtomicReference<>();
+      CountDownLatch requestRegistered = new CountDownLatch(1);
 
       registry.register(TriggerAction.class, new ActionHandler() {
          @Override
@@ -177,10 +180,11 @@ class DefaultActionDispatcherTest {
          public List<Action> execute(final Action action) {
             TestRequest req = new TestRequest();
             CompletableFuture<TestResponse> future = dispatcher.request(req);
-            // Dispatch the matching response from another thread so the dispatcher thread can
-            // unblock via interceptPendingResponse. The pending future is already registered by
-            // request() so a race-free completion is safe regardless of when this thread runs.
-            new Thread(() -> dispatcher.dispatch(new TestResponse(req.getRequestId()))).start();
+            // Hand the test thread the request id so it can dispatch the matching response.
+            // request() has already registered the pending future, so dispatching the response
+            // from the test thread synchronously completes it via interceptPendingResponse.
+            innerRequestId.set(req.getRequestId());
+            requestRegistered.countDown();
             try {
                innerResponse.set(future.get(AWAIT_MS, TimeUnit.MILLISECONDS));
             } catch (Exception ex) {
@@ -190,7 +194,13 @@ class DefaultActionDispatcherTest {
          }
       });
 
-      dispatcher.dispatch(new TriggerAction()).get(AWAIT_MS, TimeUnit.MILLISECONDS);
+      CompletableFuture<Void> outer = dispatcher.dispatch(new TriggerAction());
+
+      assertTrue(requestRegistered.await(AWAIT_MS, TimeUnit.MILLISECONDS),
+         "Handler did not register the inner request within timeout");
+      dispatcher.dispatch(new TestResponse(innerRequestId.get()));
+
+      outer.get(AWAIT_MS, TimeUnit.MILLISECONDS);
 
       assertNull(innerError.get());
       assertNotNull(innerResponse.get());

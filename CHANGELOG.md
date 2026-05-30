@@ -4,6 +4,11 @@
 
 ### Changes
 
+### Potentially Breaking Changes
+
+-   [api] Add request/response support to server `ActionDispatcher` [#283](https://github.com/eclipse-glsp/glsp-server/pull/283)
+    -   `dispatchAll` now executes actions sequentially and will fail on the first rejected action
+
 ## [v2.6.0 - 11/02/2026](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.6.0)
 
 ### Changes

@@ -26,7 +26,7 @@ import org.eclipse.glsp.server.actions.ResponseAction;
  */
 public class CheckEdgeResultAction extends ResponseAction {
 
-   public static final String KIND = "checkEdgeResult";
+   public static final String KIND = "checkEdgeTargetResult";
 
    /**
     * true if the selected element is a valid target for this edge,

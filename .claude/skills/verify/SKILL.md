@@ -21,18 +21,20 @@ Run build verification for the Eclipse GLSP server project.
 
 2. **For m2 profile**, run in sequence:
    ```bash
-   mvn clean verify -Pm2 -B
+   mvn clean verify -Pm2 -Pfatjar -B 
    ```
-   This runs compile, checkstyle, and tests together.
+   This runs compile, checkstyle, tests and building of the fatjar together.
 
 3. **For p2 profile**, run:
    ```bash
    mvn clean verify -Pp2 -B
    ```
 
-4. **For fatjar profile**, run:
+4. **For copyright header check**, run:
    ```bash
-   mvn clean verify -Pm2 -Pfatjar -B
+   npx @eclipse-glsp/cli checkHeaders . -f java -e "**/src-gen/**" -a
    ```
-
+   This checks that all Java source files have the correct copyright header, excluding generated sources.
+   Any missing or incorrect headers will be fixed automatically.
+   
 5. **Report results**: summarize pass/fail for each phase (compile, checkstyle, tests). If any step fails, show the relevant error output.

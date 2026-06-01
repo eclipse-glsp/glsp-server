@@ -21,15 +21,6 @@
 					<profiles>JavaSE-17</profiles>
 				</configuration>
 			</plugin>
-			<!-- Skip cleaning of this module otherwise the release build is not working 
-				on the jenkins instance -->
-			<plugin>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>${maven.clean.version}</version>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 

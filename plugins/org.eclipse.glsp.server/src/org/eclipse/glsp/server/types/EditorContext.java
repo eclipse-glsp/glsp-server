@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.eclipse.glsp.graph.GBounds;
 import org.eclipse.glsp.graph.GPoint;
 
 /**
@@ -33,6 +34,10 @@ public class EditorContext {
 
    private List<String> selectedElementIds;
    private GPoint lastMousePosition;
+   /** Current scroll position and zoom level of the diagram. */
+   private Viewport viewport;
+   /** Bounds of the diagram canvas DOM element, in browser pixel coordinates. */
+   private GBounds canvasBounds;
    private String sourceUri;
    private Map<String, String> args = new HashMap<>();
 
@@ -47,6 +52,14 @@ public class EditorContext {
    public Optional<GPoint> getLastMousePosition() { return Optional.ofNullable(lastMousePosition); }
 
    public void setLastMousePosition(final GPoint lastMousePosition) { this.lastMousePosition = lastMousePosition; }
+
+   public Optional<Viewport> getViewport() { return Optional.ofNullable(viewport); }
+
+   public void setViewport(final Viewport viewport) { this.viewport = viewport; }
+
+   public Optional<GBounds> getCanvasBounds() { return Optional.ofNullable(canvasBounds); }
+
+   public void setCanvasBounds(final GBounds canvasBounds) { this.canvasBounds = canvasBounds; }
 
    public String getSourceUri() { return sourceUri; }
 

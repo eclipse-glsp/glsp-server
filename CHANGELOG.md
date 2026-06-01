@@ -4,6 +4,8 @@
 
 ### Changes
 
+-   [protocol] Add new viewport, export, and editor-context actions to align with glsp-client [#286](https://github.com/eclipse-glsp/glsp-server/pull/286)
+
 ### Potentially Breaking Changes
 
 -   [api] Add request/response support to server `ActionDispatcher` [#283](https://github.com/eclipse-glsp/glsp-server/pull/283)

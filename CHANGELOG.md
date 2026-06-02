@@ -1,5 +1,16 @@
 # Eclipse GLSP Server Changelog
 
+## [v2.7.0.javax - 01/06/2026](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.7.0.javax)
+
+### Changes
+
+- [protocol] Add new viewport, export, and editor-context actions to align with glsp-client [#286](https://github.com/eclipse-glsp/glsp-server/pull/286)
+
+### Potentially Breaking Changes
+
+- [api] Add request/response support to server `ActionDispatcher` [#283](https://github.com/eclipse-glsp/glsp-server/pull/283)
+  - `dispatchAll` now executes actions sequentially and will fail on the first rejected action
+
 ## [v2.6.0javax  - 11/02/2026](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.6.0javax )
 
 ### Changes
@@ -25,7 +36,6 @@
 ### Changes
 
 - [operation] Avoid unnecessary model changes after empty operations [#253](https://github.com/eclipse-glsp/glsp-server/pull/253)
-
 
 ## [v2.3.0.javax - 27/12/2024](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.3.0.javax)
 
@@ -95,7 +105,7 @@ Note: This release is a parallel release of the [2.3.0](https://github.com/eclip
 - [validation] Add explicit support and API for live and batch validation [#200](https://github.com/eclipse-glsp/glsp-server/pull/200)
 - [server] Change default ports from 5007 (and 8081 for websockets) to 0, which implies autoassignment by the OS [#198](https://github.com/eclipse-glsp/glsp-server/pull/198)
 - [API] Remove deprecated `GConstants.STACK` constant [#209](https://github.com/eclipse-glsp/glsp-server/pull/209)
-- [API] Revise model loading and client action handling [#211](https://github.com/eclipse-glsp/glsp-server/pull/211) 
+- [API] Revise model loading and client action handling [#211](https://github.com/eclipse-glsp/glsp-server/pull/211)
   - Refactor `ModelSubmissionHandler` to enable handling of `RequestModelAction` as proper request action
     - Introduce a `submitInitialModel` method that is called by the `RequestModelActionHandler`
   - Remove `configureClientActions` from `DiagramModule` as client actions are now implicitly configured via `InitializeClientSession` request

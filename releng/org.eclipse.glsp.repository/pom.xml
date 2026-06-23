@@ -11,6 +11,12 @@
 	<artifactId>org.eclipse.glsp.repository</artifactId>
 	<packaging>eclipse-repository</packaging>
 
+	<!--
+		This module only builds the p2 repository into 'target/repository'.
+		Publishing it into the nightly composite update site is handled
+		separately by 'p2-composite.sh' (invoked from the Jenkins pipeline),
+		which is fully decoupled from Maven.
+	-->
 	<build>
 		<plugins>
 			<plugin>
@@ -23,118 +29,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<profiles>
-		<profile>
-			<id>p2-nightly</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-
-			<properties>
-				<p2.repository.dest>${project.basedir}/../target/repository</p2.repository.dest>
-				<local.p2.root>${user.home}</local.p2.root>
-				<remote.p2.root>genie.glsp@projects-storage.eclipse.org:/home/data/httpd/download.eclipse.org/glsp</remote.p2.root>
-				<repository.path>server/p2/</repository.path>
-				<!-- local source directory for rsync (read from this directory) -->
-				<rsync.local.dir>${local.p2.root}/${repository.path}</rsync.local.dir>
-				<!-- remote rsync host -->
-				<rsync.remote.dir>${remote.p2.root}/${repository.path}</rsync.remote.dir>
-				<!-- pass "-n" to perform a trial run with no changes made -->
-				<dryrun></dryrun>
-				<p2.site.label>Eclipse GLSP Nightly Updatesite</p2.site.label>
-			</properties>
-
-			<build>
-				<plugins>
-					<plugin>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<version>${maven.antrun.version}</version>
-						<executions>
-							<execution>
-								<id>update-local-repository</id>
-								<phase>prepare-package</phase>
-								<configuration>
-									<target>
-										<ant antfile="${basedir}/rsync.ant" target="rsync-update">
-										</ant>
-									</target>
-								</configuration>
-								<goals>
-									<goal>run</goal>
-								</goals>
-							</execution>
-
-							<execution>
-								<id>deploy-repository</id>
-								<phase>verify</phase>
-								<configuration>
-									<target>
-										<ant antfile="${basedir}/rsync.ant" target="rsync-commit">
-										</ant>
-									</target>
-								</configuration>
-								<goals>
-									<goal>run</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-
-					<plugin>
-						<groupId>org.eclipse.tycho.extras</groupId>
-						<artifactId>tycho-eclipserun-plugin</artifactId>
-						<version>${tycho.version}</version>
-						<configuration>
-							<executionEnvironment>JavaSE-11</executionEnvironment>
-							<!-- IMPORTANT: DO NOT split the arg line -->
-							<appArgLine>-application org.eclipse.ant.core.antRunner -buildfile packaging-p2composite.ant p2.composite.add -Dsite.label=${p2.site.label} -Dproject.build.directory=${project.build.directory} -DunqualifiedVersion=${unqualifiedVersion} -DbuildQualifier=${buildQualifier} -Dsoftware.download.area=${rsync.local.dir}</appArgLine>
-							<repositories>
-								<repository>
-									<id>2019-09</id>
-									<layout>p2</layout>
-									<url>https://download.eclipse.org/releases/2019-09</url>
-								</repository>
-							</repositories>
-							<dependencies>
-								<dependency>
-									<artifactId>org.eclipse.ant.core</artifactId>
-									<type>eclipse-plugin</type>
-								</dependency>
-								<dependency>
-									<artifactId>org.apache.ant</artifactId>
-									<type>eclipse-plugin</type>
-								</dependency>
-								<dependency>
-									<artifactId>org.eclipse.equinox.p2.repository.tools</artifactId>
-									<type>eclipse-plugin</type>
-								</dependency>
-								<dependency>
-									<artifactId>org.eclipse.equinox.p2.core.feature</artifactId>
-									<type>eclipse-feature</type>
-								</dependency>
-								<dependency>
-									<artifactId>org.eclipse.equinox.p2.extras.feature</artifactId>
-									<type>eclipse-feature</type>
-								</dependency>
-								<dependency>
-									<artifactId>org.eclipse.equinox.ds</artifactId>
-									<type>eclipse-plugin</type>
-								</dependency>
-							</dependencies>
-						</configuration>
-						<executions>
-							<execution>
-								<id>add-p2-composite-repository</id>
-								<phase>package</phase>
-								<goals>
-									<goal>eclipse-run</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
 </project>

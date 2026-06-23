@@ -56,10 +56,19 @@ pipeline {
             stages {
                 stage('Deploy P2') {
                     steps {
+                        // build the p2 repository into target/repository ...
+                        sh "mvn clean install -Pp2 -B"
+                        // ... then publish it into the nightly composite site. The
+                        // script is fully decoupled from Maven: it detects the version
+                        // from the build output and owns the rsync up/down cycle.
                         sh "rm -rf ${WORKSPACE}/p2-update-site/server/p2"
-                        sh "mkdir -p ${WORKSPACE}/p2-update-site/server/p2/nightly"
                         sshagent ( ['projects-storage.eclipse.org-bot-ssh']) {
-                            sh "mvn clean install -Pp2 -Pp2-nightly -B -Dlocal.p2.root=${WORKSPACE}/p2-update-site"
+                            sh """
+                                releng/org.eclipse.glsp.repository/p2-composite.sh add \
+                                  --source-repo ${WORKSPACE}/releng/org.eclipse.glsp.repository/target/repository \
+                                  --local ${WORKSPACE}/p2-update-site/server/p2 \
+                                  --remote genie.glsp@projects-storage.eclipse.org:/home/data/httpd/download.eclipse.org/glsp/server/p2
+                            """
                         }
                     }
                 }

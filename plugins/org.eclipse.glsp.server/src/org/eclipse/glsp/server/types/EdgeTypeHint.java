@@ -66,6 +66,7 @@ public class EdgeTypeHint extends ElementTypeHint {
       this.routable = routable;
       this.sourceElementTypeIds = sourceElementTypeIds;
       this.targetElementTypeIds = targetElementTypeIds;
+      this.dynamic = dynamic;
    }
 
    public boolean isRoutable() { return routable; }

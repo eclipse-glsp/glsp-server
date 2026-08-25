@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019-2022 EclipseSource and others.
+ * Copyright (c) 2019-2026 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.glsp.graph.GAlignable;
@@ -45,10 +47,16 @@ import org.eclipse.glsp.server.types.GLSPServerException;
 
 public final class LayoutUtil {
 
+   protected static Logger LOGGER = LogManager.getLogger(LayoutUtil.class);
+
    private LayoutUtil() {}
 
    /**
     * Apply the computed bounds from the given {@link ComputedBoundsAction} to the model.
+    *
+    * <p>
+    * An entry that cannot be applied is skipped and logged rather than treated as an error.
+    * </p>
     *
     * @param root       The model root.
     * @param action     The computed bounds action.
@@ -57,9 +65,55 @@ public final class LayoutUtil {
    public static void applyBounds(final GModelRoot root, final ComputedBoundsAction action,
       final GModelState modelState) {
       GModelIndex index = modelState.getIndex();
-      action.getBounds().forEach(bounds -> applyBounds(bounds, index));
-      action.getAlignments().forEach(alignment -> applyAlignment(alignment, index));
-      action.getRoutes().forEach(route -> applyRoute(route, index));
+      applyElementBounds(action.getBounds(), index);
+      applyAlignments(action.getAlignments(), index);
+      applyRoutes(action.getRoutes(), index);
+   }
+
+   /**
+    * Applies the computed bounds of several elements.
+    *
+    * @param allBounds The new bounds.
+    * @param index     The model index.
+    */
+   public static void applyElementBounds(final List<ElementAndBounds> allBounds, final GModelIndex index) {
+      allBounds.forEach(bounds -> {
+         if (applyBounds(bounds, index).isEmpty()) {
+            LOGGER.warn("Skipped computed bounds of element '" + bounds.getElementId() + "'");
+         }
+      });
+   }
+
+   /**
+    * Applies the computed alignments of several elements.
+    *
+    * @param alignments The new alignments.
+    * @param index      The model index.
+    */
+   public static void applyAlignments(final List<ElementAndAlignment> alignments, final GModelIndex index) {
+      alignments.forEach(alignment -> {
+         if (applyAlignment(alignment, index).isEmpty()) {
+            LOGGER.warn("Skipped computed alignment of element '" + alignment.getElementId() + "'");
+         }
+      });
+   }
+
+   /**
+    * Applies the computed routes.
+    *
+    * <p>
+    * A skipped route is logged at debug level, an edge the client has not finished routing yet is expected.
+    * </p>
+    *
+    * @param routes The new routes.
+    * @param index  The model index.
+    */
+   public static void applyRoutes(final List<ElementAndRoutingPoints> routes, final GModelIndex index) {
+      routes.forEach(route -> {
+         if (applyRoute(route, index).isEmpty()) {
+            LOGGER.debug("Skipped computed route of element '" + route.getElementId() + "'");
+         }
+      });
    }
 
    /**
@@ -67,13 +121,12 @@ public final class LayoutUtil {
     *
     * @param bounds The new bounds.
     * @param index  The model index.
-    * @return The changed element.
+    * @return The changed element, or empty if the bounds could not be applied to any element.
     */
    public static Optional<GBoundsAware> applyBounds(final ElementAndBounds bounds, final GModelIndex index) {
-      GModelElement element = getOrThrow(index.get(bounds.getElementId()),
-         "Model element not found! ID: " + bounds.getElementId());
-      if (element instanceof GBoundsAware) {
-         GBoundsAware bae = (GBoundsAware) element;
+      Optional<GModelElement> element = index.get(bounds.getElementId());
+      if (element.isPresent() && element.get() instanceof GBoundsAware) {
+         GBoundsAware bae = (GBoundsAware) element.get();
          if (bounds.getNewPosition() != null) {
             bae.setPosition(GraphUtil.copy(bounds.getNewPosition()));
          }
@@ -90,13 +143,12 @@ public final class LayoutUtil {
     *
     * @param alignment The new alignment.
     * @param index     The model index.
-    * @return The changed element.
+    * @return The changed element, or empty if the alignment could not be applied to any element.
     */
    public static Optional<GAlignable> applyAlignment(final ElementAndAlignment alignment, final GModelIndex index) {
-      GModelElement element = getOrThrow(index.get(alignment.getElementId()),
-         "Model element not found! ID: " + alignment.getElementId());
-      if (element instanceof GAlignable) {
-         GAlignable alignable = (GAlignable) element;
+      Optional<GModelElement> element = index.get(alignment.getElementId());
+      if (element.isPresent() && element.get() instanceof GAlignable) {
+         GAlignable alignable = (GAlignable) element.get();
          alignable.setAlignment(alignment.getNewAlignment());
          return Optional.of(alignable);
       }
@@ -104,22 +156,25 @@ public final class LayoutUtil {
    }
 
    /**
-    * Applies the new route to the model.
+    * Applies the new route to the model. A route needs at least a source and a target point to describe an edge.
     *
     * @param route The new route.
     * @param index The model index.
-    * @return The changed element.
+    * @return The changed edge, or empty if the route could not be applied to any edge.
     */
-   public static GEdge applyRoute(final ElementAndRoutingPoints route, final GModelIndex index) {
+   public static Optional<GEdge> applyRoute(final ElementAndRoutingPoints route, final GModelIndex index) {
       List<GPoint> routingPoints = route.getNewRoutingPoints();
-      if (routingPoints.size() < 2) {
-         throw new GLSPServerException("Invalid Route!");
+      Optional<GEdge> edge = index.findElementByClass(route.getElementId(), GEdge.class);
+      if (edge.isEmpty() || routingPoints == null || routingPoints.size() < 2) {
+         return Optional.empty();
       }
+      EList<GPoint> edgeRoutingPoints = edge.get().getRoutingPoints();
+      edgeRoutingPoints.clear();
+      edgeRoutingPoints.addAll(routingPoints);
       // first and last point mark the source and target point
-      GEdge edge = applyRoutingPoints(route, index);
-      EList<GPoint> edgeRoutingPoints = edge.getRoutingPoints();
-      edge.getArgs().put(GArguments.KEY_EDGE_SOURCE_POINT, edgeRoutingPoints.remove(0));
-      edge.getArgs().put(GArguments.KEY_EDGE_TARGET_POINT, edgeRoutingPoints.remove(edgeRoutingPoints.size() - 1));
+      edge.get().getArgs().put(GArguments.KEY_EDGE_SOURCE_POINT, edgeRoutingPoints.remove(0));
+      edge.get().getArgs().put(GArguments.KEY_EDGE_TARGET_POINT,
+         edgeRoutingPoints.remove(edgeRoutingPoints.size() - 1));
       return edge;
    }
 

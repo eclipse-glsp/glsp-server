@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GGraph;
@@ -26,9 +27,9 @@ import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.GraphFactory;
+import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.features.core.model.ComputedBoundsAction;
-import org.eclipse.glsp.server.model.DefaultGModelState;
 import org.eclipse.glsp.server.types.ElementAndAlignment;
 import org.eclipse.glsp.server.types.ElementAndBounds;
 import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
@@ -40,18 +41,6 @@ public class LayoutUtilTest {
    private static final String NODE_ID = "node0";
    private static final String EDGE_ID = "edge0";
    private static final String UNKNOWN_ID = "does-not-exist";
-
-   /** Exposes a fixed index, the injected one is not available outside of Guice. */
-   private static class TestGModelState extends DefaultGModelState {
-      private final GModelIndex testIndex;
-
-      TestGModelState(final GModelIndex testIndex) {
-         this.testIndex = testIndex;
-      }
-
-      @Override
-      public GModelIndex getIndex() { return testIndex; }
-   }
 
    private GGraph graph;
    private GNode node;
@@ -124,9 +113,16 @@ public class LayoutUtilTest {
    @Test
    void appliesTheReportedRoute() {
       GPoint source = GraphUtil.point(0, 0);
+      GPoint middle = GraphUtil.point(5, 5);
       GPoint target = GraphUtil.point(10, 10);
 
-      assertTrue(LayoutUtil.applyRoute(route(EDGE_ID, source, GraphUtil.point(5, 5), target), index).isPresent());
+      Optional<GEdge> applied = LayoutUtil.applyRoute(route(EDGE_ID, source, middle, target), index);
+
+      assertTrue(applied.isPresent());
+      // the source and target point are moved into the args, only the intermediate points remain as routing points
+      assertEquals(List.of(middle), applied.get().getRoutingPoints());
+      assertEquals(source, applied.get().getArgs().get(GArguments.KEY_EDGE_SOURCE_POINT));
+      assertEquals(target, applied.get().getArgs().get(GArguments.KEY_EDGE_TARGET_POINT));
    }
 
    @Test
@@ -151,7 +147,9 @@ public class LayoutUtilTest {
       ComputedBoundsAction action = new ComputedBoundsAction(List.of(bounds(UNKNOWN_ID), bounds(NODE_ID)),
          List.of(alignment(UNKNOWN_ID)), List.of(route(EDGE_ID, GraphUtil.point(0, 0))), graph.getRevision());
 
-      LayoutUtil.applyBounds(graph, action, new TestGModelState(index));
+      LayoutUtil.applyElementBounds(action.getBounds(), index);
+      LayoutUtil.applyAlignments(action.getAlignments(), index);
+      LayoutUtil.applyRoutes(action.getRoutes(), index);
 
       assertNodeResized();
    }

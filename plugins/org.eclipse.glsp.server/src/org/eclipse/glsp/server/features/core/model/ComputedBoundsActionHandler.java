@@ -63,7 +63,7 @@ public class ComputedBoundsActionHandler extends AbstractActionHandler<ComputedB
     * {@link #executeAction(ComputedBoundsAction)} instead would also take over the revision check and the model lock.
     * </p>
     *
-    * @param root   The model root.
+    * @param root   The model root whose revision the action matched.
     * @param action The computed bounds action.
     */
    protected void applyBounds(final GModelRoot root, final ComputedBoundsAction action) {

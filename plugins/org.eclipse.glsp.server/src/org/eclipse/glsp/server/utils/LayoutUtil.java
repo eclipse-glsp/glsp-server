@@ -61,7 +61,12 @@ public final class LayoutUtil {
     * @param root       The model root.
     * @param action     The computed bounds action.
     * @param modelState The model state
+    * @deprecated Use
+    *             {@link org.eclipse.glsp.server.features.core.model.ComputedBoundsActionHandler#applyBounds(GModelRoot, ComputedBoundsAction)}
+    *             instead. This method dispatches to the static per-kind methods directly and therefore bypasses the
+    *             overridable ones of the handler.
     */
+   @Deprecated
    public static void applyBounds(final GModelRoot root, final ComputedBoundsAction action,
       final GModelState modelState) {
       GModelIndex index = modelState.getIndex();

@@ -41,18 +41,6 @@ public class ComputedBoundsActionHandlerTest {
    private static final String NODE_ID = "node0";
    private static final String EDGE_ID = "edge0";
 
-   /** Exposes a fixed index, the injected one is not available outside of Guice. */
-   private static class TestGModelState extends DefaultGModelState {
-      private final GModelIndex testIndex;
-
-      TestGModelState(final GModelIndex testIndex) {
-         this.testIndex = testIndex;
-      }
-
-      @Override
-      public GModelIndex getIndex() { return testIndex; }
-   }
-
    /** Records which per-kind methods the apply step reached, and drops the routes. */
    private static class TestHandler extends ComputedBoundsActionHandler {
       private final List<String> applied = new ArrayList<>();
@@ -111,7 +99,9 @@ public class ComputedBoundsActionHandlerTest {
       graph.getChildren().add(target);
       graph.getChildren().add(edge);
 
-      handler = new TestHandler(new TestGModelState(GModelIndex.create(graph)));
+      DefaultGModelState modelState = new DefaultGModelState();
+      modelState.updateRoot(graph);
+      handler = new TestHandler(modelState);
    }
 
    private ComputedBoundsAction computedBounds() {

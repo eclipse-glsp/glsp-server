@@ -6,22 +6,22 @@
 
 ### Potentially Breaking Changes
 
--   [layout] Keep applying computed bounds when an individual entry cannot be applied [#295](https://github.com/eclipse-glsp/glsp-server/pull/295)
-    -   `LayoutUtil.applyRoute` now returns `Optional<GEdge>` instead of `GEdge`
-    -   `LayoutUtil.applyBounds`, `applyAlignment` and `applyRoute` no longer throw for an element the index cannot resolve, they report it as not applied. `applyRoutingPoints` stays strict.
-    -   `ComputedBoundsActionHandler` applies the computed bounds through the new overridable `applyBounds`, `applyElementBounds`, `applyAlignments` and `applyRoutes` methods, so adjusting one kind no longer means taking over `executeAction` and its model lock
-    -   `LayoutUtil.applyBounds(GModelRoot, ComputedBoundsAction, GModelState)` is deprecated. It dispatches to the static per-kind methods directly and therefore bypasses the overridable ones of `ComputedBoundsActionHandler`.
+- [layout] Keep applying computed bounds when an individual entry cannot be applied [#295](https://github.com/eclipse-glsp/glsp-server/pull/295)
+    - `LayoutUtil.applyRoute` now returns `Optional<GEdge>` instead of `GEdge`
+    - `LayoutUtil.applyBounds`, `applyAlignment` and `applyRoute` no longer throw for an element the index cannot resolve, they report it as not applied. `applyRoutingPoints` stays strict.
+    - `ComputedBoundsActionHandler` applies the computed bounds through the new overridable `applyBounds`, `applyElementBounds`, `applyAlignments` and `applyRoutes` methods, so adjusting one kind no longer means taking over `executeAction` and its model lock
+    - `LayoutUtil.applyBounds(GModelRoot, ComputedBoundsAction, GModelState)` is deprecated. It dispatches to the static per-kind methods directly and therefore bypasses the overridable ones of `ComputedBoundsActionHandler`.
 
 ## [v2.7.0 - 01/06/2026](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.7.0)
 
 ### Changes
 
--   [protocol] Add new viewport, export, and editor-context actions to align with glsp-client [#286](https://github.com/eclipse-glsp/glsp-server/pull/286)
+- [protocol] Add new viewport, export, and editor-context actions to align with glsp-client [#286](https://github.com/eclipse-glsp/glsp-server/pull/286)
 
 ### Potentially Breaking Changes
 
--   [api] Add request/response support to server `ActionDispatcher` [#283](https://github.com/eclipse-glsp/glsp-server/pull/283)
-    -   `dispatchAll` now executes actions sequentially and will fail on the first rejected action
+- [api] Add request/response support to server `ActionDispatcher` [#283](https://github.com/eclipse-glsp/glsp-server/pull/283)
+    - `dispatchAll` now executes actions sequentially and will fail on the first rejected action
 
 ## [v2.6.0 - 11/02/2026](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.6.0)
 
@@ -30,7 +30,7 @@
 - [api] Adjust to new `MenuItem` API [#265](https://github.com/eclipse-glsp/glsp-server/pull/265)
 - [server] Ensure proper session cleanup on dispsoe [#267](https://github.com/eclipse-glsp/glsp-server/pull/267)
 - [build] Enable OSGI metadata bundling for maven artifacts [#268](https://github.com/eclipse-glsp/glsp-server/pull/268)
-- [websocket] Enable easier configuration of WS buffer size [#269](https://github.com/eclipse-glsp/glsp-server/pull/269)\
+- [websocket] Enable easier configuration of WS buffer size [#269](https://github.com/eclipse-glsp/glsp-server/pull/269)
 - [websocket] Update to Jetty 12.1.4 [#271](https://github.com/eclipse-glsp/glsp-server/pull/271)
 - [api] Extend `ModelSubmissionHandler` with optional layout information [#273](https://github.com/eclipse-glsp/glsp-server/pull/273)
 - [model] Improve `GModelBuilder` API [#274](https://github.com/eclipse-glsp/glsp-server/pull/274)
@@ -39,7 +39,7 @@
 ### Potentially Breaking Changes
 
 - [build] Switch default target platform to Eclipse 2025-12
-  - Requires Java 21 during build time
+    - Requires Java 21 during build time
 
 ## [v2.5.0 - 07/09/2025](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.5.0)
 
@@ -61,18 +61,18 @@
 
 - [API] Fix: do not bind the DefaultActionDispatcher as ActionHandler, so it can be correctly disposed and the thread is closed at the end of a session [#246](https://github.com/eclipse-glsp/glsp-server/pull/246) - Contributed on behalf of Axon Ivy AG
 - [API] Align default type configuration with client side [#245](https://github.com/eclipse-glsp/glsp-server/pull/245)
-  - Introduce `GForeignObjectElement` and corresponding builder
-  - Update default type mapping configuration to match the configuration on client side
+    - Introduce `GForeignObjectElement` and corresponding builder
+    - Update default type mapping configuration to match the configuration on client side
 - Introduce async live model validation behavior [#247](https://github.com/eclipse-glsp/glsp-server/pull/247)
 
 ### Potentially Breaking Changes
 
 - [deps] Remove dependency to Google Guava [#244](https://github.com/eclipse-glsp/glsp-server/pull/244)
-  - The core framework no longer depends on any Guava components.
-  - Introduced custom `BiIndex` class to replace usage of Guava's `BiMap`
-  - Adopters that want that still depend  on Guava code have to ensure that the dependency is available as it is no longer shipped with GLSP
+    - The core framework no longer depends on any Guava components.
+    - Introduced custom `BiIndex` class to replace usage of Guava's `BiMap`
+    - Adopters that want that still depend on Guava code have to ensure that the dependency is available as it is no longer shipped with GLSP
 - [deps] Update dependencies to Jakarta namespace and Eclipse 2024-x [#249](https://github.com/eclipse-glsp/glsp-server/pull/249)
-  - This includes a switch to Jetty 12.x, and the Jakarta variant of LSP4j Websocket. For adopters that still rely on the javax namespace and [alternative release](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.3.0.javax) is provided
+    - This includes a switch to Jetty 12.x, and the Jakarta variant of LSP4j Websocket. For adopters that still rely on the javax namespace and [alternative release](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.3.0.javax) is provided
 
 ## [v2.2.1 - 22/07/2024](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.2.1)
 
@@ -82,7 +82,7 @@
 - [model] Allow definition of resize handle locations for `GShapeElements` [#231](https://github.com/eclipse-glsp/glsp-server/pull/231)
 - [api] Improve extensibility of `DefaultActionDispatcher` [#235](https://github.com/eclipse-glsp/glsp-server/pull/235)- Contributed on behalf of Axon Ivy AG
 
-## [v2.1.0 -  24/01/2024](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.1.0)
+## [v2.1.0 - 24/01/2024](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.1.0)
 
 ### Changes
 
@@ -100,33 +100,33 @@
 - [API] Add support for progress reporting [#205](https://github.com/eclipse-glsp/glsp-server/pull/205)
 - [diagram] Add support for handling reconnection requests to RequestModelActionHandler [#208](https://github.com/eclipse-glsp/glsp-server/pull/208)
 - [diagram] Add support for dynamic edge type hints [#210](https://github.com/eclipse-glsp/glsp-server/pull/210)
-  - Provide EdgeCreationChecker API. Adopters can implement this to handle dynamic edge creation validation requests.
+    - Provide EdgeCreationChecker API. Adopters can implement this to handle dynamic edge creation validation requests.
 - [launch] Add `hostname` arg to `CLIParser` [#214](https://github.com/eclipse-glsp/glsp-server/pull/214)
 - [deps] Remove upper bounds version constraints for Guice and Guava [#216](https://github.com/eclipse-glsp/glsp-server/pull/216)
 
 ### Breaking Changes
 
 - [websocket] Update to Jetty Websocket 10 [#185](https://github.com/eclipse-glsp/glsp-server/pull/185) [#186](https://github.com/eclipse-glsp/glsp-server/pull/186) - Contributed on behalf of STMicroelectronics
-  - This includes breaking changes due to major API changes in Jetty and the following new minimum versions:
-    - Jetty 9.x -> Jetty 10.0.13
-    - LSP4J -> 0.8.0 -> 0.11.0
-    - ELK 0.7.0 -> 0.8.1
+    - This includes breaking changes due to major API changes in Jetty and the following new minimum versions:
+        - Jetty 9.x -> Jetty 10.0.13
+        - LSP4J -> 0.8.0 -> 0.11.0
+        - ELK 0.7.0 -> 0.8.1
 - [operation] Rework `OperationHandler` to provide an optional command instead of direct execution to allow more execution control [#187](https://github.com/eclipse-glsp/glsp-server/pull/187)
-  - `Abstract<XYZ>` base implementations were deprecated in favor of `GModelOperationHandler` and `EMFOperationHandler` base classes
-  - Long-term deprecated and unused `Basic<XYZ>` base classes were removed
+    - `Abstract<XYZ>` base implementations were deprecated in favor of `GModelOperationHandler` and `EMFOperationHandler` base classes
+    - Long-term deprecated and unused `Basic<XYZ>` base classes were removed
 - [modelstate] Use interface-injection for all subclasses of GModelState (EMFModelState, EMFNotationModelState) [#199](https://github.com/eclipse-glsp/glsp-server/pull/199)
-  - `EMFModelState` and `EMFNotationModelState` are now interfaces instead of classes
-  - Add `EMFModelStateImpl` and `EMFNotationModelStateImpl` classes
-  - Update related modules to inject these GModelState sub-types as a Singleton
+    - `EMFModelState` and `EMFNotationModelState` are now interfaces instead of classes
+    - Add `EMFModelStateImpl` and `EMFNotationModelStateImpl` classes
+    - Update related modules to inject these GModelState sub-types as a Singleton
 - [validation] Add explicit support and API for live and batch validation [#200](https://github.com/eclipse-glsp/glsp-server/pull/200)
 - [server] Change default ports from 5007 (and 8081 for websockets) to 0, which implies autoassignment by the OS [#198](https://github.com/eclipse-glsp/glsp-server/pull/198)
 - [API] Remove deprecated `GConstants.STACK` constant [#209](https://github.com/eclipse-glsp/glsp-server/pull/209)
-- [API] Revise model loading and client action handling [#211](https://github.com/eclipse-glsp/glsp-server/pull/211) 
-  - Refactor `ModelSubmissionHandler` to enable handling of `RequestModelAction` as proper request action
-    - Introduce a `submitInitialModel` method that is called by the `RequestModelActionHandler`
-  - Remove `configureClientActions` from `DiagramModule` as client actions are now implicitly configured via `InitializeClientSession` request
-  - Remove `ClientActionHandler` and replace with `ClientActionForwarder`
-  - Rename `ServerStatusAction` -> `StatusAction` and `ServerMessageAction` -> `MessageAction`
+- [API] Revise model loading and client action handling [#211](https://github.com/eclipse-glsp/glsp-server/pull/211)
+    - Refactor `ModelSubmissionHandler` to enable handling of `RequestModelAction` as proper request action
+        - Introduce a `submitInitialModel` method that is called by the `RequestModelActionHandler`
+    - Remove `configureClientActions` from `DiagramModule` as client actions are now implicitly configured via `InitializeClientSession` request
+    - Remove `ClientActionHandler` and replace with `ClientActionForwarder`
+    - Rename `ServerStatusAction` -> `StatusAction` and `ServerMessageAction` -> `MessageAction`
 - [deps] Set Java compliance level to Java 17 as Java 11 is now EOL [#217](https://github.com/eclipse-glsp/glsp-server/pull/217)
 
 ## [v1.0.0 - 30/06/2022](https://github.com/eclipse-glsp/glsp-server/releases/tag/v1.0.0)
@@ -140,26 +140,26 @@
 - [layout] Ensure that `LayoutEngine` is injected as optional field to avoid `NullPointerExceptions`s if no implementation is bound [#153](https://github.com/eclipse-glsp/glsp-server/pull/153/)
 - [build] Remove dependency to `org.apache.commons.io` [#157](https://github.com/eclipse-glsp/glsp-server/pull/157)
 - [emf] Inception of new `org.eclipse.glsp.server.emf` package + example models
-  - Provides reusable base classes for EMF-based source models [#159](https://github.com/eclipse-glsp/glsp-server/pull/159)
+    - Provides reusable base classes for EMF-based source models [#159](https://github.com/eclipse-glsp/glsp-server/pull/159)
 - [graph] Introduced `GShapePrerenderedElementBuilder` to enable easy construction of shaped prerendered elements eg. foreign object elements. [#168](https://github.com/eclipse-glsp/glsp-server/pull/168)
 - [diagram] Fixed a bug that could occur during saving by ensuring that all pending actions are dispatched before a client session is disposed. [#172](https://github.com/eclipse-glsp/glsp-server/pull/172)
 
 ### Breaking Changes
 
 - [protocol] Align server actions with the definitions in @eclipse-glsp-protocol [#142](https://github.com/eclipse-glsp/glsp-server/pull/142)
-  - Affects methods and return types of all action classes.
+    - Affects methods and return types of all action classes.
 - [model] Source model refactoring [#154](https://github.com/eclipse-glsp/glsp-server/pull/154)
-  - `ModelSourceLoader` → `SourceModelStorage`
-  - `ModelSourceWatcher` → `SourceModelWatcher`
-  - Added method to `SourceModelStorage`
+    - `ModelSourceLoader` → `SourceModelStorage`
+    - `ModelSourceWatcher` → `SourceModelWatcher`
+    - Added method to `SourceModelStorage`
 - [model] Refactoring as part of adding new GLSP examples [#159](https://github.com/eclipse-glsp/glsp-server/pull/159), [#161](https://github.com/eclipse-glsp/glsp-server/pull/161)
-  - Renamed `setRoot` to `updateRoot` in model state to better reflect dependent updates, remove re-generation of command stack in method but add index re-generation
+    - Renamed `setRoot` to `updateRoot` in model state to better reflect dependent updates, remove re-generation of command stack in method but add index re-generation
 - [operation] Refactoring as part of cleaning up operation handlers [#164](https://github.com/eclipse-glsp/glsp-server/pull/164)
-  - Renamed `CreateEdgeOperationHandler` to `AbstractCreateEdgeOperationHandler`
-  - Renamed `CreateNodeOperationHandler` to `AbstractCreateNodeOperationHandler`
+    - Renamed `CreateEdgeOperationHandler` to `AbstractCreateEdgeOperationHandler`
+    - Renamed `CreateNodeOperationHandler` to `AbstractCreateNodeOperationHandler`
 - [gmodel] Move base diagram module and operation handlers that operate directly on GModels (as a model source) to the dedicated package `org.eclipse.glsp.server.gmodel` and add prefix `GModel` in the class name [#165](https://github.com/eclipse-glsp/glsp-server/pull/165)
 - [logging] Update from log4j 1.x to log4j 2.17.1. [#163](https://github.com/eclipse-glsp/glsp-server/pull/163/)
-  - Affects logger creation across all classes
+    - Affects logger creation across all classes
 - [protocol] Rename `ModelSourceChangedAction` to `SourceModelChangedAction` including handlers [#171](https://github.com/eclipse-glsp/glsp-server/pull/171)
 
 ## [v0.9.0- 09/12/2021](https://github.com/eclipse-glsp/glsp/releases/tag/0.9.0)

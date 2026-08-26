@@ -6,6 +6,12 @@
 
 ### Potentially Breaking Changes
 
+-   [layout] Keep applying computed bounds when an individual entry cannot be applied [#295](https://github.com/eclipse-glsp/glsp-server/pull/295)
+    -   `LayoutUtil.applyRoute` now returns `Optional<GEdge>` instead of `GEdge`
+    -   `LayoutUtil.applyBounds`, `applyAlignment` and `applyRoute` no longer throw for an element the index cannot resolve, they report it as not applied. `applyRoutingPoints` stays strict.
+    -   `ComputedBoundsActionHandler` applies the computed bounds through the new overridable `applyBounds`, `applyElementBounds`, `applyAlignments` and `applyRoutes` methods, so adjusting one kind no longer means taking over `executeAction` and its model lock
+    -   `LayoutUtil.applyBounds(GModelRoot, ComputedBoundsAction, GModelState)` is deprecated. It dispatches to the static per-kind methods directly and therefore bypasses the overridable ones of `ComputedBoundsActionHandler`.
+
 ## [v2.7.0 - 01/06/2026](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.7.0)
 
 ### Changes

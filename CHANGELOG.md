@@ -4,6 +4,8 @@
 
 ### Changes
 
+- [api] Fix the `dynamic` parameter being ignored by the `EdgeTypeHint` constructor [#294](https://github.com/eclipse-glsp/glsp-server/pull/294)
+
 ### Potentially Breaking Changes
 
 - [layout] Keep applying computed bounds when an individual entry cannot be applied [#295](https://github.com/eclipse-glsp/glsp-server/pull/295)

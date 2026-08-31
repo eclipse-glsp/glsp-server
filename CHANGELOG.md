@@ -1,6 +1,6 @@
 # Eclipse GLSP Server Changelog
 
-## v2.8.0.javax - active
+## [v2.8.0.javax - 31/08/2026](https://github.com/eclipse-glsp/glsp-server/releases/tag/v2.8.0.javax)
 
 ### Changes
 

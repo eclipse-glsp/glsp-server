@@ -81,7 +81,7 @@
 
 		<!-- Release Dependencies for M2 -->
 		<central.publishing.version>0.8.0</central.publishing.version>
-		<maven.gpg.version>1.6</maven.gpg.version>
+		<maven.gpg.version>3.2.8</maven.gpg.version>
 	</properties>
 
 	<pluginRepositories>

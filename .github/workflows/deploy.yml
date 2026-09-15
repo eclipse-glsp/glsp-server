@@ -46,24 +46,11 @@ jobs:
         run: |
           mkdir -p ~/.ssh && chmod 700 ~/.ssh
           install -m 600 /dev/null ~/.ssh/id_ed25519
-          printf '%s\n' "$SCP_KEY" >>~/.ssh/id_ed25519
+          printf '%s\n' "$SCP_KEY" >~/.ssh/id_ed25519
+          # the bot key is passphrase-protected; strip the passphrase from the on-disk
+          # copy so the rsync/ssh steps need neither an agent nor an interactive prompt
+          ssh-keygen -p -P "$SCP_PASSPHRASE" -N '' -f ~/.ssh/id_ed25519
           ssh-keyscan projects-storage.eclipse.org >>~/.ssh/known_hosts
-          # the bot key is passphrase-protected, so the passphrase goes to ssh-add via
-          # SSH_ASKPASS - passing it as an argument would expose it in the process list
-          askpass=$(mktemp)
-          cat >"$askpass" <<'ASKPASS'
-          #!/usr/bin/env bash
-          printf '%s\n' "$SCP_PASSPHRASE"
-          ASKPASS
-          chmod 700 "$askpass"
-          eval "$(ssh-agent -s)"
-          SSH_ASKPASS="$askpass" SSH_ASKPASS_REQUIRE=force ssh-add ~/.ssh/id_ed25519 </dev/null
-          rm -f "$askpass"
-          # hand the agent over to the steps that run rsync/ssh
-          {
-            echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK"
-            echo "SSH_AGENT_PID=$SSH_AGENT_PID"
-          } >>"$GITHUB_ENV"
 
       - name: Publish nightly composite update site
         env:

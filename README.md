@@ -1,4 +1,4 @@
-# Eclipse GLSP Server [![Build Status](https://ci.eclipse.org/glsp/job/eclipse-glsp/job/glsp-server/job/master/badge/icon)](https://ci.eclipse.org/glsp/job/eclipse-glsp/job/glsp-server/job/master/)
+# Eclipse GLSP Server [![CI](https://github.com/eclipse-glsp/glsp-server/actions/workflows/ci.yml/badge.svg?ref=master)](https://github.com/eclipse-glsp/glsp-server/actions/workflows/ci.yml) [![E2E](https://github.com/eclipse-glsp/glsp-server/actions/workflows/e2e.yml/badge.svg)](https://github.com/eclipse-glsp/glsp-server/actions/workflows/e2e.yml)
 
 Contains the code for the Java-based framework to create [GLSP](https://github.com/eclipse-glsp/glsp) server components.
 

@@ -1,0 +1,118 @@
+name: Deploy
+
+concurrency:
+  # a half-finished upload to download.eclipse.org or Central must never be cancelled
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ['CI']
+    types: [completed]
+    branches: [master]
+
+permissions:
+  contents: read
+
+env:
+  # the commit that CI validated; falls back to the dispatched ref for manual runs
+  DEPLOY_REF: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+jobs:
+  p2:
+    name: Deploy P2 update site
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    if: >-
+      github.repository == 'eclipse-glsp/glsp-server' &&
+      (github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success')
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          ref: ${{ env.DEPLOY_REF }}
+      - name: Set up JDK
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+      - name: Build p2 repository
+        run: mvn clean install -Pp2 -B
+
+      - name: Set up SSH access to projects-storage.eclipse.org
+        env:
+          SCP_KEY: ${{ secrets.SCP_KEY }}
+          SCP_PASSPHRASE: ${{ secrets.SCP_PASSPHRASE }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          install -m 600 /dev/null ~/.ssh/id_ed25519
+          printf '%s\n' "$SCP_KEY" >>~/.ssh/id_ed25519
+          ssh-keyscan projects-storage.eclipse.org >>~/.ssh/known_hosts
+          # the bot key is passphrase-protected, so the passphrase goes to ssh-add via
+          # SSH_ASKPASS - passing it as an argument would expose it in the process list
+          askpass=$(mktemp)
+          cat >"$askpass" <<'ASKPASS'
+          #!/usr/bin/env bash
+          printf '%s\n' "$SCP_PASSPHRASE"
+          ASKPASS
+          chmod 700 "$askpass"
+          eval "$(ssh-agent -s)"
+          SSH_ASKPASS="$askpass" SSH_ASKPASS_REQUIRE=force ssh-add ~/.ssh/id_ed25519 </dev/null
+          rm -f "$askpass"
+          # hand the agent over to the steps that run rsync/ssh
+          {
+            echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK"
+            echo "SSH_AGENT_PID=$SSH_AGENT_PID"
+          } >>"$GITHUB_ENV"
+
+      - name: Publish nightly composite update site
+        env:
+          SCP_USERNAME: ${{ secrets.SCP_USERNAME }}
+        # the script detects the version from the build output and owns the rsync up/down cycle
+        run: |
+          releng/org.eclipse.glsp.repository/p2-composite.sh add \
+            --source-repo "${{ github.workspace }}/releng/org.eclipse.glsp.repository/target/repository" \
+            --local "${{ github.workspace }}/p2-update-site/server/p2" \
+            --remote "${SCP_USERNAME}@projects-storage.eclipse.org:/home/data/httpd/download.eclipse.org/glsp/server/p2"
+
+      - name: Upload update site
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: p2-update-site
+          path: p2-update-site/
+          if-no-files-found: ignore
+
+  m2:
+    name: Deploy to Maven Central
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    if: >-
+      github.repository == 'eclipse-glsp/glsp-server' &&
+      (github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success')
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          ref: ${{ env.DEPLOY_REF }}
+      # generates the settings.xml for the 'central' server and imports the signing key
+      - name: Set up JDK & Maven Central credentials
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+          server-id: 'central'
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+      - name: Deploy
+        env:
+          MAVEN_USERNAME: ${{ secrets.CENTRAL_SONATYPE_TOKEN_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.CENTRAL_SONATYPE_TOKEN_PASSWORD }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        # the test modules are not published; they are built and run by the CI workflow
+        run: |
+          mvn clean deploy -Pm2 -Pm2-release -Pfatjar -B \
+            -Dgpg.keyname="${{ secrets.GPG_KEY_ID }}" \
+            -pl '!tests,!tests/org.eclipse.glsp.server.test,!tests/org.eclipse.glsp.graph.test'

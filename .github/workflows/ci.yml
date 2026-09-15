@@ -1,0 +1,89 @@
+name: CI
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths-ignore:
+      - '**/*.md'
+      - 'LICENSE'
+      - '.vscode/**'
+  pull_request:
+    branches: [master]
+    paths-ignore:
+      - '**/*.md'
+      - 'LICENSE'
+      - '.vscode/**'
+
+permissions:
+  contents: read
+
+jobs:
+  m2:
+    name: Build, Checkstyle & Test (M2)
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - name: Set up JDK
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+      # a single 'verify' with both profiles covers compile, checkstyle, tests and the fatjar.
+      # checkstyle runs at 'validate', so letting it fail the build here would skip the tests
+      # entirely - the report step below turns the collected violations into the failure instead.
+      - name: Build
+        run: mvn clean verify -Pm2 -Pfatjar -B -Dcheckstyle.failOnViolation=false
+      - name: Report test results
+        if: always()
+        run: .github/scripts/test-summary.py
+      - name: Report checkstyle violations
+        if: always()
+        run: .github/scripts/checkstyle-summary.py
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: surefire-reports
+          path: tests/**/surefire-reports/*.xml
+          if-no-files-found: ignore
+
+  p2:
+    name: Build (P2)
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - name: Set up JDK
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+      - name: Build
+        run: mvn clean verify -Pp2 -B
+
+  m2-java25:
+    name: Build & Test (M2, Java 25)
+    # compatibility build only; matches the cadence of the former 'glsp-server-java25' Jenkins job
+    if: github.event_name != 'pull_request'
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - name: Set up JDK
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
+        with:
+          distribution: 'temurin'
+          java-version: '25'
+          cache: 'maven'
+      - name: Build
+        run: mvn clean verify -Pm2 -Pfatjar -B -Dcheckstyle.skip
+      - name: Report test results
+        if: always()
+        run: .github/scripts/test-summary.py

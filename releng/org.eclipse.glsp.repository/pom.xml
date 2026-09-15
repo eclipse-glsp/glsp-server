@@ -14,7 +14,7 @@
 	<!--
 		This module only builds the p2 repository into 'target/repository'.
 		Publishing it into the nightly composite update site is handled
-		separately by 'p2-composite.sh' (invoked from the Jenkins pipeline),
+		separately by 'p2-composite.sh' (invoked from the 'Deploy' workflow),
 		which is fully decoupled from Maven.
 	-->
 	<build>

@@ -44,6 +44,7 @@ https://user-images.githubusercontent.com/588090/154459938-849ca684-11b3-472c-8a
 
 To see the diagram in action, you need to choose and launch one diagram client, see [here for an overview of available clients](https://www.eclipse.org/glsp/examples/#workflowoverview).
 
+-   [`glsp-core`](https://github.com/eclipse-glsp/glsp-core): Standalone diagram client running in a plain browser page (`examples/workflow-standalone`).
 -   [`glsp-theia-integration`](https://github.com/eclipse-glsp/glsp-theia-integration): Diagrams clients integrated into [Theia](https://github.com/theia-ide/theia).
 -   [`glsp-vscode-integration`](https://github.com/eclipse-glsp/glsp-vscode-integration): Diagram clients integrated into [VS Code](https://github.com/microsoft/vscode).
 -   [`glsp-eclipse-integration`](https://github.com/eclipse-glsp/glsp-eclipse-integration): Diagram clients integrated into Eclipse IDE.
@@ -99,7 +100,7 @@ Once the server is running, choose a diagram client integration (such as Eclipse
 
 In addition to this repository, the related source code can be found here:
 
-- <https://github.com/eclipse-glsp/glsp-client>
+- <https://github.com/eclipse-glsp/glsp-core>
 - <https://github.com/eclipse-glsp/glsp-theia-integration>
 - <https://github.com/eclipse-glsp/glsp-eclipse-integration>
 - <https://github.com/eclipse-glsp/glsp-vscode-integration>

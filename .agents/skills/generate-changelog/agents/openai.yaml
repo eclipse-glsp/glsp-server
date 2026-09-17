@@ -1,0 +1,5 @@
+interface:
+    display_name: 'generate-changelog'
+    short_description: 'Generate changelog entries'
+policy:
+    allow_implicit_invocation: false

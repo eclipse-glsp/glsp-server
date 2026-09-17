@@ -4,6 +4,7 @@ target/
 
 # Agent specific files
 .claude/plans
+.claude/local.settings.json
 .claude/settings.local.json
 CLAUDE.local.md
 .reviews

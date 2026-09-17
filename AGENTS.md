@@ -1,12 +1,8 @@
 # AGENTS.md
 
-## Commenting Style
-
-- **Javadoc (`/** ... */`) on the public API**: document `public`/`protected` interfaces, classes, methods, and notable fields. Describe intent and behavior, not the obvious signature. Don't document plain getters/setters.
-- **Cross-reference with `{@link Symbol}`** instead of writing bare type/method names in prose.
-- **Document non-trivial methods** with `@param`/`@return` (and `@throws` where relevant). Skip them for self-explanatory one-liners.
-- **Deprecations** use the fixed form `/** @deprecated Use {@link Replacement} instead */` and pair it with the `@Deprecated` annotation.
-- **Inline `//` comments explain _why_, not _what_** — keep them short and lowercase, and reserve them for non-obvious decisions or rationale.
-- **Mark known limitations** with `// FIXME:` / `// TODO:`, and justify warning suppressions with `@SuppressWarnings("...")` (e.g. `@SuppressWarnings("checkstyle:...")`).
-- Don't restate code in comments; let clear naming carry the _what_.
-- Copyright headers are required on every file.
+- Use Maven. The build needs a profile: `-Pm2` for the Maven artifacts, `-Pp2` for the Eclipse/Tycho build, `-Pfatjar` for the shaded Workflow example jar. Java 21 builds, the bundles run on Java 17.
+- Consult `README.md` for the plugin layout and the Workflow example setup.
+- Document public APIs with Javadoc and use `{@link Symbol}` for cross-references. Explain behavior and non-obvious decisions rather than restating signatures.
+- After code changes, run the /fix skill. Resolve failures and repeat until headers, build, checkstyle, and tests pass.
+- The e2e suites are not part of /fix: they run the Playwright suites of `glsp-core` against the Workflow server. See `.github/workflows/e2e.yml`.
+- `CHANGELOG.md` is generated from the merged PRs before a release. Do not add or bump entries manually.

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2024 EclipseSource and others.
+ * Copyright (c) 2019-2026 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -16,13 +16,14 @@
 package org.eclipse.glsp.server.launch;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PushbackInputStream;
 import java.net.InetSocketAddress;
 import java.nio.channels.AsynchronousServerSocketChannel;
 import java.nio.channels.AsynchronousSocketChannel;
 import java.nio.channels.Channels;
 import java.nio.channels.CompletionHandler;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -46,6 +47,9 @@ import com.google.inject.Module;
 
 public class SocketGLSPServerLauncher extends GLSPServerLauncher {
    public static final String START_UP_COMPLETE_MSG = "[GLSP-Server]:Startup completed. Accepting requests on port:";
+
+   /** Common prefix of the only headers lsp4j understands, {@code Content-Length} and {@code Content-Type}. */
+   private static final String BASE_PROTOCOL_HEADER_PREFIX = "Content-";
    protected static Logger LOGGER = LogManager.getLogger(SocketGLSPServerLauncher.class);
 
    protected ExecutorService threadPool;
@@ -106,11 +110,24 @@ public class SocketGLSPServerLauncher extends GLSPServerLauncher {
    }
 
    protected void createClientConnection(final AsynchronousSocketChannel socketChannel) {
-      Injector injector = createInjector();
       GLSPServer glspServer = null;
       try {
-         InputStream in = Channels.newInputStream(socketChannel);
+         // Read once, so the pushback buffer always fits the peeked bytes.
+         int prefixLength = getStreamPrefixLength();
+         PushbackInputStream in = new PushbackInputStream(Channels.newInputStream(socketChannel), prefixLength);
+         // Both checks run before the injector, so a connection that is not a GLSP client never allocates a server.
+         String streamPrefix = peekStreamPrefix(in, prefixLength);
+         if (streamPrefix.isEmpty()) {
+            LOGGER.debug("Client closed the connection before sending anything");
+            return;
+         }
+         if (!isBaseProtocolMessage(streamPrefix)) {
+            LOGGER.warn("Rejecting client connection from " + socketChannel.getRemoteAddress()
+               + ": the stream does not start with a JSON-RPC base protocol header.");
+            return;
+         }
          OutputStream out = Channels.newOutputStream(socketChannel);
+         Injector injector = createInjector();
 
          glspServer = injector.getInstance(GLSPServer.class);
          Launcher<GLSPClient> launcher = Launcher.createIoLauncher(glspServer, GLSPClient.class, in, out,
@@ -131,6 +148,37 @@ public class SocketGLSPServerLauncher extends GLSPServerLauncher {
             LOGGER.error("Excpetion occured when trying to close socketChannel", e);
          }
       }
+   }
+
+   /**
+    * Reads the first bytes of the stream and pushes them back, so the client is unaffected. Blocks without a timeout
+    * until the client sends enough bytes or hangs up. A GLSP client sends its first message right away.
+    *
+    * @return the first bytes as ASCII, or an empty string if the client hung up without sending anything
+    */
+   protected String peekStreamPrefix(final PushbackInputStream in, final int length) throws IOException {
+      byte[] prefix = new byte[length];
+      int read = in.readNBytes(prefix, 0, prefix.length);
+      if (read <= 0) {
+         return "";
+      }
+      in.unread(prefix, 0, read);
+      return new String(prefix, 0, read, StandardCharsets.US_ASCII);
+   }
+
+   /**
+    * Number of bytes passed to {@link #isBaseProtocolMessage(String)}. Override it if that check needs more bytes.
+    */
+   protected int getStreamPrefixLength() { return BASE_PROTOCOL_HEADER_PREFIX.length(); }
+
+   /**
+    * Whether the stream starts with a JSON-RPC base protocol header. Anything else, an HTTP request in particular, is
+    * not a GLSP client: the framing is close enough to HTTP that a request posted by a web page would otherwise be
+    * read as a message. The match is case-sensitive like the header parsing of lsp4j. A client that sends another
+    * header first is rejected, but lsp4j and vscode-jsonrpc always start with {@code Content-Length}.
+    */
+   protected boolean isBaseProtocolMessage(final String streamPrefix) {
+      return streamPrefix.startsWith(BASE_PROTOCOL_HEADER_PREFIX);
    }
 
    protected Consumer<GsonBuilder> configureGson(final Injector injector) {

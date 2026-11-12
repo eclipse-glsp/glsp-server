@@ -112,8 +112,7 @@ public class SocketGLSPServerLauncher extends GLSPServerLauncher {
    protected void createClientConnection(final AsynchronousSocketChannel socketChannel) {
       GLSPServer glspServer = null;
       try {
-         // Read once, so the pushback buffer always fits the peeked bytes.
-         int prefixLength = getStreamPrefixLength();
+         int prefixLength = BASE_PROTOCOL_HEADER_PREFIX.length();
          PushbackInputStream in = new PushbackInputStream(Channels.newInputStream(socketChannel), prefixLength);
          // Both checks run before the injector, so a connection that is not a GLSP client never allocates a server.
          String streamPrefix = peekStreamPrefix(in, prefixLength);
@@ -122,7 +121,8 @@ public class SocketGLSPServerLauncher extends GLSPServerLauncher {
             return;
          }
          if (!isBaseProtocolMessage(streamPrefix)) {
-            LOGGER.warn("Rejecting client connection from " + socketChannel.getRemoteAddress()
+            // Debug level: any web page can hit this port, so a warning per request would let it flood the log.
+            LOGGER.debug("Rejecting client connection from " + socketChannel.getRemoteAddress()
                + ": the stream does not start with a JSON-RPC base protocol header.");
             return;
          }
@@ -165,11 +165,6 @@ public class SocketGLSPServerLauncher extends GLSPServerLauncher {
       in.unread(prefix, 0, read);
       return new String(prefix, 0, read, StandardCharsets.US_ASCII);
    }
-
-   /**
-    * Number of bytes passed to {@link #isBaseProtocolMessage(String)}. Override it if that check needs more bytes.
-    */
-   protected int getStreamPrefixLength() { return BASE_PROTOCOL_HEADER_PREFIX.length(); }
 
    /**
     * Whether the stream starts with a JSON-RPC base protocol header. Anything else, an HTTP request in particular, is

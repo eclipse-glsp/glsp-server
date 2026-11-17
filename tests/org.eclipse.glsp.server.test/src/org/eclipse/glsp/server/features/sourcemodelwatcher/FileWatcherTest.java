@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2023 EclipseSource and others.
+ * Copyright (c) 2020-2026 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -143,6 +143,25 @@ class FileWatcherTest {
       fileWatcher.stopWatching();
 
       assertNotifications(1);
+   }
+
+   @Test
+   void changingWatchedFileBetweenPauseAndImmediateContinueDoesntNotifyClient()
+      throws IOException, InterruptedException {
+      final File file = createFile("test.txt");
+      final GModelState modelState = modelState("1", fileUri(file));
+
+      final FileWatcher fileWatcher = new FileWatcher(sessionManager, actionDispatcher, modelState);
+      fileWatcher.setDebounceDelay(0);
+      fileWatcher.startWatching();
+      sleep();
+      fileWatcher.pauseWatching();
+      changeFile(file);
+      fileWatcher.continueWatching();
+      sleep();
+      fileWatcher.stopWatching();
+
+      assertNoNotification();
    }
 
    private void assertNoNotification() {

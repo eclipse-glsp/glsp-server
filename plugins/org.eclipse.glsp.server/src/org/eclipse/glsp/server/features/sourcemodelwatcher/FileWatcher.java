@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2024 EclipseSource and others.
+ * Copyright (c) 2020-2026 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -26,6 +26,8 @@ import java.nio.file.Path;
 import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -146,8 +148,11 @@ public class FileWatcher implements ClientSessionListener, SourceModelWatcher {
 
    protected class FileWatchWorker extends Thread {
 
-      protected boolean stopped;
-      protected boolean paused;
+      protected volatile boolean stopped;
+      protected volatile boolean paused;
+      // Not the thread itself: Thread.join() waits on the thread's monitor.
+      protected final Object stateLock = new Object();
+      protected FileState knownState;
 
       protected final String clientId;
       protected final Path filePath;
@@ -165,6 +170,7 @@ public class FileWatcher implements ClientSessionListener, SourceModelWatcher {
          try (WatchService watchService = FileSystems.getDefault().newWatchService()) {
             final Path directory = filePath.getParent();
             key = directory.register(watchService, ENTRY_MODIFY, ENTRY_DELETE);
+            recordCurrentState();
             while (!stopped) {
                final WatchKey newKey = watchService.take();
                if (this.key != newKey) {
@@ -183,9 +189,37 @@ public class FileWatcher implements ClientSessionListener, SourceModelWatcher {
       protected void pollEventsAndNotifyClient(final Path directory)
          throws IOException {
          for (final WatchEvent<?> event : key.pollEvents()) {
-            if (!paused && !stopped && Files.isSameFile(directory.resolve((Path) event.context()), filePath)) {
+            if (!paused && !stopped && Files.isSameFile(directory.resolve((Path) event.context()), filePath)
+               && hasChanged()) {
                scheduleClientNotification(clientId, filePath);
             }
+         }
+      }
+
+      /**
+       * Checks whether the modification time or size of the file differs from the last known {@link FileState} and
+       * records the current state if so.
+       * <p>
+       * Events are delivered asynchronously, so the events of a write that happened while paused may only arrive
+       * after {@link #continueNotifications()}. Comparing against the state recorded on continue filters them. This
+       * also drops events that leave modification time and size untouched during normal watching, e.g. a
+       * {@code chmod}, which the {@link WatchService} reports as {@link java.nio.file.StandardWatchEventKinds#ENTRY_MODIFY
+       * ENTRY_MODIFY} on Linux.
+       */
+      protected boolean hasChanged() {
+         synchronized (stateLock) {
+            FileState currentState = FileState.of(filePath);
+            if (Objects.equals(currentState, knownState)) {
+               return false;
+            }
+            knownState = currentState;
+            return true;
+         }
+      }
+
+      protected void recordCurrentState() {
+         synchronized (stateLock) {
+            knownState = FileState.of(filePath);
          }
       }
 
@@ -202,9 +236,29 @@ public class FileWatcher implements ClientSessionListener, SourceModelWatcher {
       }
 
       public void continueNotifications() {
+         recordCurrentState();
          paused = false;
       }
 
+   }
+
+   /**
+    * Modification time and size of a file, used to tell real changes from events of an already known write.
+    */
+   protected record FileState(FileTime lastModified, long size) {
+
+      /**
+       * Reads the state of the given file, or returns {@code null} if its attributes cannot be read for any reason
+       * (missing file, missing permissions, I/O error).
+       */
+      public static FileState of(final Path path) {
+         try {
+            BasicFileAttributes attributes = Files.readAttributes(path, BasicFileAttributes.class);
+            return new FileState(attributes.lastModifiedTime(), attributes.size());
+         } catch (IOException e) {
+            return null;
+         }
+      }
    }
 
    protected class ClientNotification {

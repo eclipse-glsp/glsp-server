@@ -190,15 +190,15 @@ public class FileWatcher implements ClientSessionListener, SourceModelWatcher {
          throws IOException {
          for (final WatchEvent<?> event : key.pollEvents()) {
             if (!paused && !stopped && Files.isSameFile(directory.resolve((Path) event.context()), filePath)
-               && hasChanged()) {
+               && updateKnownState()) {
                scheduleClientNotification(clientId, filePath);
             }
          }
       }
 
       /**
-       * Checks whether the modification time or size of the file differs from the last known {@link FileState} and
-       * records the current state if so.
+       * Records the current {@link FileState} as the known state and returns whether its modification time or size
+       * differed from the previously known one. A second call for the same event therefore returns {@code false}.
        * <p>
        * Events are delivered asynchronously, so the events of a write that happened while paused may only arrive
        * after {@link #continueNotifications()}. Comparing against the state recorded on continue filters them. This
@@ -206,7 +206,7 @@ public class FileWatcher implements ClientSessionListener, SourceModelWatcher {
        * {@code chmod}, which the {@link WatchService} reports as {@link java.nio.file.StandardWatchEventKinds#ENTRY_MODIFY
        * ENTRY_MODIFY} on Linux.
        */
-      protected boolean hasChanged() {
+      protected boolean updateKnownState() {
          synchronized (stateLock) {
             FileState currentState = FileState.of(filePath);
             if (Objects.equals(currentState, knownState)) {
@@ -244,6 +244,9 @@ public class FileWatcher implements ClientSessionListener, SourceModelWatcher {
 
    /**
     * Modification time and size of a file, used to tell real changes from events of an already known write.
+    * <p>
+    * The comparison depends on the timestamp resolution of the file system. With coarse timestamps (HFS+ 1 s, FAT 2 s,
+    * some network shares) an external edit that keeps the size and lands in the same tick as a save is not detected.
     */
    protected record FileState(FileTime lastModified, long size) {
 
